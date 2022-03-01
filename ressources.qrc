@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/application-image.png</file>
+        <file>images/control-pause.png</file>
+        <file>images/control-skip-180.png</file>
+        <file>images/control-skip.png</file>
+        <file>images/control-stop-square.png</file>
+        <file>images/control.png</file>
+        <file>images/speaker-volume.png</file>
+    </qresource>
+</RCC>
