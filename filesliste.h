@@ -1,0 +1,34 @@
+#ifndef FILESLISTE_H
+#define FILESLISTE_H
+
+#include <QMainWindow>
+#include <QFrame>
+
+namespace Ui {
+class FilesListe;
+}
+
+class FilesListe : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    explicit FilesListe(QWidget *parent = nullptr);
+    ~FilesListe();
+
+    void clearitems();
+    void Populate(QStringList fileName);
+
+    QTime starttime();
+    QTime stoptime();
+private:
+    Ui::FilesListe *ui;
+
+private slots:
+    //void localtablebeenclicked( int row, int column );
+
+
+    void on_tableWidget_2_localfilist_cellClicked(int row, int column);
+};
+
+#endif // FILESLISTE_H
