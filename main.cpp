@@ -10,5 +10,10 @@ int main(int argc, char *argv[])
     QtVsPlayer w;
     a.installEventFilter(&w);
     w.show();
+    QStringList list;
+    for (int a = 0; a < argc; ++a) {
+        list << QString::fromLocal8Bit(argv[a]);
+    }
+    w.ParseArgs(list);
     return a.exec();
 }

@@ -60,6 +60,7 @@
     </property>
     <addaction name="actionPlein_ecran"/>
     <addaction name="actionMasquer_les_controles"/>
+    <addaction name="actionListe_de_lecture"/>
    </widget>
    <addaction name="menuFichiers"/>
    <addaction name="menuAffichage"/>
@@ -98,6 +99,14 @@
    </property>
    <property name="shortcut">
     <string>F10</string>
+   </property>
+  </action>
+  <action name="actionListe_de_lecture">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Liste de lecture</string>
    </property>
   </action>
  </widget>

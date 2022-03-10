@@ -192,6 +192,16 @@
     </item>
    </layout>
   </widget>
+  <widget class="QLineEdit" name="lineEdit_2_pbprocess">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>30</y>
+     <width>101</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="ressources.qrc"/>
