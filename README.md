@@ -1,8 +1,8 @@
 # QtVsPlayer
 
-QvSPlayer for Hikvision local
+QtVsPlayer for Hikvision local
 
-QvSPlayer can read local video files of Hikvision and display blue, green an red vector.
+QtVsPlayer can read local video files of Hikvision and display blue, green an red vector.
 
 The project is young, very basique and surelly have bug.
 
