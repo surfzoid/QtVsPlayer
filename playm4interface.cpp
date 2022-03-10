@@ -35,6 +35,10 @@ unsigned int  playm4interface::VideoFs(QStringList fileName,WId HWND)
 
     bSuccess = PlayM4_Play(m_pblocalportnum, (PLAYM4_HWND)(m_pbframe->winId()));
 
+    if (bSuccess) {
+
+        QtVsPlayer().SetWindowTitle(m_pblocalfilepath.toUtf8().data());
+    }
 
     QtVsPlayer().WVideoCtrls->InitTimeSlide();
     //return;

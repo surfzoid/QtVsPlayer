@@ -129,12 +129,17 @@ void QtVsPlayer::DisplayError(unsigned int  ErrMess)
 
     QString QerrMess=ErrorManager::error_codes(ErrMess);
     this->ui->statusbar->showMessage(QerrMess,1000);
+    this->ui->statusbar->update();
+    this->ui->statusbar->repaint();
 }
 
 void QtVsPlayer::DisplayStatus(QString  StatuTxt)
 {
 
-    this->ui->statusbar->setStatusTip(StatuTxt);
+    //this->ui->statusbar->clearMessage();
+    this->ui->statusbar->showMessage(StatuTxt);
+    ///this->ui->statusbar->update();
+    //this->ui->statusbar->repaint();
 
 }
 
@@ -221,4 +226,11 @@ void QtVsPlayer::on_actionListe_de_lecture_toggled(bool checked)
     } else {
         filesListe->hide();
     }
+}
+
+void QtVsPlayer::SetWindowTitle(QString Title)
+{
+    this->setWindowTitle(Title.toUtf8());
+    this->update();
+    //this->repaint();
 }

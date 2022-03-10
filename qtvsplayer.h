@@ -31,6 +31,7 @@ public:
     QTabWidget* tableWidget_2_localfilist = filesListe->findChild<QTabWidget*>("tableWidget_2_localfilist");
     void ParseArgs(QStringList args);
     void DisplayStatus(QString  StatuTxt);
+    void SetWindowTitle(QString Title);
 
 private slots:
     void on_actionOuvrir_triggered();

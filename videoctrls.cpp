@@ -173,6 +173,7 @@ void VideoCtrls::updatelocalprocess()
         pos = PlayM4_GetPlayPos(QtVsPlayer().nPlaym4Interface->m_pblocalportnum);
         currentpos =(unsigned int)(pos*100);
         ui->TimeSlider->setValue(currentpos);
+        //ui->TimeSlider->statusTip(currentpos).fromUtf8();
         //}
 
     }
