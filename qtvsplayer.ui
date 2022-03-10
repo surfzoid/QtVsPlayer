@@ -38,7 +38,7 @@
      <x>0</x>
      <y>0</y>
      <width>427</width>
-     <height>27</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichiers">
@@ -66,7 +66,11 @@
    <addaction name="menuAffichage"/>
    <addaction name="menuAide"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+  </widget>
   <action name="actionOuvrir">
    <property name="text">
     <string>Ouvrir</string>

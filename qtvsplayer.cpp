@@ -128,7 +128,14 @@ void QtVsPlayer::DisplayError(unsigned int  ErrMess)
 {
 
     QString QerrMess=ErrorManager::error_codes(ErrMess);
-    statusBar()->showMessage(QerrMess);
+    this->ui->statusbar->showMessage(QerrMess,1000);
+}
+
+void QtVsPlayer::DisplayStatus(QString  StatuTxt)
+{
+
+    this->ui->statusbar->setStatusTip(StatuTxt);
+
 }
 
 void QtVsPlayer::on_actionPlein_ecran_triggered()

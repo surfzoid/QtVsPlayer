@@ -165,9 +165,14 @@ void VideoCtrls::updatelocalprocess()
         timevalue = QString::number(totaltime%60);
         qtotaltime.append(timevalue);
         qtotaltime.append("  ");
-        //qtotaltime.append(ui.lineEdit_1_downfilename->text());
-        this->ui->lineEdit_2_pbprocess->setText(qtotaltime);
+        //this->ui->lineEdit_2_pbprocess->setText(qtotaltime);
+        QtVsPlayer().DisplayStatus(qtotaltime);
 
+        unsigned int currentpos;
+        float pos;
+        pos = PlayM4_GetPlayPos(QtVsPlayer().nPlaym4Interface->m_pblocalportnum);
+        currentpos =(unsigned int)(pos*100);
+        ui->TimeSlider->setValue(currentpos);
         //}
 
     }
