@@ -30,11 +30,8 @@ public:
     FilesListe *filesListe = new FilesListe (this);
     QTabWidget* tableWidget_2_localfilist = filesListe->findChild<QTabWidget*>("tableWidget_2_localfilist");
     void ParseArgs(QStringList args);
-<<<<<<< HEAD
     void DisplayStatus(QString  StatuTxt);
 
-=======
->>>>>>> 98b4d6130297892ba68d2fbc4722f8668b836bec
 private slots:
     void on_actionOuvrir_triggered();
 
