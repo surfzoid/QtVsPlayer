@@ -6,7 +6,7 @@ class ErrorManager
 {
 public:
     ErrorManager();
-   static QString  error_codes (uint32_t errcode) {
+   static QString  error_codes (unsigned int  errcode) {
        QString errtxt;
        switch (errcode) {
        case 0:

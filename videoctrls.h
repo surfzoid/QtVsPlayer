@@ -17,8 +17,11 @@ public:
     explicit VideoCtrls(QWidget *parent = nullptr);
     ~VideoCtrls();
 
+    void InitTimeSlide();
 private:
     Ui::VideoCtrls *ui;
+    //timer for play-process
+    QTimer *m_pbqtimer;
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;
@@ -31,6 +34,10 @@ private slots:
     void on_SeekLessButton_released();
     void on_OneByOneButton_released();
     void on_OneByOneBackButton_released();
+    void updatelocalprocess();
+//public slots:
+
+
 };
 
 #endif // VIDEOCTRLS_H
