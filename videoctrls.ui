@@ -195,9 +195,15 @@
   <widget class="QLineEdit" name="lineEdit_2_pbprocess">
    <property name="geometry">
     <rect>
+<<<<<<< HEAD
      <x>280</x>
      <y>30</y>
      <width>121</width>
+=======
+     <x>290</x>
+     <y>30</y>
+     <width>101</width>
+>>>>>>> 98b4d6130297892ba68d2fbc4722f8668b836bec
      <height>20</height>
     </rect>
    </property>

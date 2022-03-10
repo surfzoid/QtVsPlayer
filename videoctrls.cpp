@@ -95,8 +95,13 @@ void VideoCtrls::on_OneByOneBackButton_released()
     //m_pbqtimer->connect(this,SIGNAL(this), this, SLOT(updatelocalprocess()));
     //m_pbqtimer->start(1000);
 }
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> 98b4d6130297892ba68d2fbc4722f8668b836bec
 /************************************************************************
  *	Function  		:	updatelocalprocess
  *  Description     :  	update play process
@@ -165,6 +170,7 @@ void VideoCtrls::updatelocalprocess()
         timevalue = QString::number(totaltime%60);
         qtotaltime.append(timevalue);
         qtotaltime.append("  ");
+<<<<<<< HEAD
         //this->ui->lineEdit_2_pbprocess->setText(qtotaltime);
         QtVsPlayer().DisplayStatus(qtotaltime);
 
@@ -173,6 +179,11 @@ void VideoCtrls::updatelocalprocess()
         pos = PlayM4_GetPlayPos(QtVsPlayer().nPlaym4Interface->m_pblocalportnum);
         currentpos =(unsigned int)(pos*100);
         ui->TimeSlider->setValue(currentpos);
+=======
+        //qtotaltime.append(ui.lineEdit_1_downfilename->text());
+        this->ui->lineEdit_2_pbprocess->setText(qtotaltime);
+
+>>>>>>> 98b4d6130297892ba68d2fbc4722f8668b836bec
         //}
 
     }
