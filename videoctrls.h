@@ -17,7 +17,10 @@ public:
     explicit VideoCtrls(QWidget *parent = nullptr);
     ~VideoCtrls();
 
+    static int HikNumPort;
     void InitTimeSlide();
+    static bool EndRead;
+    static bool PLast;
 private:
     Ui::VideoCtrls *ui;
     //timer for play-process
@@ -38,6 +41,10 @@ private slots:
 //public slots:
 
 
+    void on_lineEdit_2_pbprocess_textChanged(const QString &arg1);
+    void on_TimeSlider_sliderMoved(int position);
+    void on_TimeSlider_sliderPressed();
+    void on_TimeSlider_sliderReleased();
 };
 
 #endif // VIDEOCTRLS_H

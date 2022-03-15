@@ -7,33 +7,36 @@
 #include "filesliste.h"
 #include "videoctrls.h"
 #include <string>
+#include <QtDebug>
 
-WId  hwnd;
-unsigned int  playm4interface::VideoFs(QStringList fileName,WId HWND)
+PLAYM4_HWND  playm4interface::hwnd;
+int playm4interface::m_pblocalportnum = -1;
+unsigned int  playm4interface::VideoFs(QString fileName)
 {
-    hwnd=HWND;
+    QtVsPlayer().WVideoCtrls->EndRead = false;
     decimaltoOctal(PlayM4_GetCaps());
-    PlayM4_CloseFile(m_pblocalportnum);
-    PlayM4_FreePort(m_pblocalportnum);
+    BOOL bSuccess;
+    bSuccess = playm4interface::Stop();
+    bSuccess = PlayM4_CloseFile(m_pblocalportnum);
+    bSuccess = PlayM4_FreePort(m_pblocalportnum);
 
     printf("%.8x <- PlayM4_GetSdkVersion()\n\r",PlayM4_GetSdkVersion());
 
     initval();
-    m_pblocalfilepath = fileName[0];
+    m_pblocalfilepath = fileName;
     //from qtdemo//////
-    BOOL bSuccess;
-    playm4interface::Stop();
     bSuccess = PlayM4_GetPort((LONG *)&m_pblocalportnum);
+    QtVsPlayer().WVideoCtrls->HikNumPort = m_pblocalportnum;
 
-    qDebug("pyd---File name:%s", m_pblocalfilepath.toUtf8().data());
-    qDebug("pyd---Port:%s",(std::to_string(m_pblocalportnum)).data());
+    qDebug("Debug---File name:%s", m_pblocalfilepath.toUtf8().data());
+    qDebug("Debug---Port:%s",(std::to_string(m_pblocalportnum)).data());
 
     printf("pyd---File name:%s\n\r",m_pblocalfilepath.toUtf8().data());
 
 
     bSuccess= PlayM4_OpenFile(m_pblocalportnum, m_pblocalfilepath.toUtf8().data());
 
-    bSuccess = PlayM4_Play(m_pblocalportnum, (PLAYM4_HWND)(m_pbframe->winId()));
+    bSuccess = PlayM4_Play(m_pblocalportnum, hwnd);
 
     if (bSuccess) {
 
@@ -41,8 +44,6 @@ unsigned int  playm4interface::VideoFs(QStringList fileName,WId HWND)
     }
 
     QtVsPlayer().WVideoCtrls->InitTimeSlide();
-    //return;
-    //qtdemo/////////
 
 
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));
@@ -57,9 +58,9 @@ int playm4interface::RefreshPlay()
 }
 
 
-int playm4interface::SetVideoWin(unsigned int nRegionNum, WId hWnd)
+int playm4interface::SetVideoWin(unsigned int nRegionNum)
 {
-    return PlayM4_SetVideoWindow(m_pblocalportnum,nRegionNum,hWnd);
+    return PlayM4_SetVideoWindow(m_pblocalportnum,nRegionNum,hwnd);
 }
 
 int playm4interface::Pause(unsigned int nPause)//nPause=1 pause, =0 resume
@@ -69,18 +70,20 @@ int playm4interface::Pause(unsigned int nPause)//nPause=1 pause, =0 resume
 
 int playm4interface::Play()
 {
+    //QtVsPlayer().WinIdWorkarround();
     return PlayM4_Play(m_pblocalportnum,hwnd);
 }
 
 int playm4interface::Stop()
 {
+    //QtVsPlayer().WinIdWorkarround();
     return PlayM4_Stop(m_pblocalportnum);
     //return PlayM4_FreePort(m_pblocalportnum);
 }
 
 int playm4interface::Fast()
 {
-    qDebug("pyd---Fastest Port:%s",(std::to_string(playm4interface::m_pblocalportnum)).data());
+    qDebug("Debug---Fastest Port:%s",(std::to_string(playm4interface::m_pblocalportnum)).data());
     return PlayM4_Fast(playm4interface::m_pblocalportnum);
 
 }

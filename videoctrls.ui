@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>403</width>
+    <width>446</width>
     <height>54</height>
    </rect>
   </property>
@@ -65,6 +65,9 @@
    <layout class="QHBoxLayout" name="horizontalLayout_5">
     <item>
      <widget class="QPushButton" name="previousButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -143,6 +146,9 @@
     </item>
     <item>
      <widget class="QPushButton" name="nextButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -193,11 +199,14 @@
    </layout>
   </widget>
   <widget class="QLineEdit" name="lineEdit_2_pbprocess">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>290</x>
      <y>30</y>
-     <width>121</width>
+     <width>151</width>
      <height>20</height>
     </rect>
    </property>

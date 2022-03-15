@@ -10,10 +10,14 @@ int main(int argc, char *argv[])
     QtVsPlayer w;
     a.installEventFilter(&w);
     w.show();
+    while (w.isEnabled() == false) {
+
+    }
     QStringList list;
-    for (int a = 0; a < argc; ++a) {
+    for (int a = 1; a < argc; ++a) {
         list << QString::fromLocal8Bit(argv[a]);
     }
-    w.ParseArgs(list);
+    list.append("/home/eric/Vidéos/Hikvision/");
+    if (list.length() > 0) {w.ParseArgs(list);}
     return a.exec();
 }

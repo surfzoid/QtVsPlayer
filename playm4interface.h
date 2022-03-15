@@ -11,9 +11,10 @@ class playm4interface
 
 
 public:
+        static PLAYM4_HWND  hwnd;
         //playm4interface DisplayError(unsigned int  ErrMess);
-        unsigned int  VideoFs (QStringList fileName,WId HWND);
-        int SetVideoWin(unsigned int nRegionNum, WId hWnd);
+        unsigned int  VideoFs (QString fileName);
+        int SetVideoWin(unsigned int nRegionNum);
         int RefreshPlay();
         int Pause(unsigned int nPause);//nPause=1 pause, =0 resume
         int Play();
@@ -22,7 +23,7 @@ public:
         int Slow();
         int OneByOne();
         int OneByOneBack();
-        void (CALLBACK FileRefDone)(unsigned int nPort,void* nUser);
+        //void (CALLBACK FileRefDone)(unsigned int nPort,void* nUser);
         void decimaltoOctal(int deciNum)
         {
 
@@ -53,7 +54,7 @@ public:
         //play area
         QWidget *m_pbframe;
         //playM4 handle
-        int m_pblocalportnum;
+        static int m_pblocalportnum;
 private:
 
         void initval();

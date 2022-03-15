@@ -9,6 +9,7 @@
 #include "videoctrls.h"
 #include "filesliste.h"
 #include <QFileDialog>
+#include <QtCore>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class QtVsPlayer; }
@@ -22,16 +23,20 @@ public:
     QtVsPlayer(QWidget *parent = nullptr);
     ~QtVsPlayer();
     void KeyPress(QWidget *parent = 0);
-    playm4interface *nPlaym4Interface = new playm4interface ();
+    static playm4interface *nPlaym4Interface;
     void FullScr();
     void HideCtrl();
-    VideoCtrls *WVideoCtrls = new VideoCtrls (this);
-    QSlider * VTimeSlider = WVideoCtrls->findChild<QSlider *>("TimeSlider");
-    FilesListe *filesListe = new FilesListe (this);
-    QTabWidget* tableWidget_2_localfilist = filesListe->findChild<QTabWidget*>("tableWidget_2_localfilist");
+    VideoCtrls *WVideoCtrls;
+    QSlider * VTimeSlider;
+    FilesListe *filesLs;
+    QTabWidget* tableWidget_localfilist;
     void ParseArgs(QStringList args);
     void DisplayStatus(QString  StatuTxt);
     void SetWindowTitle(QString Title);
+    static int LastPlayIdx;
+    void PlayNextFile(bool FromFsList, int idx);
+    void WinIdWorkarround();
+    static QStringList fileNames;
 
 private slots:
     void on_actionOuvrir_triggered();
@@ -52,13 +57,15 @@ private:
     QFileDialog *FsDialog = new QFileDialog();
     QStringList Hist;
     QString Lastpath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
-    QStringList fileNames;
     QString GetmimeType( const QString &filePath );
     void Play (QStringList Files);
     QStringList Scandir( const QString &dir );
+
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
+    //void WinIdChange(QEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 #endif // QTVSPLAYER_H

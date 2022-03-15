@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QDir>
 #include <unistd.h>
+#include <qtvsplayer.h>
 
 
 FilesListe::FilesListe(QWidget *parent) :
@@ -109,6 +110,5 @@ void FilesListe::on_tableWidget_2_localfilist_cellClicked(int row, int column)
     {
         return;
     }
-    //m_pblocalfilepath = ui.tableWidget_2_localfilist->item(row,column)->text();
-    return;
+    QtVsPlayer().PlayNextFile(true,row);
 }
