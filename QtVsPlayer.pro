@@ -49,4 +49,7 @@ TRANSLATIONS += \
 RESOURCES += \
     ressources.qrc
 
+DISTFILES += \
+    README.md
+
 
