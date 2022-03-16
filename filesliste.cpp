@@ -112,3 +112,8 @@ void FilesListe::on_tableWidget_2_localfilist_cellClicked(int row, int column)
     }
     QtVsPlayer().PlayNextFile(true,row);
 }
+
+void FilesListe::on_FilesListe_destroyed()
+{
+
+}

@@ -38,6 +38,7 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     WVideoCtrls->setWindowOpacity(0);
     //QStringList args = QApplication::arguments();
     //ParseArgs(args);
+    this->ui->FsDisplay->setVisible(false);
 }
 
 QtVsPlayer::~QtVsPlayer()
@@ -155,12 +156,21 @@ void QtVsPlayer::Play (QStringList Files)
 
     filesLs->Populate(Files);
     WVideoCtrls->PLast = false;
+    LastPlayIdx = 0 ;
     PlayNextFile(false,0);
 
 }
 
 void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
 {
+    if (fileNames.length() > 0) {
+        DisplayFsName(fileNames[LastPlayIdx]);
+    }
+
+    if (LastPlayIdx < 0 and fileNames.length() > 0) {
+        LastPlayIdx = fileNames.length() - 1;
+    }
+
     WVideoCtrls->InitTimeSlide();
     if (LastPlayIdx > fileNames.length()) {
         WVideoCtrls->PLast = true;
@@ -173,6 +183,7 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
 
         DisplayError(nPlaym4Interface->VideoFs(
                          fileNames[LastPlayIdx]));
+        WVideoCtrls->RestoreSeek();
         LastPlayIdx += 1;
     }
 
@@ -180,6 +191,15 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
         LastPlayIdx += 1;
     }
     //window()->resize(WinSize);
+}
+
+void QtVsPlayer::DisplayFsName(QString Name)
+{
+    this->ui->FsDisplay->setText(Name);
+    this->ui->FsDisplay->setVisible(true);
+    this->ui->FsDisplay->raise();
+    this->ui->statusbar->setToolTip(Name);
+    this->ui->statusbar->showMessage(Name);
 }
 
 void QtVsPlayer::on_actionA_propos_triggered()
@@ -248,6 +268,8 @@ void QtVsPlayer::resizeEvent(QResizeEvent *event)
     WVideoCtrls->move(0,this->height() -
                       WVideoCtrls->height() -
                       this->statusBar()->height());
+
+    this->ui->FsDisplay->setVisible(false);
 }
 
 
@@ -286,6 +308,7 @@ void QtVsPlayer::on_actionListe_de_lecture_toggled(bool checked)
     } else {
         filesLs->hide();
     }
+
 }
 
 void QtVsPlayer::SetWindowTitle(QString Title)
@@ -310,5 +333,26 @@ void QtVsPlayer::WinIdWorkarround()
             nPlaym4Interface->SetVideoWin(0);
             nPlaym4Interface->RefreshPlay();
         }
+    }
+}
+
+void QtVsPlayer::on_actionListe_de_lecture_triggered()
+{
+    filesLs->show();
+}
+
+void QtVsPlayer::on_actionDossier_triggered()
+{
+    QFileInfo dirname = Lastpath;
+
+    QString _IntputFolder = QFileDialog::getExistingDirectory(this,("Select Folder to read"), dirname.absolutePath());
+
+    if (_IntputFolder.isEmpty() == false) {
+        fileNames.clear();
+        fileNames = Scandir(_IntputFolder.toUtf8());
+    }
+
+    if (fileNames.length() > 0) {
+        Play (fileNames);
     }
 }

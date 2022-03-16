@@ -7,5 +7,8 @@
         <file>images/control-stop-square.png</file>
         <file>images/control.png</file>
         <file>images/speaker-volume.png</file>
+        <file>images/control-fast.png</file>
+        <file>images/control-slow.png</file>
+        <file>images/QtVsPlayer.png</file>
     </qresource>
 </RCC>

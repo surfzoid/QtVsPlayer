@@ -49,6 +49,7 @@ RESOURCES += \
     ressources.qrc
 
 DISTFILES += \
+    QtVsPlayer.desktop \
     README.md
 
 

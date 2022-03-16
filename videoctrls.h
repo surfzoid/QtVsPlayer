@@ -5,6 +5,8 @@
 #include <QtGui>
 #include <QWidget>
 
+#define CAPTURE_PICTURE_PATH "./PlayBackPictureDir/"
+
 namespace Ui {
 class VideoCtrls;
 }
@@ -21,6 +23,9 @@ public:
     void InitTimeSlide();
     static bool EndRead;
     static bool PLast;
+    static int seekSpeed;
+    void RestoreSeek();
+
 private:
     Ui::VideoCtrls *ui;
     //timer for play-process
@@ -45,6 +50,9 @@ private slots:
     void on_TimeSlider_sliderMoved(int position);
     void on_TimeSlider_sliderPressed();
     void on_TimeSlider_sliderReleased();
+    void on_nextButton_released();
+    void on_previousButton_released();
+    void on_SnapshotButton_released();
 };
 
 #endif // VIDEOCTRLS_H

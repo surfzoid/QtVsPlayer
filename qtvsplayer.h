@@ -51,6 +51,10 @@ private slots:
 
     void on_actionListe_de_lecture_toggled(bool arg1);
 
+    void on_actionListe_de_lecture_triggered();
+
+    void on_actionDossier_triggered();
+
 private:
     Ui::QtVsPlayer *ui;
 
@@ -60,6 +64,8 @@ private:
     QString GetmimeType( const QString &filePath );
     void Play (QStringList Files);
     QStringList Scandir( const QString &dir );
+
+    void DisplayFsName(QString Name);
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
