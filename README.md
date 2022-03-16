@@ -17,7 +17,9 @@ qmake
 
 make
 
-sudo make install
+make install
+
+cp ./lib/$(uname -p)/* /opt/QtVsPlayer/
 
 # TODO
 Copy lib/$ARCH/* to the same dir of the executable durring make install.
