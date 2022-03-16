@@ -1,10 +1,10 @@
 # QtVsPlayer for Hikvision.
-an read local video files of Hikvision and display blue, green and red vectors.
+Read local video files of Hikvision devices and display blue, green and red vectors.
 
 # Tips
 Double click on the video toggle fullscreen
 Midle click on the control move them
-
+use https://github.com/surfzoid/HikNetExtractor in an shelde task to automaticaly download video.
 
 # install
 git clone https://github.com/surfzoid/QtVsPlayer.git
