@@ -14,11 +14,14 @@ make
 sudo make install
 
 # TODO
-Copy lib/$ARCH/* to the same dir of the executable durring make install
+Copy lib/$ARCH/* to the same dir of the executable durring make install.
+
 check with 
 ldd /opt/QtVsPlayer/QtVsPlayer 
 and
 cd /opt/QtVsPlayer && ldd ./QtVsPlayer
+
+Add sound managment.
 
 
 
