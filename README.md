@@ -1,4 +1,3 @@
-# QtVsPlayer
 # QtVsPlayer for Hikvision.
 an read local video files of Hikvision and display blue, green and red vectors.
 
