@@ -3,7 +3,7 @@
 #include "playm4interface.h"
 #include <QMessageBox>
 #include <QDir>
-#include <unistd.h>
+//#include <unistd.h>
 #include <qtvsplayer.h>
 
 

@@ -5,8 +5,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+qnx: target.path = /tmp/$${TARGET}
+else: unix:!android: target.path = /opt/$${TARGET}
 !isEmpty(target.path): INSTALLS += target
 
 unix {
@@ -31,7 +31,6 @@ SOURCES += \
 HEADERS += \
     errormanager.h \
     filesliste.h \
-    include/DataType.h \
     include/LinuxPlayM4.h \
     include/PlayM4.h \
     playm4interface.h \

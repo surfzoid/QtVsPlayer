@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     for (int a = 1; a < argc; ++a) {
         list << QString::fromLocal8Bit(argv[a]);
     }
-    list.append("/home/eric/Vidéos/Hikvision/");
+    //list.append("/home/eric/Vidéos/Hikvision/");
     if (list.length() > 0) {w.ParseArgs(list);}
     return a.exec();
 }
