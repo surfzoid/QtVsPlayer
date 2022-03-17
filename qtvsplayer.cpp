@@ -163,8 +163,8 @@ void QtVsPlayer::Play (QStringList Files)
 
 void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
 {
-    if (fileNames.length() > 0) {
-        DisplayFsName(fileNames[LastPlayIdx]);
+    if (fileNames.length() < LastPlayIdx) {
+        LastPlayIdx = 0;
     }
 
     if (LastPlayIdx < 0 and fileNames.length() > 0) {
@@ -178,12 +178,17 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
     if (FromFsList) {
         LastPlayIdx = idx;
     }
-    if (LastPlayIdx < fileNames.length()) {
+    if (LastPlayIdx >= 0 and LastPlayIdx < fileNames.length()) {
         // this->ui->frame->setEnabled(0);
 
         DisplayError(nPlaym4Interface->VideoFs(
                          fileNames[LastPlayIdx]));
         WVideoCtrls->RestoreSeek();
+
+        if (fileNames.length() > 0) {
+            DisplayFsName(fileNames[LastPlayIdx]);
+        }
+
         LastPlayIdx += 1;
     }
 

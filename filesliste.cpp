@@ -63,43 +63,61 @@ void FilesListe::clearitems()
 void FilesListe::Populate(QStringList fileNames)
 {
     clearitems();
+    ui->tableWidget_2_localfilist->horizontalHeader()->sortIndicatorOrder();
     foreach (QString fileName, fileNames) {
+
+        QStringList Colom = fileName.split("-");
 
         QFile file(fileName);
         //��ʾ��table����  �ļ���
         QString filepath;
-        filepath =file.fileName();
+        filepath = Colom[4];
         QTableWidgetItem *FilePathItem = new QTableWidgetItem(filepath);
         FilePathItem->setFlags(Qt::ItemIsEnabled);
         //�ļ���С
         QString filesize;
         QFileInfo  filecurr(file.fileName());
-        filesize = QString::number(filecurr.size());
+        filesize = QString::number(filecurr.size() / 1000000);
         QTableWidgetItem *FileSizeItem = new QTableWidgetItem(filesize);
         FileSizeItem->setFlags(Qt::ItemIsEnabled);
         //����
-        QString fileattr("Download");
-        QTableWidgetItem *FileAttrItem = new QTableWidgetItem(fileattr);
-        FileAttrItem->setFlags(Qt::ItemIsEnabled);
+        QString path(Colom[0]);
+        path = path.left(path.length() - 8);
+        QTableWidgetItem *pathItem = new QTableWidgetItem(path);
+        //pathItem->setFlags(Qt::ItemIsEnabled);
 
         //��ʼʱ��
-       /* QTableWidgetItem *FileStartTimeItem = new QTableWidgetItem(starttime());
-        FileStartTimeItem->setFlags(Qt::ItemIsEnabled);
+        QString tt = Colom[1];
+        QString starttime = tt.left(2) + ":" + tt.mid(2,2) + ":" + tt.right(2);
+        QTableWidgetItem *FileStartTimeItem = new QTableWidgetItem(starttime);
+        //FileStartTimeItem->setFlags(Qt::ItemIsEnabled);
 
         //����ʱ��
-        QTableWidgetItem *FileStopTimeItem = new QTableWidgetItem(FilesListe::stoptime);
-        FileStopTimeItem->setFlags(Qt::ItemIsEnabled);*/
+        QString st = Colom[3];
+        QString stoptime = st.left(2) + ":" + st.mid(2,2) + ":" + st.right(2);
+         QTableWidgetItem *FileStopTimeItem = new QTableWidgetItem(stoptime);
+        //FileStopTimeItem->setFlags(Qt::ItemIsEnabled);
 
+        //����ʱ��
+        QString dd = Colom[2];
+        QString Day = dd.left(4) + "/" + dd.mid(4,2) + "/" + dd.right(2);
+
+        QTableWidgetItem *DayItem = new QTableWidgetItem(Day);
+
+        FileStopTimeItem->setFlags(Qt::ItemIsEnabled);
         int row = ui->tableWidget_2_localfilist->rowCount();
         ui->tableWidget_2_localfilist->insertRow(row);
         ui->tableWidget_2_localfilist->setItem(row, 0, FilePathItem);
-        ui->tableWidget_2_localfilist->setItem(row, 1, FileSizeItem);
-        ui->tableWidget_2_localfilist->setItem(row, 2, FileAttrItem);
-        /*ui->tableWidget_2_localfilist->setItem(row, 3, FileStartTimeItem);
-        ui->tableWidget_2_localfilist->setItem(row, 4, FileStopTimeItem);*/
+        ui->tableWidget_2_localfilist->setItem(row, 1, FileStartTimeItem);
+        ui->tableWidget_2_localfilist->setItem(row, 2, FileStopTimeItem);
+        ui->tableWidget_2_localfilist->setItem(row, 3, DayItem);
+        ui->tableWidget_2_localfilist->setItem(row, 4, FileSizeItem);
+        ui->tableWidget_2_localfilist->setItem(row, 5, pathItem);
 
 
     }
+    QHeaderView *header = ui->tableWidget_2_localfilist->horizontalHeader();
+    header->setSectionResizeMode(QHeaderView::ResizeToContents);
     return;
 
 }

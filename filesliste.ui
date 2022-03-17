@@ -18,87 +18,152 @@
     <normaloff>:/images/images/QtVsPlayer.png</normaloff>:/images/images/QtVsPlayer.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTableWidget" name="tableWidget_2_localfilist">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>50</y>
-      <width>801</width>
-      <height>531</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string>file name</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>size</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>type</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>start time</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>end time</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>54</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>start</string>
-    </property>
-   </widget>
-   <widget class="QDateTimeEdit" name="dateTimeEdit_2_start">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>10</y>
-      <width>141</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_11">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>10</y>
-      <width>54</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>end</string>
-    </property>
-   </widget>
-   <widget class="QDateTimeEdit" name="dateTimeEdit_2_stop">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>10</y>
-      <width>151</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QWidget" name="horizontalWidget" native="true">
+        <property name="maximumSize">
+         <size>
+          <width>515</width>
+          <height>48</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="leftMargin">
+          <number>11</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>start</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDateTimeEdit" name="dateTimeEdit_2_start">
+           <property name="showGroupSeparator" stdset="0">
+            <bool>true</bool>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>end</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDateTimeEdit" name="dateTimeEdit_2_stop">
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="tableWidget_2_localfilist">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <attribute name="horizontalHeaderCascadingSectionResizes">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>file name</string>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>start time</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>end time</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Day</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>size(M)</string>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>directory</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources>
