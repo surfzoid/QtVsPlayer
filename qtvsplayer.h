@@ -23,13 +23,13 @@ public:
     QtVsPlayer(QWidget *parent = nullptr);
     ~QtVsPlayer();
     void KeyPress(QWidget *parent = 0);
-    static playm4interface *nPlaym4Interface;
+    playm4interface *nPlaym4Interface = new playm4interface ();
     void FullScr();
     void HideCtrl();
     VideoCtrls *WVideoCtrls;
-    QSlider * VTimeSlider;
+    //QSlider * VTimeSlider;
     FilesListe *filesLs;
-    QTabWidget* tableWidget_localfilist;
+    //QTabWidget* tableWidget_localfilist;
     void ParseArgs(QStringList args);
     void DisplayStatus(QString  StatuTxt);
     void SetWindowTitle(QString Title);
@@ -37,6 +37,7 @@ public:
     void PlayNextFile(bool FromFsList, int idx);
     void WinIdWorkarround();
     static QStringList fileNames;
+    void InitPort(int port);
 
 private slots:
     void on_actionOuvrir_triggered();

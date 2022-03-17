@@ -16,11 +16,12 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
     ui->setupUi(this);
 
     //set init value
-    m_pbqtimer = NULL ;
+    //m_pbqtimer = NULL ;
     m_pbqtimer = new QTimer(this);
     m_pbqtimer->setTimerType(Qt::PreciseTimer);
-    connect(m_pbqtimer, &QTimer::timeout, this, &VideoCtrls::updatelocalprocess);
+    //connect(m_pbqtimer, &QTimer::timeout, this, &VideoCtrls::updatelocalprocess);
     m_pbqtimer->start( 1000 );
+    connect(m_pbqtimer, SIGNAL(timeout()), this, SLOT(updatelocalprocess()));
     this->ui->lineEdit_2_pbprocess->setReadOnly(true);
 
     this->ui->CurSpeed->setText("0X");
@@ -28,6 +29,14 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
 
 VideoCtrls::~VideoCtrls()
 {
+    if (m_pbqtimer != NULL)
+    {
+        delete m_pbqtimer;
+        m_pbqtimer = NULL ;
+    }
+
+    //on_stopButton_released();
+
     delete ui;
 }
 
@@ -80,6 +89,7 @@ void VideoCtrls::on_stopButton_released()
     this->ui->CurSpeed->setText("0X");
     this->ui->TimeSlider->setValue(0);
     QtVsPlayer().nPlaym4Interface->Stop();
+
 }
 
 void VideoCtrls::on_SeekMoreButton_released()
@@ -151,59 +161,6 @@ void VideoCtrls::updatelocalprocess()
         if (HikNumPort >= 0)
         {
             try {
-                unsigned int totaltime;
-                //totaltime = PlayM4_GetPlayedTime(HikNumPort);
-                //CurTime = totaltime;
-                QString qtotaltime;
-                QString timevalue;
-                if (totaltime/3600 <= 9)
-                {
-                    qtotaltime.append("0");
-                }
-                timevalue = QString::number(totaltime/3600);
-                qtotaltime.append(timevalue);
-                qtotaltime.append(":");
-                if (((totaltime%3600)/60) <= 9)
-                {
-                    qtotaltime.append("0");
-                }
-                timevalue = QString::number((totaltime%3600)/60);
-                qtotaltime.append(timevalue);
-                qtotaltime.append(":");
-                if ((totaltime%60) <= 9)
-                {
-                    qtotaltime.append("0");
-                }
-                timevalue = QString::number(totaltime%60);
-                qtotaltime.append(timevalue);
-
-                //unsigned int timeback = totaltime;
-                qtotaltime.append("/");
-                //totaltime =PlayM4_GetFileTime(HikNumPort);
-                //EndTime = totaltime;
-                if (totaltime/3600 <= 9)
-                {
-                    qtotaltime.append("0");
-                }
-                timevalue = QString::number(totaltime/3600);
-                qtotaltime.append(timevalue);
-                qtotaltime.append(":");
-                if (((totaltime%3600)/60) <= 9)
-                {
-                    qtotaltime.append("0");
-                }
-                timevalue = QString::number((totaltime%3600)/60);
-                qtotaltime.append(timevalue);
-                qtotaltime.append(":");
-                if ((totaltime%60) <= 9)
-                {
-                    qtotaltime.append("0");
-                }
-                timevalue = QString::number(totaltime%60);
-                qtotaltime.append(timevalue);
-                //qtotaltime.append("  ");
-                this->ui->lineEdit_2_pbprocess->setText(qtotaltime);
-                //QtVsPlayer().DisplayStatus(qtotaltime);
 
                 unsigned int currentpos;
                 float pos;
@@ -213,7 +170,13 @@ void VideoCtrls::updatelocalprocess()
                 //ui->TimeSlider->statusTip(currentpos).fromUtf8();
                 if (currentpos >= 100) {
 
+                    PlayM4_CloseFile(QtVsPlayer().nPlaym4Interface->m_pblocalportnum);
+                    QThreadPool::globalInstance()->releaseThread();
+                    QThreadPool::globalInstance()->clear();
+                    printf("pyd---activeThreadCount:%d\n\r",QThreadPool::globalInstance()->activeThreadCount());
+
                     QtVsPlayer().PlayNextFile(false,0);
+
                     if (PLast == true) {
                         EndRead = true;
                         on_stopButton_released();
@@ -237,11 +200,9 @@ void VideoCtrls::on_lineEdit_2_pbprocess_textChanged(const QString &arg1)
 
 void VideoCtrls::on_TimeSlider_sliderMoved(int position)
 {
-    /*PlayM4_SetPlayPos(HikNumPort,(float)(position/100));
-    PlayM4_RefreshPlay(HikNumPort);*/
 
-    int value =ui->TimeSlider->value();
-    PlayM4_SetPlayPos(HikNumPort, ((float)value)*0.01);
+    //int value =ui->TimeSlider->value();
+    PlayM4_SetPlayPos(HikNumPort, ((float)position)*0.01);
     return;
 }
 
@@ -324,6 +285,6 @@ void VideoCtrls::on_SnapshotButton_released()
     picturepathname.append(CAPTURE_PICTURE_PATH);
 
     QMessageBox::information(this,"Capture Picture succes ",
-           picturepathname.toUtf8().data());
+                             picturepathname.toUtf8().data());
 
 }

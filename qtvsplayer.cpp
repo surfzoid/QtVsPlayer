@@ -13,11 +13,12 @@
 
 QStringList QtVsPlayer::fileNames;
 int QtVsPlayer::LastPlayIdx = 0;
-
-playm4interface *QtVsPlayer::nPlaym4Interface = new playm4interface ();
 /*
+playm4interface *QtVsPlayer::nPlaym4Interface = new playm4interface ();
+
 VideoCtrls *QtVsPlayer::WVideoCtrls;
 QSlider * QtVsPlayer::VTimeSlider;
+
 FilesListe *QtVsPlayer::filesLs;
 QTabWidget* QtVsPlayer::tableWidget_localfilist;
 */
@@ -30,15 +31,17 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 
 
     QtVsPlayer::WVideoCtrls = new VideoCtrls (this);
-    QtVsPlayer::VTimeSlider = WVideoCtrls->findChild<QSlider *>("TimeSlider");
+
+    //QtVsPlayer::VTimeSlider = WVideoCtrls->findChild<QSlider *>("TimeSlider");
     QtVsPlayer::filesLs = new FilesListe (this);
-    QtVsPlayer::tableWidget_localfilist = filesLs->findChild<QTabWidget*>("tableWidget_2_localfilist");
+    //QtVsPlayer::tableWidget_localfilist = filesLs->findChild<QTabWidget*>("tableWidget_2_localfilist");
+
 
     qApp->installEventFilter(this);
     WVideoCtrls->setWindowOpacity(0);
     //QStringList args = QApplication::arguments();
     //ParseArgs(args);
-    this->ui->FsDisplay->setVisible(false);
+    //this->ui->FsDisplay->setVisible(false);
 }
 
 QtVsPlayer::~QtVsPlayer()
@@ -52,6 +55,7 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
     //const QObjectList& list = children(); // or centralwidget->children();
     if(event->type() == QEvent::WinIdChange)
     {
+        printf("pyd---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
         if(obj->objectName() == "centralwidget")
         {
             qDebug() << "Debug---QEvent::WinIdChange";
@@ -93,6 +97,7 @@ void QtVsPlayer::ParseArgs(QStringList args)
         nPlaym4Interface->SetVideoWin(0);
         nPlaym4Interface->RefreshPlay();
     }
+    nPlaym4Interface->SetPort();
 }
 
 
@@ -146,6 +151,7 @@ void QtVsPlayer::on_actionOuvrir_triggered()
                                            tr("video Files (*.mp4 *.avi *.mkv)"));
     if (fileNames.length() > 0) {
 
+        nPlaym4Interface->SetPort();
         Lastpath = fileNames[0].toUtf8();
         Play (fileNames);
     }
@@ -200,9 +206,9 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
 
 void QtVsPlayer::DisplayFsName(QString Name)
 {
-    this->ui->FsDisplay->setText(Name);
+    /*this->ui->FsDisplay->setText(Name);
     this->ui->FsDisplay->setVisible(true);
-    this->ui->FsDisplay->raise();
+    this->ui->FsDisplay->raise();*/
     this->ui->statusbar->setToolTip(Name);
     this->ui->statusbar->showMessage(Name);
 }
@@ -274,7 +280,7 @@ void QtVsPlayer::resizeEvent(QResizeEvent *event)
                       WVideoCtrls->height() -
                       this->statusBar()->height());
 
-    this->ui->FsDisplay->setVisible(false);
+    //this->ui->FsDisplay->setVisible(false);
 }
 
 
@@ -358,6 +364,12 @@ void QtVsPlayer::on_actionDossier_triggered()
     }
 
     if (fileNames.length() > 0) {
+        nPlaym4Interface->SetPort();
         Play (fileNames);
     }
+}
+
+void QtVsPlayer::InitPort(int port)
+{
+    WVideoCtrls->HikNumPort = port;
 }

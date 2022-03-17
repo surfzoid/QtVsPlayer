@@ -2,14 +2,15 @@
 #define __LINUX_PLAYM4_H__
 
 #ifdef __cplusplus
-    extern "C"
-    {
+	extern "C" 
+	{
 #endif
 
 typedef unsigned int PLAYM4_HWND;
 typedef void * PLAYM4_HDC;
 
-#define PLAYM4_API
+#define PLAYM4_API 
+
 #define  BOOL  int
 typedef  unsigned int       DWORD;
 typedef  unsigned short     WORD;
@@ -50,13 +51,13 @@ typedef  signed long long   INT64;
 
 //Timer type
 #define TIMER_1 1 //Only 16 timers for every process.Default TIMER;
-#define TIMER_2 2 //Not limit;But the precision less than TIMER_1;
+#define TIMER_2 2 //Not limit;But the precision less than TIMER_1; 
 
 //BUFFER AND DATA TYPE
-#define BUF_VIDEO_SRC               (1) //mixed input,total src buffer size;splited input,video src buffer size
+#define BUF_VIDEO_SRC               (1) //mixed input,total src buffer size;splited input,video src buffer size 
 #define BUF_AUDIO_SRC               (2) //mixed input,not defined;splited input,audio src buffer size
 #define BUF_VIDEO_RENDER            (3) //video render node count or node cout for decoded data
-#define BUF_AUDIO_RENDER            (4) //audio render node count
+#define BUF_AUDIO_RENDER            (4) //audio render node count 
 #define BUF_VIDEO_DECODED           (5) //video decoded node count to render
 #define BUF_AUDIO_DECODED           (6) //audio decoded node count to render
 
@@ -73,13 +74,13 @@ typedef  signed long long   INT64;
 //#define  PLAYM4_CREATE_DDRAW_ERROR		9	//Create DirectDraw object failed.
 //#define  PLAYM4_CREATE_OFFSCREEN_ERROR 10	//failed when creating off-screen surface.
 #define  PLAYM4_BUF_OVER			   11	//buffer is overflow
-#define  PLAYM4_CREATE_SOUND_ERROR	   12	//failed when creating audio device.
+#define  PLAYM4_CREATE_SOUND_ERROR	   12	//failed when creating audio device.	
 #define	 PLAYM4_SET_VOLUME_ERROR	   13	//Set volume failed
 #define  PLAYM4_SUPPORT_FILE_ONLY	   14	//The function only support play file.
 #define  PLAYM4_SUPPORT_STREAM_ONLY	   15	//The function only support play stream.
 #define  PLAYM4_SYS_NOT_SUPPORT		   16	//System not support.
 #define  PLAYM4_FILEHEADER_UNKNOWN     17	//No file header.
-#define  PLAYM4_VERSION_INCORRECT	   18	//The version of decoder and encoder is not adapted.
+#define  PLAYM4_VERSION_INCORRECT	   18	//The version of decoder and encoder is not adapted.  
 #define  PLAYM4_INIT_DECODER_ERROR     19	//Initialize decoder failed.
 #define  PLAYM4_CHECK_FILE_ERROR	   20	//The file data is unknown.
 #define  PLAYM4_INIT_TIMER_ERROR	   21	//Initialize multimedia clock failed.
@@ -96,7 +97,7 @@ typedef  signed long long   INT64;
 #define  PLAYM4_INVALID_PORT		   32	//add by cj 20100913
 #define  PLAYM4_NOT_FIND               33	//add by cj 20110428
 #define  PLAYM4_NEED_LARGER_BUFFER     34  //add by pzj 20130528
-#define  PLAYM4_FAIL_UNKNOWN		   99   //Fail, but the reason is unknown;
+#define  PLAYM4_FAIL_UNKNOWN		   99   //Fail, but the reason is unknown;	
 
 //ÓãÑÛ¹¦ÄÜ´íÎóÂë
 #define PLAYM4_FEC_ERR_ENABLEFAIL				100 // ÓãÑÛÄ£¿é¼ÓÔØÊ§°Ü
@@ -152,20 +153,20 @@ typedef  signed long long   INT64;
 #define T_RGB32		7
 
 //capability
-#define SUPPORT_DDRAW		1
-#define SUPPORT_BLT         2
-#define SUPPORT_BLTFOURCC   4
-#define SUPPORT_BLTSHRINKX  8
+#define SUPPORT_DDRAW		1 
+#define SUPPORT_BLT         2 
+#define SUPPORT_BLTFOURCC   4 
+#define SUPPORT_BLTSHRINKX  8 
 #define SUPPORT_BLTSHRINKY  16
 #define SUPPORT_BLTSTRETCHX 32
 #define SUPPORT_BLTSTRETCHY 64
 #define SUPPORT_SSE         128
-#define SUPPORT_MMX			256
+#define SUPPORT_MMX			256 
 
 // ÒÔÏÂºê¶¨ÒåÓÃÓÚHIK_MEDIAINFO½á¹¹
 #define FOURCC_HKMI			0x484B4D49	// "HKMI" HIK_MEDIAINFO½á¹¹±ê¼Ç
-// ÏµÍ³·â×°¸ñÊ½
-#define SYSTEM_NULL			0x0				// Ã»ÓÐÏµÍ³²ã£¬´¿ÒôÆµÁ÷»òÊÓÆµÁ÷
+// ÏµÍ³·â×°¸ñÊ½	
+#define SYSTEM_NULL			0x0				// Ã»ÓÐÏµÍ³²ã£¬´¿ÒôÆµÁ÷»òÊÓÆµÁ÷	
 #define SYSTEM_HIK          0x1				// º£¿µÎÄ¼þ²ã
 #define SYSTEM_MPEG2_PS     0x2				// PS·â×°
 #define SYSTEM_MPEG2_TS     0x3				// TS·â×°
@@ -182,7 +183,7 @@ typedef  signed long long   INT64;
 
 // ÒôÆµ±àÂëÀàÐÍ
 #define AUDIO_NULL          0x0000 // Ã»ÓÐÒôÆµ
-#define AUDIO_ADPCM         0x1000 // ADPCM
+#define AUDIO_ADPCM         0x1000 // ADPCM 
 #define AUDIO_MPEG          0x2000 // MPEG ÏµÁÐÒôÆµ£¬½âÂëÆ÷ÄÜ×ÔÊÊÓ¦¸÷ÖÖMPEGÒôÆµ
 #define AUDIO_AAC           0x2001 // AAC
 #define AUDIO_RAW_DATA8     0x7000 //²ÉÑùÂÊÎª8kµÄÔ­Ê¼Êý¾Ý
@@ -200,7 +201,7 @@ typedef  signed long long   INT64;
 #define AUDIO_G729          0x7290
 #define AUDIO_AMR_NB		0x3000
 
-#define SYNCDATA_VEH	    1 //Í¬²½Êý¾Ý:³µÔØÐÅÏ¢
+#define SYNCDATA_VEH	    1 //Í¬²½Êý¾Ý:³µÔØÐÅÏ¢	
 #define SYNCDATA_IVS	    2 //Í¬²½Êý¾Ý:ÖÇÄÜÐÅÏ¢
 
 //motion flow type
@@ -249,7 +250,7 @@ typedef struct tagHKRect
 //Frame position
 typedef struct
 {
-    long long nFilePos;
+	long long nFilePos;
     int nFrameNum;
     int nFrameTime;
     int nErrorFrameNum;
@@ -269,7 +270,7 @@ typedef struct
     unsigned int dwFrameNum;
 }FRAME_INFO;
 
-//Frame
+//Frame 
 typedef struct
 {
     char *pDataBuf;
@@ -289,7 +290,7 @@ typedef struct
     int  nReserved;
 }WATERMARK_INFO;
 
-typedef struct SYNCDATA_INFO
+typedef struct SYNCDATA_INFO 
 {
     unsigned int dwDataType;        //ºÍÂëÁ÷Êý¾ÝÍ¬²½µÄ¸½ÊôÐÅÏ¢ÀàÐÍ£¬Ä¿Ç°ÓÐ£ºÖÇÄÜÐÅÏ¢£¬³µÔØÐÅÏ¢
     unsigned int dwDataLen;         //¸½ÊôÐÅÏ¢Êý¾Ý³¤¶È
@@ -302,22 +303,22 @@ typedef struct _HIK_MEDIAINFO_				// modified by gb 080425
 {
     unsigned int    media_fourcc;			// "HKMI": 0x484B4D49 Hikvision Media Information
     unsigned short  media_version;			// °æ±¾ºÅ£ºÖ¸±¾ÐÅÏ¢½á¹¹°æ±¾ºÅ£¬Ä¿Ç°Îª0x0101,¼´1.01°æ±¾£¬01£ºÖ÷°æ±¾ºÅ£»01£º×Ó°æ±¾ºÅ¡£
-    unsigned short  device_id;				// Éè±¸ID£¬±ãÓÚ¸ú×Ù/·ÖÎö
+    unsigned short  device_id;				// Éè±¸ID£¬±ãÓÚ¸ú×Ù/·ÖÎö			
 
     unsigned short  system_format;          // ÏµÍ³·â×°²ã
     unsigned short  video_format;           // ÊÓÆµ±àÂëÀàÐÍ
 
     unsigned short  audio_format;           // ÒôÆµ±àÂëÀàÐÍ
-    unsigned char   audio_channels;         // Í¨µÀÊý
+    unsigned char   audio_channels;         // Í¨µÀÊý  
     unsigned char   audio_bits_per_sample;  // ÑùÎ»ÂÊ
-    unsigned int    audio_samplesrate;      // ²ÉÑùÂÊ
+    unsigned int    audio_samplesrate;      // ²ÉÑùÂÊ 
     unsigned int    audio_bitrate;          // Ñ¹ËõÒôÆµÂëÂÊ,µ¥Î»£ºbit
 
     unsigned int    reserved[4];            // ±£Áô
 }HIK_MEDIAINFO;
 #endif
 
-typedef struct
+typedef struct  
 {
     int nPort;
     char* pBuf;
@@ -343,7 +344,7 @@ typedef struct
     void* nUser;
 }DISPLAY_INFOEX;
 
-typedef struct PLAYM4_SYSTEM_TIME //¾ø¶ÔÊ±¼ä
+typedef struct PLAYM4_SYSTEM_TIME //¾ø¶ÔÊ±¼ä 
 {
     unsigned int dwYear; //Äê
     unsigned int dwMon;  //ÔÂ
@@ -378,7 +379,7 @@ typedef struct{
 
 // Ë½ÓÐÐÅÏ¢Ä£¿éÀàÐÍ
 typedef enum _PLAYM4_PRIDATA_RENDER
-{
+{	
     PLAYM4_RENDER_ANA_INTEL_DATA   = 0x00000001, //ÖÇÄÜ·ÖÎö
     PLAYM4_RENDER_MD               = 0x00000002, //ÒÆ¶¯Õì²â
     PLAYM4_RENDER_ADD_POS          = 0x00000004, //POSÐÅÏ¢ºóµþ¼Ó
@@ -576,7 +577,7 @@ typedef struct tagCycleParam
 typedef struct tagPTZParam
 {
     float fPTZPositionX;		// PTZ ÏÔÊ¾µÄÖÐÐÄÎ»ÖÃ X×ø±ê
-    float fPTZPositionY;		// PTZ ÏÔÊ¾µÄÖÐÐÄÎ»ÖÃ Y×ø±ê
+    float fPTZPositionY;		// PTZ ÏÔÊ¾µÄÖÐÐÄÎ»ÖÃ Y×ø±ê	
 
 }PTZPARAM;
 
@@ -627,7 +628,7 @@ typedef enum tagFECShowMode
 #define    FEC_JPEG   0  // JPEG×¥Í¼
 #define    FEC_BMP    1  // BMP ×¥Í¼
 
-typedef void (__stdcall * FISHEYE_CallBack )(void* pUser, unsigned int nPort, unsigned int nCBType, void * hDC, unsigned int nWidth, unsigned int nHeight);
+typedef void (__stdcall * FISHEYE_CallBack )(void* pUser, unsigned int nPort, unsigned int nCBType, void * hDC, unsigned int nWidth, unsigned int nHeight); 
 
 #endif
 
@@ -639,7 +640,7 @@ PLAYM4_API int __stdcall PlayM4_FEC_Enable(int nPort);
 // ¹Ø±ÕÓãÑÛÄ£¿é
 PLAYM4_API int __stdcall PlayM4_FEC_Disable(int nPort);
 
-// »ñÈ¡ÓãÑÛ½ÃÕý´¦Àí×Ó¶Ë¿Ú [1~31]
+// »ñÈ¡ÓãÑÛ½ÃÕý´¦Àí×Ó¶Ë¿Ú [1~31] 
 PLAYM4_API int  __stdcall PlayM4_FEC_GetPort(int nPort , unsigned int* nSubPort , FECPLACETYPE emPlaceType , FECCORRECTTYPE emCorrectType);
 
 // É¾³ýÓãÑÛ½ÃÕý´¦Àí×Ó¶Ë¿Ú
@@ -747,7 +748,7 @@ PLAYM4_API int __stdcall PlayM4_VIE_GetParaConfig(int nPort, PLAYM4_VIE_PARACONF
 #define PLAYM4_PRIVT_DATA     4   //Ë½ÓÐÁ÷Êý¾Ý
 
 //Ô¤Â¼ÏñÊý¾ÝÐÅÏ¢--Unsupported Interface ¹¦ÄÜ²»Ö§³Ö////////////////////////
-typedef struct
+typedef struct  
 {
     long nType;                     // Êý¾ÝÀàÐÍ£¬ÈçÎÄ¼þÍ·£¬ÊÓÆµ£¬ÒôÆµ£¬Ë½ÓÐÊý¾ÝµÈ
     long nStamp;                    // Ê±¼ä´Á
@@ -808,7 +809,7 @@ PLAYM4_API int __stdcall PlayM4_WndResolutionChange(int nPort);//new add
 int  PlayM4_RigisterDrawFun(int nPort,void (CALLBACK* DrawFun)(int nPort,PLAYM4_HDC hDc,void* nUser),void* nUser);
 int  PlayM4_SetDecCallBack(int nPort,void (CALLBACK* DecCBFun)(int nPort,char* pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2));
 int  PlayM4_SetDecCallBackEx(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2), char* pDest, int nDestSize);
-int  PlayM4_SetVideoWindow(int nPort, unsigned int nRegionNum, PLAYM4_HWND hWnd);
+int  PlayM4_SetVideoWindow(int nPort, unsigned int nRegionNum, PLAYM4_HWND hWnd); 
 int  PlayM4_SetColor(int nPort, unsigned int nRegionNum, int nBrightness, int nContrast, int nSaturation, int nHue);
 int  PlayM4_GetColor(int nPort, unsigned int nRegionNum, int* pBrightness, int* pContrast, int* pSaturation, int* pHue);
 int  PlayM4_GetFileTimeEx(int nPort, unsigned int* pStart, unsigned int* pStop, unsigned int* pRev);

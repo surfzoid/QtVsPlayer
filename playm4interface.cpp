@@ -11,26 +11,18 @@
 
 PLAYM4_HWND  playm4interface::hwnd;
 int playm4interface::m_pblocalportnum = -1;
+QString playm4interface::m_pblocalfilepath;
+
 unsigned int  playm4interface::VideoFs(QString fileName)
 {
-    QtVsPlayer().WVideoCtrls->EndRead = false;
-    decimaltoOctal(PlayM4_GetCaps());
+    //QtVsPlayer().WVideoCtrls->EndRead = false;
+    VideoCtrls().EndRead = false;
     BOOL bSuccess;
-    bSuccess = playm4interface::Stop();
-    bSuccess = PlayM4_CloseFile(m_pblocalportnum);
-    bSuccess = PlayM4_FreePort(m_pblocalportnum);
 
-    printf("%.8x <- PlayM4_GetSdkVersion()\n\r",PlayM4_GetSdkVersion());
-
-    initval();
+    //initval();
     m_pblocalfilepath = fileName;
-    //from qtdemo//////
-    bSuccess = PlayM4_GetPort((LONG *)&m_pblocalportnum);
-    QtVsPlayer().WVideoCtrls->HikNumPort = m_pblocalportnum;
 
     qDebug("Debug---File name:%s", m_pblocalfilepath.toUtf8().data());
-    qDebug("Debug---Port:%s",(std::to_string(m_pblocalportnum)).data());
-
     printf("pyd---File name:%s\n\r",m_pblocalfilepath.toUtf8().data());
 
 
@@ -50,6 +42,28 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     return PlayM4_GetLastError(m_pblocalportnum);
 }
 
+void playm4interface::SetPort()
+{
+
+    BOOL bSuccess;
+    //from qtdemo//////
+    printf("%.8x <- PlayM4_GetSdkVersion()\n\r",PlayM4_GetSdkVersion());
+
+    decimaltoOctal(PlayM4_GetCaps());
+
+    bSuccess = PlayM4_GetPort((LONG *)&m_pblocalportnum);
+    qDebug("Debug---Port:%s",(std::to_string(m_pblocalportnum)).data());
+
+    QtVsPlayer().InitPort(m_pblocalportnum);
+}
+
+void playm4interface::FreePort()
+{
+    BOOL bSuccess;
+    bSuccess = Stop();
+    bSuccess = PlayM4_CloseFile(m_pblocalportnum);
+    bSuccess = PlayM4_FreePort(m_pblocalportnum);
+}
 
 //int m_pblocalportnum=0;
 int playm4interface::RefreshPlay()
@@ -100,9 +114,11 @@ int playm4interface::OneByOne()
 
 int playm4interface::OneByOneBack()
 {
-    return PlayM4_OneByOneBack(m_pblocalportnum);
+    return PlayM4_ReversePlay(m_pblocalportnum);
+    //return PlayM4_OneByOneBack(m_pblocalportnum);
 }
 
+/*
 void playm4interface::initval()
 {
 
@@ -121,5 +137,5 @@ void playm4interface::initval()
     m_pbhandle = -1;
 
 }
-
+*/
 
