@@ -1,9 +1,8 @@
 #include "playm4interface.h"
-#include"include/PlayM4.h"
 #include "errormanager.h"
 #include "qtvsplayer.h"
 #include "ui_qtvsplayer.h"
-#include <unistd.h>
+#include <include/PlayM4.h>
 #include "filesliste.h"
 #include "videoctrls.h"
 #include <string>
@@ -26,6 +25,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     printf("pyd---File name:%s\n\r",m_pblocalfilepath.toUtf8().data());
 
 
+    bSuccess = PlayM4_CloseFile(m_pblocalportnum);
     bSuccess= PlayM4_OpenFile(m_pblocalportnum, m_pblocalfilepath.toUtf8().data());
 
     bSuccess = PlayM4_Play(m_pblocalportnum, hwnd);
@@ -44,7 +44,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
 void playm4interface::SetPort()
 {
-
+    FreePort();
     BOOL bSuccess;
     //from qtdemo//////
     printf("%.8x <- PlayM4_GetSdkVersion()\n\r",PlayM4_GetSdkVersion());
@@ -114,6 +114,9 @@ int playm4interface::OneByOne()
 
 int playm4interface::OneByOneBack()
 {
+
+    PlayM4_WndResolutionChange(m_pblocalportnum);
+
     return PlayM4_ReversePlay(m_pblocalportnum);
     //return PlayM4_OneByOneBack(m_pblocalportnum);
 }

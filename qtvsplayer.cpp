@@ -46,6 +46,9 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 
 QtVsPlayer::~QtVsPlayer()
 {
+    /*nPlaym4Interface->Stop();
+    nPlaym4Interface->FreePort();
+    nPlaym4Interface->~playm4interface();*/
     delete ui;
 }
 
@@ -87,6 +90,7 @@ void QtVsPlayer::ParseArgs(QStringList args)
             fileNames.append(args[0].toUtf8());
             Play (fileNames);
         }
+        fi.~QFileInfo();
     }
 
     if (args.length() > 1) {
@@ -137,6 +141,7 @@ QStringList QtVsPlayer::Scandir( const QString &dir2scan )
             }
         }
         qDebug("Debug---Found :%d files",list.length());
+
     }
     return fileNames;
 }
@@ -145,6 +150,8 @@ void QtVsPlayer::on_actionOuvrir_triggered()
 {
     HideCtrl();
 
+
+    QFileDialog *FsDialog = new QFileDialog();
     Hist = FsDialog->history();
     fileNames = FsDialog->getOpenFileNames(this,
                                            tr("Open video"), Lastpath,
@@ -354,9 +361,11 @@ void QtVsPlayer::on_actionListe_de_lecture_triggered()
 
 void QtVsPlayer::on_actionDossier_triggered()
 {
-    QFileInfo dirname = Lastpath;
+    QFileDialog *FsDialog = new QFileDialog();
 
-    QString _IntputFolder = QFileDialog::getExistingDirectory(this,("Select Folder to read"), dirname.absolutePath());
+    QString _IntputFolder = FsDialog->getExistingDirectory(this,
+                                     ("Select Folder to read"), Lastpath);
+    Hist = FsDialog->history();
 
     if (_IntputFolder.isEmpty() == false) {
         fileNames.clear();
@@ -366,6 +375,7 @@ void QtVsPlayer::on_actionDossier_triggered()
     if (fileNames.length() > 0) {
         nPlaym4Interface->SetPort();
         Play (fileNames);
+        Lastpath = _IntputFolder;
     }
 }
 

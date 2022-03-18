@@ -59,7 +59,6 @@ private slots:
 private:
     Ui::QtVsPlayer *ui;
 
-    QFileDialog *FsDialog = new QFileDialog();
     QStringList Hist;
     QString Lastpath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
     QString GetmimeType( const QString &filePath );
@@ -67,6 +66,7 @@ private:
     QStringList Scandir( const QString &dir );
 
     void DisplayFsName(QString Name);
+
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

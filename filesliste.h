@@ -2,7 +2,7 @@
 #define FILESLISTE_H
 
 #include <QMainWindow>
-#include <QFrame>
+#include <QFileInfo>
 
 namespace Ui {
 class FilesListe;

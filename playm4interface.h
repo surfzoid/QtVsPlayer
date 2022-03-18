@@ -1,10 +1,8 @@
 #ifndef PLAYM4INTERFACE_H
 #define PLAYM4INTERFACE_H
 
-#include"include/PlayM4.h"
+#include <include/PlayM4.h>
 #include <QString>
-#include <QWidget>
-#include <QFrame>
 
 namespace Ui {
 class playm4interface;
@@ -56,7 +54,7 @@ public:
     //for play local file
     static QString m_pblocalfilepath;
     //play area
-    QWidget *m_pbframe;
+    //QWidget *m_pbframe;
     //playM4 handle
     static int m_pblocalportnum;
     static void SetPort();

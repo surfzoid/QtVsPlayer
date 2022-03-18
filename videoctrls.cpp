@@ -209,14 +209,14 @@ void VideoCtrls::on_TimeSlider_sliderMoved(int position)
 void VideoCtrls::on_TimeSlider_sliderPressed()
 {
     //EndRead = true;
-    on_pauseButton_released();
+    //on_pauseButton_released();
 
 }
 
 void VideoCtrls::on_TimeSlider_sliderReleased()
 {
     //EndRead = false;
-    on_pauseButton_released();
+   // on_pauseButton_released();
 
 }
 
