@@ -14,7 +14,6 @@ class playm4interface
 
 public:
     static PLAYM4_HWND  hwnd;
-    //playm4interface DisplayError(unsigned int  ErrMess);
     static unsigned int  VideoFs (QString fileName);
     int SetVideoWin(unsigned int nRegionNum);
     int RefreshPlay();
@@ -25,7 +24,6 @@ public:
     int Slow();
     int OneByOne();
     int OneByOneBack();
-    //void (CALLBACK FileRefDone)(unsigned int nPort,void* nUser);
     static void decimaltoOctal(int deciNum)
     {
 
@@ -53,35 +51,11 @@ public:
     int * channelnum = 0;
     //for play local file
     static QString m_pblocalfilepath;
-    //play area
-    //QWidget *m_pbframe;
-    //playM4 handle
     static int m_pblocalportnum;
     static void SetPort();
     static void FreePort();
 private:
 
-    //void initval();
-    //current user id
-    int* m_pbUserID;
-    //current valid channel
-    int* m_pbCurrChannel;
-    //qtablewidget page index
-    int m_pbpageindex;
-    //page index backup
-    int m_pbcurrentpageindex;
-    //for play
-    //play handle
-    int m_pbhandle;
-    //file type for search filelist
-    unsigned int m_pbfiletype;
-    //file attr for search filelist
-    unsigned int m_pbfileattr;
-    //doawnload handle
-    int m_pbdownloadhandle;
-    //0 normal 1 alarm 2 download
-    int m_pblocaltype;
-    //tmp variants in 0,2 page
     QString m_pbdstarttime;
     QString m_pbdstoptime;
 

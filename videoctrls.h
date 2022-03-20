@@ -26,6 +26,7 @@ public:
     static int seekSpeed;
     void RestoreSeek();
     void InitTimer();
+    void NextFile(bool playlist,int idx);
 
 private:
     Ui::VideoCtrls *ui;
@@ -44,9 +45,8 @@ private slots:
     void on_OneByOneButton_released();
     void on_OneByOneBackButton_released();
     void updatelocalprocess();
-//public slots:
 
-
+    //action slots:
     void on_lineEdit_2_pbprocess_textChanged(const QString &arg1);
     void on_TimeSlider_sliderMoved(int position);
     void on_TimeSlider_sliderPressed();

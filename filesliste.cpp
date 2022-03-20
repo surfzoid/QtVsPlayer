@@ -13,10 +13,6 @@ FilesListe::FilesListe(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //table item been ticked emit signals and slots
-    /*connect(ui->tableWidget_2_localfilist, SIGNAL(cellClicked(int, int)), this,
-            SLOT(localtablebeenclicked(int , int)));*/
-
     //set begin and end time value
     QDate startdate = QDateTime::currentDateTime().date();
     QDate stopdate = QDateTime::currentDateTime().date();
@@ -69,37 +65,37 @@ void FilesListe::Populate(QStringList fileNames)
         QStringList Colom = fileName.split("-");
 
         QFile file(fileName);
-        //��ʾ��table����  �ļ���
+
         QString filepath;
         filepath = Colom[4];
         QTableWidgetItem *FilePathItem = new QTableWidgetItem(filepath);
         FilePathItem->setFlags(Qt::ItemIsEnabled);
-        //�ļ���С
+
         QString filesize;
         QFileInfo  *filecurr = new QFileInfo(file.fileName());
         filesize = QString::number(filecurr->size() / 1000000);
 
         QTableWidgetItem *FileSizeItem = new QTableWidgetItem(filesize);
         FileSizeItem->setFlags(Qt::ItemIsEnabled);
-        //����
+
         QString path(Colom[0]);
         path = path.left(path.length() - 8);
         QTableWidgetItem *pathItem = new QTableWidgetItem(path);
         //pathItem->setFlags(Qt::ItemIsEnabled);
 
-        //��ʼʱ��
+
         QString tt = Colom[1];
         QString starttime = tt.left(2) + ":" + tt.mid(2,2) + ":" + tt.right(2);
         QTableWidgetItem *FileStartTimeItem = new QTableWidgetItem(starttime);
         //FileStartTimeItem->setFlags(Qt::ItemIsEnabled);
 
-        //����ʱ��
+
         QString st = Colom[3];
         QString stoptime = st.left(2) + ":" + st.mid(2,2) + ":" + st.right(2);
          QTableWidgetItem *FileStopTimeItem = new QTableWidgetItem(stoptime);
         //FileStopTimeItem->setFlags(Qt::ItemIsEnabled);
 
-        //����ʱ��
+
         QString dd = Colom[2];
         QString Day = dd.left(4) + "/" + dd.mid(4,2) + "/" + dd.right(2);
 

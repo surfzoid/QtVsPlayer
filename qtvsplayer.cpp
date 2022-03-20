@@ -13,15 +13,9 @@
 
 QStringList QtVsPlayer::fileNames;
 int QtVsPlayer::LastPlayIdx = 0;
-/*
-playm4interface *QtVsPlayer::nPlaym4Interface = new playm4interface ();
-
-VideoCtrls *QtVsPlayer::WVideoCtrls;
-QSlider * QtVsPlayer::VTimeSlider;
-
-FilesListe *QtVsPlayer::filesLs;
-QTabWidget* QtVsPlayer::tableWidget_localfilist;
-*/
+//QLabel QtVsPlayer::SatusLbl;
+QString QtVsPlayer::Lastpath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
+QString QtVsPlayer::Lastfs = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
 
 QtVsPlayer::QtVsPlayer(QWidget *parent)
     : QMainWindow(parent)
@@ -32,16 +26,12 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 
     QtVsPlayer::WVideoCtrls = new VideoCtrls (this);
 
-    //QtVsPlayer::VTimeSlider = WVideoCtrls->findChild<QSlider *>("TimeSlider");
     QtVsPlayer::filesLs = new FilesListe (this);
-    //QtVsPlayer::tableWidget_localfilist = filesLs->findChild<QTabWidget*>("tableWidget_2_localfilist");
-
 
     qApp->installEventFilter(this);
     WVideoCtrls->setWindowOpacity(0);
-    //QStringList args = QApplication::arguments();
-    //ParseArgs(args);
-    //this->ui->FsDisplay->setVisible(false);
+
+    ui->statusbar->addPermanentWidget(ui->SatusLbl,1);
 }
 
 QtVsPlayer::~QtVsPlayer()
@@ -55,7 +45,6 @@ QtVsPlayer::~QtVsPlayer()
 bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
 {
 
-    //const QObjectList& list = children(); // or centralwidget->children();
     if(event->type() == QEvent::WinIdChange)
     {
         printf("pyd---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
@@ -67,6 +56,12 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
 
             nPlaym4Interface->RefreshPlay();
         }
+    }
+
+    if(obj->objectName() == "VideoCtrls")
+    {
+        //ui->SatusLbl->setText(Lastfs);
+        DisplayFsName(Lastfs);
     }
 
     return QObject::eventFilter(obj, event);
@@ -111,8 +106,6 @@ QString QtVsPlayer::GetmimeType( const QString &filePath )
     QMimeType Mime = QMimeDatabase().mimeTypeForFile(filePath );
     qDebug() << "Debug---File:" << filePath.toUtf8().data();
     qDebug() << "Debug---Mime type:" << Mime.name().toUtf8().data();
-    //printf("pyd---File :%s\n\r",filePath.toUtf8().data());
-    //printf("pyd---mime type:%s\n\r",Mime.name().toUtf8().data());
     return Mime.name();
 #endif
 }
@@ -137,7 +130,6 @@ QStringList QtVsPlayer::Scandir( const QString &dir2scan )
                 if (fileNames.contains(list[i].absoluteFilePath()) == false) {
                     fileNames.append(list[i].absoluteFilePath());
                 }
-
             }
         }
         qDebug("Debug---Found :%d files",list.length());
@@ -149,7 +141,6 @@ QStringList QtVsPlayer::Scandir( const QString &dir2scan )
 void QtVsPlayer::on_actionOuvrir_triggered()
 {
     HideCtrl();
-
 
     QFileDialog *FsDialog = new QFileDialog();
     Hist = FsDialog->history();
@@ -166,12 +157,10 @@ void QtVsPlayer::on_actionOuvrir_triggered()
 
 void QtVsPlayer::Play (QStringList Files)
 {
-
     filesLs->Populate(Files);
     WVideoCtrls->PLast = false;
     LastPlayIdx = 0 ;
     PlayNextFile(false,0);
-
 }
 
 void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
@@ -192,14 +181,25 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
         LastPlayIdx = idx;
     }
     if (LastPlayIdx >= 0 and LastPlayIdx < fileNames.length()) {
-        // this->ui->frame->setEnabled(0);
 
         DisplayError(nPlaym4Interface->VideoFs(
                          fileNames[LastPlayIdx]));
         WVideoCtrls->RestoreSeek();
 
         if (fileNames.length() > 0) {
-            DisplayFsName(fileNames[LastPlayIdx]);
+            QStringList Colom = fileNames[LastPlayIdx].split("-");
+
+            QString tt = Colom[1];
+            QString starttime = tt.left(2) + ":" + tt.mid(2,2) + ":" + tt.right(2);
+
+            QString st = Colom[3];
+            QString stoptime = st.left(2) + ":" + st.mid(2,2) + ":" + st.right(2);
+
+            QString dd = Colom[2];
+            QString Day = dd.left(4) + "/" + dd.mid(4,2) + "/" + dd.right(2);
+
+            Lastfs = Colom[4] + " from " + starttime + " to " + stoptime + " at " + Day;
+
         }
 
         LastPlayIdx += 1;
@@ -208,16 +208,18 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
     if (LastPlayIdx == fileNames.length()) {
         LastPlayIdx += 1;
     }
-    //window()->resize(WinSize);
 }
 
 void QtVsPlayer::DisplayFsName(QString Name)
 {
-    /*this->ui->FsDisplay->setText(Name);
-    this->ui->FsDisplay->setVisible(true);
-    this->ui->FsDisplay->raise();*/
-    this->ui->statusbar->setToolTip(Name);
-    this->ui->statusbar->showMessage(Name);
+    ui->SatusLbl->setStyleSheet("font-weight: bold; color: red");
+    this->ui->statusbar->setToolTip(Name.toUtf8());
+    /*this->ui->statusbar->clearMessage();
+    this->ui->statusbar-> showMessage(Name.toUtf8());*/
+    ui->SatusLbl->setText(Name.toUtf8());
+    printf("pyd---currentMessage :%s\n\r",ui->SatusLbl->text().toUtf8().data());
+
+
 }
 
 void QtVsPlayer::on_actionA_propos_triggered()
@@ -230,9 +232,9 @@ void QtVsPlayer::DisplayError(unsigned int  ErrMess)
 {
 
     QString QerrMess=ErrorManager::error_codes(ErrMess);
-    this->ui->statusbar->showMessage(QerrMess);
-    //this->ui->statusbar->update();
-    //this->ui->statusbar->repaint();
+    //this->ui->statusbar->showMessage(QerrMess);
+    printf("pyd---Hik Sdk error response :%s\n\r",QerrMess.toUtf8().data());
+
 }
 
 void QtVsPlayer::DisplayStatus(QString  StatuTxt)
@@ -264,11 +266,8 @@ void QtVsPlayer::keyPressEvent(QKeyEvent *event)
 
 void QtVsPlayer::FullScr()
 {
-
-    //unsigned int nRegion=0; //this->ui->VideoRead->screen()->size()
     if (isFullScreen()) {
         showMaximized();
-        //this->ui->frame->showMaximized();
         menuBar()->setVisible(true);
         statusBar()->setVisible(true);
     } else {
@@ -276,8 +275,6 @@ void QtVsPlayer::FullScr()
         menuBar()->setVisible(false);
         statusBar()->setVisible(false);
     }
-
-
 }
 
 void QtVsPlayer::resizeEvent(QResizeEvent *event)
@@ -288,12 +285,65 @@ void QtVsPlayer::resizeEvent(QResizeEvent *event)
                       this->statusBar()->height());
 
     //this->ui->FsDisplay->setVisible(false);
+    originH = ui->centralwidget->rect();
+    Zoomed = false;
 }
 
 
 void QtVsPlayer::mouseDoubleClickEvent(QMouseEvent *event)
 {
     FullScr();
+}
+
+void QtVsPlayer::mousePressEvent(QMouseEvent *event)
+{
+    if ((event->buttons() == Qt::RightButton)) {
+        this->ui->actionMasquer_les_controles->setChecked(!this->ui->actionMasquer_les_controles->isChecked());
+        HideCtrl();
+
+    }
+
+    if ((event->buttons() == Qt::LeftButton)) {
+
+    }
+}
+
+
+void QtVsPlayer::wheelEvent(QWheelEvent *event)
+{
+    QPoint Scroll = event->angleDelta();
+
+    if (Scroll.y() > 0)
+    {
+        ui->centralwidget->resize(ui->centralwidget->width() + 10,
+                                  ui->centralwidget->height() + 10);
+        Zoomed = true;
+
+    }
+
+    if (Scroll.y() < 0 and originH.height() < ui->centralwidget->height())
+    {
+        ui->centralwidget->resize(ui->centralwidget->width() - 10,
+                                  ui->centralwidget->height() - 10);
+    }
+
+    if (Scroll.y() < 0 and originH.height() == ui->centralwidget->height())
+    {
+        Zoomed = false;
+        ui->centralwidget->move(originH.x(), originH.y());
+    }
+
+    WinIdWorkarround();
+}
+
+void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
+{
+    if (Zoomed == true and event->buttons() == Qt::LeftButton) {
+        ui->centralwidget->move(event->pos().x() - ui->centralwidget->width()/2,
+                                event->pos().y() - ui->centralwidget->height()/2);
+
+        WinIdWorkarround();
+    }
 }
 
 void QtVsPlayer::on_actionMasquer_les_controles_triggered()
@@ -364,7 +414,7 @@ void QtVsPlayer::on_actionDossier_triggered()
     QFileDialog *FsDialog = new QFileDialog();
 
     QString _IntputFolder = FsDialog->getExistingDirectory(this,
-                                     ("Select Folder to read"), Lastpath);
+                                                           ("Select Folder to read"), Lastpath);
     Hist = FsDialog->history();
 
     if (_IntputFolder.isEmpty() == false) {
@@ -382,4 +432,9 @@ void QtVsPlayer::on_actionDossier_triggered()
 void QtVsPlayer::InitPort(int port)
 {
     WVideoCtrls->HikNumPort = port;
+}
+
+void QtVsPlayer::on_actionConsole_triggered()
+{
+    ui->SatusLbl->setText("display" + Lastpath);
 }

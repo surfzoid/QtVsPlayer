@@ -10,6 +10,7 @@
 #include "filesliste.h"
 #include <QFileDialog>
 #include <QtCore>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class QtVsPlayer; }
@@ -27,9 +28,7 @@ public:
     void FullScr();
     void HideCtrl();
     VideoCtrls *WVideoCtrls;
-    //QSlider * VTimeSlider;
     FilesListe *filesLs;
-    //QTabWidget* tableWidget_localfilist;
     void ParseArgs(QStringList args);
     void DisplayStatus(QString  StatuTxt);
     void SetWindowTitle(QString Title);
@@ -56,23 +55,31 @@ private slots:
 
     void on_actionDossier_triggered();
 
+    void on_actionConsole_triggered();
+
 private:
     Ui::QtVsPlayer *ui;
 
     QStringList Hist;
-    QString Lastpath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
+    static QString Lastpath;
+    static QString Lastfs;
     QString GetmimeType( const QString &filePath );
     void Play (QStringList Files);
     QStringList Scandir( const QString &dir );
 
     void DisplayFsName(QString Name);
 
+    QRect originH;
+    bool Zoomed;
+
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
-    //void WinIdChange(QEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
     bool eventFilter(QObject *obj, QEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 };
 #endif // QTVSPLAYER_H

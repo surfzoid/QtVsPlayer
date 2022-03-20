@@ -25,8 +25,6 @@ private:
     Ui::FilesListe *ui;
 
 private slots:
-    //void localtablebeenclicked( int row, int column );
-
 
     void on_tableWidget_2_localfilist_cellClicked(int row, int column);
     void on_FilesListe_destroyed();

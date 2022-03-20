@@ -14,7 +14,6 @@ QString playm4interface::m_pblocalfilepath;
 
 unsigned int  playm4interface::VideoFs(QString fileName)
 {
-    //QtVsPlayer().WVideoCtrls->EndRead = false;
     VideoCtrls().EndRead = false;
     BOOL bSuccess;
 
@@ -65,12 +64,10 @@ void playm4interface::FreePort()
     bSuccess = PlayM4_FreePort(m_pblocalportnum);
 }
 
-//int m_pblocalportnum=0;
 int playm4interface::RefreshPlay()
 {
-    return PlayM4_RefreshPlay(m_pblocalportnum);
+    //return PlayM4_RefreshPlay(m_pblocalportnum);
 }
-
 
 int playm4interface::SetVideoWin(unsigned int nRegionNum)
 {
@@ -84,15 +81,12 @@ int playm4interface::Pause(unsigned int nPause)//nPause=1 pause, =0 resume
 
 int playm4interface::Play()
 {
-    //QtVsPlayer().WinIdWorkarround();
     return PlayM4_Play(m_pblocalportnum,hwnd);
 }
 
 int playm4interface::Stop()
 {
-    //QtVsPlayer().WinIdWorkarround();
     return PlayM4_Stop(m_pblocalportnum);
-    //return PlayM4_FreePort(m_pblocalportnum);
 }
 
 int playm4interface::Fast()

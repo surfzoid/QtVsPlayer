@@ -51,7 +51,7 @@ void VideoCtrls::InitTimeSlide()
 void VideoCtrls::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::MiddleButton) {
-        move(event->pos()+pos());
+        move(event->pos() + pos());
     }
 }
 
@@ -223,7 +223,10 @@ void VideoCtrls::on_TimeSlider_sliderReleased()
 void VideoCtrls::on_nextButton_released()
 {
     QtVsPlayer().PlayNextFile(false,0);
+
 }
+
+
 
 void VideoCtrls::on_previousButton_released()
 {
@@ -256,8 +259,8 @@ void __stdcall PlayM4DisplayCallBack(long nPort, char *pBuf, long size, long wid
     picturepathname.append(time.toLatin1().data());
     picturepathname.append(".bmp");
 
-    width = (long)1024;
-    height  = (long)768;
+    //width = (long)1024;
+    //height  = (long)768;
 
     //JPEG ERROR NEED FOLLOW!!!!
     PlayM4_ConvertToBmpFile(pBuf, size, width, height, type, picturepathname.toUtf8().data());
@@ -275,6 +278,11 @@ void __stdcall PlayM4DisplayCallBack(long nPort, char *pBuf, long size, long wid
 ************************************************************************/
 void VideoCtrls::on_SnapshotButton_released()
 {
+    PlayM4_SetPicQuality(HikNumPort,1);
+    int *width = new int(1024);
+    int *height = new int(768);
+
+    PlayM4_GetPictureSize(HikNumPort,width,height);
 #if (defined(_WIN32))
     PlayM4_SetDisplayCallBack(HikNumPort, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
 #elif defined(__linux__)
