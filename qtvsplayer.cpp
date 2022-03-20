@@ -13,7 +13,7 @@
 
 QStringList QtVsPlayer::fileNames;
 int QtVsPlayer::LastPlayIdx = 0;
-//QLabel QtVsPlayer::SatusLbl;
+
 QString QtVsPlayer::Lastpath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
 QString QtVsPlayer::Lastfs = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
 
@@ -60,8 +60,10 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
 
     if(obj->objectName() == "VideoCtrls")
     {
-        //ui->SatusLbl->setText(Lastfs);
-        DisplayFsName(Lastfs);
+        if (Zoomed == false) {
+
+            DisplayFsName(Lastfs);
+        }
     }
 
     return QObject::eventFilter(obj, event);
@@ -217,7 +219,7 @@ void QtVsPlayer::DisplayFsName(QString Name)
     /*this->ui->statusbar->clearMessage();
     this->ui->statusbar-> showMessage(Name.toUtf8());*/
     ui->SatusLbl->setText(Name.toUtf8());
-    printf("pyd---currentMessage :%s\n\r",ui->SatusLbl->text().toUtf8().data());
+    //printf("pyd---currentMessage :%s\n\r",ui->SatusLbl->text().toUtf8().data());
 
 
 }
@@ -315,16 +317,16 @@ void QtVsPlayer::wheelEvent(QWheelEvent *event)
 
     if (Scroll.y() > 0)
     {
-        ui->centralwidget->resize(ui->centralwidget->width() + 10,
-                                  ui->centralwidget->height() + 10);
+        ui->centralwidget->resize(ui->centralwidget->width() + 50,
+                                  ui->centralwidget->height() + 50);
         Zoomed = true;
 
     }
 
     if (Scroll.y() < 0 and originH.height() < ui->centralwidget->height())
     {
-        ui->centralwidget->resize(ui->centralwidget->width() - 10,
-                                  ui->centralwidget->height() - 10);
+        ui->centralwidget->resize(ui->centralwidget->width() - 50,
+                                  ui->centralwidget->height() - 50);
     }
 
     if (Scroll.y() < 0 and originH.height() == ui->centralwidget->height())
