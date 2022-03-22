@@ -9,16 +9,16 @@ Midle click on the control move them
 use https://github.com/surfzoid/HikNetExtractor in an shelde task to automaticaly download video.
 
 # install
-git clone https://github.com/surfzoid/QtVsPlayer.git
-cd ./QtVsPlayer
-qmake
-make
-make install
-cp  -f ./lib/$(uname -m)/* /opt/QtVsPlayer/
-cp -f ./QtVsPlayer_fr_FR.qm /opt/QtVsPlayer/
-sudo cp -f ./images/QtVsPlayer.png /usr/share/icons/
-sudo cp -f ./QtVsPlayer.desktop /usr/share/applications/
-./QtVsPlayer
+git clone https://github.com/surfzoid/QtVsPlayer.git  
+cd ./QtVsPlayer  
+qmake  
+make  
+make install  
+cp  -f ./lib/$(uname -m)/* /opt/QtVsPlayer/  
+cp -f ./QtVsPlayer_fr_FR.qm /opt/QtVsPlayer/  
+sudo cp -f ./images/QtVsPlayer.png /usr/share/icons/  
+sudo cp -f ./QtVsPlayer.desktop /usr/share/applications/  
+./QtVsPlayer  
 
 # TODO
 Copy lib/$ARCH/* to the same dir of the executable durring make install.
