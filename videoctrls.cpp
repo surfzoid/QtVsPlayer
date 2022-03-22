@@ -45,6 +45,7 @@ void VideoCtrls::InitTimeSlide()
     this->ui->TimeSlider->setRange(0,100);
     this->ui->TimeSlider->setValue(0);
     //ui.horizontalSlider_playback_volume_2->setRange(0,10);
+    return;
 
 }
 
@@ -53,15 +54,17 @@ void VideoCtrls::mouseMoveEvent(QMouseEvent *event)
     if (event->buttons() == Qt::MiddleButton) {
         move(event->pos() + pos());
     }
+    return;
 }
 
 
 bool PauseFlag= false;
 void VideoCtrls::on_pauseButton_released()
 {
-    QtVsPlayer().nPlaym4Interface->Pause(!PauseFlag);
+    playm4interface::Pause(!PauseFlag);
     PauseFlag = !PauseFlag;
     EndRead = PauseFlag;
+    return;
 }
 
 void VideoCtrls::on_TimeSlider_valueChanged(int value)
@@ -72,6 +75,7 @@ void VideoCtrls::on_TimeSlider_valueChanged(int value)
     pos = PlayM4_GetPlayPos(HikNumPort);
     currentpos =(unsigned int)(pos*100);
     this->ui->TimeSlider->setValue(currentpos);*/
+    return;
 }
 
 
@@ -79,8 +83,9 @@ void VideoCtrls::on_playButton_released()
 {
     seekSpeed = 0;
     this->ui->CurSpeed->setText("0X");
-    QtVsPlayer().nPlaym4Interface->Play();
+    playm4interface::Play();
     EndRead =false;
+    return;
 }
 
 void VideoCtrls::on_stopButton_released()
@@ -88,26 +93,29 @@ void VideoCtrls::on_stopButton_released()
     seekSpeed = 0;
     this->ui->CurSpeed->setText("0X");
     this->ui->TimeSlider->setValue(0);
-    QtVsPlayer().nPlaym4Interface->Stop();
+    playm4interface::Stop();
+    return;
 
 }
 
 void VideoCtrls::on_SeekMoreButton_released()
 {
     if (seekSpeed < 6 and seekSpeed >= 0) {
-        QtVsPlayer().nPlaym4Interface->Fast();
+        playm4interface::Fast();
         seekSpeed += 1;
         this->ui->CurSpeed->setText(QString::number(seekSpeed) +  "X");
     }
+    return;
 }
 
 void VideoCtrls::on_SeekLessButton_released()
 {
     if (seekSpeed > -6 ) {
-        QtVsPlayer().nPlaym4Interface->Slow();
+        playm4interface::Slow();
         seekSpeed -= 1;
         this->ui->CurSpeed->setText(QString::number(seekSpeed) +  "X");
     }
+    return;
 
 }
 
@@ -127,23 +135,26 @@ void VideoCtrls::RestoreSeek()
             on_SeekMoreButton_released();
         }
     }
+    return;
 }
 
 void VideoCtrls::on_OneByOneButton_released()
 {
     seekSpeed = 0;
-    QtVsPlayer().nPlaym4Interface->OneByOne();
+    playm4interface::OneByOne();
+    return;
 }
 
 void VideoCtrls::on_OneByOneBackButton_released()
 {
     seekSpeed = 0;
     //while (true) {
-    QtVsPlayer().nPlaym4Interface->OneByOneBack();
+    playm4interface::OneByOneBack();
     //}
     //m_pbqtimer->stop();
     //m_pbqtimer->connect(this,SIGNAL(this), this, SLOT(updatelocalprocess()));
     //m_pbqtimer->start(1000);
+    return;
 }
 
 
@@ -170,7 +181,7 @@ void VideoCtrls::updatelocalprocess()
                 //ui->TimeSlider->statusTip(currentpos).fromUtf8();
                 if (currentpos >= 100) {
 
-                    PlayM4_CloseFile(QtVsPlayer().nPlaym4Interface->m_pblocalportnum);
+                    PlayM4_CloseFile(playm4interface::m_pblocalportnum);
                     QThreadPool::globalInstance()->releaseThread();
                     QThreadPool::globalInstance()->clear();
                     printf("pyd---activeThreadCount:%d\n\r",QThreadPool::globalInstance()->activeThreadCount());
@@ -190,12 +201,13 @@ void VideoCtrls::updatelocalprocess()
         }
 
     }
-    //return;
+    return;
 }
 
 void VideoCtrls::on_lineEdit_2_pbprocess_textChanged(const QString &arg1)
 {
     QtVsPlayer().DisplayStatus(arg1);
+    return;
 }
 
 void VideoCtrls::on_TimeSlider_sliderMoved(int position)
@@ -210,6 +222,7 @@ void VideoCtrls::on_TimeSlider_sliderPressed()
 {
     //EndRead = true;
     //on_pauseButton_released();
+    return;
 
 }
 
@@ -217,12 +230,14 @@ void VideoCtrls::on_TimeSlider_sliderReleased()
 {
     //EndRead = false;
    // on_pauseButton_released();
+    return;
 
 }
 
 void VideoCtrls::on_nextButton_released()
 {
     QtVsPlayer().PlayNextFile(false,0);
+    return;
 
 }
 
@@ -230,8 +245,9 @@ void VideoCtrls::on_nextButton_released()
 
 void VideoCtrls::on_previousButton_released()
 {
-    QtVsPlayer().LastPlayIdx -= 2;
+    QtVsPlayer::LastPlayIdx -= 2;
     QtVsPlayer().PlayNextFile(false,0);
+    return;
 }
 
 /************************************************************************
@@ -265,6 +281,7 @@ void __stdcall PlayM4DisplayCallBack(long nPort, char *pBuf, long size, long wid
     //JPEG ERROR NEED FOLLOW!!!!
     PlayM4_ConvertToBmpFile(pBuf, size, width, height, type, picturepathname.toUtf8().data());
     //PlayM4_ConvertToJpegFile(pBuf, size, width, height, type, picturepathname.toUtf8().data());
+    return;
 }
 
 
@@ -294,5 +311,6 @@ void VideoCtrls::on_SnapshotButton_released()
 
     QMessageBox::information(this,tr("Capture Picture succes "),
                              picturepathname.toUtf8().data());
+    return;
 
 }

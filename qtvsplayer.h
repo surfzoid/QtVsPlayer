@@ -24,7 +24,7 @@ public:
     QtVsPlayer(QWidget *parent = nullptr);
     ~QtVsPlayer();
     void KeyPress(QWidget *parent = 0);
-    playm4interface *nPlaym4Interface = new playm4interface ();
+    //playm4interface *nPlaym4Interface;
     void FullScr();
     void HideCtrl();
     VideoCtrls *WVideoCtrls;
@@ -36,7 +36,7 @@ public:
     void PlayNextFile(bool FromFsList, int idx);
     void WinIdWorkarround();
     static QStringList fileNames;
-    void InitPort(int port);
+    static void InitPort(int port);
 
 private slots:
     void on_actionOuvrir_triggered();

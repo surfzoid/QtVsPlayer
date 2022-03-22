@@ -34,15 +34,16 @@ FilesListe::~FilesListe()
 void FilesListe::clearitems()
 {
     //clear the table items of file list
-    for (int i=0; i<ui->tableWidget_2_localfilist->rowCount(); i++)
+    for (int i=0; i< ui->tableWidget_2_localfilist->rowCount(); i++)
     {
-        for (int j=0; j<ui->tableWidget_2_localfilist->columnCount(); j++ )
+        for (int j=0; j< ui->tableWidget_2_localfilist->columnCount(); j++ )
         {
             delete ui->tableWidget_2_localfilist->takeItem(i, j);
         }
         ui->tableWidget_2_localfilist->removeRow(i);
     }
     ui->tableWidget_2_localfilist->setRowCount(0);
+    return;
 }
 
 
@@ -63,6 +64,12 @@ void FilesListe::Populate(QStringList fileNames)
     foreach (QString fileName, fileNames) {
 
         QStringList Colom = fileName.split("-");
+
+        if (Colom.length() < 4) {
+            QTableWidgetItem *FilePathItem = new QTableWidgetItem(fileName);
+            FilePathItem->setFlags(Qt::ItemIsEnabled);
+            break;
+        }
 
         QFile file(fileName);
 
@@ -126,9 +133,11 @@ void FilesListe::on_tableWidget_2_localfilist_cellClicked(int row, int column)
         return;
     }
     QtVsPlayer().PlayNextFile(true,row);
+    return;
 }
 
 void FilesListe::on_FilesListe_destroyed()
 {
 
+    return;
 }

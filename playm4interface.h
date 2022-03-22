@@ -4,26 +4,23 @@
 #include <include/PlayM4.h>
 #include <QString>
 
-namespace Ui {
-class playm4interface;
-}
-
 class playm4interface
 {
 
 
 public:
+    playm4interface();
     static PLAYM4_HWND  hwnd;
     static unsigned int  VideoFs (QString fileName);
-    int SetVideoWin(unsigned int nRegionNum);
-    int RefreshPlay();
-    int Pause(unsigned int nPause);//nPause=1 pause, =0 resume
-    int Play();
+    static int SetVideoWin(unsigned int nRegionNum);
+    static int RefreshPlay();
+    static int Pause(unsigned int nPause);//nPause=1 pause, =0 resume
+    static int Play();
     static int Stop();
-    int Fast();
-    int Slow();
-    int OneByOne();
-    int OneByOneBack();
+    static int Fast();
+    static int Slow();
+    static int OneByOne();
+    static int OneByOneBack();
     static void decimaltoOctal(int deciNum)
     {
 
@@ -45,6 +42,7 @@ public:
             printf("%x <- Caps()\n\r",deciNum);
             printf("%x <- Caps()\n\r",octalNum);
         }
+        return;
     }
 
     int * usrid = 0;

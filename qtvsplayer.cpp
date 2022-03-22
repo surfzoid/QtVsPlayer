@@ -17,6 +17,7 @@ int QtVsPlayer::LastPlayIdx = 0;
 QString QtVsPlayer::Lastpath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
 QString QtVsPlayer::Lastfs = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
 
+
 QtVsPlayer::QtVsPlayer(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::QtVsPlayer)
@@ -24,21 +25,36 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     ui->setupUi(this);
 
 
-    QtVsPlayer::WVideoCtrls = new VideoCtrls (this);
 
-    QtVsPlayer::filesLs = new FilesListe (this);
+    //if (QtVsPlayer::filesLs == nullptr) {
+        QtVsPlayer::filesLs = new FilesListe (this);
+    //}
 
-    qApp->installEventFilter(this);
-    WVideoCtrls->setWindowOpacity(0);
+    //if (QtVsPlayer::nPlaym4Interface == nullptr) {
+        //QtVsPlayer::nPlaym4Interface = new playm4interface ();
+    //}
 
-    ui->statusbar->addPermanentWidget(ui->SatusLbl,1);
+
+    //if (QtVsPlayer::WVideoCtrls == nullptr) {
+        QtVsPlayer::WVideoCtrls = new VideoCtrls (this);
+        qApp->installEventFilter(this);
+        //WVideoCtrls->setWindowOpacity(0);
+        ui->statusbar->addPermanentWidget(ui->SatusLbl,1);
+    //}
+    //if (ArgLS.length() > 0) {ParseArgs(ArgLS);}
+
 }
 
 QtVsPlayer::~QtVsPlayer()
 {
-    /*nPlaym4Interface->Stop();
-    nPlaym4Interface->FreePort();
-    nPlaym4Interface->~playm4interface();*/
+    /*playm4interface::Stop();
+    playm4interface::FreePort();
+    playm4interface::~playm4interface();*/
+    if (filesLs != NULL)
+    {
+        delete filesLs;
+        filesLs = NULL;
+    }
     delete ui;
 }
 
@@ -50,11 +66,11 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
         printf("pyd---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
         if(obj->objectName() == "centralwidget")
         {
-            qDebug() << "Debug---QEvent::WinIdChange";
-            printf("pyd---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
-            nPlaym4Interface->hwnd = this->centralWidget()->winId();
 
-            nPlaym4Interface->RefreshPlay();
+            printf("pyd---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
+            playm4interface::hwnd = this->centralWidget()->winId();
+
+            playm4interface::RefreshPlay();
         }
     }
 
@@ -71,7 +87,13 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
 
 void QtVsPlayer::ParseArgs(QStringList args)
 {
-    HideCtrl();
+    //HideCtrl();
+    playm4interface::SetPort();
+    if (playm4interface::hwnd == 0) {
+        playm4interface::hwnd = this->centralWidget()->winId();
+        playm4interface::SetVideoWin(0);
+        playm4interface::RefreshPlay();
+    }
 
     if (args.length() == 1) {
         QFileInfo fi(args[0].toUtf8());
@@ -93,12 +115,9 @@ void QtVsPlayer::ParseArgs(QStringList args)
     if (args.length() > 1) {
         Play (args);
     }
-    if (nPlaym4Interface->hwnd == 0) {
-        nPlaym4Interface->hwnd = this->centralWidget()->winId();
-        nPlaym4Interface->SetVideoWin(0);
-        nPlaym4Interface->RefreshPlay();
-    }
-    nPlaym4Interface->SetPort();
+
+
+    return;
 }
 
 
@@ -106,15 +125,16 @@ QString QtVsPlayer::GetmimeType( const QString &filePath )
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     QMimeType Mime = QMimeDatabase().mimeTypeForFile(filePath );
-    qDebug() << "Debug---File:" << filePath.toUtf8().data();
-    qDebug() << "Debug---Mime type:" << Mime.name().toUtf8().data();
+    printf("Debug---File:%s" , filePath.toUtf8().data());
+    printf("Debug---Mime type:%s",Mime.name().toUtf8().data());
     return Mime.name();
 #endif
+    return "";
 }
 
 QStringList QtVsPlayer::Scandir( const QString &dir2scan )
 {
-    QDir dir{dir2scan};
+    QDir dir(dir2scan);
     dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
     dir.setSorting(QDir::Name | QDir::DirsFirst);
     if (dir.isEmpty() == false) {
@@ -134,7 +154,7 @@ QStringList QtVsPlayer::Scandir( const QString &dir2scan )
                 }
             }
         }
-        qDebug("Debug---Found :%d files",list.length());
+        printf("Debug---Found :%d files",list.length());
 
     }
     return fileNames;
@@ -151,10 +171,11 @@ void QtVsPlayer::on_actionOuvrir_triggered()
                                            tr("video Files (*.mp4 *.avi *.mkv)"));
     if (fileNames.length() > 0) {
 
-        nPlaym4Interface->SetPort();
+        playm4interface::SetPort();
         Lastpath = fileNames[0].toUtf8();
         Play (fileNames);
     }
+    return;
 }
 
 void QtVsPlayer::Play (QStringList Files)
@@ -163,6 +184,7 @@ void QtVsPlayer::Play (QStringList Files)
     WVideoCtrls->PLast = false;
     LastPlayIdx = 0 ;
     PlayNextFile(false,0);
+    return;
 }
 
 void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
@@ -184,24 +206,31 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
     }
     if (LastPlayIdx >= 0 and LastPlayIdx < fileNames.length()) {
 
-        DisplayError(nPlaym4Interface->VideoFs(
+        DisplayError(playm4interface::VideoFs(
                          fileNames[LastPlayIdx]));
         WVideoCtrls->RestoreSeek();
 
         if (fileNames.length() > 0) {
             QStringList Colom = fileNames[LastPlayIdx].split("-");
 
-            QString tt = Colom[1];
-            QString starttime = tt.left(2) + ":" + tt.mid(2,2) + ":" + tt.right(2);
+            if (Colom.length() < 4) {
+                Lastfs = fileNames[LastPlayIdx];
 
-            QString st = Colom[3];
-            QString stoptime = st.left(2) + ":" + st.mid(2,2) + ":" + st.right(2);
+            }
+            else
+            {
+                QString tt = Colom[1];
+                QString starttime = tt.left(2) + ":" + tt.mid(2,2) + ":" + tt.right(2);
 
-            QString dd = Colom[2];
-            QString Day = dd.left(4) + "/" + dd.mid(4,2) + "/" + dd.right(2);
+                QString st = Colom[3];
+                QString stoptime = st.left(2) + ":" + st.mid(2,2) + ":" + st.right(2);
 
-            Lastfs = Colom[4] + " from " + starttime + " to " + stoptime + " at " + Day;
+                QString dd = Colom[2];
+                QString Day = dd.left(4) + "/" + dd.mid(4,2) + "/" + dd.right(2);
 
+                Lastfs = Colom[4] + " from " + starttime + " to " + stoptime + " at " + Day;
+
+            }
         }
 
         LastPlayIdx += 1;
@@ -210,6 +239,7 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
     if (LastPlayIdx == fileNames.length()) {
         LastPlayIdx += 1;
     }
+    return;
 }
 
 void QtVsPlayer::DisplayFsName(QString Name)
@@ -221,12 +251,14 @@ void QtVsPlayer::DisplayFsName(QString Name)
     ui->SatusLbl->setText(Name.toUtf8());
     //printf("pyd---currentMessage :%s\n\r",ui->SatusLbl->text().toUtf8().data());
 
+    return;
 
 }
 
 void QtVsPlayer::on_actionA_propos_triggered()
 {
     QMessageBox::about(this, tr("QvSPlayer for Hikvision local records"), tr("QvSPlayer can read local video files of Hikvision and display blue, green an red vector"));
+    return;
 }
 
 
@@ -236,6 +268,7 @@ void QtVsPlayer::DisplayError(unsigned int  ErrMess)
     QString QerrMess=ErrorManager::error_codes(ErrMess);
     //this->ui->statusbar->showMessage(QerrMess);
     printf("pyd---Hik Sdk error response :%s\n\r",QerrMess.toUtf8().data());
+    return;
 
 }
 
@@ -246,12 +279,14 @@ void QtVsPlayer::DisplayStatus(QString  StatuTxt)
     this->ui->statusbar->showMessage(tr(StatuTxt.toUtf8()), 2000);
     //this->ui->statusbar->update();
     //this->ui->statusbar->repaint();
+    return;
 
 }
 
 void QtVsPlayer::on_actionPlein_ecran_triggered()
 {
     FullScr();
+    return;
 }
 
 void QtVsPlayer::keyPressEvent(QKeyEvent *event)
@@ -264,6 +299,7 @@ void QtVsPlayer::keyPressEvent(QKeyEvent *event)
         QtVsPlayer().HideCtrl();
         break;
     }
+    return;
 }
 
 void QtVsPlayer::FullScr()
@@ -277,6 +313,7 @@ void QtVsPlayer::FullScr()
         menuBar()->setVisible(false);
         statusBar()->setVisible(false);
     }
+    return;
 }
 
 void QtVsPlayer::resizeEvent(QResizeEvent *event)
@@ -289,12 +326,14 @@ void QtVsPlayer::resizeEvent(QResizeEvent *event)
     //this->ui->FsDisplay->setVisible(false);
     originH = ui->centralwidget->rect();
     Zoomed = false;
+    return;
 }
 
 
 void QtVsPlayer::mouseDoubleClickEvent(QMouseEvent *event)
 {
     FullScr();
+    return;
 }
 
 void QtVsPlayer::mousePressEvent(QMouseEvent *event)
@@ -308,6 +347,7 @@ void QtVsPlayer::mousePressEvent(QMouseEvent *event)
     if ((event->buttons() == Qt::LeftButton)) {
 
     }
+    return;
 }
 
 
@@ -336,6 +376,7 @@ void QtVsPlayer::wheelEvent(QWheelEvent *event)
     }
 
     WinIdWorkarround();
+    return;
 }
 
 void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
@@ -346,12 +387,14 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
 
         WinIdWorkarround();
     }
+    return;
 }
 
 void QtVsPlayer::on_actionMasquer_les_controles_triggered()
 {
 
     HideCtrl();
+    return;
 }
 
 void QtVsPlayer::HideCtrl()
@@ -367,6 +410,7 @@ void QtVsPlayer::HideCtrl()
         this->centralWidget()->stackUnder(WVideoCtrls);
         //WVideoCtrls->setParent(centralWidget());
     }
+    return;
 }
 
 
@@ -378,6 +422,7 @@ void QtVsPlayer::on_actionListe_de_lecture_toggled(bool checked)
     } else {
         filesLs->hide();
     }
+    return;
 
 }
 
@@ -386,6 +431,7 @@ void QtVsPlayer::SetWindowTitle(QString Title)
     this->setWindowTitle(Title.toUtf8());
     this->update();
     //this->repaint();
+    return;
 }
 
 void QtVsPlayer::WinIdWorkarround()
@@ -395,20 +441,22 @@ void QtVsPlayer::WinIdWorkarround()
         if (this->centralWidget())
         {
 
-            nPlaym4Interface->hwnd = this->winId();
+            playm4interface::hwnd = this->winId();
 
-            nPlaym4Interface->SetVideoWin(0);
-            nPlaym4Interface->RefreshPlay();
-            nPlaym4Interface->hwnd = this->centralWidget()->winId();
-            nPlaym4Interface->SetVideoWin(0);
-            nPlaym4Interface->RefreshPlay();
+            playm4interface::SetVideoWin(0);
+            playm4interface::RefreshPlay();
+            playm4interface::hwnd = this->centralWidget()->winId();
+            playm4interface::SetVideoWin(0);
+            playm4interface::RefreshPlay();
         }
     }
+    return;
 }
 
 void QtVsPlayer::on_actionListe_de_lecture_triggered()
 {
     filesLs->show();
+    return;
 }
 
 void QtVsPlayer::on_actionDossier_triggered()
@@ -425,18 +473,21 @@ void QtVsPlayer::on_actionDossier_triggered()
     }
 
     if (fileNames.length() > 0) {
-        nPlaym4Interface->SetPort();
+        playm4interface::SetPort();
         Play (fileNames);
         Lastpath = _IntputFolder;
     }
+    return;
 }
 
 void QtVsPlayer::InitPort(int port)
 {
-    WVideoCtrls->HikNumPort = port;
+    VideoCtrls::HikNumPort = port;
+    return;
 }
 
 void QtVsPlayer::on_actionConsole_triggered()
 {
     ui->SatusLbl->setText("display" + Lastpath);
+    return;
 }

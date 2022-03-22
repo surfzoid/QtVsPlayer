@@ -8,6 +8,10 @@
 #include <string>
 #include <QtDebug>
 
+using namespace std;
+
+
+
 PLAYM4_HWND  playm4interface::hwnd;
 int playm4interface::m_pblocalportnum = -1;
 QString playm4interface::m_pblocalfilepath;
@@ -20,7 +24,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     //initval();
     m_pblocalfilepath = fileName;
 
-    qDebug("Debug---File name:%s", m_pblocalfilepath.toUtf8().data());
+    printf("Debug---File name:%s", m_pblocalfilepath.toUtf8().data());
     printf("pyd---File name:%s\n\r",m_pblocalfilepath.toUtf8().data());
 
 
@@ -43,17 +47,20 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
 void playm4interface::SetPort()
 {
-    FreePort();
-    BOOL bSuccess;
-    //from qtdemo//////
-    printf("%.8x <- PlayM4_GetSdkVersion()\n\r",PlayM4_GetSdkVersion());
+    if (m_pblocalportnum == -1) {
+        //FreePort();
+        BOOL bSuccess;
+        //from qtdemo//////
+        printf("%.8x <- PlayM4_GetSdkVersion()\n\r",PlayM4_GetSdkVersion());
 
-    decimaltoOctal(PlayM4_GetCaps());
+        decimaltoOctal(PlayM4_GetCaps());
 
-    bSuccess = PlayM4_GetPort((LONG *)&m_pblocalportnum);
-    qDebug("Debug---Port:%s",(std::to_string(m_pblocalportnum)).data());
+        bSuccess = PlayM4_GetPort((int *)&m_pblocalportnum);
+        printf("Debug---Port:%s",((QString)m_pblocalportnum).toUtf8().data());
 
-    QtVsPlayer().InitPort(m_pblocalportnum);
+        QtVsPlayer::InitPort(m_pblocalportnum);
+    }
+    return;
 }
 
 void playm4interface::FreePort()
@@ -62,6 +69,7 @@ void playm4interface::FreePort()
     bSuccess = Stop();
     bSuccess = PlayM4_CloseFile(m_pblocalportnum);
     bSuccess = PlayM4_FreePort(m_pblocalportnum);
+    return;
 }
 
 int playm4interface::RefreshPlay()
@@ -92,7 +100,7 @@ int playm4interface::Stop()
 
 int playm4interface::Fast()
 {
-    //qDebug("Debug---Fastest Port:%s",(std::to_string(playm4interface::m_pblocalportnum)).data());
+    //printf("Debug---Fastest Port:%s",(std::to_string(playm4interface::m_pblocalportnum)).data());
     return PlayM4_Fast(playm4interface::m_pblocalportnum);
 
 }

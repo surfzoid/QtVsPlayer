@@ -25,8 +25,8 @@ public:
     static bool PLast;
     static int seekSpeed;
     void RestoreSeek();
-    void InitTimer();
-    void NextFile(bool playlist,int idx);
+    static void InitTimer();
+    static void NextFile(bool playlist,int idx);
 
 private:
     Ui::VideoCtrls *ui;
