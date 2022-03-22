@@ -25,6 +25,8 @@ cp -f ./QtVsPlayer_fr_FR.qm /opt/QtVsPlayer/
 
 sudo cp -f ./QtVsPlayer.desktop /usr/share/applications/
 
+./QtVsPlayer
+
 # TODO
 Copy lib/$ARCH/* to the same dir of the executable durring make install.
 
