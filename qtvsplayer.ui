@@ -6,24 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>427</width>
-    <height>349</height>
+    <width>492</width>
+    <height>446</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>0</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="mouseTracking">
-   <bool>false</bool>
-  </property>
-  <property name="tabletTracking">
-   <bool>false</bool>
-  </property>
-  <property name="contextMenuPolicy">
-   <enum>Qt::ActionsContextMenu</enum>
   </property>
   <property name="acceptDrops">
    <bool>true</bool>
@@ -34,6 +19,9 @@
   <property name="windowIcon">
    <iconset resource="ressources.qrc">
     <normaloff>:/images/images/QtVsPlayer.png</normaloff>:/images/images/QtVsPlayer.png</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="palette">
@@ -118,27 +106,27 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>427</width>
+     <width>492</width>
      <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichiers">
     <property name="title">
-     <string>Fichiers</string>
+     <string>File</string>
     </property>
     <addaction name="actionOuvrir"/>
     <addaction name="actionDossier"/>
    </widget>
    <widget class="QMenu" name="menuAide">
     <property name="title">
-     <string>Aide</string>
+     <string>Help</string>
     </property>
     <addaction name="actionConsole"/>
     <addaction name="actionA_propos"/>
    </widget>
    <widget class="QMenu" name="menuAffichage">
     <property name="title">
-     <string>Affichage</string>
+     <string>Display</string>
     </property>
     <addaction name="actionPlein_ecran"/>
     <addaction name="actionMasquer_les_controles"/>
@@ -151,7 +139,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOuvrir">
    <property name="text">
-    <string>Ouvrir</string>
+    <string>Open</string>
    </property>
   </action>
   <action name="actionConsole">
@@ -161,12 +149,12 @@
   </action>
   <action name="actionA_propos">
    <property name="text">
-    <string>A propos</string>
+    <string>About</string>
    </property>
   </action>
   <action name="actionPlein_ecran">
    <property name="text">
-    <string>Plein ecran</string>
+    <string>Full screen</string>
    </property>
    <property name="shortcut">
     <string>F11</string>
@@ -177,7 +165,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Masquer les controles</string>
+    <string>Hide control</string>
    </property>
    <property name="shortcut">
     <string>F10</string>
@@ -188,12 +176,12 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Liste de lecture</string>
+    <string>Playliste</string>
    </property>
   </action>
   <action name="actionDossier">
    <property name="text">
-    <string>Dossier</string>
+    <string>Folder</string>
    </property>
   </action>
  </widget>

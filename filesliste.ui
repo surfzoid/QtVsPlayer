@@ -11,11 +11,14 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Play list</string>
+   <string>Playlist</string>
   </property>
   <property name="windowIcon">
    <iconset resource="ressources.qrc">
     <normaloff>:/images/images/QtVsPlayer.png</normaloff>:/images/images/QtVsPlayer.png</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">

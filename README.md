@@ -19,7 +19,11 @@ make
 
 make install
 
-cp ./lib/$(uname -p)/* /opt/QtVsPlayer/
+cp  -f ./lib/$(uname -m)/* /opt/QtVsPlayer/
+
+cp -f ./QtVsPlayer_fr_FR.qm /opt/QtVsPlayer/
+
+sudo cp -f ./QtVsPlayer.desktop /usr/share/applications/
 
 # TODO
 Copy lib/$ARCH/* to the same dir of the executable durring make install.
@@ -41,6 +45,8 @@ https://github.com/surfzoid/HikNetExtractor
 Bad, on my Raspberry P400, if i read the playlist fast, 6x, QtVsPlayer crash with
 *** stack smashing detected ***: terminated
 
-need to investigate compile options 1
+need to investigate compile options
+
+Add French translation.
 
 # Enjoy.

@@ -23,18 +23,34 @@ int main(int argc, char *argv[])
         }
         else
         {*/
-            QtVsPlayer w;
-            a.installEventFilter(&w);
-            w.show();
-            while (w.isEnabled() == false) {
 
-            }
-            QStringList list;
-            for (int a = 1; a < argc; ++a) {
-                list << QString::fromLocal8Bit(argv[a]);
-            }
-            //list.append("/home/eric/Vidéos/hiv00000.mp4");
-            if (list.length() > 0) {w.ParseArgs(list);}
-            return a.exec();
-        //}
+    //Translation
+    QTranslator qtTranslator;
+    bool bsuc = false;
+    bsuc = qtTranslator.load(QLocale(), QLatin1String("qt"), QLatin1String("_"),
+                             QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+
+    a.installTranslator(&qtTranslator);
+
+    QTranslator myappTranslator;
+    bsuc = myappTranslator.load(QLocale(), QLatin1String("QtVsPlayer"), QLatin1String("_"),
+                                QCoreApplication::applicationDirPath());
+    a.installTranslator(&myappTranslator);
+    //End Translation
+
+    QtVsPlayer w;
+    a.installEventFilter(&w);
+    w.show();
+    while (w.isEnabled() == false) {
+
+    }
+    QStringList list;
+    for (int a = 1; a < argc; ++a) {
+        list << QString::fromLocal8Bit(argv[a]);
+    }
+    //list.append("/home/eric/Vidéos/hiv00000.mp4");
+    if (list.length() > 0) {w.ParseArgs(list);}
+
+    return a.exec();
+    //}
 }

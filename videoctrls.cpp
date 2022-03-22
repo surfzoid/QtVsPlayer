@@ -1,4 +1,4 @@
-#include "videoctrls.h"
+﻿#include "videoctrls.h"
 #include "ui_videoctrls.h"
 #include <QMouseEvent>
 #include <QMessageBox>
@@ -289,10 +289,10 @@ void VideoCtrls::on_SnapshotButton_released()
     PlayM4_SetDisplayCallBack(HikNumPort, (void (__stdcall *)(int,char *,int,int,int,int,int,int))PlayM4DisplayCallBack);
 #endif
 
-    QString picturepathname("Capture Picture succes to ");
+    QString picturepathname(tr("Capture Picture succes to "));
     picturepathname.append(CAPTURE_PICTURE_PATH);
 
-    QMessageBox::information(this,"Capture Picture succes ",
+    QMessageBox::information(this,tr("Capture Picture succes "),
                              picturepathname.toUtf8().data());
 
 }

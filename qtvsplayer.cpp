@@ -226,7 +226,7 @@ void QtVsPlayer::DisplayFsName(QString Name)
 
 void QtVsPlayer::on_actionA_propos_triggered()
 {
-    QMessageBox::about(this, "QvSPlayer for Hikvision local records", "QvSPlayer can read local video files of Hikvision and display blue, green an red vector");
+    QMessageBox::about(this, tr("QvSPlayer for Hikvision local records"), tr("QvSPlayer can read local video files of Hikvision and display blue, green an red vector"));
 }
 
 
@@ -416,7 +416,7 @@ void QtVsPlayer::on_actionDossier_triggered()
     QFileDialog *FsDialog = new QFileDialog();
 
     QString _IntputFolder = FsDialog->getExistingDirectory(this,
-                                                           ("Select Folder to read"), Lastpath);
+                                                           (tr("Select Folder to read")), Lastpath);
     Hist = FsDialog->history();
 
     if (_IntputFolder.isEmpty() == false) {

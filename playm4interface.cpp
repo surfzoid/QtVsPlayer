@@ -67,6 +67,7 @@ void playm4interface::FreePort()
 int playm4interface::RefreshPlay()
 {
     //return PlayM4_RefreshPlay(m_pblocalportnum);
+    return 0;
 }
 
 int playm4interface::SetVideoWin(unsigned int nRegionNum)
@@ -91,7 +92,7 @@ int playm4interface::Stop()
 
 int playm4interface::Fast()
 {
-    qDebug("Debug---Fastest Port:%s",(std::to_string(playm4interface::m_pblocalportnum)).data());
+    //qDebug("Debug---Fastest Port:%s",(std::to_string(playm4interface::m_pblocalportnum)).data());
     return PlayM4_Fast(playm4interface::m_pblocalportnum);
 
 }

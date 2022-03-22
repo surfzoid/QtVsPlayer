@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
+  </property>
   <widget class="QSlider" name="TimeSlider">
    <property name="geometry">
     <rect>

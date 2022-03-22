@@ -1,6 +1,7 @@
 #ifndef ERRORMANAGER_H
 #define ERRORMANAGER_H
 #include <QString>
+#include <QObject>
 
 class ErrorManager
 {
@@ -10,97 +11,97 @@ public:
        QString errtxt;
        switch (errcode) {
        case 0:
-           errtxt="No error";
+           errtxt=QObject::tr("No error");
            break;
        case 1:
-           errtxt="Illegal input parameter";
+           errtxt=QObject::tr("Illegal input parameter");
            break;
        case 2:
-           errtxt="Calling reference error (function are supposed to be called in another order).";
+           errtxt=QObject::tr("Calling reference error (function are supposed to be called in another order).");
            break;
        case 3:
-           errtxt="Set timer failure";
+           errtxt=QObject::tr("Set timer failure");
            break;
        case 4:
-           errtxt="Video decoding failure";
+           errtxt=QObject::tr("Video decoding failure");
            break;
        case 5:
-           errtxt=" Audio decoding failure";
+           errtxt=QObject::tr(" Audio decoding failure");
            break;
        case 6:
-           errtxt="Memory allocation failure";
+           errtxt=QObject::tr("Memory allocation failure");
            break;
        case 7:
-           errtxt="File operation failure";
+           errtxt=QObject::tr("File operation failure");
            break;
        case 8:
-           errtxt="Create thread failure";
+           errtxt=QObject::tr("Create thread failure");
            break;
        case 9:
-           errtxt="Create directDraw failure";
+           errtxt=QObject::tr("Create directDraw failure");
            break;
        case 10:
-           errtxt="Create off-screen failure";
+           errtxt=QObject::tr("Create off-screen failure");
            break;
        case 11:
-           errtxt="Buffer overflow, input stream failure";
+           errtxt=QObject::tr("Buffer overflow, input stream failure");
            break;
        case 12:
-           errtxt="Create sound device failure";
+           errtxt=QObject::tr("Create sound device failure");
            break;
        case 13:
-           errtxt="Set volume failure";
+           errtxt=QObject::tr("Set volume failure");
            break;
        case 14:
-           errtxt="This API can only be called in file decoding mode";
+           errtxt=QObject::tr("This API can only be called in file decoding mode");
            break;
        case 15:
-           errtxt="This API can only be called in stream decoding mode";
+           errtxt=QObject::tr("This API can only be called in stream decoding mode");
            break;
        case 16:
-           errtxt="System not support, the SDK can only work with CPU above Pentium 3";
+           errtxt=QObject::tr("System not support, the SDK can only work with CPU above Pentium 3");
            break;
        case 17:
-           errtxt="Missing file header";
+           errtxt=QObject::tr("Missing file header");
            break;
        case 18:
-           errtxt="Version mismatch between encoder and decoder";
+           errtxt=QObject::tr("Version mismatch between encoder and decoder");
            break;
        case 19:
-           errtxt="Initialize decoder failure";
+           errtxt=QObject::tr("Initialize decoder failure");
            break;
        case 20:
-           errtxt="File too short or unrecognizable stream";
+           errtxt=QObject::tr("File too short or unrecognizable stream");
            break;
        case 21:
-           errtxt="Initialize timer failure";
+           errtxt=QObject::tr("Initialize timer failure");
            break;
        case 22:
-           errtxt="BLT failure";
+           errtxt=QObject::tr("BLT failure");
            break;
        case 23:
-           errtxt="Update overlay surface failure";
+           errtxt=QObject::tr("Update overlay surface failure");
            break;
        case 24:
-           errtxt="Open video & audio stream failure";
+           errtxt=QObject::tr("Open video & audio stream failure");
            break;
        case 25:
-           errtxt="Open video stream failure";
+           errtxt=QObject::tr("Open video stream failure");
            break;
        case 26:
-           errtxt="JPEG compression failure";
+           errtxt=QObject::tr("JPEG compression failure");
            break;
        case 27:
-           errtxt="File type not supported";
+           errtxt=QObject::tr("File type not supported");
            break;
        case 28:
-           errtxt="Data error";
+           errtxt=QObject::tr("Data error");
            break;
        case 29:
-           errtxt="Secret key error";
+           errtxt=QObject::tr("Secret key error");
            break;
        case 30:
-           errtxt="Key frame decoding failure";
+           errtxt=QObject::tr("Key frame decoding failure");
            break;
 
        }
