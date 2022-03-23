@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
         list << QString::fromLocal8Bit(argv[a]);
     }
 
-    list.append("/home/eric/tmp/hikextracted/20220315/");
+    //list.append("/home/eric/tmp/hikextracted/20220315/");
     if (list.length() > 0) {w.ParseArgs(list);}
 
     return a.exec();
