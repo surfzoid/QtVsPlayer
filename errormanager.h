@@ -7,7 +7,7 @@ class ErrorManager
 {
 public:
     ErrorManager();
-   static QString  error_codes (unsigned int  errcode) {
+   static QString  error_codes (QString Source, unsigned int  errcode) {
        QString errtxt;
        switch (errcode) {
        case 0:
@@ -105,6 +105,10 @@ public:
            break;
 
        }
+       if (errcode > 0) {
+           printf("pyd---Hik Sdk error response :from %s : %s\n\r", Source.toUtf8().data(), errtxt.toUtf8().data());
+       }
+
        return errtxt;
        }
 };

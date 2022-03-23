@@ -17,6 +17,8 @@ int QtVsPlayer::LastPlayIdx = 0;
 QString QtVsPlayer::Lastpath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
 QString QtVsPlayer::Lastfs = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
 
+static int eventEnumIndex = QEvent::staticMetaObject
+      .indexOfEnumerator("Type");
 
 QtVsPlayer::QtVsPlayer(QWidget *parent)
     : QMainWindow(parent)
@@ -74,13 +76,16 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
         }
     }
 
-    if(obj->objectName() == "VideoCtrls")
+    if(event->type() == 68)
     {
         if (Zoomed == false) {
 
             DisplayFsName(Lastfs);
         }
     }
+
+/*printf("pyd---Event type %i :%s\n\r", event->type(), QEvent::staticMetaObject
+       .enumerator(eventEnumIndex).valueToKey(event->type()));*/
 
     return QObject::eventFilter(obj, event);
 }
@@ -109,7 +114,7 @@ void QtVsPlayer::ParseArgs(QStringList args)
             fileNames.append(args[0].toUtf8());
             Play (fileNames);
         }
-        fi.~QFileInfo();
+        //fi.~QFileInfo();
     }
 
     if (args.length() > 1) {
@@ -125,8 +130,8 @@ QString QtVsPlayer::GetmimeType( const QString &filePath )
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     QMimeType Mime = QMimeDatabase().mimeTypeForFile(filePath );
-    printf("Debug---File:%s" , filePath.toUtf8().data());
-    printf("Debug---Mime type:%s",Mime.name().toUtf8().data());
+    printf("Debug---File:%s/n/r" , filePath.toUtf8().data());
+    printf("Debug---Mime type:%s/n/r",Mime.name().toUtf8().data());
     return Mime.name();
 #endif
     return "";
@@ -206,8 +211,8 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
     }
     if (LastPlayIdx >= 0 and LastPlayIdx < fileNames.length()) {
 
-        DisplayError(playm4interface::VideoFs(
-                         fileNames[LastPlayIdx]));
+        playm4interface::VideoFs(
+                         fileNames[LastPlayIdx]);
         WVideoCtrls->RestoreSeek();
 
         if (fileNames.length() > 0) {
@@ -262,7 +267,7 @@ void QtVsPlayer::on_actionA_propos_triggered()
 }
 
 
-void QtVsPlayer::DisplayError(unsigned int  ErrMess)
+/*void QtVsPlayer::DisplayError(unsigned int  ErrMess)
 {
 
     QString QerrMess=ErrorManager::error_codes(ErrMess);
@@ -270,7 +275,7 @@ void QtVsPlayer::DisplayError(unsigned int  ErrMess)
     printf("pyd---Hik Sdk error response :%s\n\r",QerrMess.toUtf8().data());
     return;
 
-}
+}*/
 
 void QtVsPlayer::DisplayStatus(QString  StatuTxt)
 {

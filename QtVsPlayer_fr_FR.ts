@@ -56,7 +56,7 @@
     <message>
         <location filename="errormanager.h" line="14"/>
         <source>No error</source>
-        <translation>Pasd&apos;erreur</translation>
+        <translation type="unfinished">Pas d&apos;erreur</translation>
     </message>
     <message>
         <location filename="errormanager.h" line="17"/>

@@ -43,8 +43,6 @@ private slots:
 
     void on_actionA_propos_triggered();
 
-    void DisplayError(unsigned int  ErrMess);
-
     void on_actionPlein_ecran_triggered();
 
     void on_actionMasquer_les_controles_triggered();
@@ -66,6 +64,8 @@ private:
     QString GetmimeType( const QString &filePath );
     void Play (QStringList Files);
     QStringList Scandir( const QString &dir );
+
+    //void DisplayError(unsigned int  ErrMess);
 
     void DisplayFsName(QString Name);
 

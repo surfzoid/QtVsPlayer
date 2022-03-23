@@ -56,7 +56,8 @@ private:
 
     QString m_pbdstarttime;
     QString m_pbdstoptime;
-
+    static void DisplayError(QString Source, unsigned int  ErrMess);
+    static bool FsOpened;
 
 };
 

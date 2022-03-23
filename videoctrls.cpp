@@ -181,7 +181,7 @@ void VideoCtrls::updatelocalprocess()
                 //ui->TimeSlider->statusTip(currentpos).fromUtf8();
                 if (currentpos >= 100) {
 
-                    PlayM4_CloseFile(playm4interface::m_pblocalportnum);
+                    //PlayM4_CloseFile(playm4interface::m_pblocalportnum);
                     QThreadPool::globalInstance()->releaseThread();
                     QThreadPool::globalInstance()->clear();
                     printf("pyd---activeThreadCount:%d\n\r",QThreadPool::globalInstance()->activeThreadCount());

@@ -1,4 +1,4 @@
-#include "playm4interface.h"
+﻿#include "playm4interface.h"
 #include "errormanager.h"
 #include "qtvsplayer.h"
 #include "ui_qtvsplayer.h"
@@ -15,6 +15,7 @@ using namespace std;
 PLAYM4_HWND  playm4interface::hwnd;
 int playm4interface::m_pblocalportnum = -1;
 QString playm4interface::m_pblocalfilepath;
+bool playm4interface::FsOpened = false;
 
 unsigned int  playm4interface::VideoFs(QString fileName)
 {
@@ -24,25 +25,46 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     //initval();
     m_pblocalfilepath = fileName;
 
-    printf("Debug---File name:%s", m_pblocalfilepath.toUtf8().data());
     printf("pyd---File name:%s\n\r",m_pblocalfilepath.toUtf8().data());
 
+    if (FsOpened == true) {
+        FreePort();
+        FsOpened = false;
+    }
+    if (m_pblocalportnum == -1) {
+        bSuccess = PlayM4_GetPort((int *)&m_pblocalportnum);
+        DisplayError("PlayM4_GetPort", PlayM4_GetLastError(m_pblocalportnum));
+    }
 
-    bSuccess = PlayM4_CloseFile(m_pblocalportnum);
-    bSuccess= PlayM4_OpenFile(m_pblocalportnum, m_pblocalfilepath.toUtf8().data());
+
+
+    FsOpened= PlayM4_OpenFile(m_pblocalportnum, m_pblocalfilepath.toUtf8().data());
+    DisplayError("PlayM4_OpenFile",PlayM4_GetLastError(m_pblocalportnum));
 
     bSuccess = PlayM4_Play(m_pblocalportnum, hwnd);
+    DisplayError("PlayM4_Play",PlayM4_GetLastError(m_pblocalportnum));
 
     if (bSuccess) {
 
-        QtVsPlayer().SetWindowTitle(m_pblocalfilepath.toUtf8().data());
+        //QtVsPlayer().SetWindowTitle(m_pblocalfilepath.toUtf8().data());
     }
 
     QtVsPlayer().WVideoCtrls->InitTimeSlide();
 
 
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));
-    return PlayM4_GetLastError(m_pblocalportnum);
+    return 0;PlayM4_GetLastError(m_pblocalportnum);
+}
+
+void playm4interface::DisplayError(QString Source, unsigned int  ErrMess)
+{
+
+    QString QerrMess=ErrorManager::error_codes(Source, ErrMess);
+
+    //printf("pyd---Hik Sdk error response :from %s : %s\n\r", Source.toUtf8().data(), QerrMess.toUtf8().data());
+
+    return;
+
 }
 
 void playm4interface::SetPort()
@@ -57,6 +79,7 @@ void playm4interface::SetPort()
 
         bSuccess = PlayM4_GetPort((int *)&m_pblocalportnum);
         printf("Debug---Port:%s",((QString)m_pblocalportnum).toUtf8().data());
+        DisplayError("PlayM4_GetPort", PlayM4_GetLastError(m_pblocalportnum));
 
         QtVsPlayer::InitPort(m_pblocalportnum);
     }
@@ -65,16 +88,23 @@ void playm4interface::SetPort()
 
 void playm4interface::FreePort()
 {
-    BOOL bSuccess;
+    BOOL bSuccess = false;
     bSuccess = Stop();
+
     bSuccess = PlayM4_CloseFile(m_pblocalportnum);
+    DisplayError("PlayM4_CloseFile", PlayM4_GetLastError(m_pblocalportnum));
+
     bSuccess = PlayM4_FreePort(m_pblocalportnum);
+    DisplayError("PlayM4_FreePort", PlayM4_GetLastError(m_pblocalportnum));
+
+    m_pblocalportnum = -1;
     return;
 }
 
 int playm4interface::RefreshPlay()
 {
     //return PlayM4_RefreshPlay(m_pblocalportnum);
+    //DisplayError("PlayM4_RefreshPlay", PlayM4_GetLastError(m_pblocalportnum));
     return 0;
 }
 
