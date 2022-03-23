@@ -16,8 +16,9 @@ make
 make install  
 cp  -f ./lib/$(uname -m)/* /opt/QtVsPlayer/  
 cp -f ./QtVsPlayer_fr_FR.qm /opt/QtVsPlayer/  
-sudo cp -f ./images/QtVsPlayer.png /usr/share/icons/  
-sudo cp -f ./QtVsPlayer.desktop /usr/share/applications/  
+cp -f ./images/QtVsPlayer.png $HOME/.local/share/icons/  
+cp -f ./QtVsPlayer.desktop $HOME/.local/share/applications
+cd /opt/QtVsPlayer/
 ./QtVsPlayer  
 
 # TODO
