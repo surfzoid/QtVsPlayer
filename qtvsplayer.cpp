@@ -130,8 +130,8 @@ QString QtVsPlayer::GetmimeType( const QString &filePath )
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     QMimeType Mime = QMimeDatabase().mimeTypeForFile(filePath );
-    printf("Debug---File:%s/n/r" , filePath.toUtf8().data());
-    printf("Debug---Mime type:%s/n/r",Mime.name().toUtf8().data());
+    printf("Debug---File:%s\n\r" , filePath.toUtf8().data());
+    printf("Debug---Mime type:%s\n\r",Mime.name().toUtf8().data());
     return Mime.name();
 #endif
     return "";
