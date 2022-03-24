@@ -19,8 +19,6 @@ public:
     void clearitems();
     void Populate(QStringList fileName);
 
-    static QTime starttime();
-    static QTime stoptime();
 private:
     Ui::FilesListe *ui;
 

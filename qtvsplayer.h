@@ -61,16 +61,14 @@ private:
     QStringList Hist;
     static QString Lastpath;
     static QString Lastfs;
-    QString GetmimeType( const QString &filePath );
+    static QString GetmimeType( const QString &filePath );
     void Play (QStringList Files);
-    QStringList Scandir( const QString &dir );
+    static QStringList Scandir( const QString &dir );
 
     //void DisplayError(unsigned int  ErrMess);
 
     void DisplayFsName(QString Name);
 
-    QRect originH;
-    bool Zoomed;
 
 
 protected:

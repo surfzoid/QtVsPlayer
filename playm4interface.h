@@ -45,8 +45,6 @@ public:
         return;
     }
 
-    int * usrid = 0;
-    int * channelnum = 0;
     //for play local file
     static QString m_pblocalfilepath;
     static int m_pblocalportnum;
@@ -54,8 +52,6 @@ public:
     static void FreePort();
 private:
 
-    QString m_pbdstarttime;
-    QString m_pbdstoptime;
     static void DisplayError(QString Source, unsigned int  ErrMess);
     static bool FsOpened;
 

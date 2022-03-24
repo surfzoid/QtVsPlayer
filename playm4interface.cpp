@@ -28,12 +28,17 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     printf("pyd---File name:%s\n\r",m_pblocalfilepath.toUtf8().data());
 
     if (FsOpened == true) {
-        FreePort();
+
+        bSuccess = Stop();
+
+        bSuccess = PlayM4_CloseFile(m_pblocalportnum);
+        DisplayError("PlayM4_CloseFile", PlayM4_GetLastError(m_pblocalportnum));
         FsOpened = false;
     }
     if (m_pblocalportnum == -1) {
-        bSuccess = PlayM4_GetPort((int *)&m_pblocalportnum);
-        DisplayError("PlayM4_GetPort", PlayM4_GetLastError(m_pblocalportnum));
+        //bSuccess = PlayM4_GetPort((int *)&m_pblocalportnum);
+        SetPort();
+        //DisplayError("PlayM4_GetPort", PlayM4_GetLastError(m_pblocalportnum));
     }
 
 
@@ -78,7 +83,7 @@ void playm4interface::SetPort()
         decimaltoOctal(PlayM4_GetCaps());
 
         bSuccess = PlayM4_GetPort((int *)&m_pblocalportnum);
-        printf("Debug---Port:%s",((QString)m_pblocalportnum).toUtf8().data());
+        printf("Debug---Port:%s\n\r",((QString)m_pblocalportnum).toUtf8().data());
         DisplayError("PlayM4_GetPort", PlayM4_GetLastError(m_pblocalportnum));
 
         QtVsPlayer::InitPort(m_pblocalportnum);
@@ -97,7 +102,10 @@ void playm4interface::FreePort()
     bSuccess = PlayM4_FreePort(m_pblocalportnum);
     DisplayError("PlayM4_FreePort", PlayM4_GetLastError(m_pblocalportnum));
 
-    m_pblocalportnum = -1;
+    if (bSuccess == true) {
+        m_pblocalportnum = -1;
+    }
+
     return;
 }
 

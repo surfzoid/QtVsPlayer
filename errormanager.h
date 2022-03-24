@@ -103,6 +103,22 @@ public:
        case 30:
            errtxt=QObject::tr("Key frame decoding failure");
            break;
+       case 31:
+           errtxt=QObject::tr("NEED_MORE_DATA");
+           break;
+       case 32:
+           errtxt=QObject::tr("INVALID_PORT");
+           break;
+       case 33:
+           errtxt=QObject::tr("NOT_FIND");
+           break;
+       case 34:
+           errtxt=QObject::tr("NEED_LARGER_BUFFER");
+           break;
+       case 99:
+           errtxt=QObject::tr("FAIL_UNKNOWN");
+           break;
+
 
        }
        if (errcode > 0) {

@@ -20,6 +20,9 @@ QString QtVsPlayer::Lastfs = QStandardPaths::writableLocation(QStandardPaths::Mo
 static int eventEnumIndex = QEvent::staticMetaObject
       .indexOfEnumerator("Type");
 
+static QRect originH = *new QRect;
+static bool Zoomed = false;
+
 QtVsPlayer::QtVsPlayer(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::QtVsPlayer)
@@ -65,8 +68,7 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
 
     if(event->type() == QEvent::WinIdChange)
     {
-        printf("pyd---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
-        if(obj->objectName() == "centralwidget")
+         if(obj->objectName() == "centralwidget")
         {
 
             printf("pyd---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
@@ -176,7 +178,7 @@ void QtVsPlayer::on_actionOuvrir_triggered()
                                            tr("video Files (*.mp4 *.avi *.mkv)"));
     if (fileNames.length() > 0) {
 
-        playm4interface::SetPort();
+        //playm4interface::SetPort();
         Lastpath = fileNames[0].toUtf8();
         Play (fileNames);
     }
@@ -188,6 +190,7 @@ void QtVsPlayer::Play (QStringList Files)
     filesLs->Populate(Files);
     WVideoCtrls->PLast = false;
     LastPlayIdx = 0 ;
+    playm4interface::SetPort();
     PlayNextFile(false,0);
     return;
 }
@@ -478,7 +481,7 @@ void QtVsPlayer::on_actionDossier_triggered()
     }
 
     if (fileNames.length() > 0) {
-        playm4interface::SetPort();
+        //playm4interface::SetPort();
         Play (fileNames);
         Lastpath = _IntputFolder;
     }
