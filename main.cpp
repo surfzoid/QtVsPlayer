@@ -36,6 +36,14 @@ int main(int argc, char *argv[])
     bsuc = myappTranslator.load(QLocale(), QLatin1String("QtVsPlayer"), QLatin1String("_"),
                                 QCoreApplication::applicationDirPath());
     a.installTranslator(&myappTranslator);
+
+    //surpress warning!
+    if (bsuc == false ) {
+        //I'm happy for yu
+    }
+    //surpress warning!
+
+
     //End Translation
 
     QtVsPlayer w;

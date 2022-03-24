@@ -5,7 +5,7 @@
 #include <QtGui>
 #include <QWidget>
 
-#define CAPTURE_PICTURE_PATH "./PlayBackPictureDir/"
+#define CAPTURE_PICTURE_PATH "/QtVsPlayerPlayBackPicture/"
 
 namespace Ui {
 class VideoCtrls;
@@ -37,7 +37,6 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;
 private slots:
     void on_pauseButton_released();
-    void on_TimeSlider_valueChanged(int value);
     void on_playButton_released();
     void on_stopButton_released();
     void on_SeekMoreButton_released();

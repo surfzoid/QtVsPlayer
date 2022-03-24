@@ -8,6 +8,10 @@ bool VideoCtrls::EndRead = true;
 bool VideoCtrls::PLast = false;
 int VideoCtrls::HikNumPort = -1;
 int VideoCtrls::seekSpeed = 0;
+//QString VideoCtrls::picturepathname = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/PlayBackPictureDir/";
+static QString PicPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/";
+static bool IsSnapShoot = false;
+static int SnapShootCtl = 0;
 
 VideoCtrls::VideoCtrls(QWidget *parent) :
     QWidget(parent),
@@ -64,17 +68,6 @@ void VideoCtrls::on_pauseButton_released()
     playm4interface::Pause(!PauseFlag);
     PauseFlag = !PauseFlag;
     EndRead = PauseFlag;
-    return;
-}
-
-void VideoCtrls::on_TimeSlider_valueChanged(int value)
-{
-    /*updatelocalprocess();
-    unsigned int currentpos;
-    float pos;
-    pos = PlayM4_GetPlayPos(HikNumPort);
-    currentpos =(unsigned int)(pos*100);
-    this->ui->TimeSlider->setValue(currentpos);*/
     return;
 }
 
@@ -229,7 +222,7 @@ void VideoCtrls::on_TimeSlider_sliderPressed()
 void VideoCtrls::on_TimeSlider_sliderReleased()
 {
     //EndRead = false;
-   // on_pauseButton_released();
+    // on_pauseButton_released();
     return;
 
 }
@@ -265,22 +258,37 @@ void VideoCtrls::on_previousButton_released()
  *  Output          :  	none
  *  Return          :  	none
 ************************************************************************/
-void __stdcall PlayM4DisplayCallBack(long nPort, char *pBuf, long size, long width, long height,
-                                     long stamp, long type, long reserved)
+void __stdcall PlayM4DisplayCallBack(int nPort, char *pBuf, int size, int width, int height,
+                                     int stamp, int type, int reserved)
 {
-    QString picturepathname(CAPTURE_PICTURE_PATH);
-    QDir directory("./");
-    directory.mkpath(picturepathname);
-    QString time=QDateTime::currentDateTime().toString("yyyy-MM-dd__hh_mm_ss");
-    picturepathname.append(time.toLatin1().data());
-    picturepathname.append(".bmp");
+    if (IsSnapShoot == true) {
+        QString picturepathname(CAPTURE_PICTURE_PATH);
+        QString today=QDateTime::currentDateTime().toString("yyyy-MM-dd");
+        QDir directory(PicPath);
+        picturepathname = PicPath + picturepathname + today + "/";
+        directory.mkpath(picturepathname);
+        QString time=QDateTime::currentDateTime().toString("yyyy-MM-dd__hh_mm_ss");
+        picturepathname.append(time.toUtf8().data());
+        picturepathname.append(".bmp");
 
-    //width = (long)1024;
-    //height  = (long)768;
+        //JPEG ERROR NEED FOLLOW!!!!
+        PlayM4_ConvertToBmpFile(pBuf, size, width, height, type, picturepathname.toUtf8().data());
+        //PlayM4_ConvertToJpegFile(pBuf, size, width, height, type, picturepathname.toUtf8().data());
 
-    //JPEG ERROR NEED FOLLOW!!!!
-    PlayM4_ConvertToBmpFile(pBuf, size, width, height, type, picturepathname.toUtf8().data());
-    //PlayM4_ConvertToJpegFile(pBuf, size, width, height, type, picturepathname.toUtf8().data());
+        SnapShootCtl += 1;
+    }
+
+    if (SnapShootCtl == 45) {
+        SnapShootCtl = 0;
+        IsSnapShoot = false;
+    }
+
+    //surpress warning!
+    if (nPort == 0 and stamp == 0 and reserved == 0 ) {
+        //I'm happy for yu
+    }
+    //surpress warning!
+
     return;
 }
 
@@ -300,17 +308,33 @@ void VideoCtrls::on_SnapshotButton_released()
     int *height = new int(768);
 
     PlayM4_GetPictureSize(HikNumPort,width,height);
+
+    IsSnapShoot = true;
+
 #if (defined(_WIN32))
     PlayM4_SetDisplayCallBack(HikNumPort, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
 #elif defined(__linux__)
     PlayM4_SetDisplayCallBack(HikNumPort, (void (__stdcall *)(int,char *,int,int,int,int,int,int))PlayM4DisplayCallBack);
 #endif
 
+    QString picturepath(CAPTURE_PICTURE_PATH);
+    QString today=QDateTime::currentDateTime().toString("yyyy-MM-dd");
+    QDir directory(PicPath);
+    picturepath = PicPath + picturepath + today + "/";
+    //test
+    /*bool suc = false;
+    QString test = picturepath + "test.jpg";
+    QByteArray ba = test.toLocal8Bit();
+    unsigned char *res = (unsigned char *)strdup(ba.constData());
+    unsigned int  *buffSize = (unsigned int *)4608000;
+    suc = PlayM4_GetBMP(HikNumPort,res, 4608000,buffSize);*/
+    //end test
+
     QString picturepathname(tr("Capture Picture succes to "));
-    picturepathname.append(CAPTURE_PICTURE_PATH);
+    picturepathname.append(picturepath);
 
     QMessageBox::information(this,tr("Capture Picture succes "),
-                             picturepathname.toUtf8().data());
+                             picturepath.toUtf8().data());
     return;
 
 }

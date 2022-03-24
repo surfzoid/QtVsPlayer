@@ -334,13 +334,27 @@ void QtVsPlayer::resizeEvent(QResizeEvent *event)
     //this->ui->FsDisplay->setVisible(false);
     originH = ui->centralwidget->rect();
     Zoomed = false;
-    return;
+
+    //surpress warning!
+    if (event == nullptr) {
+        event = nullptr;
+    }
+    //surpress warning!
+
+    return ;
 }
 
 
 void QtVsPlayer::mouseDoubleClickEvent(QMouseEvent *event)
 {
     FullScr();
+
+    //surpress warning!
+    if (event == nullptr) {
+        event = nullptr;
+    }
+    //surpress warning!
+
     return;
 }
 

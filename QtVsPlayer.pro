@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -9,8 +9,13 @@ qnx: target.path = /tmp/$${TARGET}
 else: unix:!android: target.path = /opt/$${TARGET}
 !isEmpty(target.path): INSTALLS += target
 
-unix {
+# Specifies name of the binary.
+TARGET = QtVsPlayer
 
+# Denotes that project is an application.
+TEMPLATE = app
+
+unix {
 INCLUDEPATH += $$PWD/lib
 DEPENDPATH += $$PWD/lib
 LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=$$PWD/lib/$$QMAKE_HOST.arch:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender

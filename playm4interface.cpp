@@ -86,6 +86,12 @@ void playm4interface::SetPort()
         printf("Debug---Port:%s\n\r",((QString)m_pblocalportnum).toUtf8().data());
         DisplayError("PlayM4_GetPort", PlayM4_GetLastError(m_pblocalportnum));
 
+        //surpress warning!
+        if (bSuccess == false ) {
+            //I'm happy for yu
+        }
+        //surpress warning!
+
         QtVsPlayer::InitPort(m_pblocalportnum);
     }
     return;
