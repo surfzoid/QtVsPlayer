@@ -216,7 +216,6 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
 
         playm4interface::VideoFs(
                          fileNames[LastPlayIdx]);
-        WVideoCtrls->RestoreSeek();
 
         if (fileNames.length() > 0) {
             QStringList Colom = fileNames[LastPlayIdx].split("-");

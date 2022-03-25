@@ -48,6 +48,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
     bSuccess = PlayM4_Play(m_pblocalportnum, hwnd);
     DisplayError("PlayM4_Play",PlayM4_GetLastError(m_pblocalportnum));
+    QtVsPlayer().WVideoCtrls->RestoreSeek();
 
     if (bSuccess) {
 
