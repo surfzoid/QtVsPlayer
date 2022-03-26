@@ -13,7 +13,7 @@ use https://github.com/surfzoid/HikNetExtractor in an shelde task to automatical
 git clone https://github.com/surfzoid/QtVsPlayer.git  
 cd ./QtVsPlayer  
 qmake  
-make 
+make  
  #some distro ask for root access  
  #sudo mkdir /opt/QtVsPlayer & sudo chown -R $USER /opt/QtVsPlayer   
 make install  
