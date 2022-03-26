@@ -1,5 +1,6 @@
 # QtVsPlayer for Hikvision.
-Read local video files of Hikvision devices and display blue, green and red vectors.
+Read local video files of Hikvision devices and display blue, green and red vectors. 
+This is the end of an full network backup solution in combination with HikNetExtractor.
 
 # Tips
 Double click on the video toggle fullscreen
@@ -13,8 +14,8 @@ git clone https://github.com/surfzoid/QtVsPlayer.git
 cd ./QtVsPlayer  
 qmake  
 make 
-## some distro ask for root access  
-## sudo mkdir /opt/QtVsPlayer & sudo chown -R $USER /opt/QtVsPlayer   
+ #some distro ask for root access  
+ #sudo mkdir /opt/QtVsPlayer & sudo chown -R $USER /opt/QtVsPlayer   
 make install  
 cp  -f ./lib/$(uname -m)/* /opt/QtVsPlayer/  
 cp -f ./QtVsPlayer_fr_FR.qm /opt/QtVsPlayer/  
