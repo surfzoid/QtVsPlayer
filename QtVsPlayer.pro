@@ -55,6 +55,7 @@ RESOURCES += \
 
 DISTFILES += \
     QtVsPlayer.desktop \
-    README.md
+    README.md \
+    TODO
 
 

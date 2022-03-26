@@ -1,0 +1,15 @@
+An stop/play and/or play from playlist, break order of calling Hik API
+
+Add sound managment
+
+Select the line in the playlist of the curent play file.
+
+Tweak the pro/qmake file to provide better make install
+
+Setup qtcreator on PI400 to compil with clang
+
+add play rtsp
+
+add save setting
+
+aarch64, try the lib of UOS deb pkg
