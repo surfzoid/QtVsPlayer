@@ -171,9 +171,9 @@ void QtVsPlayer::on_actionOuvrir_triggered()
 {
     HideCtrl();
 
-    QFileDialog *FsDialog = new QFileDialog();
-    Hist = FsDialog->history();
-    fileNames = FsDialog->getOpenFileNames(this,
+    //QFileDialog *FsDialog = new QFileDialog();
+    //Hist = FsDialog->history();
+    fileNames = QFileDialog::getOpenFileNames(this,
                                            tr("Open video"), Lastpath,
                                            tr("video Files (*.mp4 *.avi *.mkv)"));
     if (fileNames.length() > 0) {
@@ -188,7 +188,7 @@ void QtVsPlayer::on_actionOuvrir_triggered()
 void QtVsPlayer::Play (QStringList Files)
 {
     filesLs->Populate(Files);
-    WVideoCtrls->PLast = false;
+    VideoCtrls::PLast = false;
     LastPlayIdx = 0 ;
     playm4interface::SetPort();
     PlayNextFile(false,0);
@@ -207,7 +207,7 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
 
     WVideoCtrls->InitTimeSlide();
     if (LastPlayIdx > fileNames.length()) {
-        WVideoCtrls->PLast = true;
+        VideoCtrls::PLast = true;
     }
     if (FromFsList) {
         LastPlayIdx = idx;
@@ -482,11 +482,11 @@ void QtVsPlayer::on_actionListe_de_lecture_triggered()
 
 void QtVsPlayer::on_actionDossier_triggered()
 {
-    QFileDialog *FsDialog = new QFileDialog();
+    //QFileDialog *FsDialog = new QFileDialog();
 
-    QString _IntputFolder = FsDialog->getExistingDirectory(this,
+    QString _IntputFolder = QFileDialog::getExistingDirectory(this,
                                                            (tr("Select Folder to read")), Lastpath);
-    Hist = FsDialog->history();
+    //Hist = FsDialog->history();
 
     if (_IntputFolder.isEmpty() == false) {
         fileNames.clear();

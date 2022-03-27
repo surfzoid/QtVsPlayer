@@ -19,7 +19,7 @@ bool playm4interface::FsOpened = false;
 
 unsigned int  playm4interface::VideoFs(QString fileName)
 {
-    VideoCtrls().EndRead = false;
+    VideoCtrls::EndRead = false;
     BOOL bSuccess;
 
     //initval();
@@ -59,7 +59,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
 
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));
-    return 0;PlayM4_GetLastError(m_pblocalportnum);
+    return 0;//PlayM4_GetLastError(m_pblocalportnum);
 }
 
 void playm4interface::DisplayError(QString Source, unsigned int  ErrMess)

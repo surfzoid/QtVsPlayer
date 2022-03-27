@@ -186,7 +186,7 @@ void VideoCtrls::updatelocalprocess()
                         on_stopButton_released();
                     }
                 }
-            }  catch (QException e) {
+            }  catch (QException e ) {
                 printf("pyd---Hik SDK Exception:%s\n\r",e.what());
             }
 

@@ -7,8 +7,7 @@
         <location filename="filesliste.ui" line="14"/>
         <source>Playlist</source>
         <oldsource>Play list</oldsource>
-        <translation>Liste de lecture
-</translation>
+        <translation>Liste de lecture</translation>
     </message>
     <message>
         <location filename="filesliste.ui" line="55"/>
@@ -56,7 +55,7 @@
     <message>
         <location filename="errormanager.h" line="14"/>
         <source>No error</source>
-        <translation type="unfinished">Pas d&apos;erreur</translation>
+        <translation>Pas d&apos;erreur</translation>
     </message>
     <message>
         <location filename="errormanager.h" line="17"/>
@@ -81,7 +80,7 @@
     <message>
         <location filename="errormanager.h" line="29"/>
         <source> Audio decoding failure</source>
-        <translation>Échec du décodage de l&apos;audio</translation>
+        <translation>Échec du décodage audio</translation>
     </message>
     <message>
         <location filename="errormanager.h" line="32"/>
