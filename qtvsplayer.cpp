@@ -469,6 +469,7 @@ void QtVsPlayer::WinIdWorkarround()
             playm4interface::hwnd = this->centralWidget()->winId();
             playm4interface::SetVideoWin(0);
             playm4interface::RefreshPlay();
+            playm4interface::OneByOneBack();
         }
     }
     return;
