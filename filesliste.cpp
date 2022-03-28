@@ -57,6 +57,8 @@ void FilesListe::clearitems()
     return;
 }*/
 
+static QString MemDay("");// = QDate::currentDate().toString("yyyy-mm-dd");
+static bool NextDay = false;
 void FilesListe::Populate(QStringList fileNames)
 {
     clearitems();
@@ -68,8 +70,10 @@ void FilesListe::Populate(QStringList fileNames)
         if (Colom.length() < 4) {
             QTableWidgetItem *FilePathItem = new QTableWidgetItem(fileName);
             FilePathItem->setFlags(Qt::ItemIsEnabled);
-            break;
+
         }
+        else {
+
 
         QFile file(fileName);
 
@@ -84,6 +88,7 @@ void FilesListe::Populate(QStringList fileNames)
 
         QTableWidgetItem *FileSizeItem = new QTableWidgetItem(filesize);
         FileSizeItem->setFlags(Qt::ItemIsEnabled);
+        FileSizeItem->setTextAlignment(Qt::AlignHCenter);
 
         QString path(Colom[0]);
         path = path.left(path.length() - 8);
@@ -95,18 +100,44 @@ void FilesListe::Populate(QStringList fileNames)
         QString starttime = tt.left(2) + ":" + tt.mid(2,2) + ":" + tt.right(2);
         QTableWidgetItem *FileStartTimeItem = new QTableWidgetItem(starttime);
         //FileStartTimeItem->setFlags(Qt::ItemIsEnabled);
+        FileStartTimeItem->setTextAlignment(Qt::AlignHCenter);
 
 
         QString st = Colom[3];
         QString stoptime = st.left(2) + ":" + st.mid(2,2) + ":" + st.right(2);
          QTableWidgetItem *FileStopTimeItem = new QTableWidgetItem(stoptime);
         //FileStopTimeItem->setFlags(Qt::ItemIsEnabled);
+         //FileStopTimeItem->setBackground(Qt::darkRed);
+         FileStopTimeItem->setForeground(Qt::darkBlue);
+         FileStopTimeItem->setTextAlignment(Qt::AlignHCenter);
 
 
         QString dd = Colom[2];
         QString Day = dd.left(4) + "/" + dd.mid(4,2) + "/" + dd.right(2);
 
         QTableWidgetItem *DayItem = new QTableWidgetItem(Day);
+        DayItem->setTextAlignment(Qt::AlignHCenter);
+
+        if (Day != MemDay) {
+            NextDay = !NextDay;
+            MemDay = Day;
+        }
+
+        if (NextDay == true) {
+            DayItem->setBackground(Qt::darkRed);
+            DayItem->setForeground(Qt::white);
+            FilePathItem->setBackground(Qt::cyan);
+            FileStartTimeItem->setBackground(Qt::red);
+            FileStartTimeItem->setForeground(Qt::white);
+        }
+
+        if (NextDay == false) {
+            DayItem->setBackground(Qt::white);
+            DayItem->setForeground(Qt::darkRed);
+            FilePathItem->setBackground(Qt::white);
+            FileStartTimeItem->setBackground(Qt::white);
+            FileStartTimeItem->setForeground(Qt::red);
+        }
 
         FileStopTimeItem->setFlags(Qt::ItemIsEnabled);
         int row = ui->tableWidget_2_localfilist->rowCount();
@@ -117,7 +148,7 @@ void FilesListe::Populate(QStringList fileNames)
         ui->tableWidget_2_localfilist->setItem(row, 3, DayItem);
         ui->tableWidget_2_localfilist->setItem(row, 4, FileSizeItem);
         ui->tableWidget_2_localfilist->setItem(row, 5, pathItem);
-
+}
 
     }
     QHeaderView *header = ui->tableWidget_2_localfilist->horizontalHeader();
