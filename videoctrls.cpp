@@ -179,7 +179,7 @@ void VideoCtrls::updatelocalprocess()
                     QThreadPool::globalInstance()->clear();
                     printf("pyd---activeThreadCount:%d\n\r",QThreadPool::globalInstance()->activeThreadCount());
 
-                    QtVsPlayer().PlayNextFile(false,0);
+                    QtVsPlayer::PlayNextFile(false,0);
 
                     if (PLast == true) {
                         EndRead = true;
@@ -197,11 +197,7 @@ void VideoCtrls::updatelocalprocess()
     return;
 }
 
-void VideoCtrls::on_lineEdit_2_pbprocess_textChanged(const QString &arg1)
-{
-    QtVsPlayer().DisplayStatus(arg1);
-    return;
-}
+
 
 void VideoCtrls::on_TimeSlider_sliderMoved(int position)
 {
@@ -229,7 +225,7 @@ void VideoCtrls::on_TimeSlider_sliderReleased()
 
 void VideoCtrls::on_nextButton_released()
 {
-    QtVsPlayer().PlayNextFile(false,0);
+    QtVsPlayer::PlayNextFile(false,0);
     return;
 
 }
@@ -239,7 +235,7 @@ void VideoCtrls::on_nextButton_released()
 void VideoCtrls::on_previousButton_released()
 {
     QtVsPlayer::LastPlayIdx -= 2;
-    QtVsPlayer().PlayNextFile(false,0);
+    QtVsPlayer::PlayNextFile(false,0);
     return;
 }
 

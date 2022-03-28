@@ -27,14 +27,13 @@ public:
     //playm4interface *nPlaym4Interface;
     void FullScr();
     void HideCtrl();
-    VideoCtrls *WVideoCtrls;
-    FilesListe *filesLs;
-    void ParseArgs(QStringList args);
-    void DisplayStatus(QString  StatuTxt);
+    static VideoCtrls *WVideoCtrls;
+    static FilesListe *filesLs;
+    static void ParseArgs(QStringList args);
     void SetWindowTitle(QString Title);
     static int LastPlayIdx;
-    void PlayNextFile(bool FromFsList, int idx);
-    void WinIdWorkarround();
+    static void PlayNextFile(bool FromFsList, int idx);
+    static void WinIdWorkarround();
     static QStringList fileNames;
     static void InitPort(int port);
 
@@ -62,12 +61,14 @@ private:
     static QString Lastpath;
     static QString Lastfs;
     static QString GetmimeType( const QString &filePath );
-    void Play (QStringList Files);
+    static void Play (QStringList Files);
     static QStringList Scandir( const QString &dir );
 
     //void DisplayError(unsigned int  ErrMess);
 
     void DisplayFsName(QString Name);
+
+    static int centralWidgetwinId;
 
 
 

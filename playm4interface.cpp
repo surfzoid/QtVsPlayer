@@ -48,14 +48,14 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
     bSuccess = PlayM4_Play(m_pblocalportnum, hwnd);
     DisplayError("PlayM4_Play",PlayM4_GetLastError(m_pblocalportnum));
-    QtVsPlayer().WVideoCtrls->RestoreSeek();
+    QtVsPlayer::WVideoCtrls->RestoreSeek();
 
     if (bSuccess) {
 
-        //QtVsPlayer().SetWindowTitle(m_pblocalfilepath.toUtf8().data());
+        //QtVsPlayer::SetWindowTitle(m_pblocalfilepath.toUtf8().data());
     }
 
-    QtVsPlayer().WVideoCtrls->InitTimeSlide();
+    QtVsPlayer::WVideoCtrls->InitTimeSlide();
 
 
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));

@@ -79,8 +79,8 @@ void FilesListe::Populate(QStringList fileNames)
         FilePathItem->setFlags(Qt::ItemIsEnabled);
 
         QString filesize;
-        QFileInfo  *filecurr = new QFileInfo(file.fileName());
-        filesize = QString::number(filecurr->size() / 1000000);
+        QFileInfo  filecurr(file.fileName());
+        filesize = QString::number(filecurr.size() / 1000000);
 
         QTableWidgetItem *FileSizeItem = new QTableWidgetItem(filesize);
         FileSizeItem->setFlags(Qt::ItemIsEnabled);
@@ -132,7 +132,7 @@ void FilesListe::on_tableWidget_2_localfilist_cellClicked(int row, int column)
     {
         return;
     }
-    QtVsPlayer().PlayNextFile(true,row);
+    QtVsPlayer::PlayNextFile(true,row);
     return;
 }
 

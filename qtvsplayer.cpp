@@ -14,8 +14,13 @@
 QStringList QtVsPlayer::fileNames;
 int QtVsPlayer::LastPlayIdx = 0;
 
+int QtVsPlayer::centralWidgetwinId = 0;
+
 QString QtVsPlayer::Lastpath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
 QString QtVsPlayer::Lastfs = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
+
+FilesListe *QtVsPlayer::filesLs;
+VideoCtrls *QtVsPlayer::WVideoCtrls;
 
 static int eventEnumIndex = QEvent::staticMetaObject
       .indexOfEnumerator("Type");
@@ -29,24 +34,24 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QString CpuArch = QSysInfo::buildCpuArchitecture();
+    printf("pyd---buildCpuArchitecture :%s\n\r",CpuArch.toUtf8().data());
 
-
-    //if (QtVsPlayer::filesLs == nullptr) {
         QtVsPlayer::filesLs = new FilesListe (this);
-    //}
 
-    //if (QtVsPlayer::nPlaym4Interface == nullptr) {
-        //QtVsPlayer::nPlaym4Interface = new playm4interface ();
-    //}
-
-
-    //if (QtVsPlayer::WVideoCtrls == nullptr) {
         QtVsPlayer::WVideoCtrls = new VideoCtrls (this);
         qApp->installEventFilter(this);
-        //WVideoCtrls->setWindowOpacity(0);
+
         ui->statusbar->addPermanentWidget(ui->SatusLbl,1);
-    //}
-    //if (ArgLS.length() > 0) {ParseArgs(ArgLS);}
+
+        centralWidgetwinId = this->centralWidget()->winId();
+
+      QStringList ArgLS = QApplication::arguments();
+      if (ArgLS.length() > 0)
+      {
+          ArgLS.removeAt(0);
+          ParseArgs(ArgLS);
+      }
 
 }
 
@@ -97,7 +102,7 @@ void QtVsPlayer::ParseArgs(QStringList args)
     //HideCtrl();
     playm4interface::SetPort();
     if (playm4interface::hwnd == 0) {
-        playm4interface::hwnd = this->centralWidget()->winId();
+        playm4interface::hwnd = centralWidgetwinId;
         playm4interface::SetVideoWin(0);
         playm4interface::RefreshPlay();
     }
@@ -116,7 +121,6 @@ void QtVsPlayer::ParseArgs(QStringList args)
             fileNames.append(args[0].toUtf8());
             Play (fileNames);
         }
-        //fi.~QFileInfo();
     }
 
     if (args.length() > 1) {
@@ -146,7 +150,7 @@ QStringList QtVsPlayer::Scandir( const QString &dir2scan )
     dir.setSorting(QDir::Name | QDir::DirsFirst);
     if (dir.isEmpty() == false) {
 
-        QFileInfoList list = dir.entryInfoList();
+        QFileInfoList list(dir.entryInfoList());
         QString MimeIs;
 
         for (int i=0; i<list.length(); i++)
@@ -171,8 +175,6 @@ void QtVsPlayer::on_actionOuvrir_triggered()
 {
     HideCtrl();
 
-    //QFileDialog *FsDialog = new QFileDialog();
-    //Hist = FsDialog->history();
     fileNames = QFileDialog::getOpenFileNames(this,
                                            tr("Open video"), Lastpath,
                                            tr("video Files (*.mp4 *.avi *.mkv)"));
@@ -268,28 +270,6 @@ void QtVsPlayer::on_actionA_propos_triggered()
     return;
 }
 
-
-/*void QtVsPlayer::DisplayError(unsigned int  ErrMess)
-{
-
-    QString QerrMess=ErrorManager::error_codes(ErrMess);
-    //this->ui->statusbar->showMessage(QerrMess);
-    printf("pyd---Hik Sdk error response :%s\n\r",QerrMess.toUtf8().data());
-    return;
-
-}*/
-
-void QtVsPlayer::DisplayStatus(QString  StatuTxt)
-{
-
-    //this->ui->statusbar->clearMessage();
-    this->ui->statusbar->showMessage(tr(StatuTxt.toUtf8()), 2000);
-    //this->ui->statusbar->update();
-    //this->ui->statusbar->repaint();
-    return;
-
-}
-
 void QtVsPlayer::on_actionPlein_ecran_triggered()
 {
     FullScr();
@@ -300,10 +280,10 @@ void QtVsPlayer::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
     case Qt::Key_F11:
-        QtVsPlayer().FullScr();
+        QtVsPlayer::FullScr();
         break;
     case Qt::Key_F10:
-        QtVsPlayer().HideCtrl();
+        QtVsPlayer::HideCtrl();
         break;
     }
     return;
@@ -439,7 +419,7 @@ void QtVsPlayer::on_actionListe_de_lecture_toggled(bool checked)
 {
 
     if (checked) {
-        filesLs->show();
+        QtVsPlayer::filesLs->show();
     } else {
         filesLs->hide();
     }
@@ -457,21 +437,25 @@ void QtVsPlayer::SetWindowTitle(QString Title)
 
 void QtVsPlayer::WinIdWorkarround()
 {
-    if (this->isEnabled()) {
+    /*if (this->isEnabled()) {
 
         if (this->centralWidget())
-        {
+        {*/
 
-            playm4interface::hwnd = this->winId();
+            playm4interface::hwnd = 0;
 
             playm4interface::SetVideoWin(0);
             playm4interface::RefreshPlay();
-            playm4interface::hwnd = this->centralWidget()->winId();
+            playm4interface::hwnd = centralWidgetwinId;
             playm4interface::SetVideoWin(0);
             playm4interface::RefreshPlay();
-            playm4interface::OneByOneBack();
-        }
-    }
+            if (QSysInfo::buildCpuArchitecture() == "x86_64") {
+            PlayM4_WndResolutionChange(playm4interface::m_pblocalportnum);
+            }
+
+
+        //}
+    //}
     return;
 }
 
@@ -483,7 +467,6 @@ void QtVsPlayer::on_actionListe_de_lecture_triggered()
 
 void QtVsPlayer::on_actionDossier_triggered()
 {
-    //QFileDialog *FsDialog = new QFileDialog();
 
     QString _IntputFolder = QFileDialog::getExistingDirectory(this,
                                                            (tr("Select Folder to read")), Lastpath);

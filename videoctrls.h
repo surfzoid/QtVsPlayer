@@ -45,7 +45,6 @@ private slots:
     void updatelocalprocess();
 
     //action slots:
-    void on_lineEdit_2_pbprocess_textChanged(const QString &arg1);
     void on_TimeSlider_sliderMoved(int position);
     void on_TimeSlider_sliderPressed();
     void on_TimeSlider_sliderReleased();
