@@ -24,7 +24,7 @@ unix {
     }
 message($$PWD/QtVsPlayer.desktop)
 message("If mkdir of /opt/QtVsPlayer return erorror not permit, please do :")
-message("sudo mkdir /opt/QtVsPlayer & sudo chown -R $USER")
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}
@@ -75,5 +75,6 @@ DISTFILES += \
     QtVsPlayer.desktop \
     README.md \
     TODO
+
 
 
