@@ -183,7 +183,7 @@ void VideoCtrls::updatelocalprocess()
 
                     if (PLast == true) {
                         EndRead = true;
-                        on_stopButton_released();
+                        //on_stopButton_released();
                     }
                 }
             }  catch (QException e ) {

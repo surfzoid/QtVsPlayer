@@ -2,12 +2,7 @@ QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}
-else: unix:!android: target.path = /opt/$${TARGET}
-!isEmpty(target.path): INSTALLS += target
+CONFIG += c++11 debug_and_release link_prl
 
 # Specifies name of the binary.
 TARGET = QtVsPlayer
@@ -16,6 +11,29 @@ TARGET = QtVsPlayer
 TEMPLATE = app
 
 unix {
+    isEmpty(PREFIX) {
+        PREFIX = $$(HOME)/.local/share
+    }
+
+    shortcutfiles.path = $$PREFIX/applications/
+    shortcutfiles.files = $$PWD/QtVsPlayer.desktop
+    iconfiles.path = $$PREFIX/icons/
+    iconfiles.files = $$PWD/images/QtVsPlayer.png
+    #INSTALLS += shortcutfiles
+    #INSTALLS += iconfiles
+    }
+message($$PWD/QtVsPlayer.desktop)
+message("If mkdir of /opt/QtVsPlayer return erorror not permit, please do :")
+message("sudo mkdir /opt/QtVsPlayer & sudo chown -R $USER")
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}
+else: unix:!android: target.path = /opt/$${TARGET}
+target.files += $${TARGET} $$PWD/lib/$$QMAKE_HOST.arch/* $$PWD/*.qm
+!isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles
+
+unix {
+CONFIG += separate_debug_info
 INCLUDEPATH += $$PWD/lib
 DEPENDPATH += $$PWD/lib
 LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=$$PWD/lib/$$QMAKE_HOST.arch:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
