@@ -449,9 +449,9 @@ void QtVsPlayer::WinIdWorkarround()
             playm4interface::hwnd = centralWidgetwinId;
             playm4interface::SetVideoWin(0);
             playm4interface::RefreshPlay();
-            if (QSysInfo::buildCpuArchitecture() == "x86_64") {
+            //if (QSysInfo::buildCpuArchitecture() == "x86_64") {
             PlayM4_WndResolutionChange(playm4interface::m_pblocalportnum);
-            }
+           // }
 
 
         //}
