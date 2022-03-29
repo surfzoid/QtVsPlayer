@@ -485,11 +485,6 @@ void QtVsPlayer::on_actionDossier_triggered()
     return;
 }
 
-void QtVsPlayer::InitPort(int port)
-{
-    VideoCtrls::HikNumPort = port;
-    return;
-}
 
 void QtVsPlayer::on_actionConsole_triggered()
 {

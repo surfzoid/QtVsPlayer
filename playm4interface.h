@@ -54,6 +54,7 @@ private:
 
     static void DisplayError(QString Source, unsigned int  ErrMess);
     static bool FsOpened;
+    static void GetCap(int nFlag);
 
 };
 

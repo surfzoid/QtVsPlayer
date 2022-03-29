@@ -79,9 +79,9 @@ void playm4interface::SetPort()
         //FreePort();
         BOOL bSuccess;
         //from qtdemo//////
-        printf("%.8x <- PlayM4_GetSdkVersion()\n\r",PlayM4_GetSdkVersion());
+        printf("\n\r%.8x <- PlayM4_GetSdkVersion()\n\r",PlayM4_GetSdkVersion());
 
-        decimaltoOctal(PlayM4_GetCaps());
+        GetCap(PlayM4_GetCaps());
 
         bSuccess = PlayM4_GetPort((int *)&m_pblocalportnum);
         printf("Debug---Port:%s\n\r",((QString)m_pblocalportnum).toUtf8().data());
@@ -93,7 +93,7 @@ void playm4interface::SetPort()
         }
         //surpress warning!
 
-        QtVsPlayer::InitPort(m_pblocalportnum);
+        VideoCtrls::HikNumPort = m_pblocalportnum;
     }
     return;
 }
@@ -190,3 +190,54 @@ void playm4interface::initval()
 }
 */
 
+void playm4interface::GetCap(int nFlag)
+{
+    QString csCap="";
+    if(!(nFlag&SUPPORT_SSE))
+    {
+        csCap+="Don't support SSE instruction set;\r\n";
+    }
+
+    if(!(nFlag&SUPPORT_DDRAW))
+    {
+        csCap+="Create DirectDraw faild;\r\n";
+    }
+
+    if(!(nFlag&SUPPORT_BLT))
+    {
+        csCap+="Error when blitting overlay or offscreen;Error when blitting overlay or offscreen;\r\n";
+    }
+
+    if(!(nFlag&SUPPORT_BLTFOURCC))
+    {
+        csCap+="Don't support color-space conversions;\r\n";
+    }
+
+    if(!(nFlag&SUPPORT_BLTSHRINKX))
+    {
+        csCap+="Don't support arbitrary shrinking of a surface along the x-axis\r\n";
+    }
+
+    if(!(nFlag&SUPPORT_BLTSHRINKY))
+    {
+        csCap+="Don't supports arbitrary shrinking of a surface along the y-axis (vertically);\r\n";
+    }
+
+    if(!(nFlag&SUPPORT_BLTSTRETCHX))
+    {
+        csCap+="Don't supports arbitrary stretching of a surface along the x-axis;\r\n";
+    }
+
+    if(!(nFlag&SUPPORT_BLTSTRETCHY))
+    {
+        csCap+="Don't supports arbitrary stretching of a surface along the y-axis;\r\n";
+    }
+
+    if(csCap.length()>0)
+    {
+        csCap+="If your video adapter chip is made by nVidia,please update the new driver!\r\n";
+
+    }
+
+    printf("\n\r%s\n\r",csCap.toUtf8().data());
+}

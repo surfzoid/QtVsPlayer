@@ -35,7 +35,6 @@ public:
     static void PlayNextFile(bool FromFsList, int idx);
     static void WinIdWorkarround();
     static QStringList fileNames;
-    static void InitPort(int port);
 
 private slots:
     void on_actionOuvrir_triggered();
