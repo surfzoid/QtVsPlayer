@@ -468,19 +468,19 @@ void QtVsPlayer::on_actionListe_de_lecture_triggered()
 void QtVsPlayer::on_actionDossier_triggered()
 {
 
-    QString _IntputFolder = QFileDialog::getExistingDirectory(this,
+    QUrl _IntputFolder = QFileDialog::getExistingDirectory(this,
                                                            (tr("Select Folder to read")), Lastpath);
     //Hist = FsDialog->history();
 
     if (_IntputFolder.isEmpty() == false) {
         fileNames.clear();
-        fileNames = Scandir(_IntputFolder.toUtf8());
+        fileNames = Scandir(_IntputFolder.path().toUtf8());
     }
 
     if (fileNames.length() > 0) {
         //playm4interface::SetPort();
         Play (fileNames);
-        Lastpath = _IntputFolder;
+        Lastpath = _IntputFolder.path();
     }
     return;
 }
