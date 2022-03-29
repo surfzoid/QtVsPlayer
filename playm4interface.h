@@ -25,7 +25,7 @@ public:
     {
 
         // initializations
-        int octalNum = 0, countval = 1;
+        static int octalNum = 0, countval = 1;
         // int dNo = deciNum;
 
         while (deciNum != 0) {

@@ -57,9 +57,8 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 
 QtVsPlayer::~QtVsPlayer()
 {
-    /*playm4interface::Stop();
     playm4interface::FreePort();
-    playm4interface::~playm4interface();*/
+    /*playm4interface::~playm4interface();*/
     if (filesLs != NULL)
     {
         delete filesLs;
@@ -107,8 +106,9 @@ void QtVsPlayer::ParseArgs(QStringList args)
         playm4interface::RefreshPlay();
     }
 
-    if (args.length() == 1) {
-        QFileInfo fi(args[0].toUtf8());
+    for (int i=0; i<args.length(); i++)
+    {
+        QFileInfo fi(args[i].toUtf8());
         if (fi.isDir()) {
 
             Scandir(fi.filePath().toUtf8());
@@ -118,14 +118,14 @@ void QtVsPlayer::ParseArgs(QStringList args)
 
         }
         if (fi.isFile()) {
-            fileNames.append(args[0].toUtf8());
+            fileNames.append(args[i].toUtf8());
             Play (fileNames);
         }
     }
 
-    if (args.length() > 1) {
+    /*if (args.length() > 1) {
         Play (args);
-    }
+    }*/
 
 
     return;

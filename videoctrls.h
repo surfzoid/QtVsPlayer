@@ -25,7 +25,6 @@ public:
     static bool PLast;
     static int seekSpeed;
     void RestoreSeek();
-    //static void NextFile(bool playlist,int idx);
 
 private:
     Ui::VideoCtrls *ui;
