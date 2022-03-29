@@ -22,8 +22,8 @@ unix {
     #INSTALLS += shortcutfiles
     #INSTALLS += iconfiles
     }
-message($$PWD/QtVsPlayer.desktop)
 message("If mkdir of /opt/QtVsPlayer return erorror not permit, please do :")
+message("sudo mkdir /opt/QtVsPlayer & sudo chown -R $USER /opt/QtVsPlayer")
 
 
 # Default rules for deployment.

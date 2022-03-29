@@ -7,7 +7,9 @@ Double click on the video toggle fullscreen
 
 Midle click on the control move them
 
-use https://github.com/surfzoid/HikNetExtractor in an shelde task to automaticaly download video.
+use https://github.com/surfzoid/HikNetExtractor in an shelde task to automaticaly download video.  
+
+PI P400 raspian 64 bit, PcmanFm and thunar don't respect the %U in the desktop file but nautillus do it.  
 
 # install
 git clone https://github.com/surfzoid/QtVsPlayer.git  
