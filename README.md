@@ -27,6 +27,7 @@ Since release QtVsPlayer-Linux-x86_64.v1.0.0-alpha the playlist support only fil
 https://github.com/surfzoid/HikNetExtractor  
 
 Add French translation.  
+Add RTSP Player.  
 
 # Enjoy.
 ![Capture d’écran_2022-03-29_08-35-19](https://user-images.githubusercontent.com/20399920/160548537-bf9234a0-5670-4544-9ca9-a8eb5de15b64.png)
