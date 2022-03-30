@@ -1,7 +1,9 @@
 ﻿#include "qtvsplayer.h"
 #include "ui_qtvsplayer.h"
 #include "errormanager.h"
-#include"playm4interface.h"
+#include "playm4interface.h"
+#include "settingsform.h"
+#include "rtspwindow.h"
 #include <QFileDialog>
 #include <QtWidgets>
 #include <QKeyEvent>
@@ -23,7 +25,7 @@ FilesListe *QtVsPlayer::filesLs;
 VideoCtrls *QtVsPlayer::WVideoCtrls;
 
 static int eventEnumIndex = QEvent::staticMetaObject
-      .indexOfEnumerator("Type");
+        .indexOfEnumerator("Type");
 
 static QRect originH = *new QRect;
 static bool Zoomed = false;
@@ -32,26 +34,38 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::QtVsPlayer)
 {
+
+    QtVsPlayer::filesLs = new FilesListe (this);
+
+    QtVsPlayer::WVideoCtrls = new VideoCtrls (this);
+
     ui->setupUi(this);
+
+    ui->statusbar->addPermanentWidget(ui->SatusLbl,1);
 
     QString CpuArch = QSysInfo::buildCpuArchitecture();
     printf("pyd---buildCpuArchitecture :%s\n\r",CpuArch.toUtf8().data());
 
-        QtVsPlayer::filesLs = new FilesListe (this);
+    //settings//
+    QCoreApplication::setOrganizationName("Surfzoid");
+    QCoreApplication::setOrganizationDomain("https://github.com/surfzoid");
+    QCoreApplication::setApplicationName("QtVsPlayer");
 
-        QtVsPlayer::WVideoCtrls = new VideoCtrls (this);
-        qApp->installEventFilter(this);
+    QSettings settings;
+    int margin = settings.value("editor/wrapMargin", 80).toInt();
+    printf("pyd---buildCpuArchitecture :%d\n\r",margin);
+    //settings//
 
-        ui->statusbar->addPermanentWidget(ui->SatusLbl,1);
+    qApp->installEventFilter(this);
 
-        centralWidgetwinId = this->centralWidget()->winId();
+    centralWidgetwinId = this->centralWidget()->winId();
 
-      QStringList ArgLS = QApplication::arguments();
-      if (ArgLS.length() > 0)
-      {
-          ArgLS.removeAt(0);
-          ParseArgs(ArgLS);
-      }
+    QStringList ArgLS = QApplication::arguments();
+    if (ArgLS.length() > 0)
+    {
+        ArgLS.removeAt(0);
+        ParseArgs(ArgLS);
+    }
 
 }
 
@@ -72,7 +86,7 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
 
     if(event->type() == QEvent::WinIdChange)
     {
-         if(obj->objectName() == "centralwidget")
+        if(obj->objectName() == "centralwidget")
         {
 
             printf("pyd---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
@@ -90,7 +104,7 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
         }
     }
 
-/*printf("pyd---Event type %i :%s\n\r", event->type(), QEvent::staticMetaObject
+    /*printf("pyd---Event type %i :%s\n\r", event->type(), QEvent::staticMetaObject
        .enumerator(eventEnumIndex).valueToKey(event->type()));*/
 
     return QObject::eventFilter(obj, event);
@@ -176,8 +190,8 @@ void QtVsPlayer::on_actionOuvrir_triggered()
     HideCtrl();
 
     fileNames = QFileDialog::getOpenFileNames(this,
-                                           tr("Open video"), Lastpath,
-                                           tr("video Files (*.mp4 *.avi *.mkv)"));
+                                              tr("Open video"), Lastpath,
+                                              tr("video Files (*.mp4 *.avi *.mkv)"));
     if (fileNames.length() > 0) {
 
         //playm4interface::SetPort();
@@ -217,7 +231,7 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
     if (LastPlayIdx >= 0 and LastPlayIdx < fileNames.length()) {
 
         playm4interface::VideoFs(
-                         fileNames[LastPlayIdx]);
+                    fileNames[LastPlayIdx]);
 
         if (fileNames.length() > 0) {
             QStringList Colom = fileNames[LastPlayIdx].split("-");
@@ -442,19 +456,19 @@ void QtVsPlayer::WinIdWorkarround()
         if (this->centralWidget())
         {*/
 
-            playm4interface::hwnd = 0;
+    playm4interface::hwnd = 0;
 
-            playm4interface::SetVideoWin(0);
-            playm4interface::RefreshPlay();
-            playm4interface::hwnd = centralWidgetwinId;
-            playm4interface::SetVideoWin(0);
-            playm4interface::RefreshPlay();
-            //if (QSysInfo::buildCpuArchitecture() == "x86_64") {
-            PlayM4_WndResolutionChange(playm4interface::m_pblocalportnum);
-           // }
+    playm4interface::SetVideoWin(0);
+    playm4interface::RefreshPlay();
+    playm4interface::hwnd = centralWidgetwinId;
+    playm4interface::SetVideoWin(0);
+    playm4interface::RefreshPlay();
+    //if (QSysInfo::buildCpuArchitecture() == "x86_64") {
+    PlayM4_WndResolutionChange(playm4interface::m_pblocalportnum);
+    // }
 
 
-        //}
+    //}
     //}
     return;
 }
@@ -490,4 +504,19 @@ void QtVsPlayer::on_actionConsole_triggered()
 {
     ui->SatusLbl->setText("display" + Lastpath);
     return;
+}
+
+#include <QMediaPlayer>
+void QtVsPlayer::on_actionSettings_triggered()
+{
+    SettingsForm *setTing = new SettingsForm();
+    setTing->setWindowModality(Qt::WindowModality::WindowModal);
+    setTing->show();
+
+}
+
+void QtVsPlayer::on_actionRtsp_Play_triggered()
+{
+   RtspWindow *RtspView = new RtspWindow (this);
+   RtspView->showMaximized();
 }

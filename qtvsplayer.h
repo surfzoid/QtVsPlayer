@@ -53,6 +53,10 @@ private slots:
 
     void on_actionConsole_triggered();
 
+    void on_actionSettings_triggered();
+
+    void on_actionRtsp_Play_triggered();
+
 private:
     Ui::QtVsPlayer *ui;
 

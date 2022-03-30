@@ -116,6 +116,7 @@
     </property>
     <addaction name="actionOuvrir"/>
     <addaction name="actionDossier"/>
+    <addaction name="actionRtsp_Play"/>
    </widget>
    <widget class="QMenu" name="menuAide">
     <property name="title">
@@ -131,6 +132,7 @@
     <addaction name="actionPlein_ecran"/>
     <addaction name="actionMasquer_les_controles"/>
     <addaction name="actionListe_de_lecture"/>
+    <addaction name="actionSettings"/>
    </widget>
    <addaction name="menuFichiers"/>
    <addaction name="menuAffichage"/>
@@ -182,6 +184,16 @@
   <action name="actionDossier">
    <property name="text">
     <string>Folder</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionRtsp_Play">
+   <property name="text">
+    <string>Rtsp Play</string>
    </property>
   </action>
  </widget>

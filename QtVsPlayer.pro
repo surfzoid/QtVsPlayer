@@ -1,4 +1,4 @@
-QT       += core gui opengl
+QT       += core gui opengl multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -49,6 +49,8 @@ SOURCES += \
     main.cpp \
     playm4interface.cpp \
     qtvsplayer.cpp \
+    rtspwindow.cpp \
+    settingsform.cpp \
     videoctrls.cpp
 
 HEADERS += \
@@ -58,11 +60,15 @@ HEADERS += \
     include/PlayM4.h \
     playm4interface.h \
     qtvsplayer.h \
+    rtspwindow.h \
+    settingsform.h \
     videoctrls.h
 
 FORMS += \
     filesliste.ui \
     qtvsplayer.ui \
+    rtspwindow.ui \
+    settingsform.ui \
     videoctrls.ui
 
 TRANSLATIONS += \
