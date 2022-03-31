@@ -62,15 +62,21 @@ void VideoCtrls::mouseMoveEvent(QMouseEvent *event)
 }
 
 
-bool PauseFlag= false;
+bool PauseFlag= true;
 void VideoCtrls::on_pauseButton_released()
 {
-    playm4interface::Pause(!PauseFlag);
-    PauseFlag = !PauseFlag;
-    EndRead = PauseFlag;
+    pause();
     return;
 }
 
+void VideoCtrls::pause()
+{
+    playm4interface::Pause(PauseFlag);
+    EndRead = PauseFlag;
+    PauseFlag = !PauseFlag;
+    return;
+
+}
 
 void VideoCtrls::on_playButton_released()
 {

@@ -15,7 +15,6 @@
 
 QStringList QtVsPlayer::fileNames;
 int QtVsPlayer::LastPlayIdx = 0;
-
 int QtVsPlayer::centralWidgetwinId = 0;
 
 QString QtVsPlayer::Lastpath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
@@ -66,6 +65,8 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
         ArgLS.removeAt(0);
         ParseArgs(ArgLS);
     }
+
+    WVideoCtrls->raise();
 
 }
 
@@ -298,6 +299,9 @@ void QtVsPlayer::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_F10:
         QtVsPlayer::HideCtrl();
+        break;
+    case Qt::Key_Space:
+        VideoCtrls::pause();
         break;
     }
     return;

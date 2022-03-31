@@ -25,6 +25,7 @@ public:
     static bool PLast;
     static int seekSpeed;
     void RestoreSeek();
+    static void pause();
 
 private:
     Ui::VideoCtrls *ui;
