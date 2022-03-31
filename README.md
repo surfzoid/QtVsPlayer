@@ -11,6 +11,13 @@ use https://github.com/surfzoid/HikNetExtractor in an shelde task to automatical
 
 PI P400 raspian 64 bit, PcmanFm and thunar don't respect the %U in the desktop file but nautillus do it.  
 
+# Depancies
+Qt5 runtime  
+Developper package qtmultimedia5-dev  
+sudo apt-get install qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia5-plugins libqt5multimedia5  
+or
+sudo urpmi qtmultimedia5 lib64qt5multimediawidgets-devel lib64qt5multimedia5 libqt5multimedia-devel 
+
 # install
 git clone https://github.com/surfzoid/QtVsPlayer.git  
 cd ./QtVsPlayer  
