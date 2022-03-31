@@ -99,3 +99,8 @@ void SettingsForm::on_BtPlay_released()
     ErrorManager::error_codes("PlayM4_OpenStreamAdvanced",PlayM4_GetLastError(playm4interface::m_pblocalportnum));*/
 
 }
+
+void SettingsForm::on_BtnCancel_released()
+{
+    close();
+}

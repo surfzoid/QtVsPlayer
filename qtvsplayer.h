@@ -11,6 +11,7 @@
 #include <QFileDialog>
 #include <QtCore>
 #include <QLabel>
+#include <QVideoWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class QtVsPlayer; }
@@ -72,6 +73,7 @@ private:
     void DisplayFsName(QString Name);
 
     static int centralWidgetwinId;
+    static QVideoWidget *videoWidget;
 
 
 

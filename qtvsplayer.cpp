@@ -22,6 +22,7 @@ QString QtVsPlayer::Lastfs = QStandardPaths::writableLocation(QStandardPaths::Mo
 
 FilesListe *QtVsPlayer::filesLs;
 VideoCtrls *QtVsPlayer::WVideoCtrls;
+QVideoWidget *QtVsPlayer::videoWidget;
 
 static int eventEnumIndex = QEvent::staticMetaObject
         .indexOfEnumerator("Type");
@@ -37,8 +38,12 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     QtVsPlayer::filesLs = new FilesListe (this);
 
     QtVsPlayer::WVideoCtrls = new VideoCtrls (this);
+    QtVsPlayer::videoWidget = new QVideoWidget;
 
     ui->setupUi(this);
+
+    //setCentralWidget(videoWidget);
+    videoWidget->setContentsMargins(0,0,0,0);
 
     ui->statusbar->addPermanentWidget(ui->SatusLbl,1);
 

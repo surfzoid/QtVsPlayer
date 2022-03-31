@@ -30,6 +30,8 @@ private slots:
 
     void on_BtPlay_released();
 
+    void on_BtnCancel_released();
+
 private:
     Ui::SettingsForm *ui;
 };

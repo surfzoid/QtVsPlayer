@@ -14,37 +14,26 @@
    <string>RTSP Player</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QComboBox" name="ComboBxCam">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>93</width>
-      <height>27</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblLoading">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>130</y>
-      <width>631</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>14</pointsize>
-      <weight>75</weight>
-      <italic>true</italic>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Loading video stream ........</string>
-    </property>
-   </widget>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="lblLoading">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <italic>true</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Loading video stream ........</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="ComboBxCam"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -68,22 +57,21 @@
      <addaction name="actionKeepAspectRatio"/>
      <addaction name="actionKeepAspectRatioByExpanding"/>
     </widget>
+    <widget class="QMenu" name="menuchannel">
+     <property name="title">
+      <string>channel</string>
+     </property>
+     <addaction name="action_Streaming_Channels_1"/>
+     <addaction name="action_Streaming_Channels_2"/>
+     <addaction name="action_Streaming_Channels_3"/>
+    </widget>
     <addaction name="menuProportions"/>
+    <addaction name="menuchannel"/>
+    <addaction name="actionMetadata"/>
    </widget>
    <addaction name="menuVideo"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
   <action name="actionDefault">
    <property name="text">
     <string>Default</string>
@@ -102,6 +90,38 @@
   <action name="actionKeepAspectRatioByExpanding">
    <property name="text">
     <string>KeepAspectRatioByExpanding</string>
+   </property>
+  </action>
+  <action name="action_Streaming_Channels_1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>/Streaming/Channels/1</string>
+   </property>
+  </action>
+  <action name="action_Streaming_Channels_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>/Streaming/Channels/2</string>
+   </property>
+  </action>
+  <action name="action_Streaming_Channels_3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>/Streaming/Channels/3</string>
+   </property>
+  </action>
+  <action name="actionMetadata">
+   <property name="text">
+    <string>Metadata</string>
    </property>
   </action>
  </widget>

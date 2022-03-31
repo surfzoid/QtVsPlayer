@@ -5,19 +5,25 @@
 #include <QSettings>
 #include <QMediaPlayer>
 #include <QVideoWidget>
+#include <QVBoxLayout>
 
 
 QMediaPlayer *RtspWindow::player;
 QVideoWidget *RtspWindow::videoWidget;
+QString RtspWindow::RtspUri;
 
 RtspWindow::RtspWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::RtspWindow)
 {
-    RtspWindow::player = new QMediaPlayer();
-    RtspWindow::videoWidget = new QVideoWidget;
+    RtspWindow::player = new QMediaPlayer(this);
+    RtspWindow::videoWidget = new QVideoWidget(this);
     connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+
     ui->setupUi(this);
+
+    setCentralWidget(videoWidget);
+
 
     ui->menubar->setCornerWidget(ui->ComboBxCam);
     ui->statusbar->addPermanentWidget(ui->lblLoading);
@@ -69,7 +75,7 @@ void RtspWindow::PlayRtsp(QString Camuri)
     videoWidget->setSizePolicy(QSizePolicy::Preferred,
                                QSizePolicy::Maximum);
 
-    setCentralWidget(videoWidget);
+
     player->setMedia(QUrl(Camuri));
     player->play();
     videoWidget->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
@@ -88,9 +94,13 @@ void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
     QString CamPass = settings.value("Password", "hik12345").value<QString>();
     settings.endGroup();
 
-    QString RtspUri = "rtsp://" + CamUser + ":" + CamPass + "@" + CamIp + ":" + CamPort;
+    RtspUri = "rtsp://" + CamUser + ":" + CamPass +
+            "@" + CamIp + ":" + CamPort + "/Streaming/Channels/2";
 
     PlayRtsp(RtspUri);
+
+    ui->action_Streaming_Channels_1->setChecked(false);
+    ui->action_Streaming_Channels_3->setChecked(false);
 }
 
 void RtspWindow::positionChanged(qint64 pos)
@@ -116,14 +126,10 @@ void RtspWindow::mouseDoubleClickEvent(QMouseEvent *event)
         showMaximized();
         menuBar()->setVisible(true);
         statusBar()->setVisible(true);
-        videoWidget->showMaximized();
-        //videoWidget->setFullScreen(false);
     } else {
         showFullScreen();
         menuBar()->setVisible(false);
         statusBar()->setVisible(false);
-        videoWidget->showFullScreen();
-        //videoWidget->setFullScreen(true);
     }
     return;
 }
@@ -150,4 +156,51 @@ void RtspWindow::on_actionKeepAspectRatio_triggered()
 void RtspWindow::on_actionKeepAspectRatioByExpanding_triggered()
 {
     videoWidget->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
+}
+
+void RtspWindow::on_action_Streaming_Channels_1_triggered()
+{
+    RtspUri = RtspUri.remove(RtspUri.length() - 1,1) + "1";
+
+    ui->action_Streaming_Channels_2->setChecked(false);
+    ui->action_Streaming_Channels_3->setChecked(false);
+    PlayRtsp(RtspUri);
+}
+
+void RtspWindow::on_action_Streaming_Channels_2_triggered()
+{
+
+    RtspUri = RtspUri.remove(RtspUri.length() - 1,1) + "2";
+
+    ui->action_Streaming_Channels_1->setChecked(false);
+    ui->action_Streaming_Channels_3->setChecked(false);
+    PlayRtsp(RtspUri);
+}
+
+void RtspWindow::on_action_Streaming_Channels_3_triggered()
+{
+
+    RtspUri = RtspUri.remove(RtspUri.length() - 1,1) + "3";
+
+    ui->action_Streaming_Channels_1->setChecked(false);
+    ui->action_Streaming_Channels_2->setChecked(false);
+    PlayRtsp(RtspUri);
+}
+
+void RtspWindow::on_actionMetadata_triggered()
+{
+    bool IsMeta ;
+    IsMeta = player->isMetaDataAvailable();
+
+    if (IsMeta == true) {
+        QStringList nMeta = player->availableMetaData();
+        foreach (QString nData, nMeta)
+        {
+            printf("%s\n\r",nData.toUtf8().data());
+            QVariant KeyVal = player->metaData(nData);
+            printf("%s\n\r",KeyVal.toString().toUtf8().data());
+        }
+
+
+    }
 }

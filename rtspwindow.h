@@ -30,11 +30,20 @@ private slots:
 
     void on_actionKeepAspectRatioByExpanding_triggered();
 
+    void on_action_Streaming_Channels_1_triggered();
+
+    void on_action_Streaming_Channels_2_triggered();
+
+    void on_action_Streaming_Channels_3_triggered();
+
+    void on_actionMetadata_triggered();
+
 private:
     Ui::RtspWindow *ui;
     void PlayRtsp(QString Camuri);
     static QMediaPlayer *player;
     static QVideoWidget *videoWidget;
+    static QString RtspUri;
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
