@@ -47,6 +47,7 @@ void SettingsForm::on_BtnSave_released()
 
     settings.setValue( "Ip", ui->IpEd->text());
     settings.setValue("Port", ui->PortEd->text());
+    settings.setValue("PortHttp", ui->PortHttpEd->text());
     settings.setValue("User", ui->UserEd->text());
     settings.setValue("Password", ui->PassEd->text());
 
@@ -65,12 +66,14 @@ void SettingsForm::on_CamNameEd_currentIndexChanged(const QString &arg1)
 
     CamIp = settings.value("Ip", "").value<QString>();
     CamPort = settings.value("Port", "554").value<QString>();
+    CamPortHttp = settings.value("PortHttp", "800").value<QString>();
     CamUser = settings.value("User", "admin").value<QString>();
     CamPass = settings.value("Password", "hik12345").value<QString>();
     settings.endGroup();
 
     ui->IpEd->setText(CamIp);
     ui->PortEd->setText(CamPort);
+    ui->PortHttpEd->setText(CamPortHttp);
     ui->UserEd->setText(CamUser);
     ui->PassEd->setText(CamPass);
 

@@ -123,8 +123,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>50</y>
+     <x>280</x>
+     <y>30</y>
      <width>31</width>
      <height>19</height>
     </rect>
@@ -136,7 +136,7 @@
   <widget class="QLineEdit" name="PortEd">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>280</x>
      <y>50</y>
      <width>51</width>
      <height>27</height>
@@ -206,6 +206,45 @@
    </property>
    <property name="text">
     <string>Play</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="PortHttpEd">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>80</y>
+     <width>51</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>800</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>80</y>
+     <width>41</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Http</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>50</y>
+     <width>41</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Rtsp</string>
    </property>
   </widget>
  </widget>

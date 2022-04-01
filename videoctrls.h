@@ -34,6 +34,7 @@ private:
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;
+
 private slots:
     void on_pauseButton_released();
     void on_playButton_released();

@@ -16,6 +16,21 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
+     <widget class="QWidget" name="ComboBxs" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QComboBox" name="comboBxPatrol"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBxPresset"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="ComboBxCam"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
      <widget class="QLabel" name="lblLoading">
       <property name="font">
        <font>
@@ -29,9 +44,6 @@
        <string>Loading video stream ........</string>
       </property>
      </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="ComboBxCam"/>
     </item>
    </layout>
   </widget>
@@ -61,15 +73,31 @@
      <property name="title">
       <string>channel</string>
      </property>
+     <widget class="QMenu" name="menuNVR">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="title">
+       <string>NVR</string>
+      </property>
+      <addaction name="action_ISAPI_Streaming_channels_101"/>
+     </widget>
      <addaction name="action_Streaming_Channels_1"/>
      <addaction name="action_Streaming_Channels_2"/>
      <addaction name="action_Streaming_Channels_3"/>
+     <addaction name="menuNVR"/>
     </widget>
     <addaction name="menuProportions"/>
     <addaction name="menuchannel"/>
     <addaction name="actionMetadata"/>
    </widget>
+   <widget class="QMenu" name="menuPTZ">
+    <property name="title">
+     <string>PTZ</string>
+    </property>
+   </widget>
    <addaction name="menuVideo"/>
+   <addaction name="menuPTZ"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionDefault">
@@ -94,6 +122,9 @@
   </action>
   <action name="action_Streaming_Channels_1">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
     <bool>true</bool>
    </property>
    <property name="text">
@@ -122,6 +153,11 @@
   <action name="actionMetadata">
    <property name="text">
     <string>Metadata</string>
+   </property>
+  </action>
+  <action name="action_ISAPI_Streaming_channels_101">
+   <property name="text">
+    <string>/ISAPI/Streaming/channels/101</string>
    </property>
   </action>
  </widget>

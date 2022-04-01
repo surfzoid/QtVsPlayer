@@ -18,6 +18,7 @@ public:
     QString CamName = "CamName";
     QString CamIp = "192.168.";
     QString CamPort = "554";
+    QString CamPortHttp = "800";
     QString CamUser = "admin";
     QString CamPass = "hik12345";
 

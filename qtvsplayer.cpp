@@ -141,6 +141,7 @@ void QtVsPlayer::ParseArgs(QStringList args)
             fileNames.append(args[i].toUtf8());
             Play (fileNames);
         }
+
     }
 
     /*if (args.length() > 1) {
@@ -188,6 +189,7 @@ QStringList QtVsPlayer::Scandir( const QString &dir2scan )
         printf("Debug---Found :%d files",list.length());
 
     }
+
     return fileNames;
 }
 
