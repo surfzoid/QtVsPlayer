@@ -21,7 +21,7 @@ PI P400 raspian 64 bit, PcmanFm and thunar don't respect the %U in the desktop f
 
 # Depancies
 Qt5 runtime  
-Developper package qtmultimedia5-dev  
+Developper package qtmultimedia5-dev   lib64qt5opengl-devel  
 sudo apt-get install qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia5-plugins libqt5multimedia5  
 or
 sudo urpmi qtmultimedia5 lib64qt5multimediawidgets-devel lib64qt5multimedia5 libqt5multimedia-devel 
@@ -30,10 +30,10 @@ sudo urpmi qtmultimedia5 lib64qt5multimediawidgets-devel lib64qt5multimedia5 lib
 git clone https://github.com/surfzoid/QtVsPlayer.git  
 cd ./QtVsPlayer  
 qmake  
-make  #-all -release or -debug  
+make release #-all -release or -debug  
  #some distro ask for root access  
  #sudo mkdir /opt/QtVsPlayer & sudo chown -R $USER /opt/QtVsPlayer   
-make install  #-all -release or -debug  
+make release-install  #-all -release or -debug  
 cd /opt/QtVsPlayer/  
 ./QtVsPlayer  
 
