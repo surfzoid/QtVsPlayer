@@ -13,16 +13,43 @@
   <property name="windowTitle">
    <string>RTSP Player</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="ressources.qrc">
+    <normaloff>:/images/images/QtVsPlayer.png</normaloff>:/images/images/QtVsPlayer.png</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QWidget" name="ComboBxs" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QComboBox" name="comboBxPatrol"/>
+        <widget class="QComboBox" name="comboBxPatrol">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <property name="currentText">
+          <string notr="true"/>
+         </property>
+         <property name="placeholderText">
+          <string notr="true"/>
+         </property>
+        </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBxPresset"/>
+        <widget class="QComboBox" name="comboBxPresset">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <property name="currentText">
+          <string notr="true"/>
+         </property>
+         <property name="placeholderText">
+          <string notr="true"/>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QComboBox" name="ComboBxCam"/>
@@ -75,7 +102,7 @@
      </property>
      <widget class="QMenu" name="menuNVR">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="title">
        <string>NVR</string>
@@ -156,11 +183,16 @@
    </property>
   </action>
   <action name="action_ISAPI_Streaming_channels_101">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>/ISAPI/Streaming/channels/101</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

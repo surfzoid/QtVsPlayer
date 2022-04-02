@@ -6,12 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>335</width>
+    <width>337</width>
     <height>233</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Settings</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="ressources.qrc">
+    <normaloff>:/images/images/QtVsPlayer.png</normaloff>:/images/images/QtVsPlayer.png</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
   </property>
   <widget class="QLineEdit" name="IpEd">
    <property name="geometry">
@@ -21,6 +28,9 @@
      <width>151</width>
      <height>27</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>the ip or domain name of the device</string>
    </property>
    <property name="text">
     <string>192.168.</string>
@@ -48,6 +58,9 @@
      <height>27</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>Enter the user name</string>
+   </property>
    <property name="text">
     <string>admin</string>
    </property>
@@ -61,6 +74,9 @@
      <height>27</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>Close without saving</string>
+   </property>
    <property name="text">
     <string>Cancel</string>
    </property>
@@ -73,6 +89,9 @@
      <width>151</width>
      <height>27</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>Enter the user password</string>
    </property>
    <property name="text">
     <string>pass</string>
@@ -116,6 +135,9 @@
      <height>27</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>Save and lose</string>
+   </property>
    <property name="text">
     <string>Save</string>
    </property>
@@ -142,6 +164,9 @@
      <height>27</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>Enter the port number for rtsp conection</string>
+   </property>
    <property name="text">
     <string>554</string>
    </property>
@@ -154,6 +179,9 @@
      <width>151</width>
      <height>27</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>The name of the device</string>
    </property>
    <property name="editable">
     <bool>true</bool>
@@ -181,6 +209,9 @@
      <height>27</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>Delete imediatly this device</string>
+   </property>
    <property name="text">
     <string>X</string>
    </property>
@@ -190,12 +221,24 @@
     <rect>
      <x>0</x>
      <y>200</y>
-     <width>331</width>
+     <width>461</width>
      <height>27</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="toolTip">
+    <string>The file where settings are saved inside</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="BtPlay">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>269</x>
@@ -216,6 +259,9 @@
      <width>51</width>
      <height>27</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>Enter the http port for ISAPI</string>
    </property>
    <property name="text">
     <string>800</string>
@@ -248,6 +294,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

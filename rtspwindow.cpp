@@ -145,7 +145,7 @@ void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
 
 void RtspWindow::positionChanged(qint64 pos)
 {
-    printf("%lli", pos);
+    //printf("%lli", pos);
     QTime time(0,0,0,0);
     time = time.addMSecs(pos);
 
@@ -281,7 +281,11 @@ void RtspWindow::on_actionMetadata_triggered()
 
 void RtspWindow::on_action_ISAPI_Streaming_channels_101_triggered()
 {
-
+/*• rtsp://user:password@192.168.1.64:554/Streaming/Channels/channel_no01/ - Flux
+principal
+• rtsp://user:password@192.168.1.64:554/Streaming/Channels/channel_no02/ - Flux
+auxiliaire
+*/
     RtspUri = RtspUri.remove(RtspUri.length() - 1,1) + "/ISAPI/Streaming/channels/101";
 
     ui->action_Streaming_Channels_1->setChecked(false);
