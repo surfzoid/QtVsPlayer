@@ -54,10 +54,6 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     QCoreApplication::setOrganizationName("Surfzoid");
     QCoreApplication::setOrganizationDomain("https://github.com/surfzoid");
     QCoreApplication::setApplicationName("QtVsPlayer");
-
-    QSettings settings;
-    int margin = settings.value("editor/wrapMargin", 80).toInt();
-    printf("pyd---buildCpuArchitecture :%d\n\r",margin);
     //settings//
 
     qApp->installEventFilter(this);
@@ -288,7 +284,8 @@ void QtVsPlayer::DisplayFsName(QString Name)
 
 void QtVsPlayer::on_actionA_propos_triggered()
 {
-    QMessageBox::about(this, tr("QvSPlayer for Hikvision local records"), tr("QvSPlayer can read local video files of Hikvision and display blue, green an red vector"));
+QString Vers = APP_VERSION;
+    QMessageBox::about(this, tr("QvSPlayer for Hikvision local records. Version " + Vers.toUtf8()), tr("QvSPlayer can read local video files of Hikvision and display blue, green an red vector"));
     return;
 }
 
