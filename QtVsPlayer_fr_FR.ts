@@ -214,7 +214,7 @@
     <message>
         <location filename="qtvsplayer.ui" line="17"/>
         <source>QtVsPlayer</source>
-        <translation></translation>
+        <translation>QtVsPlayer</translation>
     </message>
     <message>
         <location filename="qtvsplayer.ui" line="98"/>
@@ -265,7 +265,7 @@
         <location filename="qtvsplayer.ui" line="168"/>
         <source>Hide control</source>
         <oldsource>Masquer les controles</oldsource>
-        <translation>Masquer les contrþles</translation>
+        <translation>Masquer les contrôles</translation>
     </message>
     <message>
         <location filename="qtvsplayer.ui" line="171"/>
