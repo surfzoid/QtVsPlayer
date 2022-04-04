@@ -67,10 +67,47 @@ void FilesListe::Populate(QStringList fileNames)
 
         QStringList Colom = fileName.split("-");
 
-        if (Colom.length() < 4) {
-            QTableWidgetItem *FilePathItem = new QTableWidgetItem(fileName);
+        if (Colom.length() < 5) {
+            QFile file(fileName);
+            QString filesize;
+            QFileInfo  filecurr(file.fileName());
+
+            QTableWidgetItem *FilePathItem = new QTableWidgetItem(filecurr.fileName());
             FilePathItem->setFlags(Qt::ItemIsEnabled);
 
+            filesize = QString::number(filecurr.size() / 1000000);
+            QTableWidgetItem *FileSizeItem = new QTableWidgetItem(filesize);
+
+            FileSizeItem->setFlags(Qt::ItemIsEnabled);
+            FileSizeItem->setTextAlignment(Qt::AlignHCenter);
+
+            QString path(filecurr.path());
+            path = path.left(path.length() - 8);
+            QTableWidgetItem *pathItem = new QTableWidgetItem(path);
+
+            QString Day = filecurr.lastModified().date().toString("dd.MM.yyyy");
+
+            QTableWidgetItem *DayItem = new QTableWidgetItem(Day);
+            DayItem->setTextAlignment(Qt::AlignHCenter);
+
+            QString stoptime = filecurr.lastModified().time().toString("hh:mm:ss");
+             QTableWidgetItem *FileStopTimeItem = new QTableWidgetItem(stoptime);
+            //FileStopTimeItem->setFlags(Qt::ItemIsEnabled);
+             //FileStopTimeItem->setBackground(Qt::darkRed);
+             FileStopTimeItem->setForeground(Qt::darkBlue);
+             FileStopTimeItem->setTextAlignment(Qt::AlignHCenter);
+
+            DayItem->setBackground(Qt::darkRed);
+            DayItem->setForeground(Qt::white);
+            FilePathItem->setBackground(Qt::cyan);
+
+            int row = ui->tableWidget_2_localfilist->rowCount();
+            ui->tableWidget_2_localfilist->insertRow(row);
+            ui->tableWidget_2_localfilist->setItem(row, 2, FileStopTimeItem);
+            ui->tableWidget_2_localfilist->setItem(row, 0, FilePathItem);
+            ui->tableWidget_2_localfilist->setItem(row, 4, FileSizeItem);
+            ui->tableWidget_2_localfilist->setItem(row, 5, pathItem);
+            ui->tableWidget_2_localfilist->setItem(row, 3, DayItem);
         }
         else {
 

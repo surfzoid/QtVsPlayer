@@ -26,6 +26,9 @@ sudo apt-get install qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia
 or
 sudo urpmi qtmultimedia5 lib64qt5multimediawidgets-devel lib64qt5multimedia5 libqt5multimedia-devel 
 
+Qt use platform tool, so qtmultimedia can use Gstreamer, ffmpeg and so on, it could be necessary to install :  
+sudo urpmi gstreamer1.0-plugins-good "something RTSP too"  
+
 # install
 git clone https://github.com/surfzoid/QtVsPlayer.git  
 cd ./QtVsPlayer  

@@ -240,7 +240,7 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
         if (fileNames.length() > 0) {
             QStringList Colom = fileNames[LastPlayIdx].split("-");
 
-            if (Colom.length() < 4) {
+            if (Colom.length() < 5) {
                 Lastfs = fileNames[LastPlayIdx];
 
             }
