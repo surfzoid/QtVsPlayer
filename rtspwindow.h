@@ -46,6 +46,8 @@ private slots:
 
     void on_comboBxPatrol_activated(int index);
 
+    void on_SnapshotBtn_pressed();
+
 private:
     Ui::RtspWindow *ui;
     void PlayRtsp(QString Camuri);
@@ -76,7 +78,6 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
 
 };
 

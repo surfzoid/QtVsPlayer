@@ -26,6 +26,13 @@
      <widget class="QWidget" name="ComboBxs" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
+        <widget class="QPushButton" name="SnapshotBtn">
+         <property name="text">
+          <string>Snap</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QComboBox" name="comboBxPatrol">
          <property name="editable">
           <bool>true</bool>
@@ -155,7 +162,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>/Streaming/Channels/1</string>
+    <string>/Streaming/Channels/101</string>
    </property>
   </action>
   <action name="action_Streaming_Channels_2">
@@ -166,7 +173,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>/Streaming/Channels/2</string>
+    <string>/Streaming/Channels/102</string>
    </property>
   </action>
   <action name="action_Streaming_Channels_3">
@@ -174,7 +181,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>/Streaming/Channels/3</string>
+    <string>/Streaming/Channels/103</string>
    </property>
   </action>
   <action name="actionMetadata">
@@ -184,10 +191,10 @@
   </action>
   <action name="action_ISAPI_Streaming_channels_101">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
-    <string>/ISAPI/Streaming/channels/101</string>
+    <string>/Streaming/Channels/104</string>
    </property>
   </action>
  </widget>

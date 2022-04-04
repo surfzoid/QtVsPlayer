@@ -13,6 +13,10 @@
 #include <QUrl>
 #include <QUrlQuery>
 #include <QDebug>
+#include <QFile>
+#include <QFileDialog>
+#include <QStandardPaths>
+#include <QMessageBox>
 
 QMediaPlayer *RtspWindow::player;
 QVideoWidget *RtspWindow::videoWidget;
@@ -105,7 +109,6 @@ void RtspWindow::PlayRtsp(QString Camuri)
 
 
     player->setVideoOutput(videoWidget);
-    //player->setParent(this->centralWidget());
     videoWidget->setAutoFillBackground(true);
     videoWidget->setAspectRatioMode(Qt::KeepAspectRatio);
     videoWidget->setSizePolicy(QSizePolicy::Preferred,
@@ -132,7 +135,7 @@ void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
     settings.endGroup();
 
     RtspUri = "rtsp://" + CamUser + ":" + CamPass +
-            "@" + CamIp + ":" + CamPort + "/Streaming/Channels/2";
+            "@" + CamIp + ":" + CamPort + "/Streaming/Channels/102";
 
 
     foreach( QAction *const EntryMenu , ui->menuchannel->actions())
@@ -200,10 +203,6 @@ void RtspWindow::on_actionDefault_triggered()
 void RtspWindow::on_actionKeepAspectRatio_triggered()
 {
     videoWidget->setAspectRatioMode(Qt::KeepAspectRatio);
-    /*videoWidget->setUpdatesEnabled(true);
-    videoWidget->update();
-    player->pause();
-    player->play();*/
 }
 
 void RtspWindow::on_actionKeepAspectRatioByExpanding_triggered()
@@ -213,7 +212,7 @@ void RtspWindow::on_actionKeepAspectRatioByExpanding_triggered()
 
 void RtspWindow::on_action_Streaming_Channels_1_triggered()
 {
-    RtspUri = RtspUri.remove(RtspUri.length() - 1,1) + "1";
+    RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + "101";
 
     ui->action_Streaming_Channels_1->setDisabled(true);
     ui->action_Streaming_Channels_1->setChecked(true);
@@ -230,7 +229,7 @@ void RtspWindow::on_action_Streaming_Channels_1_triggered()
 void RtspWindow::on_action_Streaming_Channels_2_triggered()
 {
 
-    RtspUri = RtspUri.remove(RtspUri.length() - 1,1) + "2";
+    RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + "102";
 
     ui->action_Streaming_Channels_2->setDisabled(true);
     ui->action_Streaming_Channels_2->setChecked(true);
@@ -247,7 +246,7 @@ void RtspWindow::on_action_Streaming_Channels_2_triggered()
 void RtspWindow::on_action_Streaming_Channels_3_triggered()
 {
 
-    RtspUri = RtspUri.remove(RtspUri.length() - 1,1) + "3";
+    RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + "103";
 
     ui->action_Streaming_Channels_3->setDisabled(true);
     ui->action_Streaming_Channels_3->setChecked(true);
@@ -281,16 +280,18 @@ void RtspWindow::on_actionMetadata_triggered()
 
 void RtspWindow::on_action_ISAPI_Streaming_channels_101_triggered()
 {
-/*• rtsp://user:password@192.168.1.64:554/Streaming/Channels/channel_no01/ - Flux
+    /*• rtsp://user:password@192.168.1.64:554/Streaming/Channels/channel_no01/ - Flux
 principal
 • rtsp://user:password@192.168.1.64:554/Streaming/Channels/channel_no02/ - Flux
 auxiliaire
+/doc/index.html#/preview
 */
-    RtspUri = RtspUri.remove(RtspUri.length() - 1,1) + "/ISAPI/Streaming/channels/101";
-
+    QString AdPath = "/Streaming/Channels/104";
+    QUrl Adresse("rtsp://" + CamUser + ":" + CamPass +
+                 "@" +  CamIp + ":" + CamPort + AdPath);
     ui->action_Streaming_Channels_1->setChecked(false);
     ui->action_Streaming_Channels_3->setChecked(false);
-    PlayRtsp(RtspUri);
+    PlayRtsp(Adresse.url());
 }
 
 void RtspWindow::wheelEvent(QWheelEvent *event)
@@ -302,13 +303,6 @@ void RtspWindow::wheelEvent(QWheelEvent *event)
 
     if (Scroll.y() > 0)
     {
-
-        /*manager->get(QNetworkRequest(QUrl(
-                 "http://" + CamIp + ":" + CamPortHttp +
-                                         "/ISAPI/PTZCtrl/channels/1/capabilities")));
-        manager->get(QNetworkRequest(QUrl(
-                 "http://" + CamIp + ":" + CamPortHttp +
-                                         "/ISAPI/PTZCtrl/channels/1/capabilities")));*/
 
         manager->put((QNetworkRequest)Adresse,
                      SetXMLReq(0,0,100).toUtf8());
@@ -324,18 +318,14 @@ void RtspWindow::wheelEvent(QWheelEvent *event)
 
 }
 
-void RtspWindow::mouseMoveEvent(QMouseEvent *event)
-{
-}
-
 void RtspWindow::mousePressEvent(QMouseEvent *event)
 {
 
     if ((event->buttons() == Qt::RightButton))
-       {
-           IsPressed = true;
-           PanTilt(event);
-       }
+    {
+        IsPressed = true;
+        PanTilt(event);
+    }
 
 }
 
@@ -349,33 +339,33 @@ void RtspWindow::PanTilt(QMouseEvent *event)
     int WheightOfS = this->height()/2 - (WheightC/2);//h_y
     int WwidthCOfS = this->width()/2 - (WwidthC/2);//l_x
 
-        if (event->globalY() > WheightC and event->globalY() < WheightC - WheightOfS)
-            manager->put((QNetworkRequest)Adresse,
-                         SetXMLReq(0,-100,0).toUtf8());
-        if (event->globalY() > WheightC - WheightOfS)
-            manager->put((QNetworkRequest)Adresse,
-                         SetXMLReq(0,-100,0).toUtf8());
+    if (event->globalY() > WheightC and event->globalY() < WheightC - WheightOfS)
+        manager->put((QNetworkRequest)Adresse,
+                     SetXMLReq(0,-100,0).toUtf8());
+    if (event->globalY() > WheightC - WheightOfS)
+        manager->put((QNetworkRequest)Adresse,
+                     SetXMLReq(0,-100,0).toUtf8());
 
-        if (event->globalY() < WheightC and event->globalY() > WheightC + WheightOfS)
-            manager->put((QNetworkRequest)Adresse,
-                         SetXMLReq(0,100,0).toUtf8());
-        if (event->globalY() < WheightC + WheightOfS)
-            manager->put((QNetworkRequest)Adresse,
-                         SetXMLReq(0,100,0).toUtf8());
+    if (event->globalY() < WheightC and event->globalY() > WheightC + WheightOfS)
+        manager->put((QNetworkRequest)Adresse,
+                     SetXMLReq(0,100,0).toUtf8());
+    if (event->globalY() < WheightC + WheightOfS)
+        manager->put((QNetworkRequest)Adresse,
+                     SetXMLReq(0,100,0).toUtf8());
 
-        if (event->globalX() > WwidthC and event->globalX() < WwidthC - WwidthCOfS)
-            manager->put((QNetworkRequest)Adresse,
-                         SetXMLReq(100,0,0).toUtf8());
-        if (event->globalX() > WwidthC - WwidthCOfS)
-            manager->put((QNetworkRequest)Adresse,
-                         SetXMLReq(100,0,0).toUtf8());
+    if (event->globalX() > WwidthC and event->globalX() < WwidthC - WwidthCOfS)
+        manager->put((QNetworkRequest)Adresse,
+                     SetXMLReq(100,0,0).toUtf8());
+    if (event->globalX() > WwidthC - WwidthCOfS)
+        manager->put((QNetworkRequest)Adresse,
+                     SetXMLReq(100,0,0).toUtf8());
 
-        if (event->globalX() < WwidthC and event->globalX() > WwidthC + WwidthCOfS)
-            manager->put((QNetworkRequest)Adresse,
-                         SetXMLReq(-100,0,0).toUtf8());
-        if (event->globalX() < WwidthC + WwidthCOfS)
-            manager->put((QNetworkRequest)Adresse,
-                         SetXMLReq(-100,0,0).toUtf8());
+    if (event->globalX() < WwidthC and event->globalX() > WwidthC + WwidthCOfS)
+        manager->put((QNetworkRequest)Adresse,
+                     SetXMLReq(-100,0,0).toUtf8());
+    if (event->globalX() < WwidthC + WwidthCOfS)
+        manager->put((QNetworkRequest)Adresse,
+                     SetXMLReq(-100,0,0).toUtf8());
 }
 
 void RtspWindow::mouseReleaseEvent(QMouseEvent *event)
@@ -399,15 +389,35 @@ void RtspWindow::replyFinished(QNetworkReply *reply)
     }
     else
     {
-        qDebug() << reply->header(QNetworkRequest::ContentTypeHeader).toString();
+
+        QString Header = reply->header(QNetworkRequest::ContentTypeHeader).toString();
+        qDebug() << Header;
         qDebug() << reply->header(QNetworkRequest::LastModifiedHeader).toDateTime().toString();;
         qDebug() << reply->header(QNetworkRequest::ContentLengthHeader).toULongLong();
         qDebug() << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
         qDebug() << reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
         qDebug() << reply->header(QNetworkRequest::UserAgentHeader).toString();
-        qDebug() << reply->readAll();
+
+        QByteArray Response = reply->readAll();
 
 
+        if (Header.startsWith("image/jpeg") == true) {
+            QString FsName = QFileDialog::getSaveFileName(this,
+                                                          tr("Save as"),
+                                                          QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
+                                                          tr("Pictures Files (*.jpg *.jpeg)"));
+
+            if (FsName.isEmpty()){
+                return;
+            }else {
+                QFile file(FsName);
+                file.open(QFile::WriteOnly);
+                file.write(Response);
+                file.close();
+            }
+        }else {
+            qDebug() << Response;
+        }
     }
 
     reply->deleteLater();
@@ -492,4 +502,14 @@ void RtspWindow::on_comboBxPatrol_activated(int index)
 
     QIODevice * outgoingData = 0;
     manager->put((QNetworkRequest)Adresse,outgoingData);
+}
+
+void RtspWindow::on_SnapshotBtn_pressed()
+{
+    //http://192.168.8.104/ISAPI/Streaming/channels/101/picture?videoResolutionWidth=1920&videoResolutionHeight=1080
+    QString AdPath = "/ISAPI/Streaming/channels/101/picture?videoResolutionWidth=2592&videoResolutionHeight=1944";
+    QUrl Adresse("http://" + CamUser + ":" + CamPass +
+                 "@" +  CamIp + ":" + CamPortHttp + AdPath);
+
+    manager->get((QNetworkRequest)Adresse);
 }

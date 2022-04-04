@@ -29,6 +29,9 @@ sudo urpmi qtmultimedia5 lib64qt5multimediawidgets-devel lib64qt5multimedia5 lib
 Qt use platform tool, so qtmultimedia can use Gstreamer, ffmpeg and so on, it could be necessary to install :  
 sudo urpmi gstreamer1.0-plugins-good "something RTSP too"  
 
+To develop QrVsPlayer i'using gnome desktop on Mageia8, i really don't know why, but QT seems broken, special RTSP  read if i don't have the folowing RPM :  
+sudo urpmi elementary-xfce-icon-theme
+
 # install
 git clone https://github.com/surfzoid/QtVsPlayer.git  
 cd ./QtVsPlayer  
