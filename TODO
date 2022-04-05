@@ -4,12 +4,14 @@ Add sound managment
 
 Select the line in the playlist of the curent play file.
 
-Tweak the pro/qmake file to provide better make install
+Tweak the pro/qmake file to provide better make install. ok
 
 Setup qtcreator on PI400 to compil with clang
 
-add play rtsp
+add play rtsp. ok
 
-add save setting
+add save setting. ok
 
 aarch64, try the lib of UOS deb pkg
+
+
