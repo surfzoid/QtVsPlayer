@@ -26,6 +26,31 @@
      <widget class="QWidget" name="ComboBxs" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
+        <widget class="QSlider" name="PtzSliderSpeed">
+         <property name="toolTip">
+          <string>4</string>
+         </property>
+         <property name="statusTip">
+          <string>4</string>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>7</number>
+         </property>
+         <property name="pageStep">
+          <number>1</number>
+         </property>
+         <property name="sliderPosition">
+          <number>4</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="SnapshotBtn">
          <property name="text">
           <string>Snap</string>

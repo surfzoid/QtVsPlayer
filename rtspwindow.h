@@ -48,6 +48,8 @@ private slots:
 
     void on_SnapshotBtn_pressed();
 
+    void on_PtzSliderSpeed_valueChanged(int value);
+
 private:
     Ui::RtspWindow *ui;
     void PlayRtsp(QString Camuri);
@@ -64,6 +66,7 @@ private:
     static QString CamUser;
     static QString CamPass;
     static QString CamPortHttp;
+    static unsigned int PtzSpeed;
 
     static bool IsPressed;
 

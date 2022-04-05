@@ -27,6 +27,7 @@ QString RtspWindow::CamPort = "554";
 QString RtspWindow::CamUser = "admin";
 QString RtspWindow::CamPass = "hik12345";
 QString RtspWindow::CamPortHttp = "801";
+unsigned int RtspWindow::PtzSpeed = 4;
 
 bool RtspWindow::IsPressed = false;
 
@@ -463,12 +464,15 @@ void RtspWindow::authenticationRequired(QNetworkReply *reply, QAuthenticator *au
 ************************************************************************/
 QString RtspWindow::SetXMLReq(int pan,int tilt,int zoom)
 {
+    int Duration = PtzSpeed * 100;
+
     QString XmlData = "<PTZData>\r\n\
 <pan>" + QString::number(pan) + "</pan>\r\n\
             <tilt>" + QString::number(tilt) + "</tilt>\r\n\
             <zoom>" + QString::number(zoom) + "</zoom>\r\n\
             <Momentary>\r\n\
-            <duration>500</duration>\r\n\
+            <duration>" +
+                      QString::number(Duration) + "</duration>\r\n\
             </Momentary>\r\n\
             </PTZData>";
 
@@ -480,7 +484,8 @@ void RtspWindow::CallPresset(int Presset)
 {
 
     QString AdPath = ("/PTZ/channels/1/PTZControl?command=GOTO_PRESET&presetNo=" +
-                      QString::number(Presset) + "&speed=7&mode=start").toUtf8();
+                      QString::number(Presset) + "&speed=" +
+                      QString::number(PtzSpeed) + "&mode=start").toUtf8();
     QUrl Adresse("http://" + CamUser + ":" + CamPass +
                  "@" +  CamIp + ":" + CamPortHttp + AdPath);
 
@@ -512,4 +517,12 @@ void RtspWindow::on_SnapshotBtn_pressed()
                  "@" +  CamIp + ":" + CamPortHttp + AdPath);
 
     manager->get((QNetworkRequest)Adresse);
+}
+
+void RtspWindow::on_PtzSliderSpeed_valueChanged(int value)
+{
+    PtzSpeed = value;
+    ui->PtzSliderSpeed->setToolTipDuration(3000);
+    ui->PtzSliderSpeed->setToolTip(QString::number(value));
+    ui->PtzSliderSpeed->setStatusTip(QString::number(value));
 }
