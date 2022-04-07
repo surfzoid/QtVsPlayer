@@ -241,7 +241,8 @@ void VideoCtrls::on_nextButton_released()
 void VideoCtrls::on_previousButton_released()
 {
     QtVsPlayer::LastPlayIdx -= 2;
-    QtVsPlayer::PlayNextFile(false,0);
+    //int idx = QtVsPlayer::LastPlayIdx;
+    QtVsPlayer::PlayNextFile(false, 0);
     return;
 }
 

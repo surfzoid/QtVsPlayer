@@ -217,6 +217,15 @@ void QtVsPlayer::Play (QStringList Files)
 
 void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
 {
+    if (FromFsList) {
+        LastPlayIdx = idx;
+    }
+
+
+    if (LastPlayIdx == fileNames.length()) {
+        LastPlayIdx += 1;
+    }
+
     if (fileNames.length() < LastPlayIdx) {
         LastPlayIdx = 0;
     }
@@ -229,9 +238,7 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
     if (LastPlayIdx > fileNames.length()) {
         VideoCtrls::PLast = true;
     }
-    if (FromFsList) {
-        LastPlayIdx = idx;
-    }
+
     if (LastPlayIdx >= 0 and LastPlayIdx < fileNames.length()) {
 
         playm4interface::VideoFs(
@@ -260,12 +267,10 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
             }
         }
 
+        filesLs->SelCurPlay(LastPlayIdx);
         LastPlayIdx += 1;
     }
 
-    if (LastPlayIdx == fileNames.length()) {
-        LastPlayIdx += 1;
-    }
     return;
 }
 

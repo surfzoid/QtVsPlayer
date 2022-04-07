@@ -18,6 +18,7 @@ public:
 
     void clearitems();
     void Populate(QStringList fileName);
+    void SelCurPlay(unsigned int FsNumber);
 
 private:
     Ui::FilesListe *ui;

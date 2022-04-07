@@ -209,3 +209,9 @@ void FilesListe::on_FilesListe_destroyed()
 
     return;
 }
+
+void FilesListe::SelCurPlay(unsigned int FsNumber)
+{
+ui->tableWidget_2_localfilist->selectRow(FsNumber);
+    return;
+}
