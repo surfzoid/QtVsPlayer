@@ -18,7 +18,7 @@ FilesListe::FilesListe(QWidget *parent) :
     QDate stopdate = QDateTime::currentDateTime().date();
     QTime starttime(0, 0, 0);
     QTime stoptime(23, 59, 59);
-   /* FilesListe::starttime() = starttime;
+    /* FilesListe::starttime() = starttime;
     FilesListe::stoptime() = stoptime;*/
     ui->dateTimeEdit_2_start->setDate(startdate);
     ui->dateTimeEdit_2_start->setTime(starttime);
@@ -91,11 +91,11 @@ void FilesListe::Populate(QStringList fileNames)
             DayItem->setTextAlignment(Qt::AlignHCenter);
 
             QString stoptime = filecurr.lastModified().time().toString("hh:mm:ss");
-             QTableWidgetItem *FileStopTimeItem = new QTableWidgetItem(stoptime);
+            QTableWidgetItem *FileStopTimeItem = new QTableWidgetItem(stoptime);
             //FileStopTimeItem->setFlags(Qt::ItemIsEnabled);
-             //FileStopTimeItem->setBackground(Qt::darkRed);
-             FileStopTimeItem->setForeground(Qt::darkBlue);
-             FileStopTimeItem->setTextAlignment(Qt::AlignHCenter);
+            //FileStopTimeItem->setBackground(Qt::darkRed);
+            FileStopTimeItem->setForeground(Qt::darkBlue);
+            FileStopTimeItem->setTextAlignment(Qt::AlignHCenter);
 
             DayItem->setBackground(Qt::darkRed);
             DayItem->setForeground(Qt::white);
@@ -112,84 +112,87 @@ void FilesListe::Populate(QStringList fileNames)
         else {
 
 
-        QFile file(fileName);
+            QFile file(fileName);
 
-        QString filepath;
-        filepath = Colom[4];
-        QTableWidgetItem *FilePathItem = new QTableWidgetItem(filepath);
-        FilePathItem->setFlags(Qt::ItemIsEnabled);
+            QString filepath;
+            filepath = Colom[4];
+            QTableWidgetItem *FilePathItem = new QTableWidgetItem(filepath);
+            FilePathItem->setFlags(Qt::ItemIsEnabled);
 
-        QString filesize;
-        QFileInfo  filecurr(file.fileName());
-        filesize = QString::number(filecurr.size() / 1000000);
+            QString filesize;
+            QFileInfo  filecurr(file.fileName());
+            filesize = QString::number(filecurr.size() / 1000000);
 
-        QTableWidgetItem *FileSizeItem = new QTableWidgetItem(filesize);
-        FileSizeItem->setFlags(Qt::ItemIsEnabled);
-        FileSizeItem->setTextAlignment(Qt::AlignHCenter);
+            QTableWidgetItem *FileSizeItem = new QTableWidgetItem(filesize);
+            FileSizeItem->setFlags(Qt::ItemIsEnabled);
+            FileSizeItem->setTextAlignment(Qt::AlignHCenter);
 
-        QString path(Colom[0]);
-        path = path.left(path.length() - 8);
-        QTableWidgetItem *pathItem = new QTableWidgetItem(path);
-        //pathItem->setFlags(Qt::ItemIsEnabled);
-
-
-        QString tt = Colom[1];
-        QString starttime = tt.left(2) + ":" + tt.mid(2,2) + ":" + tt.right(2);
-        QTableWidgetItem *FileStartTimeItem = new QTableWidgetItem(starttime);
-        //FileStartTimeItem->setFlags(Qt::ItemIsEnabled);
-        FileStartTimeItem->setTextAlignment(Qt::AlignHCenter);
+            QString path(Colom[0]);
+            path = path.left(path.length() - 8);
+            QTableWidgetItem *pathItem = new QTableWidgetItem(path);
+            //pathItem->setFlags(Qt::ItemIsEnabled);
 
 
-        QString st = Colom[3];
-        QString stoptime = st.left(2) + ":" + st.mid(2,2) + ":" + st.right(2);
-         QTableWidgetItem *FileStopTimeItem = new QTableWidgetItem(stoptime);
-        //FileStopTimeItem->setFlags(Qt::ItemIsEnabled);
-         //FileStopTimeItem->setBackground(Qt::darkRed);
-         FileStopTimeItem->setForeground(Qt::darkBlue);
-         FileStopTimeItem->setTextAlignment(Qt::AlignHCenter);
+            QString tt = Colom[1];
+            QString starttime = tt.left(2) + ":" + tt.mid(2,2) + ":" + tt.right(2);
+            QTableWidgetItem *FileStartTimeItem = new QTableWidgetItem(starttime);
+            //FileStartTimeItem->setFlags(Qt::ItemIsEnabled);
+            FileStartTimeItem->setTextAlignment(Qt::AlignHCenter);
 
 
-        QString dd = Colom[2];
-        QString Day = dd.left(4) + "/" + dd.mid(4,2) + "/" + dd.right(2);
+            QString st = Colom[3];
+            QString stoptime = st.left(2) + ":" + st.mid(2,2) + ":" + st.right(2);
+            QTableWidgetItem *FileStopTimeItem = new QTableWidgetItem(stoptime);
+            //FileStopTimeItem->setFlags(Qt::ItemIsEnabled);
+            //FileStopTimeItem->setBackground(Qt::darkRed);
+            FileStopTimeItem->setForeground(Qt::darkBlue);
+            FileStopTimeItem->setTextAlignment(Qt::AlignHCenter);
 
-        QTableWidgetItem *DayItem = new QTableWidgetItem(Day);
-        DayItem->setTextAlignment(Qt::AlignHCenter);
 
-        if (Day != MemDay) {
-            NextDay = !NextDay;
-            MemDay = Day;
+            QString dd = Colom[2];
+            QString Day = dd.left(4) + "/" + dd.mid(4,2) + "/" + dd.right(2);
+
+            QTableWidgetItem *DayItem = new QTableWidgetItem(Day);
+            DayItem->setTextAlignment(Qt::AlignHCenter);
+
+            if (Day != MemDay) {
+                NextDay = !NextDay;
+                MemDay = Day;
+            }
+
+            if (NextDay == true) {
+                DayItem->setBackground(Qt::darkRed);
+                DayItem->setForeground(Qt::white);
+                FilePathItem->setBackground(Qt::cyan);
+                FileStartTimeItem->setBackground(Qt::red);
+                FileStartTimeItem->setForeground(Qt::white);
+            }
+
+            if (NextDay == false) {
+                DayItem->setBackground(Qt::white);
+                DayItem->setForeground(Qt::darkRed);
+                FilePathItem->setBackground(Qt::white);
+                FileStartTimeItem->setBackground(Qt::white);
+                FileStartTimeItem->setForeground(Qt::red);
+            }
+
+            FileStopTimeItem->setFlags(Qt::ItemIsEnabled);
+            int row = ui->tableWidget_2_localfilist->rowCount();
+            ui->tableWidget_2_localfilist->insertRow(row);
+
+            ui->tableWidget_2_localfilist->setItem(row, 0, FilePathItem);
+            ui->tableWidget_2_localfilist->setItem(row, 1, FileStartTimeItem);
+            ui->tableWidget_2_localfilist->setItem(row, 2, FileStopTimeItem);
+            ui->tableWidget_2_localfilist->setItem(row, 3, DayItem);
+            ui->tableWidget_2_localfilist->setItem(row, 4, FileSizeItem);
+            ui->tableWidget_2_localfilist->setItem(row, 5, pathItem);
+
         }
-
-        if (NextDay == true) {
-            DayItem->setBackground(Qt::darkRed);
-            DayItem->setForeground(Qt::white);
-            FilePathItem->setBackground(Qt::cyan);
-            FileStartTimeItem->setBackground(Qt::red);
-            FileStartTimeItem->setForeground(Qt::white);
-        }
-
-        if (NextDay == false) {
-            DayItem->setBackground(Qt::white);
-            DayItem->setForeground(Qt::darkRed);
-            FilePathItem->setBackground(Qt::white);
-            FileStartTimeItem->setBackground(Qt::white);
-            FileStartTimeItem->setForeground(Qt::red);
-        }
-
-        FileStopTimeItem->setFlags(Qt::ItemIsEnabled);
-        int row = ui->tableWidget_2_localfilist->rowCount();
-        ui->tableWidget_2_localfilist->insertRow(row);
-        ui->tableWidget_2_localfilist->setItem(row, 0, FilePathItem);
-        ui->tableWidget_2_localfilist->setItem(row, 1, FileStartTimeItem);
-        ui->tableWidget_2_localfilist->setItem(row, 2, FileStopTimeItem);
-        ui->tableWidget_2_localfilist->setItem(row, 3, DayItem);
-        ui->tableWidget_2_localfilist->setItem(row, 4, FileSizeItem);
-        ui->tableWidget_2_localfilist->setItem(row, 5, pathItem);
-}
 
     }
     QHeaderView *header = ui->tableWidget_2_localfilist->horizontalHeader();
     header->setSectionResizeMode(QHeaderView::ResizeToContents);
+
     return;
 
 }
@@ -212,6 +215,15 @@ void FilesListe::on_FilesListe_destroyed()
 
 void FilesListe::SelCurPlay(unsigned int FsNumber)
 {
-ui->tableWidget_2_localfilist->selectRow(FsNumber);
+    ui->tableWidget_2_localfilist->selectRow(FsNumber);
     return;
+}
+
+
+void FilesListe::on_tableWidget_2_localfilist_itemSelectionChanged()
+{
+    int CurRow = ui->tableWidget_2_localfilist->currentRow();
+    QTableWidgetItem *item=new QTableWidgetItem(windowIcon(),QString::number(CurRow + 1),0);//set Icon a and string 1
+
+    ui->tableWidget_2_localfilist->setVerticalHeaderItem(CurRow,item);
 }
