@@ -48,6 +48,8 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
     bSuccess = PlayM4_Play(m_pblocalportnum, hwnd);
     DisplayError("PlayM4_Play",PlayM4_GetLastError(m_pblocalportnum));
+
+    delay();
     QtVsPlayer::WVideoCtrls->RestoreSeek();
 
     if (bSuccess) {
@@ -60,6 +62,13 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));
     return 0;//PlayM4_GetLastError(m_pblocalportnum);
+}
+
+void playm4interface::delay()
+{
+    QTime dieTime= QTime::currentTime().addSecs(1);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
 
 void playm4interface::DisplayError(QString Source, unsigned int  ErrMess)
