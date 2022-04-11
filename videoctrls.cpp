@@ -26,7 +26,6 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
     //connect(m_pbqtimer, &QTimer::timeout, this, &VideoCtrls::updatelocalprocess);
     m_pbqtimer->start( 1000 );
     connect(m_pbqtimer, SIGNAL(timeout()), this, SLOT(updatelocalprocess()));
-    this->ui->lineEdit_2_pbprocess->setReadOnly(true);
 
     this->ui->CurSpeed->setText("0X");
 }
@@ -99,7 +98,7 @@ void VideoCtrls::on_stopButton_released()
 
 void VideoCtrls::on_SeekMoreButton_released()
 {
-    if (seekSpeed < 6 and seekSpeed >= 0) {
+    if (seekSpeed < 6) {
         playm4interface::Fast();
         seekSpeed += 1;
         this->ui->CurSpeed->setText(QString::number(seekSpeed) +  "X");

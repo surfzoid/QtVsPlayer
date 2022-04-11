@@ -60,6 +60,10 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     QtVsPlayer::WVideoCtrls->InitTimeSlide();
 
 
+    SetVideoWin(0);
+    RefreshPlay();
+    PlayM4_WndResolutionChange(m_pblocalportnum);
+
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));
     return 0;//PlayM4_GetLastError(m_pblocalportnum);
 }
