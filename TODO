@@ -4,13 +4,13 @@ Add sound managment
 
 Select the line in the playlist of the curent play file.
 
-Tweak the pro/qmake file to provide better make install. ok
+Tweak the pro/qmake file to provide better make install.Did  ok
 
 Setup qtcreator on PI400 to compil with clang
 
-add play rtsp. ok
+add play rtsp.Did it ok
 
-add save setting. ok
+add save setting.Did it ok
 
 aarch64, try the lib of UOS deb pkg
 
@@ -18,4 +18,4 @@ Make ptz command more accurate
 
 Playctrl when zoom and move , make mousse position relative to the center of the picture, or to offset
 
-Save preset name
+Save preset and patrol name. Did it 2022.04.12

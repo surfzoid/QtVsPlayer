@@ -50,6 +50,14 @@ private slots:
 
     void on_PtzSliderSpeed_valueChanged(int value);
 
+    void on_actionPreset_triggered();
+
+    void on_actionPatrol_triggered();
+
+    void on_comboBxPresset_editTextChanged(const QString &arg1);
+
+    void on_comboBxPatrol_editTextChanged(const QString &arg1);
+
 private:
     Ui::RtspWindow *ui;
     void PlayRtsp(QString Camuri);
@@ -69,6 +77,9 @@ private:
     static unsigned int PtzSpeed;
 
     static bool IsPressed;
+
+    void LoadPreset();
+    void LoadPatrol();
 
     QString SetXMLReq(int pan,int tilt,int zoom);
 

@@ -43,17 +43,6 @@ RtspWindow::RtspWindow(QWidget *parent) :
 
     setCentralWidget(videoWidget);
 
-
-    ui->comboBxPresset->clear();
-    for (int i=1; i<16; i++){
-        ui->comboBxPresset->addItem("Presset" + QString::number(i));
-    }
-
-    ui->comboBxPatrol->clear();
-    for (int i=1; i<10; i++){
-        ui->comboBxPatrol->addItem("Patrol" + QString::number(i));
-    }
-
     ui->menubar->setCornerWidget(ui->ComboBxs);
     ui->statusbar->addPermanentWidget(ui->lblLoading);
 
@@ -76,9 +65,6 @@ RtspWindow::RtspWindow(QWidget *parent) :
 
     connect(manager, SIGNAL(authenticationRequired(QNetworkReply*, QAuthenticator*)),
             this, SLOT(authenticationRequired(QNetworkReply*, QAuthenticator*)));
-
-
-
 
 
 }
@@ -145,6 +131,9 @@ void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
             EntryMenu->activate(QAction::Trigger);
         }
     }
+
+    LoadPreset();
+    LoadPatrol();
 }
 
 void RtspWindow::positionChanged(qint64 pos)
@@ -525,4 +514,97 @@ void RtspWindow::on_PtzSliderSpeed_valueChanged(int value)
     ui->PtzSliderSpeed->setToolTipDuration(3000);
     ui->PtzSliderSpeed->setToolTip(QString::number(value));
     ui->PtzSliderSpeed->setStatusTip(QString::number(value));
+}
+
+
+
+void RtspWindow::on_actionPreset_triggered()
+{
+    QSettings settings;
+
+    settings.beginGroup(ui->ComboBxCam->currentText() + "_Preset");
+
+    for (int i=0; i<15; i++){
+        settings.setValue( "Presset" + QString::number(i),
+                           ui->comboBxPresset->itemText(i));
+    }
+
+    settings.endGroup();
+    settings.sync();
+}
+
+void RtspWindow::on_actionPatrol_triggered()
+{
+    QSettings settings;
+
+    settings.beginGroup(ui->ComboBxCam->currentText() + "_Patrol");
+
+    for (int i=0; i<9; i++){
+        settings.setValue( "Patrol" + QString::number(i),
+                           ui->comboBxPatrol->itemText(i));
+    }
+
+    settings.endGroup();
+    settings.sync();
+
+}
+
+void RtspWindow::on_comboBxPresset_editTextChanged(const QString &arg1)
+{
+    ui->comboBxPresset->setItemText(ui->comboBxPresset->currentIndex(),arg1);
+}
+
+void RtspWindow::on_comboBxPatrol_editTextChanged(const QString &arg1)
+{
+    ui->comboBxPatrol->setItemText(ui->comboBxPatrol->currentIndex(),arg1);
+}
+
+void RtspWindow::LoadPreset()
+{
+
+    ui->comboBxPresset->clear();
+
+    QSettings settings;
+    settings.beginGroup(ui->ComboBxCam->currentText() + "_Preset");
+    QStringList keys = settings.allKeys();
+
+
+    for (int i=0; i<keys.length(); i++){
+        ui->comboBxPresset->addItem(settings.value("Presset" +
+                                                   QString::number(i), "Presset" + QString::number(i)).value<QString>());
+    }
+
+    settings.endGroup();
+
+    if (ui->comboBxPresset->count() == 0) {
+        for (int i=1; i<16; i++){
+            ui->comboBxPresset->addItem("Presset" + QString::number(i));
+        }
+    }
+
+
+}
+
+void RtspWindow::LoadPatrol()
+{
+    ui->comboBxPatrol->clear();
+
+    QSettings settings;
+    settings.beginGroup(ui->ComboBxCam->currentText() + "_Patrol");
+    QStringList keys = settings.allKeys();
+
+
+    for (int i=0; i<keys.length(); i++){
+        ui->comboBxPatrol->addItem(settings.value("Patrol" +
+                                                  QString::number(i), "Patrol" + QString::number(i)).value<QString>());
+    }
+
+    settings.endGroup();
+
+    if (ui->comboBxPatrol->count() == 0) {
+        for (int i=1; i<10; i++){
+            ui->comboBxPatrol->addItem("Patrol" + QString::number(i));
+        }
+    }
+
 }

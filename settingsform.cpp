@@ -39,7 +39,7 @@ void SettingsForm::on_BtnSave_released()
     QSettings settings;
     CamName = ui->CamNameEd->currentText();
     settings.setValue( "CamsName/" + CamName,"Name");
-    settings.endGroup();
+    //settings.endGroup();
     settings.sync();
 
     settings.beginGroup(CamName);

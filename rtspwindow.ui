@@ -65,6 +65,12 @@
          <property name="currentText">
           <string notr="true"/>
          </property>
+         <property name="maxCount">
+          <number>10</number>
+         </property>
+         <property name="insertPolicy">
+          <enum>QComboBox::NoInsert</enum>
+         </property>
          <property name="placeholderText">
           <string notr="true"/>
          </property>
@@ -77,6 +83,15 @@
          </property>
          <property name="currentText">
           <string notr="true"/>
+         </property>
+         <property name="maxVisibleItems">
+          <number>15</number>
+         </property>
+         <property name="maxCount">
+          <number>15</number>
+         </property>
+         <property name="insertPolicy">
+          <enum>QComboBox::NoInsert</enum>
          </property>
          <property name="placeholderText">
           <string notr="true"/>
@@ -154,6 +169,14 @@
     <property name="title">
      <string>PTZ</string>
     </property>
+    <widget class="QMenu" name="menusave">
+     <property name="title">
+      <string>save</string>
+     </property>
+     <addaction name="actionPreset"/>
+     <addaction name="actionPatrol"/>
+    </widget>
+    <addaction name="menusave"/>
    </widget>
    <addaction name="menuVideo"/>
    <addaction name="menuPTZ"/>
@@ -220,6 +243,16 @@
    </property>
    <property name="text">
     <string>/Streaming/Channels/104</string>
+   </property>
+  </action>
+  <action name="actionPreset">
+   <property name="text">
+    <string>Preset</string>
+   </property>
+  </action>
+  <action name="actionPatrol">
+   <property name="text">
+    <string>Patrol</string>
    </property>
   </action>
  </widget>
