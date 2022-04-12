@@ -86,3 +86,9 @@ DISTFILES += \
 
 
 
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -lPlayCtrl
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/w86_64/ -lPlayCtrld
+
+INCLUDEPATH += $$PWD/lib/w86_64
+DEPENDPATH += $$PWD/lib/w86_64

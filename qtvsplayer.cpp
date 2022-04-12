@@ -513,13 +513,6 @@ void QtVsPlayer::on_actionDossier_triggered()
 }
 
 
-void QtVsPlayer::on_actionConsole_triggered()
-{
-    ui->SatusLbl->setText("display" + Lastpath);
-    return;
-}
-
-#include <QMediaPlayer>
 void QtVsPlayer::on_actionSettings_triggered()
 {
     SettingsForm *setTing = new SettingsForm();
@@ -532,4 +525,26 @@ void QtVsPlayer::on_actionRtsp_Play_triggered()
 {
    RtspWindow *RtspView = new RtspWindow (this);
    RtspView->showMaximized();
+}
+
+void QtVsPlayer::on_actionBeer_and_Coffee_triggered()
+{
+    QString Paypal = "<a href='https://paypal.me/EricPetit?'>Paypal</a>\n\r";
+    QString Tip = "<a href='https://fr.tipeee.com/eric-utopiste'>Tip</a>\n\r";
+    QMessageBox::about(this, tr("Enjoy!"),
+                       Paypal +
+                       " or \n\r" + Tip +
+                       "\n\r" +
+                       tr("If you like my job and be happy to buy me a beer or a coffee, you can do it here."));
+
+    return;
+}
+
+void QtVsPlayer::test()
+{
+    foreach (const QAction *Act, ui->menuAide->actions()) {
+
+   printf("menu name :%s\n\r",Act->text().toUtf8().data());
+    }
+
 }

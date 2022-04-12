@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     }
 
     //if (list.length() > 0) {w.ParseArgs(list);}
-qputenv("QT_ASSUME_STDERR_HAS_CONSOLE", "1");
+    qputenv("QT_ASSUME_STDERR_HAS_CONSOLE", "1");
     return a.exec();
     //}
 }

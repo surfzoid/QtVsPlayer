@@ -52,11 +52,11 @@ private slots:
 
     void on_actionDossier_triggered();
 
-    void on_actionConsole_triggered();
-
     void on_actionSettings_triggered();
 
     void on_actionRtsp_Play_triggered();
+
+    void on_actionBeer_and_Coffee_triggered();
 
 private:
     Ui::QtVsPlayer *ui;
@@ -75,7 +75,7 @@ private:
     static int centralWidgetwinId;
     static QVideoWidget *videoWidget;
 
-
+    void test();
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

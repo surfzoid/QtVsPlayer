@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>Eric Petit</author>
  <class>QtVsPlayer</class>
  <widget class="QMainWindow" name="QtVsPlayer">
   <property name="geometry">
@@ -9,9 +10,6 @@
     <width>492</width>
     <height>446</height>
    </rect>
-  </property>
-  <property name="acceptDrops">
-   <bool>true</bool>
   </property>
   <property name="windowTitle">
    <string>QtVsPlayer</string>
@@ -102,14 +100,6 @@
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>492</width>
-     <height>24</height>
-    </rect>
-   </property>
    <widget class="QMenu" name="menuFichiers">
     <property name="title">
      <string>File</string>
@@ -122,7 +112,7 @@
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionConsole"/>
+    <addaction name="actionBeer_and_Coffee"/>
     <addaction name="actionA_propos"/>
    </widget>
    <widget class="QMenu" name="menuAffichage">
@@ -144,14 +134,12 @@
     <string>Open</string>
    </property>
   </action>
-  <action name="actionConsole">
-   <property name="text">
-    <string>Console</string>
-   </property>
-  </action>
   <action name="actionA_propos">
    <property name="text">
     <string>About</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::AboutRole</enum>
    </property>
   </action>
   <action name="actionPlein_ecran">
@@ -174,9 +162,6 @@
    </property>
   </action>
   <action name="actionListe_de_lecture">
-   <property name="checkable">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Playliste</string>
    </property>
@@ -190,10 +175,21 @@
    <property name="text">
     <string>Settings</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::PreferencesRole</enum>
+   </property>
   </action>
   <action name="actionRtsp_Play">
    <property name="text">
     <string>Rtsp Play</string>
+   </property>
+  </action>
+  <action name="actionBeer_and_Coffee">
+   <property name="text">
+    <string>Beer and Coffee</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::AboutRole</enum>
    </property>
   </action>
  </widget>
