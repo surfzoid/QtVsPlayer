@@ -548,3 +548,9 @@ void QtVsPlayer::test()
     }
 
 }
+
+void QtVsPlayer::on_actionInfos_triggered()
+{
+    playm4interface::GetMetadatas();
+
+}

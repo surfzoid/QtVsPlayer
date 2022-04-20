@@ -50,6 +50,7 @@ public:
     static int m_pblocalportnum;
     static void SetPort();
     static void FreePort();
+    static void GetMetadatas();
 private:
 
     static void DisplayError(QString Source, unsigned int  ErrMess);

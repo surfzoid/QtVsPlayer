@@ -58,6 +58,8 @@ private slots:
 
     void on_actionBeer_and_Coffee_triggered();
 
+    void on_actionInfos_triggered();
+
 private:
     Ui::QtVsPlayer *ui;
 

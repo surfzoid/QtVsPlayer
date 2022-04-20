@@ -259,3 +259,11 @@ void playm4interface::GetCap(int nFlag)
 
     printf("\n\r%s\n\r",csCap.toUtf8().data());
 }
+
+
+void playm4interface::GetMetadatas()
+{
+
+    HIK_MEDIAINFO HIKMI;
+    qDebug() <<  HIKMI.video_format;
+}

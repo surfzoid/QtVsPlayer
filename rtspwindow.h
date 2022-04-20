@@ -82,6 +82,7 @@ private:
     void LoadPatrol();
 
     QString SetXMLReq(int pan,int tilt,int zoom);
+    void GetMetaData(QMediaPlayer *player);
 
 public slots:
     void replyFinished (QNetworkReply *reply);

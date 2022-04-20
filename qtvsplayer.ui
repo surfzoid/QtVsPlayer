@@ -100,6 +100,14 @@
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>492</width>
+     <height>24</height>
+    </rect>
+   </property>
    <widget class="QMenu" name="menuFichiers">
     <property name="title">
      <string>File</string>
@@ -123,6 +131,7 @@
     <addaction name="actionMasquer_les_controles"/>
     <addaction name="actionListe_de_lecture"/>
     <addaction name="actionSettings"/>
+    <addaction name="actionInfos"/>
    </widget>
    <addaction name="menuFichiers"/>
    <addaction name="menuAffichage"/>
@@ -190,6 +199,11 @@
    </property>
    <property name="menuRole">
     <enum>QAction::AboutRole</enum>
+   </property>
+  </action>
+  <action name="actionInfos">
+   <property name="text">
+    <string>Infos</string>
    </property>
   </action>
  </widget>

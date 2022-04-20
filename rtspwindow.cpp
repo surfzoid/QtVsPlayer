@@ -17,6 +17,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QMessageBox>
+#include <QMediaMetaData>
 
 QMediaPlayer *RtspWindow::player;
 QVideoWidget *RtspWindow::videoWidget;
@@ -252,6 +253,9 @@ void RtspWindow::on_action_Streaming_Channels_3_triggered()
 
 void RtspWindow::on_actionMetadata_triggered()
 {
+    GetMetaData(player);
+    return;
+
     bool IsMeta ;
     IsMeta = player->isMetaDataAvailable();
 
@@ -608,3 +612,31 @@ void RtspWindow::LoadPatrol()
     }
 
 }
+
+void RtspWindow::GetMetaData(QMediaPlayer *player)
+{
+   // Get the list of keys there is metadata available for
+   QStringList metadatalist = player->availableMetaData();
+
+   // Get the size of the list
+   int list_size = metadatalist.size();
+
+   qDebug() << player->isMetaDataAvailable() << list_size;
+
+   // Define variables to store metadata key and value
+   QString metadata_key;
+   QVariant var_data;
+
+   for (int indx = 0; indx < list_size; indx++)
+   {
+     // Get the key from the list
+     metadata_key = metadatalist.at(indx);
+
+     // Get the value for the key
+     var_data = player->metaData(metadata_key);
+
+    qDebug() << metadata_key << var_data.toString();
+    printf("%s : %s\n\r",metadata_key.toUtf8().data(),var_data.toString().toUtf8().data());
+   }
+   qDebug() <<  player->metaData(QMediaMetaData::Resolution).toString();
+ }
