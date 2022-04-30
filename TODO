@@ -25,3 +25,5 @@ Add the first callback descripe in the doc
 Add ptz->reboot
 
 When saving presset name, save in the device
+
+Rtsp player, set default filename of snapshot to camName + date now

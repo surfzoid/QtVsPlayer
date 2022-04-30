@@ -103,6 +103,14 @@ void RtspWindow::PlayRtsp(QString Camuri)
                                QSizePolicy::Maximum);
 
 
+
+    /*QUrl Adresse(Camuri.replace("rtsp:","http:") + "/metadata");
+    Adresse.setPort(CamPortHttp.toInt());
+    manager->get((QNetworkRequest)Adresse);
+
+    player->setMedia(QUrl(Camuri + "/trackID=1"));
+    player->play();*/
+
     player->setMedia(QUrl(Camuri));
     player->play();
     videoWidget->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
@@ -123,7 +131,7 @@ void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
     settings.endGroup();
 
     RtspUri = "rtsp://" + CamUser + ":" + CamPass +
-            "@" + CamIp + ":" + CamPort + "/Streaming/Channels/102";
+            "@" + CamIp + ":" + CamPort + "/ISAPI/Streaming/Channels/102";
 
 
     foreach( QAction *const EntryMenu , ui->menuchannel->actions())
@@ -280,7 +288,7 @@ principal
 auxiliaire
 /doc/index.html#/preview
 */
-    QString AdPath = "/Streaming/Channels/104";
+    QString AdPath = "/ISAPI/Streaming/Channels/104";
     QUrl Adresse("rtsp://" + CamUser + ":" + CamPass +
                  "@" +  CamIp + ":" + CamPort + AdPath);
     ui->action_Streaming_Channels_1->setChecked(false);

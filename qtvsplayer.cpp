@@ -264,6 +264,9 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
 
                 Lastfs = Colom[4] + " from " + starttime + " to " + stoptime + " at " + Day;
 
+                VideoCtrls::Duration = QTime::fromString(stoptime).second() - QTime::fromString(starttime).second();
+
+                VideoCtrls::Duration = PlayM4_GetFileTime(playm4interface::m_pblocalportnum);
             }
         }
 
