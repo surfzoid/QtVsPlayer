@@ -182,7 +182,7 @@ QStringList QtVsPlayer::Scandir( const QString &dir2scan )
                 }
             }
         }
-        printf("Debug---Found :%d files",list.length());
+        printf("Debug---Found :%d files\n\r",list.length());
 
     }
 
