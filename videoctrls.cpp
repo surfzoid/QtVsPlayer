@@ -8,7 +8,7 @@ bool VideoCtrls::EndRead = true;
 bool VideoCtrls::PLast = false;
 int VideoCtrls::HikNumPort = -1;
 int VideoCtrls::seekSpeed = 0;
-unsigned int VideoCtrls::Duration = 300;
+int VideoCtrls::Duration = 0;
 //QString VideoCtrls::picturepathname = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/PlayBackPictureDir/";
 static QString PicPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/";
 static bool IsSnapShoot = false;
@@ -177,9 +177,12 @@ void VideoCtrls::updatelocalprocess()
                 pos = PlayM4_GetPlayPos(HikNumPort);
                 currentpos =(unsigned int)(pos*100);
                 ui->TimeSlider->setValue(currentpos);
-                QString CurTime = QTime::fromMSecsSinceStartOfDay(Duration * 1000*pos).toString("mm:ss");
-                QString TotTime = QTime::fromMSecsSinceStartOfDay(Duration * 1000).toString("mm:ss");
-                ui->LblDuration->setText(CurTime +  " / " + TotTime );
+
+                unsigned int PlayedTime = PlayM4_GetPlayedTime(HikNumPort);
+                QString CurTime = QDateTime::fromSecsSinceEpoch((int)(PlayedTime)).toUTC().toString("mm:ss");
+                QString TotTime = QDateTime::fromSecsSinceEpoch((int)(Duration)).toUTC().toString("mm:ss");
+                ui->LblDuration->setText(CurTime +  "\n\r" + TotTime );
+
                 //ui->LblDuration->setText(QString::number((Duration/60)*pos, 'f', 2) +  " / " + QString::number(Duration/60, 'f', 2) );
                 //ui->TimeSlider->statusTip(currentpos).fromUtf8();
                 if (currentpos >= 100) {

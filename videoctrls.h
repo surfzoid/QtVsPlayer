@@ -26,7 +26,7 @@ public:
     static int seekSpeed;
     void RestoreSeek();
     static void pause();
-    static unsigned int Duration;
+    static int Duration;
 
 private:
     Ui::VideoCtrls *ui;
