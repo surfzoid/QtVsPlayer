@@ -27,14 +27,14 @@ int main(int argc, char *argv[])
     //Translation
     QTranslator qtTranslator;
     bool bsuc = false;
-    bsuc = qtTranslator.load(QLocale(), QLatin1String("qt"), QLatin1String("_"),
+    bsuc = qtTranslator.load( QLocale(), QLatin1String("qt"), QLatin1String("_"),
                              QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 
     a.installTranslator(&qtTranslator);
 
     QTranslator myappTranslator;
     bsuc = myappTranslator.load(QLocale(), QLatin1String("QtVsPlayer"), QLatin1String("_"),
-                                QCoreApplication::applicationDirPath());
+                                "/usr/share/QtVsPlayer/translations");
     a.installTranslator(&myappTranslator);
 
     //surpress warning!
