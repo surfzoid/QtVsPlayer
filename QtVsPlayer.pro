@@ -14,7 +14,8 @@ TEMPLATE = app
 
 unix {
     isEmpty(PREFIX) {
-        PREFIX = $$(HOME)/.local/share
+        #PREFIX = $$(HOME)/.local/share
+        PREFIX = /usr/share
     }
 
     shortcutfiles.path = $$PREFIX/applications/
@@ -23,16 +24,21 @@ unix {
     iconfiles.files = $$PWD/images/QtVsPlayer.png
     #INSTALLS += shortcutfiles
     #INSTALLS += iconfiles
+    #For Mageia, adjust
+    libfiles.path = /usr/lib64
+    libfiles.files += $$PWD/lib/$$QMAKE_HOST.arch/*
+    translationfiles.path = /usr/share/QtVsPlayer/translations
+    translationfiles.files = $$PWD/*.qm
     }
-message("If mkdir of /opt/QtVsPlayer return erorror not permit, please do :")
-message("sudo mkdir /opt/QtVsPlayer & sudo chown -R $USER /opt/QtVsPlayer")
+#message("If mkdir of /opt/QtVsPlayer return erorror not permit, please do :")
+#message("sudo mkdir /opt/QtVsPlayer & sudo chown -R $USER /opt/QtVsPlayer")
 
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}
-else: unix:!android: target.path = /opt/$${TARGET}
-target.files += $${TARGET} $$PWD/lib/$$QMAKE_HOST.arch/* $$PWD/*.qm
-!isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles
+else: unix:!android: target.path = /usr/bin #/opt/$${TARGET}
+target.files += $${TARGET}
+!isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles
 
 unix {
 CONFIG += separate_debug_info
