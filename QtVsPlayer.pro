@@ -87,6 +87,7 @@ RESOURCES += \
 
 DISTFILES += \
     QtVsPlayer.desktop \
+    QtVsPlayer.spec \
     README.md \
     TODO
 
