@@ -38,7 +38,9 @@ unix {
 qnx: target.path = /tmp/$${TARGET}
 else: unix:!android: target.path = /usr/bin #/opt/$${TARGET}
 target.files += $${TARGET}
-!isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles
+debugfiles.path = /usr/lib/debug/usr/bin
+debugfiles.files = $${TARGET}.debug
+!isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles debugfiles
 
 unix {
 CONFIG += separate_debug_info
