@@ -131,7 +131,7 @@ void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
     settings.endGroup();
 
     RtspUri = "rtsp://" + CamUser + ":" + CamPass +
-            "@" + CamIp + ":" + CamPort + "/ISAPI/Streaming/Channels/102";
+            "@" + CamIp + ":" + CamPort + "/Streaming/Channels/102";
 
 
     foreach( QAction *const EntryMenu , ui->menuchannel->actions())
