@@ -58,7 +58,13 @@ private:
     static bool FsOpened;
     static void GetCap(int nFlag);
     static void delay();
+    static void InitCallback(unsigned int nBeginTime, unsigned int nEndTime);
 
+
+    static void __stdcall SetFileRefCallBack(unsigned int nPort,unsigned int nUser);
+    static void __stdcall SetAudioCallBack(long nPort, char * pAudioBuf, long nSize, long nStamp, long nType, long nUser);
+    static void __stdcall SetVerifyCallBack(long nPort, FRAME_POS * pFilePos, unsigned int bIsVideo, unsigned int nUser);
+    static void __stdcall SetDecCallBack(long nPort,char * pBuf,long nSize,FRAME_INFO * pFrameInfo, long nReserved1,long nReserved2);
 };
 
 
