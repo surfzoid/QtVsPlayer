@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>491</width>
+    <width>511</width>
     <height>57</height>
    </rect>
   </property>
@@ -1108,6 +1108,22 @@
    </property>
    <property name="wordWrap">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QSlider" name="SoudVolume">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>0</y>
+     <width>20</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>32768</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
    </property>
   </widget>
  </widget>

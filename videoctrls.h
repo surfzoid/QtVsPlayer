@@ -53,6 +53,9 @@ private slots:
     void on_nextButton_released();
     void on_previousButton_released();
     void on_SnapshotButton_released();
+    void on_Infolabel_2_linkHovered(const QString &link);
+    void on_SoudVolume_actionTriggered(int action);
+    void on_SoudVolume_valueChanged(int value);
 };
 
 #endif // VIDEOCTRLS_H

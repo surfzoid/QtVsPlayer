@@ -21,6 +21,7 @@ public:
     static int Slow();
     static int OneByOne();
     static int OneByOneBack();
+    static int SetVolume(unsigned short Volume);
     static void decimaltoOctal(int deciNum)
     {
 

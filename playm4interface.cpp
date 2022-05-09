@@ -49,6 +49,10 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     bSuccess = PlayM4_Play(m_pblocalportnum, hwnd);
     DisplayError("PlayM4_Play",PlayM4_GetLastError(m_pblocalportnum));
 
+    bSuccess = PlayM4_PlaySoundShare(m_pblocalportnum);
+    DisplayError("PlayM4_PlaySound",PlayM4_GetLastError(m_pblocalportnum));
+
+
     delay();
     QtVsPlayer::WVideoCtrls->RestoreSeek();
 
@@ -158,7 +162,8 @@ int playm4interface::Play()
 
 int playm4interface::Stop()
 {
-    return PlayM4_Stop(m_pblocalportnum);
+    PlayM4_Stop(m_pblocalportnum);
+    return PlayM4_StopSoundShare(m_pblocalportnum);
 }
 
 int playm4interface::Fast()
@@ -185,6 +190,12 @@ int playm4interface::OneByOneBack()
 
     return PlayM4_ReversePlay(m_pblocalportnum);
     //return PlayM4_OneByOneBack(m_pblocalportnum);
+}
+
+int playm4interface::SetVolume(unsigned short Volume)
+{
+   unsigned short GetVolume = PlayM4_GetVolume(m_pblocalportnum);
+   return PlayM4_SetVolume(m_pblocalportnum, Volume);
 }
 
 /*

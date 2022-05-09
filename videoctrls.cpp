@@ -348,3 +348,18 @@ void VideoCtrls::on_SnapshotButton_released()
     return;
 
 }
+
+void VideoCtrls::on_Infolabel_2_linkHovered(const QString &link)
+{
+
+}
+
+void VideoCtrls::on_SoudVolume_actionTriggered(int action)
+{
+
+}
+
+void VideoCtrls::on_SoudVolume_valueChanged(int value)
+{
+    playm4interface::SetVolume((unsigned short)value);
+}
