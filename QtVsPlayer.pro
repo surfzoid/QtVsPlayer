@@ -88,6 +88,7 @@ RESOURCES += \
     ressources.qrc
 
 DISTFILES += \
+    Open Source Software Licenses_playctrl_linux.txt \
     QtVsPlayer.desktop \
     QtVsPlayer.spec \
     README.md \

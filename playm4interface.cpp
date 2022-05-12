@@ -110,7 +110,7 @@ void playm4interface::SetPort()
         //from qtdemo//////
         unsigned int dwVersion = PlayM4_GetSdkVersion();
         QString strPlaySDKVersion;
-        printf("PlayCtrl V%d.%d.%d.%d", (0xff000000 & dwVersion)>>24, (0x00ff0000 & dwVersion)>>16,\
+        printf("PlayCtrl V%d.%d.%d.%d\n\r", (0xff000000 & dwVersion)>>24, (0x00ff0000 & dwVersion)>>16,\
                             (0x0000ff00 & dwVersion)>>8, (0x000000ff & dwVersion));
         //ui.m_labelPlayerSDKVersion->setText(strPlaySDKVersion);
         //printf("\n\r%.8x <- PlayM4_GetSdkVersion()\n\r",PlayM4_GetSdkVersion());
