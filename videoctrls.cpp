@@ -268,7 +268,7 @@ void VideoCtrls::on_previousButton_released()
  *  Output          :  	none
  *  Return          :  	none
 ************************************************************************/
-void __stdcall PlayM4DisplayCallBack(int nPort, char *pBuf, int size, int width, int height,
+void CALLBACK PlayM4DisplayCallBack(int nPort, char *pBuf, int size, int width, int height,
                                      int stamp, int type, int reserved)
 {
     if (IsSnapShoot == true) {
@@ -324,7 +324,7 @@ void VideoCtrls::on_SnapshotButton_released()
 #if (defined(_WIN32))
     PlayM4_SetDisplayCallBack(HikNumPort, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
 #elif defined(__linux__)
-    PlayM4_SetDisplayCallBack(HikNumPort, (void (__stdcall *)(int,char *,int,int,int,int,int,int))PlayM4DisplayCallBack);
+    PlayM4_SetDisplayCallBack(HikNumPort, (void (CALLBACK *)(int,char *,int,int,int,int,int,int))PlayM4DisplayCallBack);
 #endif
 
     QString picturepath(CAPTURE_PICTURE_PATH);

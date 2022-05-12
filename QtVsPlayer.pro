@@ -48,9 +48,9 @@ debugfiles.files = $${TARGET}.debug
 
 unix {
 CONFIG += separate_debug_info
-INCLUDEPATH += $$PWD/lib
-DEPENDPATH += $$PWD/lib
-LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=$$PWD/lib/$$QMAKE_HOST.arch:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
+# INCLUDEPATH += lib
+# DEPENDPATH += lib
+LIBS += -Llib/$$QMAKE_HOST.arch/ -Wl,-rpath=lib/$$QMAKE_HOST.arch:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
 }
 
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -101,8 +101,8 @@ DISTFILES += \
 
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -lPlayCtrl
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/w86_64/ -lPlayCtrld
+# win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -lPlayCtrl
+# else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/w86_64/ -lPlayCtrld
 
-INCLUDEPATH += $$PWD/lib/w86_64
-DEPENDPATH += $$PWD/lib/w86_64
+# INCLUDEPATH += $$PWD/lib/w86_64
+# DEPENDPATH += $$PWD/lib/w86_64

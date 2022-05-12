@@ -16,6 +16,7 @@ PLAYM4_HWND  playm4interface::hwnd;
 int playm4interface::m_pblocalportnum = -1;
 QString playm4interface::m_pblocalfilepath;
 bool playm4interface::FsOpened = false;
+void* playm4interface::nUser;
 
 unsigned int  playm4interface::VideoFs(QString fileName)
 {
@@ -41,7 +42,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         //DisplayError("PlayM4_GetPort", PlayM4_GetLastError(m_pblocalportnum));
     }
 
-//InitCallback(0,PlayM4_GetFileTime(m_pblocalportnum));
+    //InitCallback(0,PlayM4_GetFileTime(m_pblocalportnum));
     InitCallback(0,1);
 
     FsOpened= PlayM4_OpenFile(m_pblocalportnum, m_pblocalfilepath.toUtf8().data());
@@ -52,16 +53,17 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     //BOOL __stdcall    PlayM4_SetDecCallBack(LONG nPort,void (CALLBACK* DecCBFun)(long nPort,char * pBuf,long nSize,FRAME_INFO * pFrameInfo, long nReserved1,long nReserved2));
 
 #if (defined(_WIN32))
-    //PlayM4_SetDecCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
+    //PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
 #elif defined(__linux__)
     //callback work, but no sound anymore !!!
-    //PlayM4_SetDecCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,FRAME_INFO *, long,long))SetDecCallBack);
+    //int  PlayM4_SetDecCallBackMend(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2), void* nUser);
+    //PlayM4_SetDecCallBackMend(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack, nUser);
 #endif
 
     bSuccess = PlayM4_Play(m_pblocalportnum, hwnd);
     DisplayError("PlayM4_Play",PlayM4_GetLastError(m_pblocalportnum));
 
-    bSuccess = PlayM4_PlaySoundShare(m_pblocalportnum);
+    bSuccess = PlayM4_PlaySound(m_pblocalportnum);
     DisplayError("PlayM4_PlaySound",PlayM4_GetLastError(m_pblocalportnum));
 
 
@@ -111,7 +113,7 @@ void playm4interface::SetPort()
         unsigned int dwVersion = PlayM4_GetSdkVersion();
         QString strPlaySDKVersion;
         printf("PlayCtrl V%d.%d.%d.%d\n\r", (0xff000000 & dwVersion)>>24, (0x00ff0000 & dwVersion)>>16,\
-                            (0x0000ff00 & dwVersion)>>8, (0x000000ff & dwVersion));
+               (0x0000ff00 & dwVersion)>>8, (0x000000ff & dwVersion));
         //ui.m_labelPlayerSDKVersion->setText(strPlaySDKVersion);
         //printf("\n\r%.8x <- PlayM4_GetSdkVersion()\n\r",PlayM4_GetSdkVersion());
 
@@ -134,18 +136,18 @@ void playm4interface::SetPort()
 void playm4interface::FreePort()
 {
     if (FsOpened == true) {
-    BOOL bSuccess = false;
-    bSuccess = Stop();
+        BOOL bSuccess = false;
+        bSuccess = Stop();
 
-    bSuccess = PlayM4_CloseFile(m_pblocalportnum);
-    DisplayError("PlayM4_CloseFile", PlayM4_GetLastError(m_pblocalportnum));
+        bSuccess = PlayM4_CloseFile(m_pblocalportnum);
+        DisplayError("PlayM4_CloseFile", PlayM4_GetLastError(m_pblocalportnum));
 
-    bSuccess = PlayM4_FreePort(m_pblocalportnum);
-    DisplayError("PlayM4_FreePort", PlayM4_GetLastError(m_pblocalportnum));
+        bSuccess = PlayM4_FreePort(m_pblocalportnum);
+        DisplayError("PlayM4_FreePort", PlayM4_GetLastError(m_pblocalportnum));
 
-    if (bSuccess == true) {
-        m_pblocalportnum = -1;
-    }
+        if (bSuccess == true) {
+            m_pblocalportnum = -1;
+        }
 
     }
 
@@ -177,7 +179,7 @@ int playm4interface::Play()
 int playm4interface::Stop()
 {
     PlayM4_Stop(m_pblocalportnum);
-    return PlayM4_StopSoundShare(m_pblocalportnum);
+    return PlayM4_StopSound();
 }
 
 int playm4interface::Fast()
@@ -208,8 +210,8 @@ int playm4interface::OneByOneBack()
 
 int playm4interface::SetVolume(unsigned short Volume)
 {
-   unsigned short GetVolume = PlayM4_GetVolume(m_pblocalportnum);
-   return PlayM4_SetVolume(m_pblocalportnum, Volume);
+    unsigned short GetVolume = PlayM4_GetVolume(m_pblocalportnum);
+    return PlayM4_SetVolume(m_pblocalportnum, Volume);
 }
 
 /*
@@ -293,58 +295,58 @@ void playm4interface::GetMetadatas()
     qDebug() <<  HIKMI.video_format;
 }
 
+
 void playm4interface::InitCallback( unsigned int nBeginTime, unsigned int nEndTime)
 {
 
 #if (defined(_WIN32))
-    //PlayM4_SetDisplayCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
+    //PlayM4_SetFileRefCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
 #elif defined(__linux__)
-    PlayM4_SetFileRefCallBack(m_pblocalportnum, (void (__stdcall *)(unsigned int,unsigned int))SetFileRefCallBack,0);
+    //int  PlayM4_SetFileRefCallBack(int nPort, void (CALLBACK *pFileRefDone)(unsigned int nPort,void* nUser),void* nUser);
+    PlayM4_SetFileRefCallBack(m_pblocalportnum, (void (CALLBACK *)(unsigned int,void*))SetFileRefCallBack,nUser);
 #endif
 
 #if (defined(_WIN32))
     //PlayM4_SetAudioCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
 #elif defined(__linux__)
-    //BOOL __stdcall PlayM4_SetAudioCallBack(LONG nPort, void (__stdcall * funAudio)(long nPort, char * pAudioBuf, long nSize, long nStamp, long nType, long nUser), long nUser);
-    //PlayM4_SetAudioCallBack(m_pblocalportnum, (void (__stdcall *)(long , char * , long , long , long , long ))SetAudioCallBack,0);
+    //int          PlayM4_SetAudioCallBack(int nPort, void (__stdcall* funAudio)(int nPort, char* pAudioBuf, int nSize, int nStamp, int nType, int nUser), int nUser);
+    PlayM4_SetAudioCallBack(m_pblocalportnum, (void (CALLBACK *)(int, char*, int, int, int, int))SetAudioCallBack,0);
 #endif
 
 
 #if (defined(_WIN32))
     //PlayM4_SetVerifyCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
 #elif defined(__linux__)
-    //BOOL __stdcall PlayM4_SetVerifyCallBack(LONG nPort, DWORD nBeginTime, DWORD nEndTime, void (__stdcall * funVerify)(long nPort, FRAME_POS * pFilePos, DWORD bIsVideo, DWORD nUser),  DWORD  nUser);
-    //PlayM4_SetVerifyCallBack(m_pblocalportnum, nBeginTime, nEndTime,(void (__stdcall *)(long , FRAME_POS * , DWORD , DWORD ))SetVerifyCallBack,0);
+    //int          PlayM4_SetVerifyCallBack(int nPort, unsigned int nBeginTime, unsigned int nEndTime, void (__stdcall* funVerify)(int nPort, FRAME_POS* pFilePos, unsigned int bIsVideo, unsigned int nUser), unsigned int nUser);
+    PlayM4_SetVerifyCallBack(m_pblocalportnum, nBeginTime, nEndTime,(void (CALLBACK *)(int, FRAME_POS*, unsigned int, unsigned int ))SetVerifyCallBack,0);
 #endif
 
-/*#if (defined(_WIN32))
-    //PlayM4_SetDisplayCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
-#elif defined(__linux__)
-    PlayM4_SetFileEndMsg(m_pblocalportnum, (void (__stdcall *)(unsigned int,unsigned int))SetFileRefCallBack,0);
-#endif*/
+
+    //PlayM4_SetFileEndMsg(m_pblocalportnum, hwnd,0);
+
 
 }
 
-void __stdcall playm4interface::SetFileRefCallBack(unsigned int nPort,unsigned int nUser)
+void CALLBACK playm4interface::SetFileRefCallBack(unsigned int nPort,void* nUser)
 {
-    printf("pyd---%u:%u\n\r",nPort, nUser);
+    printf("SetFileRefCallBack---%u:%u\n\r",nPort, nUser);
 
 }
 
-void __stdcall playm4interface::SetAudioCallBack(long nPort, char * pAudioBuf, long nSize, long nStamp, long nType, long nUser)
+void CALLBACK playm4interface::SetAudioCallBack(int nPort, char* pAudioBuf, int nSize, int nStamp, int nType, int nUser)
 {
-    printf("pyd---%ld:%ld\n\r",nPort, nUser);
+    printf("SetAudioCallBack---%d:%d\n\r",nPort, nUser);
 
 }
 
-void __stdcall playm4interface::SetVerifyCallBack(long nPort, FRAME_POS * pFilePos, unsigned int bIsVideo, unsigned int nUser)
+void CALLBACK playm4interface::SetVerifyCallBack(int nPort, FRAME_POS* pFilePos, unsigned int bIsVideo, unsigned int nUser)
 {
-    printf("pyd---%ld:%u\n\r",nPort, nUser);
+    printf("SetVerifyCallBack---%d:%d:%d:%u\n\r", nPort,pFilePos->nErrorFrameSize, bIsVideo, nUser);
 
 }
 
-void __stdcall playm4interface::SetDecCallBack(long nPort,char * pBuf,long nSize,FRAME_INFO * pFrameInfo, long nReserved1,long nReserved2)
+void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2)
 {
-    //printf("pyd---%ld:%ld\n\r",nPort, nSize);
+    //printf("SetDecCallBack---%ld:%ld\n\r",nPort, nSize);
 
 }

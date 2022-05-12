@@ -60,11 +60,11 @@ private:
     static void delay();
     static void InitCallback(unsigned int nBeginTime, unsigned int nEndTime);
 
-
-    static void __stdcall SetFileRefCallBack(unsigned int nPort,unsigned int nUser);
-    static void __stdcall SetAudioCallBack(long nPort, char * pAudioBuf, long nSize, long nStamp, long nType, long nUser);
-    static void __stdcall SetVerifyCallBack(long nPort, FRAME_POS * pFilePos, unsigned int bIsVideo, unsigned int nUser);
-    static void __stdcall SetDecCallBack(long nPort,char * pBuf,long nSize,FRAME_INFO * pFrameInfo, long nReserved1,long nReserved2);
+    static void*  nUser;
+    static void CALLBACK SetFileRefCallBack(unsigned int nPort,void* nUser);
+    static void CALLBACK SetAudioCallBack(int nPort, char* pAudioBuf, int nSize, int nStamp, int nType, int nUser);
+    static void CALLBACK SetVerifyCallBack(int nPort, FRAME_POS* pFilePos, unsigned int bIsVideo, unsigned int nUser);
+    static void CALLBACK SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2);
 };
 
 
