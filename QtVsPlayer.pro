@@ -1,4 +1,4 @@
-VERSION = 1.0.0.5
+VERSION = 1.0.0.6
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT       += core gui opengl multimedia multimediawidgets
 
@@ -27,8 +27,12 @@ unix {
     #For Mageia, adjust
     libfiles.path = /usr/lib64
     libfiles.files += $$PWD/lib/$$QMAKE_HOST.arch/*
-    translationfiles.path = /usr/share/QtVsPlayer/translations
-    translationfiles.files = $$PWD/*.qm
+    translationfiles.path = $$PREFIX/QtVsPlayer/translations
+    translationfiles.files += $$PWD/*.qm
+    docfiles.path = $$PREFIX/doc/QtVsPlayer
+    docfiles.files += $$PWD/README.md
+    licfiles.path = $$PREFIX/licenses/QtVsPlayer
+    licfiles.files += $$PWD/Licenses_playctrl_linux.txt LICENSE
     }
 #message("If mkdir of /opt/QtVsPlayer return erorror not permit, please do :")
 #message("sudo mkdir /opt/QtVsPlayer & sudo chown -R $USER /opt/QtVsPlayer")
@@ -40,7 +44,7 @@ else: unix:!android: target.path = /usr/bin #/opt/$${TARGET}
 target.files += $${TARGET}
 debugfiles.path = /usr/lib/debug/usr/bin
 debugfiles.files = $${TARGET}.debug
-!isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles debugfiles
+!isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles debugfiles docfiles licfiles
 
 unix {
 CONFIG += separate_debug_info
