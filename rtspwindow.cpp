@@ -28,7 +28,7 @@ QString RtspWindow::CamPort = "554";
 QString RtspWindow::CamUser = "admin";
 QString RtspWindow::CamPass = "hik12345";
 QString RtspWindow::CamPortHttp = "801";
-unsigned int RtspWindow::PtzSpeed = 4;
+unsigned int RtspWindow::PtzSpeed = 1;
 
 bool RtspWindow::IsPressed = false;
 
@@ -406,7 +406,8 @@ void RtspWindow::replyFinished(QNetworkReply *reply)
         if (Header.startsWith("image/jpeg") == true) {
             QString FsName = QFileDialog::getSaveFileName(this,
                                                           tr("Save as"),
-                                                          QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
+                                                          QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/" + ui->ComboBxCam->currentText() +
+                                                          QDateTime::currentDateTime().toString("-dddd-dd-MMMM-yyyy-hh.mm.ss") + ".jpg",
                                                           tr("Pictures Files (*.jpg *.jpeg)"));
 
             if (FsName.isEmpty()){
