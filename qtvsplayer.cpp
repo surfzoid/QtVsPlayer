@@ -277,20 +277,24 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
 
 void QtVsPlayer::DisplayFsName(QString Name)
 {
-    ui->SatusLbl->setStyleSheet("font-weight: bold; color: red");
-    this->ui->statusbar->setToolTip(Name.toUtf8());
-    /*this->ui->statusbar->clearMessage();
-    this->ui->statusbar-> showMessage(Name.toUtf8());*/
-    ui->SatusLbl->setText(Name.toUtf8());
-    //printf("pyd---currentMessage :%s\n\r",ui->SatusLbl->text().toUtf8().data());
+    if (Name != QStandardPaths::writableLocation(QStandardPaths::MoviesLocation))
 
+    {
+        ui->SatusLbl->setStyleSheet("font-weight: bold; color: red");
+        this->ui->statusbar->setToolTip(Name.toUtf8());
+        /*this->ui->statusbar->clearMessage();
+    this->ui->statusbar-> showMessage(Name.toUtf8());*/
+        ui->SatusLbl->setText(Name.toUtf8());
+        //printf("pyd---currentMessage :%s\n\r",ui->SatusLbl->text().toUtf8().data());
+
+    }
     return;
 
 }
 
 void QtVsPlayer::on_actionA_propos_triggered()
 {
-QString Vers = APP_VERSION;
+    QString Vers = APP_VERSION;
     QMessageBox::about(this, tr("QvSPlayer for Hikvision local records. Version " + Vers.toUtf8()), tr("QvSPlayer can read local video files of Hikvision and display blue, green an red vector"));
     return;
 }
@@ -524,8 +528,8 @@ void QtVsPlayer::on_actionSettings_triggered()
 
 void QtVsPlayer::on_actionRtsp_Play_triggered()
 {
-   RtspWindow *RtspView = new RtspWindow (this);
-   RtspView->showMaximized();
+    RtspWindow *RtspView = new RtspWindow (this);
+    RtspView->showMaximized();
 }
 
 void QtVsPlayer::on_actionBeer_and_Coffee_triggered()
@@ -545,7 +549,7 @@ void QtVsPlayer::test()
 {
     foreach (const QAction *Act, ui->menuAide->actions()) {
 
-   printf("menu name :%s\n\r",Act->text().toUtf8().data());
+        printf("menu name :%s\n\r",Act->text().toUtf8().data());
     }
 
 }
