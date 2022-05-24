@@ -30,6 +30,7 @@ static int eventEnumIndex = QEvent::staticMetaObject
 static QRect originH = *new QRect;
 static bool Zoomed = false;
 
+
 QtVsPlayer::QtVsPlayer(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::QtVsPlayer)
@@ -102,7 +103,7 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
     {
         if (Zoomed == false) {
 
-            DisplayFsName(Lastfs);
+            //DisplayFsName(Lastfs);
         }
     }
 
@@ -212,6 +213,7 @@ void QtVsPlayer::Play (QStringList Files)
     LastPlayIdx = 0 ;
     playm4interface::SetPort();
     PlayNextFile(false,0);
+
     return;
 }
 
@@ -272,6 +274,9 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
         LastPlayIdx += 1;
     }
 
+
+
+    DisplayFsName(Lastfs);
     return;
 }
 
@@ -280,16 +285,29 @@ void QtVsPlayer::DisplayFsName(QString Name)
     if (Name != QStandardPaths::writableLocation(QStandardPaths::MoviesLocation))
 
     {
-        ui->SatusLbl->setStyleSheet("font-weight: bold; color: red");
-        this->ui->statusbar->setToolTip(Name.toUtf8());
+        QWidget *pWin = GetWidgetByName("QtVsPlayer");
+        QLabel *SatusLbl = pWin->findChild<QLabel *>("SatusLbl");
+        QStatusBar *statusbar = pWin->findChild<QStatusBar *>("statusbar");
+        SatusLbl->setStyleSheet("font-weight: bold; color: red");
+        statusbar->setToolTip(Name.toUtf8());
         /*this->ui->statusbar->clearMessage();
     this->ui->statusbar-> showMessage(Name.toUtf8());*/
-        ui->SatusLbl->setText(Name.toUtf8());
+        SatusLbl->setText(Name.toUtf8());
         //printf("pyd---currentMessage :%s\n\r",ui->SatusLbl->text().toUtf8().data());
 
     }
     return;
 
+}
+
+QWidget  *QtVsPlayer::GetWidgetByName(QString Name)
+{
+    const QWidgetList topLevelWidgets = QApplication::topLevelWidgets();
+    for (QWidget *widget : topLevelWidgets) {
+        if (widget->objectName() == Name)
+            return widget;
+    }
+    return nullptr;
 }
 
 void QtVsPlayer::on_actionA_propos_triggered()

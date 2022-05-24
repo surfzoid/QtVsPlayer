@@ -72,12 +72,16 @@ private:
 
     //void DisplayError(unsigned int  ErrMess);
 
-    void DisplayFsName(QString Name);
-
     static int centralWidgetwinId;
     static QVideoWidget *videoWidget;
 
     void test();
+
+    static void DisplayFsName(QString Name);
+
+    static QWidget  *GetWidgetByName(QString Name);
+/*signals:
+static void  FsChanged();*/
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
