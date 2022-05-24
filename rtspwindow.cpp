@@ -496,18 +496,18 @@ void RtspWindow::CallPresset(int Presset)
 
 void RtspWindow::on_comboBxPresset_activated(int index)
 {
-    CallPresset(index + 1);
+    //CallPresset(index + 1);
 }
 
 void RtspWindow::on_comboBxPatrol_activated(int index)
 {
-    QString AdPath = ("/ISAPI/PTZCtrl/channels/1/patrols/" +
+    /*QString AdPath = ("/ISAPI/PTZCtrl/channels/1/patrols/" +
                       QString::number(index + 1) + "/start").toUtf8();
     QUrl Adresse("http://" + CamUser + ":" + CamPass +
                  "@" + CamIp + ":" + CamPortHttp + AdPath);
 
     QIODevice * outgoingData = 0;
-    manager->put((QNetworkRequest)Adresse,outgoingData);
+    manager->put((QNetworkRequest)Adresse,outgoingData);*/
 }
 
 void RtspWindow::on_SnapshotBtn_pressed()
@@ -648,3 +648,21 @@ void RtspWindow::GetMetaData(QMediaPlayer *player)
    }
    qDebug() <<  player->metaData(QMediaMetaData::Resolution).toString();
  }
+
+
+
+void RtspWindow::on_comboBxPresset_textActivated(const QString &arg1)
+{
+    CallPresset(ui->comboBxPresset->currentIndex() + 1);
+}
+
+void RtspWindow::on_comboBxPatrol_textActivated(const QString &arg1)
+{
+    QString AdPath = ("/ISAPI/PTZCtrl/channels/1/patrols/" +
+                      QString::number(ui->comboBxPatrol->currentIndex() + 1) + "/start").toUtf8();
+    QUrl Adresse("http://" + CamUser + ":" + CamPass +
+                 "@" + CamIp + ":" + CamPortHttp + AdPath);
+
+    QIODevice * outgoingData = 0;
+    manager->put((QNetworkRequest)Adresse,outgoingData);
+}
