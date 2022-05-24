@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>887</width>
     <height>600</height>
    </rect>
   </property>
@@ -42,8 +42,11 @@
          <property name="pageStep">
           <number>1</number>
          </property>
+         <property name="value">
+          <number>1</number>
+         </property>
          <property name="sliderPosition">
-          <number>4</number>
+          <number>1</number>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -126,8 +129,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>24</height>
+     <width>887</width>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuVideo">
@@ -177,6 +180,7 @@
      <addaction name="actionPatrol"/>
     </widget>
     <addaction name="menusave"/>
+    <addaction name="actionReboot"/>
    </widget>
    <addaction name="menuVideo"/>
    <addaction name="menuPTZ"/>
@@ -253,6 +257,11 @@
   <action name="actionPatrol">
    <property name="text">
     <string>Patrol</string>
+   </property>
+  </action>
+  <action name="actionReboot">
+   <property name="text">
+    <string>Reboot</string>
    </property>
   </action>
  </widget>

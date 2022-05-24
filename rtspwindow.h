@@ -62,6 +62,8 @@ private slots:
 
     void on_comboBxPatrol_textActivated(const QString &arg1);
 
+    void on_actionReboot_triggered();
+
 private:
     Ui::RtspWindow *ui;
     void PlayRtsp(QString Camuri);

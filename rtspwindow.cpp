@@ -666,3 +666,13 @@ void RtspWindow::on_comboBxPatrol_textActivated(const QString &arg1)
     QIODevice * outgoingData = 0;
     manager->put((QNetworkRequest)Adresse,outgoingData);
 }
+
+void RtspWindow::on_actionReboot_triggered()
+{
+    QString AdPath = "/ISAPI/System/reboot";
+    QUrl Adresse("http://" + CamUser + ":" + CamPass +
+                 "@" + CamIp + ":" + CamPortHttp + AdPath);
+
+    QIODevice * outgoingData = 0;
+    manager->put((QNetworkRequest)Adresse,outgoingData);
+}
