@@ -243,87 +243,93 @@
     </message>
     <message>
         <location filename="qtvsplayer.ui" line="96"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;_________________&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <oldsource>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="105"/>
+        <location filename="qtvsplayer.ui" line="113"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="113"/>
+        <location filename="qtvsplayer.ui" line="121"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="189"/>
+        <location filename="qtvsplayer.ui" line="198"/>
         <source>Beer and Coffee</source>
-        <translation type="unfinished"></translation>
+        <translation>Bière et café</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="120"/>
+        <location filename="qtvsplayer.ui" line="128"/>
         <source>Display</source>
         <translation>Affichage</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="134"/>
+        <location filename="qtvsplayer.ui" line="143"/>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="139"/>
+        <location filename="qtvsplayer.ui" line="148"/>
         <source>About</source>
         <translation>A propos</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="147"/>
+        <location filename="qtvsplayer.ui" line="156"/>
         <source>Full screen</source>
         <translation>Plein écran</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="150"/>
+        <location filename="qtvsplayer.ui" line="159"/>
         <source>F11</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="158"/>
+        <location filename="qtvsplayer.ui" line="167"/>
         <source>Hide control</source>
         <oldsource>Masquer les controles</oldsource>
         <translation>Masquer les contrôles</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="161"/>
+        <location filename="qtvsplayer.ui" line="170"/>
         <source>F10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="166"/>
+        <location filename="qtvsplayer.ui" line="175"/>
         <source>Playliste</source>
         <translation>Liste de lecture</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="171"/>
+        <location filename="qtvsplayer.ui" line="180"/>
         <source>Folder</source>
         <translation>Répertoire</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="176"/>
+        <location filename="qtvsplayer.ui" line="185"/>
         <source>Settings</source>
         <translation>Parametres</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="184"/>
+        <location filename="qtvsplayer.ui" line="193"/>
         <source>Rtsp Play</source>
         <translation>Lecteur RTSP</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="197"/>
+        <location filename="qtvsplayer.ui" line="206"/>
+        <source>Infos</source>
+        <translation>Infos</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.cpp" line="199"/>
         <source>Open video</source>
         <translation>Ouvrir une vidéo</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="198"/>
+        <location filename="qtvsplayer.cpp" line="200"/>
         <source>video Files (*.mp4 *.avi *.mkv)</source>
         <translation>Fichiers vidéos (*.mp4 *.avi *.mkv)</translation>
     </message>
@@ -332,29 +338,42 @@
         <translation type="vanished">QvSPlayer lecteur pour vidéos locales Hikvision</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="293"/>
         <source>QvSPlayer can read local video files of Hikvision and display blue, green an red vector</source>
-        <translation>QvSPlayer permet de lre les vidéos Hikvision récupérées par HikNetExtractor  et d&apos;afficher les rectangles Bleu, vert et rouge des détections</translation>
+        <translation type="vanished">QvSPlayer permet de lre les vidéos Hikvision récupérées par HikNetExtractor  et d&apos;afficher les rectangles Bleu, vert et rouge des détections</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="293"/>
         <source>QvSPlayer for Hikvision local records. Version </source>
-        <translation>QtVsPlayer pour lire les vidéos locales Hikvision. Verssion </translation>
+        <translation type="vanished">QtVsPlayer pour lire les vidéos locales Hikvision. Verssion </translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="499"/>
+        <location filename="qtvsplayer.cpp" line="317"/>
+        <source>QvSPlayer for Hikvision local records.</source>
+        <translation>QvSPlayer pour les enregistrements locaux Hikvision.</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.cpp" line="317"/>
+        <source>QvSPlayer can read local video files of Hikvision and display blue, green an red vector.
+<byte value="xd"/>
+<byte value="xd"/>Version </source>
+        <translation>QtVsPlayer peut lire les vidéos enregistrées localement et afficher les rectangles bleue, vert et rouge.
+
+
+Version </translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.cpp" line="528"/>
         <source>Select Folder to read</source>
         <translation>Sélectionner un répertoire à lire</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="534"/>
+        <location filename="qtvsplayer.cpp" line="563"/>
         <source>Enjoy!</source>
-        <translation type="unfinished"></translation>
+        <translation>Apreciez!</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="538"/>
+        <location filename="qtvsplayer.cpp" line="567"/>
         <source>If you like my job and be happy to buy me a beer or a coffee, you can do it here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si vous aimez mon travail et souhaitez m&apos;offrir une biére ou un café, cela se passe ici avec l&apos;un des deux liens.Je vous remercie.</translation>
     </message>
 </context>
 <context>
@@ -368,77 +387,98 @@
         <location filename="rtspwindow.ui" line="31"/>
         <location filename="rtspwindow.ui" line="34"/>
         <source>4</source>
-        <translation type="unfinished">4</translation>
+        <translatorcomment>4</translatorcomment>
+        <translation>4</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="56"/>
+        <location filename="rtspwindow.ui" line="59"/>
         <source>Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Capture</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="103"/>
+        <location filename="rtspwindow.ui" line="121"/>
         <source>Loading video stream ........</source>
         <translation>Chargement du flux vidéo........</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="120"/>
+        <location filename="rtspwindow.ui" line="138"/>
         <source>Video</source>
         <translation>Vidéo</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="124"/>
+        <location filename="rtspwindow.ui" line="142"/>
         <source>Proportions</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="133"/>
+        <location filename="rtspwindow.ui" line="151"/>
         <source>channel</source>
         <translation>Canal</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="140"/>
+        <location filename="rtspwindow.ui" line="158"/>
         <source>NVR</source>
         <translation>NVR</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="155"/>
+        <location filename="rtspwindow.ui" line="173"/>
         <source>PTZ</source>
         <translation>PTZ</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="164"/>
+        <location filename="rtspwindow.ui" line="177"/>
+        <source>save</source>
+        <translation>Enregistrer</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.ui" line="191"/>
         <source>Default</source>
         <translation>Défaut</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="169"/>
+        <location filename="rtspwindow.ui" line="196"/>
         <source>IgnoreAspectRatio</source>
         <translation>Ignore l&apos;aspect du ratio</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="174"/>
+        <location filename="rtspwindow.ui" line="201"/>
         <source>KeepAspectRatio</source>
         <translation>Garde l&apos;aspect du ratio</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="179"/>
+        <location filename="rtspwindow.ui" line="206"/>
         <source>KeepAspectRatioByExpanding</source>
         <translation>Garde l&apos;aspect du ratio par extension</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="201"/>
+        <location filename="rtspwindow.ui" line="228"/>
         <source>/Streaming/Channels/102</source>
-        <translation type="unfinished">/Streaming/Channels/102</translation>
+        <translation>/Streaming/Channels/102</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="209"/>
+        <location filename="rtspwindow.ui" line="236"/>
         <source>/Streaming/Channels/103</source>
-        <translation type="unfinished">/Streaming/Channels/103</translation>
+        <translation>/Streaming/Channels/103</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="222"/>
+        <location filename="rtspwindow.ui" line="249"/>
         <source>/Streaming/Channels/104</source>
-        <translation type="unfinished">/Streaming/Channels/104</translation>
+        <translation>/Streaming/Channels/104</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.ui" line="254"/>
+        <source>Preset</source>
+        <translation>Préréglage</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.ui" line="259"/>
+        <source>Patrol</source>
+        <translation>Patrouille</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.ui" line="264"/>
+        <source>Reboot</source>
+        <translation>Redémarrage</translation>
     </message>
     <message>
         <source>/Streaming/Channels/1</source>
@@ -453,25 +493,25 @@
         <translation type="vanished">/Streaming/Channels/3</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="214"/>
+        <location filename="rtspwindow.ui" line="241"/>
         <source>Metadata</source>
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="190"/>
+        <location filename="rtspwindow.ui" line="217"/>
         <source>/Streaming/Channels/101</source>
         <oldsource>/ISAPI/Streaming/channels/101</oldsource>
-        <translation type="unfinished">/ISAPI/Streaming/channels/101</translation>
+        <translation>/ISAPI/Streaming/channels/101</translation>
     </message>
     <message>
-        <location filename="rtspwindow.cpp" line="407"/>
+        <location filename="rtspwindow.cpp" line="408"/>
         <source>Save as</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer sous</translation>
     </message>
     <message>
-        <location filename="rtspwindow.cpp" line="409"/>
+        <location filename="rtspwindow.cpp" line="411"/>
         <source>Pictures Files (*.jpg *.jpeg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers images (*.jpg *.jpeg)</translation>
     </message>
 </context>
 <context>
@@ -646,7 +686,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="561"/>
+        <location filename="videoctrls.ui" line="564"/>
         <source>Fastest</source>
         <extracomment>Plus vite</extracomment>
         <translation>Plus vite</translation>
@@ -657,42 +697,67 @@
         <translation>Fichier suivant</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="517"/>
-        <source>-6X</source>
-        <translation type="unfinished"></translation>
+        <location filename="videoctrls.ui" line="383"/>
+        <source>-</source>
+        <translation>-</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="621"/>
+        <location filename="videoctrls.ui" line="520"/>
+        <source>-6X</source>
+        <translation>-6X</translation>
+    </message>
+    <message>
+        <location filename="videoctrls.ui" line="577"/>
+        <source>+</source>
+        <translation>+</translation>
+    </message>
+    <message>
+        <location filename="videoctrls.ui" line="627"/>
         <source>Snapshot</source>
         <translation>Capture JPEG</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="869"/>
+        <location filename="videoctrls.ui" line="637"/>
+        <source>S</source>
+        <translation>S</translation>
+    </message>
+    <message>
+        <location filename="videoctrls.ui" line="878"/>
         <source>One by one</source>
         <translation>Une à une</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="872"/>
+        <location filename="videoctrls.ui" line="881"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="949"/>
+        <location filename="videoctrls.ui" line="884"/>
+        <source>O</source>
+        <translation>O</translation>
+    </message>
+    <message>
+        <location filename="videoctrls.ui" line="961"/>
         <source>One by one back</source>
         <translation>Une à une inversée</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="952"/>
+        <location filename="videoctrls.ui" line="964"/>
         <source>-1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="videoctrls.cpp" line="335"/>
+        <location filename="videoctrls.ui" line="1116"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="videoctrls.cpp" line="355"/>
         <source>Capture Picture succes to </source>
         <translation>Images capturées avec succès vers </translation>
     </message>
     <message>
-        <location filename="videoctrls.cpp" line="338"/>
+        <location filename="videoctrls.cpp" line="358"/>
         <source>Capture Picture succes </source>
         <translation>succès de la capture d&apos;image </translation>
     </message>

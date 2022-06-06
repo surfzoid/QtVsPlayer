@@ -379,6 +379,9 @@
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control-slow.png</normaloff>:/images/images/control-slow.png</iconset>
       </property>
+      <property name="shortcut">
+       <string>-</string>
+      </property>
      </widget>
     </item>
     <item>
@@ -570,6 +573,9 @@
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control-fast.png</normaloff>:/images/images/control-fast.png</iconset>
       </property>
+      <property name="shortcut">
+       <string>+</string>
+      </property>
      </widget>
     </item>
     <item>
@@ -626,6 +632,9 @@
       <property name="icon">
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/application-image.png</normaloff>:/images/images/application-image.png</iconset>
+      </property>
+      <property name="shortcut">
+       <string>S</string>
       </property>
       <property name="checkable">
        <bool>true</bool>
@@ -870,6 +879,9 @@
       </property>
       <property name="text">
        <string>1</string>
+      </property>
+      <property name="shortcut">
+       <string>O</string>
       </property>
      </widget>
     </item>
@@ -1120,6 +1132,9 @@
     </rect>
    </property>
    <property name="maximum">
+    <number>32768</number>
+   </property>
+   <property name="value">
     <number>32768</number>
    </property>
    <property name="orientation">

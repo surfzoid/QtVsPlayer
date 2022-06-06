@@ -19,6 +19,18 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
     ui(new Ui::VideoCtrls)
 {
     ui->setupUi(this);
+    setFocusPolicy( Qt::StrongFocus );
+        setFocus( Qt::PopupFocusReason );
+        setEnabled( true );
+    //Multimedia keys shortcut
+    this->ui->previousButton->setShortcut(Qt::Key_MediaPrevious);
+    this->ui->nextButton->setShortcut(Qt::Key_MediaNext);
+    this->ui->playButton->setShortcut(Qt::Key_MediaPlay);
+    this->ui->pauseButton->setShortcut(0x1000020);
+    this->ui->stopButton->setShortcut(Qt::Key_MediaStop);
+    this->ui->SeekLessButton->setShortcut(Qt::Key_AudioRewind);
+    this->ui->SeekMoreButton->setShortcut(Qt::Key_BackForward);
+
 
     //set init value
     //m_pbqtimer = NULL ;

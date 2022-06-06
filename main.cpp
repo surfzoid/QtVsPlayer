@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     //End Translation
 
     QtVsPlayer w;
-    a.installEventFilter(&w);
+//    a.installEventFilter(&w);
     w.show();
 
     QStringList list;

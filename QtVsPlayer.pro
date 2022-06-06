@@ -1,4 +1,4 @@
-VERSION = 1.0.0.7
+VERSION = 1.0.7
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT       += core gui opengl multimedia multimediawidgets
 

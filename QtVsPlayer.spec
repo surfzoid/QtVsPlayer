@@ -1,20 +1,21 @@
+%global debug_package %{nil}
 Name:           QtVsPlayer
 # List of additional build dependencies
 BuildRequires:  lib64qt5multimedia-devel
 BuildRequires:  lib64qt5multimediawidgets-devel
 BuildRequires:  qtbase5-common-devel
-Version:        1.0.0.6
-Release:        1
+Version:        1.0.7
+Release:        %mkrel 2
 License:        GPL-3.0 license
 Source:         %{name}-%{version}.tar.xz
-Group:          Multimedia/Video
+Group:          Video/Players
 URL: https://github.com/surfzoid/QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:  lib64qt5multimedia5
 Requires:  lib64qt5multimediawidgets5
 
-%define distsuffix .surf.mlo
+%define distsuffix .surf.mlo8
 %define dist %distsuffix%distro_release
 %define debug_package %{name}-%{version}-%distsuffix%distro_release.debug
 

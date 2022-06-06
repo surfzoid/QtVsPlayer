@@ -107,6 +107,7 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
         }
     }
 
+
     /*printf("pyd---Event type %i :%s\n\r", event->type(), QEvent::staticMetaObject
        .enumerator(eventEnumIndex).valueToKey(event->type()));*/
 
@@ -313,7 +314,7 @@ QWidget  *QtVsPlayer::GetWidgetByName(QString Name)
 void QtVsPlayer::on_actionA_propos_triggered()
 {
     QString Vers = APP_VERSION;
-    QMessageBox::about(this, tr("QvSPlayer for Hikvision local records. Version " + Vers.toUtf8()), tr("QvSPlayer can read local video files of Hikvision and display blue, green an red vector"));
+    QMessageBox::about(this, tr("QvSPlayer for Hikvision local records."), tr("QvSPlayer can read local video files of Hikvision and display blue, green an red vector.\n\r\n\rVersion " + Vers.toUtf8()));
     return;
 }
 
@@ -332,10 +333,15 @@ void QtVsPlayer::keyPressEvent(QKeyEvent *event)
     case Qt::Key_F10:
         QtVsPlayer::HideCtrl();
         break;
-    case Qt::Key_Space:
+    case Qt::Key_Space :
+    case Qt::Key_Shift:
         VideoCtrls::pause();
         break;
     }
+    int Cod = event->key();
+    QString result = QString::number( Cod, 16 );
+    qDebug() << "currentKeyPressed 0X" + result.toUpper();
+//    printf("pyd---currentKeyPressed :%s\n\r",result.toUpper().data());
     return;
 }
 
