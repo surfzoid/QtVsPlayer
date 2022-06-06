@@ -4,7 +4,7 @@ Name:           QtVsPlayer
 BuildRequires:  lib64qt5multimedia-devel
 BuildRequires:  lib64qt5multimediawidgets-devel
 BuildRequires:  qtbase5-common-devel
-Version:        1.0.7
+Version:        1.0.8
 Release:        %mkrel 2
 License:        GPL-3.0 license
 Source:         %{name}-%{version}.tar.xz
@@ -71,6 +71,13 @@ rm -rf %buildroot
 /usr/lib64/libSuperRender.so
 
 %changelog
+*Mon Jun 6 2022 surfzoid@gmail.com
++ More translation
++ Set default filename of snapshot
++ PTZ>Reboot
++ Save preset and patrol names
++ Sound is now managed
+
 *Thu May 12 2022 surfzoid@gmail.com
 + PlayCtrl SDK licence
 + README.md
