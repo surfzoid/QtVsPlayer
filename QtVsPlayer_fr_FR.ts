@@ -355,10 +355,7 @@
         <source>QvSPlayer can read local video files of Hikvision and display blue, green an red vector.
 <byte value="xd"/>
 <byte value="xd"/>Version </source>
-        <translation>QtVsPlayer peut lire les vidéos enregistrées localement et afficher les rectangles bleue, vert et rouge.
-
-
-Version </translation>
+        <translation>QtVsPlayer peut lire les vidéos enregistrées localement et afficher les rectangles bleue, vert et rouge.\n\r\n\rVersion </translation>
     </message>
     <message>
         <location filename="qtvsplayer.cpp" line="528"/>
