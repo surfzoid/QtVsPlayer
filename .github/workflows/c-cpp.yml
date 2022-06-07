@@ -17,7 +17,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
     - name: Install Qt5Gui
-      run: sudo apt install ffmpeg sox mplayer libnotify-dev qt5-default qt5-qmake g++ make libqt5multimediawidgets5 qtmultimedia5-dev qtcreator
+      run: sudo apt install ffmpeg sox mplayer libnotify-dev qt5-default qt5-qmake g++ make libqt5multimediawidgets5 qtmultimedia5-dev libqt5widgets5
     - name: Qt5 Version info
       run: dpkg -l | grep qt5-default  
     - name: qmake
