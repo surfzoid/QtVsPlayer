@@ -14,6 +14,8 @@ jobs:
     steps:
     - name: Setup C++ environment
       uses: kurocha/setup-cpp@v1
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v1.2.6
     - name: Checkout
       uses: actions/checkout@v1
     - name: Install Qt5Gui
