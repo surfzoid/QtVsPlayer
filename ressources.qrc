@@ -10,5 +10,6 @@
         <file>images/control-fast.png</file>
         <file>images/control-slow.png</file>
         <file>images/QtVsPlayer.png</file>
+        <file>images/control-reverse.png</file>
     </qresource>
 </RCC>

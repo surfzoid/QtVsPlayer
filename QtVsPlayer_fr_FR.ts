@@ -657,7 +657,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="268"/>
+        <location filename="videoctrls.ui" line="364"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
@@ -667,84 +667,83 @@
         <translation>Fichier précédent</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="370"/>
+        <location filename="videoctrls.ui" line="472"/>
         <source>Slowest</source>
         <extracomment>Moins vite</extracomment>
         <translation>Moins vite</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="217"/>
+        <location filename="videoctrls.ui" line="223"/>
         <source>Play</source>
         <translation>Lecture</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="319"/>
+        <location filename="videoctrls.ui" line="418"/>
         <source>Stop</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="564"/>
+        <location filename="videoctrls.ui" line="669"/>
         <source>Fastest</source>
         <extracomment>Plus vite</extracomment>
         <translation>Plus vite</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="166"/>
+        <location filename="videoctrls.ui" line="169"/>
         <source>Next file</source>
         <translation>Fichier suivant</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="383"/>
+        <location filename="videoctrls.ui" line="313"/>
+        <source>Reverse play</source>
+        <translation>Lecture inverssée</translation>
+    </message>
+    <message>
+        <location filename="videoctrls.ui" line="485"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="520"/>
+        <location filename="videoctrls.ui" line="625"/>
         <source>-6X</source>
         <translation>-6X</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="577"/>
+        <location filename="videoctrls.ui" line="682"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="627"/>
+        <location filename="videoctrls.ui" line="735"/>
         <source>Snapshot</source>
         <translation>Capture JPEG</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="637"/>
+        <location filename="videoctrls.ui" line="745"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="878"/>
+        <location filename="videoctrls.ui" line="986"/>
         <source>One by one</source>
         <translation>Une à une</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="881"/>
+        <location filename="videoctrls.ui" line="989"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="884"/>
+        <location filename="videoctrls.ui" line="992"/>
         <source>O</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="961"/>
         <source>One by one back</source>
-        <translation>Une à une inversée</translation>
+        <translation type="vanished">Une à une inversée</translation>
     </message>
     <message>
-        <location filename="videoctrls.ui" line="964"/>
-        <source>-1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="videoctrls.ui" line="1116"/>
+        <location filename="videoctrls.ui" line="1144"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
