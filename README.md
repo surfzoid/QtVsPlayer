@@ -56,7 +56,8 @@ Add French translation.
 Add RTSP Player.  
 Add PTZ, right click, weel to zoom  
 Add presset and patrol  
-
+Now update are in MLO repo : https://mageialinux-online.org/repository/8/x86_64/media/core  
+ 
 # Enjoy.  
 
 ![Capture d’écran_2022-04-05_08-32-57](https://user-images.githubusercontent.com/20399920/161693235-66add3e2-b790-4b55-b8ed-dccb3d0b6aa5.png)
