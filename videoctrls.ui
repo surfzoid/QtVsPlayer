@@ -66,7 +66,7 @@
     </sizepolicy>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_5">
-    <item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QPushButton" name="previousButton">
       <property name="enabled">
        <bool>true</bool>
@@ -118,9 +118,12 @@
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control-skip-180.png</normaloff>:/images/images/control-skip-180.png</iconset>
       </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
-    <item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QPushButton" name="nextButton">
       <property name="enabled">
        <bool>true</bool>
@@ -172,9 +175,12 @@
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control-skip.png</normaloff>:/images/images/control-skip.png</iconset>
       </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
-    <item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QPushButton" name="playButton">
       <property name="palette">
        <palette>
@@ -223,9 +229,99 @@
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control.png</normaloff>:/images/images/control.png</iconset>
       </property>
+      <property name="autoDefault">
+       <bool>true</bool>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="OneByOneBackButton">
+      <property name="maximumSize">
+       <size>
+        <width>28</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>190</red>
+            <green>190</green>
+            <blue>190</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <property name="toolTip">
+       <string>Reverse play</string>
+      </property>
+      <property name="icon">
+       <iconset resource="ressources.qrc">
+        <normaloff>:/images/images/control-reverse.png</normaloff>:/images/images/control-reverse.png</iconset>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QPushButton" name="pauseButton">
       <property name="palette">
        <palette>
@@ -274,9 +370,12 @@
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control-pause.png</normaloff>:/images/images/control-pause.png</iconset>
       </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
-    <item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QPushButton" name="stopButton">
       <property name="palette">
        <palette>
@@ -325,9 +424,12 @@
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control-stop-square.png</normaloff>:/images/images/control-stop-square.png</iconset>
       </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
-    <item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QPushButton" name="SeekLessButton">
       <property name="palette">
        <palette>
@@ -382,9 +484,12 @@
       <property name="shortcut">
        <string>-</string>
       </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
-    <item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QLabel" name="CurSpeed">
       <property name="minimumSize">
        <size>
@@ -521,7 +626,7 @@
       </property>
      </widget>
     </item>
-    <item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QPushButton" name="SeekMoreButton">
       <property name="palette">
        <palette>
@@ -576,9 +681,12 @@
       <property name="shortcut">
        <string>+</string>
       </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
-    <item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QPushButton" name="SnapshotButton">
       <property name="maximumSize">
        <size>
@@ -641,7 +749,7 @@
       </property>
      </widget>
     </item>
-    <item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QLabel" name="Infolabel_2">
       <property name="maximumSize">
        <size>
@@ -802,7 +910,7 @@
       </property>
      </widget>
     </item>
-    <item>
+    <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
      <widget class="QPushButton" name="OneByOneButton">
       <property name="maximumSize">
        <size>
@@ -885,86 +993,6 @@
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QPushButton" name="OneByOneBackButton">
-      <property name="maximumSize">
-       <size>
-        <width>28</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="palette">
-       <palette>
-        <active>
-         <colorrole role="Button">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ButtonText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </active>
-        <inactive>
-         <colorrole role="Button">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ButtonText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </inactive>
-        <disabled>
-         <colorrole role="Button">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="ButtonText">
-          <brush brushstyle="SolidPattern">
-           <color alpha="255">
-            <red>190</red>
-            <green>190</green>
-            <blue>190</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </disabled>
-       </palette>
-      </property>
-      <property name="toolTip">
-       <string>One by one back</string>
-      </property>
-      <property name="text">
-       <string>-1</string>
-      </property>
-     </widget>
-    </item>
    </layout>
    <zorder>previousButton</zorder>
    <zorder>nextButton</zorder>
@@ -974,10 +1002,10 @@
    <zorder>SnapshotButton</zorder>
    <zorder>Infolabel_2</zorder>
    <zorder>OneByOneButton</zorder>
-   <zorder>OneByOneBackButton</zorder>
    <zorder>CurSpeed</zorder>
    <zorder>SeekMoreButton</zorder>
    <zorder>SeekLessButton</zorder>
+   <zorder>OneByOneBackButton</zorder>
   </widget>
   <widget class="QLabel" name="LblDuration">
    <property name="geometry">
