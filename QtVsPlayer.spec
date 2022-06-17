@@ -5,7 +5,7 @@ BuildRequires:  lib64qt5multimedia-devel
 BuildRequires:  lib64qt5multimediawidgets-devel
 BuildRequires:  qtbase5-common-devel
 BuildRequires:  lib64qt5opengl-devel
-Version:        1.0.8
+Version:        1.0.9
 Release:        %mkrel 2
 License:        GPL-3.0 license
 Source:         %{name}-%{version}.tar.xz
@@ -72,6 +72,10 @@ rm -rf %buildroot
 /usr/lib64/libSuperRender.so
 
 %changelog
+*Fri Jun 17 2022 surfzoid@gmail.com
++ Update README.md for MLO Repo and git bug
++ Some cosmetic
+
 *Mon Jun 6 2022 surfzoid@gmail.com
 + More translation
 + Set default filename of snapshot
