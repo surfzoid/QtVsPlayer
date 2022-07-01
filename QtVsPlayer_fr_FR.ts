@@ -334,28 +334,14 @@
         <translation>Fichiers vidéos (*.mp4 *.avi *.mkv)</translation>
     </message>
     <message>
-        <source>QvSPlayer for Hikvision local records</source>
-        <translation type="vanished">QvSPlayer lecteur pour vidéos locales Hikvision</translation>
-    </message>
-    <message>
-        <source>QvSPlayer can read local video files of Hikvision and display blue, green an red vector</source>
-        <translation type="vanished">QvSPlayer permet de lre les vidéos Hikvision récupérées par HikNetExtractor  et d&apos;afficher les rectangles Bleu, vert et rouge des détections</translation>
-    </message>
-    <message>
-        <source>QvSPlayer for Hikvision local records. Version </source>
-        <translation type="vanished">QtVsPlayer pour lire les vidéos locales Hikvision. Verssion </translation>
-    </message>
-    <message>
         <location filename="qtvsplayer.cpp" line="317"/>
         <source>QvSPlayer for Hikvision local records.</source>
         <translation>QvSPlayer pour les enregistrements locaux Hikvision.</translation>
     </message>
     <message>
         <location filename="qtvsplayer.cpp" line="317"/>
-        <source>QvSPlayer can read local video files of Hikvision and display blue, green an red vector.
-<byte value="xd"/>
-<byte value="xd"/>Version </source>
-        <translation>QtVsPlayer peut lire les vidéos enregistrées localement et afficher les rectangles bleue, vert et rouge.\n\r\n\rVersion </translation>
+        <source>QvSPlayer can read local video files of Hikvision and display blue, green an red vector.</source>
+        <translation>QtVsPlayer peut lire les vidéos enregistrées localement et afficher les rectangles bleue, vert et rouge.</translation>
     </message>
     <message>
         <location filename="qtvsplayer.cpp" line="528"/>

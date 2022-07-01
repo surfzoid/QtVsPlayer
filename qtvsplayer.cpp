@@ -314,7 +314,7 @@ QWidget  *QtVsPlayer::GetWidgetByName(QString Name)
 void QtVsPlayer::on_actionA_propos_triggered()
 {
     QString Vers = APP_VERSION;
-    QMessageBox::about(this, tr("QvSPlayer for Hikvision local records."), tr("QvSPlayer can read local video files of Hikvision and display blue, green an red vector.\n\r\n\rVersion " + Vers.toUtf8()));
+    QMessageBox::about(this, tr("QvSPlayer for Hikvision local records."), tr("QvSPlayer can read local video files of Hikvision and display blue, green an red vector.") +  "\n\r\n\rVersion " + Vers.toUtf8());
     return;
 }
 
