@@ -159,12 +159,9 @@ void VideoCtrls::on_OneByOneButton_released()
 void VideoCtrls::on_OneByOneBackButton_released()
 {
     seekSpeed = 0;
-    //while (true) {
+    this->ui->CurSpeed->setText("0X");
     playm4interface::OneByOneBack();
-    //}
-    //m_pbqtimer->stop();
-    //m_pbqtimer->connect(this,SIGNAL(this), this, SLOT(updatelocalprocess()));
-    //m_pbqtimer->start(1000);
+    EndRead =false;
     return;
 }
 
