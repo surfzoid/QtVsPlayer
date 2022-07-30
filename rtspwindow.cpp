@@ -3,8 +3,6 @@
 #include <QComboBox>
 #include <QWidgetAction>
 #include <QSettings>
-#include <QMediaPlayer>
-#include <QVideoWidget>
 #include <QVBoxLayout>
 #include <QTime>
 #include <QTimer>
@@ -28,6 +26,7 @@ QString RtspWindow::CamPort = "554";
 QString RtspWindow::CamUser = "admin";
 QString RtspWindow::CamPass = "hik12345";
 QString RtspWindow::CamPortHttp = "801";
+QString RtspWindow::Chanel = "101";
 unsigned int RtspWindow::PtzSpeed = 1;
 
 bool RtspWindow::IsPressed = false;
@@ -38,7 +37,16 @@ RtspWindow::RtspWindow(QWidget *parent) :
 {
     RtspWindow::player = new QMediaPlayer(this);
     RtspWindow::videoWidget = new QVideoWidget(this);
+
     connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+
+
+    connect(player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
+            this, SLOT(onPlayStatusChanged(QMediaPlayer::MediaStatus)));
+    connect(player, SIGNAL(error(QMediaPlayer::Error)),
+            this, SLOT(onPlayError(QMediaPlayer::Error)));
+    connect(player, SIGNAL(stateChanged(QMediaPlayer::State)),
+            this, SLOT(onPlayStateChanged(QMediaPlayer::State)));
 
     ui->setupUi(this);
 
@@ -156,7 +164,7 @@ void RtspWindow::positionChanged(qint64 pos)
     if (pos == 0) {
         blink();
     }else {
-        ui->lblLoading->setVisible(false);
+        ui->lblLoading->setVisible(true);//mis a true pour les tests
     }
 
 }
@@ -211,7 +219,9 @@ void RtspWindow::on_actionKeepAspectRatioByExpanding_triggered()
 
 void RtspWindow::on_action_Streaming_Channels_1_triggered()
 {
-    RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + "101";
+
+    RtspWindow::Chanel = "101";
+    RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + RtspWindow::Chanel;
 
     ui->action_Streaming_Channels_1->setDisabled(true);
     ui->action_Streaming_Channels_1->setChecked(true);
@@ -228,7 +238,8 @@ void RtspWindow::on_action_Streaming_Channels_1_triggered()
 void RtspWindow::on_action_Streaming_Channels_2_triggered()
 {
 
-    RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + "102";
+    RtspWindow::Chanel = "102";
+    RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + RtspWindow::Chanel;
 
     ui->action_Streaming_Channels_2->setDisabled(true);
     ui->action_Streaming_Channels_2->setChecked(true);
@@ -245,7 +256,8 @@ void RtspWindow::on_action_Streaming_Channels_2_triggered()
 void RtspWindow::on_action_Streaming_Channels_3_triggered()
 {
 
-    RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + "103";
+    RtspWindow::Chanel = "103";
+    RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + RtspWindow::Chanel;
 
     ui->action_Streaming_Channels_3->setDisabled(true);
     ui->action_Streaming_Channels_3->setChecked(true);
@@ -288,7 +300,8 @@ principal
 auxiliaire
 /doc/index.html#/preview
 */
-    QString AdPath = "/ISAPI/Streaming/Channels/104";
+    RtspWindow::Chanel = "104";
+    QString AdPath = "/ISAPI/Streaming/Channels/" + RtspWindow::Chanel;
     QUrl Adresse("rtsp://" + CamUser + ":" + CamPass +
                  "@" +  CamIp + ":" + CamPort + AdPath);
     ui->action_Streaming_Channels_1->setChecked(false);
@@ -624,31 +637,31 @@ void RtspWindow::LoadPatrol()
 
 void RtspWindow::GetMetaData(QMediaPlayer *player)
 {
-   // Get the list of keys there is metadata available for
-   QStringList metadatalist = player->availableMetaData();
+    // Get the list of keys there is metadata available for
+    QStringList metadatalist = player->availableMetaData();
 
-   // Get the size of the list
-   int list_size = metadatalist.size();
+    // Get the size of the list
+    int list_size = metadatalist.size();
 
-   qDebug() << player->isMetaDataAvailable() << list_size;
+    qDebug() << player->isMetaDataAvailable() << list_size;
 
-   // Define variables to store metadata key and value
-   QString metadata_key;
-   QVariant var_data;
+    // Define variables to store metadata key and value
+    QString metadata_key;
+    QVariant var_data;
 
-   for (int indx = 0; indx < list_size; indx++)
-   {
-     // Get the key from the list
-     metadata_key = metadatalist.at(indx);
+    for (int indx = 0; indx < list_size; indx++)
+    {
+        // Get the key from the list
+        metadata_key = metadatalist.at(indx);
 
-     // Get the value for the key
-     var_data = player->metaData(metadata_key);
+        // Get the value for the key
+        var_data = player->metaData(metadata_key);
 
-    qDebug() << metadata_key << var_data.toString();
-    printf("%s : %s\n\r",metadata_key.toUtf8().data(),var_data.toString().toUtf8().data());
-   }
-   qDebug() <<  player->metaData(QMediaMetaData::Resolution).toString();
- }
+        qDebug() << metadata_key << var_data.toString();
+        printf("%s : %s\n\r",metadata_key.toUtf8().data(),var_data.toString().toUtf8().data());
+    }
+    qDebug() <<  player->metaData(QMediaMetaData::Resolution).toString();
+}
 
 
 
@@ -677,3 +690,104 @@ void RtspWindow::on_actionReboot_triggered()
     QIODevice * outgoingData = 0;
     manager->put((QNetworkRequest)Adresse,outgoingData);
 }
+
+
+void RtspWindow::on_RecordBtn_toggled(bool checked)
+{
+
+    if (checked) {
+
+        QString AdPath = "/ISAPI/ContentMgmt/record/control/manual/start/tracks/101"; // + RtspWindow::Chanel;
+        QUrl Adresse("http://" + CamUser + ":" + CamPass +
+                     "@" + CamIp + ":" + CamPortHttp + AdPath);
+
+        QIODevice * outgoingData = 0;
+        manager->put((QNetworkRequest)Adresse,outgoingData);
+        this->ui->RecordBtn->setText("Stop");
+        this->ui->RecordBtn->setStyleSheet("background-color: red;");
+
+    } else
+    {
+
+        QString AdPath = "/ISAPI/ContentMgmt/record/control/manual/stop/tracks/101"; // + RtspWindow::Chanel;
+        QUrl Adresse("http://" + CamUser + ":" + CamPass +
+                     "@" + CamIp + ":" + CamPortHttp + AdPath);
+
+        QIODevice * outgoingData = 0;
+        manager->put((QNetworkRequest)Adresse,outgoingData);
+        this->ui->RecordBtn->setText("Record");
+        this->ui->RecordBtn->setStyleSheet("background-color: grey;");
+    }
+
+}
+
+
+void RtspWindow::onPlayError(QMediaPlayer::Error error)
+{
+    qDebug() << "play error - " << error;
+    ui->lblLoading->setText(player->errorString().toUtf8().data());
+}
+
+void RtspWindow::onPlayStateChanged(QMediaPlayer::State state)
+{
+    qDebug() << "play State - " << state;
+
+    // handle state message
+    switch (state) {
+    case QMediaPlayer::State::PausedState:
+        setStatusInfo(tr("Paused"));
+        break;
+    case QMediaPlayer::State::PlayingState:
+        setStatusInfo(tr("Playing"));
+        break;
+    case QMediaPlayer::State::StoppedState:
+        setStatusInfo(tr("Stopped"));
+        break;
+    }
+
+}
+
+void RtspWindow::onPlayStatusChanged(QMediaPlayer::MediaStatus status)
+{
+    qDebug() << "play Status - " << status;
+    //ui->lblLoading->setText(QString(status).toUtf8().data());
+
+
+    // handle status message
+    switch (status) {
+    case QMediaPlayer::UnknownMediaStatus:
+    case QMediaPlayer::NoMedia:
+    case QMediaPlayer::LoadedMedia:
+        setStatusInfo(QString());
+        break;
+    case QMediaPlayer::LoadingMedia:
+        setStatusInfo(tr("Loading..."));
+        break;
+    case QMediaPlayer::BufferingMedia:
+    case QMediaPlayer::BufferedMedia:
+        setStatusInfo(tr("Buffering %1%").arg(player->bufferStatus()));
+        break;
+    case QMediaPlayer::StalledMedia:
+        setStatusInfo(tr("Stalled %1%").arg(player->bufferStatus()));
+        break;
+    case QMediaPlayer::EndOfMedia:
+        QApplication::alert(this);
+        break;
+    case QMediaPlayer::InvalidMedia:
+        displayErrorMessage();
+        break;
+    }
+}
+
+
+void RtspWindow::setStatusInfo(const QString &info)
+{
+    ui->lblLoading->setText(info.toUtf8().data());
+}
+
+void RtspWindow::displayErrorMessage()
+{
+    ui->lblLoading->setText(player->errorString());
+}
+
+

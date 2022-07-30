@@ -64,6 +64,8 @@ private slots:
 
     void on_actionReboot_triggered();
 
+    void on_RecordBtn_toggled(bool checked);
+
 private:
     Ui::RtspWindow *ui;
     void PlayRtsp(QString Camuri);
@@ -72,6 +74,7 @@ private:
     void CallPresset(int Presset);
     static QMediaPlayer *player;
     static QVideoWidget *videoWidget;
+
     static QString RtspUri;
     QNetworkAccessManager *manager;
 
@@ -80,6 +83,7 @@ private:
     static QString CamUser;
     static QString CamPass;
     static QString CamPortHttp;
+    static QString Chanel;
     static unsigned int PtzSpeed;
 
     static bool IsPressed;
@@ -89,11 +93,18 @@ private:
 
     QString SetXMLReq(int pan,int tilt,int zoom);
     void GetMetaData(QMediaPlayer *player);
+    void setStatusInfo(const QString &info);
+    void displayErrorMessage();
+    void SetmediaRecorder();
 
 public slots:
     void replyFinished (QNetworkReply *reply);
     void authenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
 
+protected slots:
+    void onPlayStatusChanged(QMediaPlayer::MediaStatus status);
+    void onPlayError(QMediaPlayer::Error error);
+    void onPlayStateChanged(QMediaPlayer::State state);
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
