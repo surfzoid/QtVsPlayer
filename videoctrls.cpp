@@ -219,32 +219,6 @@ void VideoCtrls::updatelocalprocess()
     return;
 }
 
-
-
-void VideoCtrls::on_TimeSlider_sliderMoved(int position)
-{
-
-    //int value =ui->TimeSlider->value();
-    PlayM4_SetPlayPos(HikNumPort, ((float)position)*0.01);
-    return;
-}
-
-void VideoCtrls::on_TimeSlider_sliderPressed()
-{
-    //EndRead = true;
-    //on_pauseButton_released();
-    return;
-
-}
-
-void VideoCtrls::on_TimeSlider_sliderReleased()
-{
-    //EndRead = false;
-    // on_pauseButton_released();
-    return;
-
-}
-
 void VideoCtrls::on_nextButton_released()
 {
     QtVsPlayer::PlayNextFile(false,0);
@@ -358,17 +332,15 @@ void VideoCtrls::on_SnapshotButton_released()
 
 }
 
-void VideoCtrls::on_Infolabel_2_linkHovered(const QString &link)
-{
-
-}
-
-void VideoCtrls::on_SoudVolume_actionTriggered(int action)
-{
-
-}
-
 void VideoCtrls::on_SoudVolume_valueChanged(int value)
 {
     playm4interface::SetVolume((unsigned short)value);
+}
+
+void VideoCtrls::on_TimeSlider_valueChanged(int value)
+{
+
+    //int value =ui->TimeSlider->value();
+    PlayM4_SetPlayPos(HikNumPort, ((float)value)*0.01);
+    return;
 }

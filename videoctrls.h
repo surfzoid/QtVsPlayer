@@ -47,15 +47,11 @@ private slots:
     void updatelocalprocess();
 
     //action slots:
-    void on_TimeSlider_sliderMoved(int position);
-    void on_TimeSlider_sliderPressed();
-    void on_TimeSlider_sliderReleased();
     void on_nextButton_released();
     void on_previousButton_released();
     void on_SnapshotButton_released();
-    void on_Infolabel_2_linkHovered(const QString &link);
-    void on_SoudVolume_actionTriggered(int action);
     void on_SoudVolume_valueChanged(int value);
+    void on_TimeSlider_valueChanged(int value);
 };
 
 #endif // VIDEOCTRLS_H
