@@ -337,10 +337,10 @@ void VideoCtrls::on_SoudVolume_valueChanged(int value)
     playm4interface::SetVolume((unsigned short)value);
 }
 
-void VideoCtrls::on_TimeSlider_valueChanged(int value)
+void VideoCtrls::on_TimeSlider_actionTriggered(int action)
 {
-
-    //int value =ui->TimeSlider->value();
+    int value =ui->TimeSlider->value();
     PlayM4_SetPlayPos(HikNumPort, ((float)value)*0.01);
-    return;
+
+return;
 }

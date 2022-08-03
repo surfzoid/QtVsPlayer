@@ -51,7 +51,7 @@ private slots:
     void on_previousButton_released();
     void on_SnapshotButton_released();
     void on_SoudVolume_valueChanged(int value);
-    void on_TimeSlider_valueChanged(int value);
+    void on_TimeSlider_actionTriggered(int action);
 };
 
 #endif // VIDEOCTRLS_H

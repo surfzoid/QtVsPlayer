@@ -5,7 +5,7 @@ BuildRequires:  lib64qt5multimedia-devel
 BuildRequires:  lib64qt5multimediawidgets-devel
 BuildRequires:  qtbase5-common-devel
 BuildRequires:  lib64qt5opengl-devel
-Version:        1.0.9
+Version:        1.0.12
 Release:        %mkrel 2
 License:        GPL-3.0 license
 Source:         %{name}-%{version}.tar.xz
@@ -56,6 +56,7 @@ make INSTALL_ROOT=%{buildroot} install
 
 %clean
 rm -rf %buildroot
+chmod -R ug+rwx ~/rpmbuild
 
 %files
 %defattr(755,root,root)
@@ -72,6 +73,13 @@ rm -rf %buildroot
 /usr/lib64/libSuperRender.so
 
 %changelog
+*Mon Aug 1 2022 surfzoid@gmail.com
++ TimeSlider more acurate
+ 
+*Sat Jul 30 2022 surfzoid@gmail.com
++ Add ISAPI record manual
++ Better rtsp status/feedback
+ 
 *Fri Jun 17 2022 surfzoid@gmail.com
 + Update README.md for MLO Repo and git bug
 + Some cosmetic
