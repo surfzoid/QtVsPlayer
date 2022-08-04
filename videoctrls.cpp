@@ -20,8 +20,8 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
 {
     ui->setupUi(this);
     setFocusPolicy( Qt::StrongFocus );
-        setFocus( Qt::PopupFocusReason );
-        setEnabled( true );
+    setFocus( Qt::PopupFocusReason );
+    setEnabled( true );
     //Multimedia keys shortcut
     this->ui->previousButton->setShortcut(Qt::Key_MediaPrevious);
     this->ui->nextButton->setShortcut(Qt::Key_MediaNext);
@@ -37,7 +37,7 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
     m_pbqtimer = new QTimer(this);
     m_pbqtimer->setTimerType(Qt::PreciseTimer);
     //connect(m_pbqtimer, &QTimer::timeout, this, &VideoCtrls::updatelocalprocess);
-    m_pbqtimer->start( 1000 );
+    m_pbqtimer->start( 100 );
     connect(m_pbqtimer, SIGNAL(timeout()), this, SLOT(updatelocalprocess()));
 
     this->ui->CurSpeed->setText("0X");
@@ -252,7 +252,7 @@ void VideoCtrls::on_previousButton_released()
  *  Return          :  	none
 ************************************************************************/
 void CALLBACK PlayM4DisplayCallBack(int nPort, char *pBuf, int size, int width, int height,
-                                     int stamp, int type, int reserved)
+                                    int stamp, int type, int reserved)
 {
     if (IsSnapShoot == true) {
         QString picturepathname(CAPTURE_PICTURE_PATH);
@@ -339,8 +339,17 @@ void VideoCtrls::on_SoudVolume_valueChanged(int value)
 
 void VideoCtrls::on_TimeSlider_actionTriggered(int action)
 {
+    pause();
     int value =ui->TimeSlider->value();
     PlayM4_SetPlayPos(HikNumPort, ((float)value)*0.01);
 
-return;
+    return;
+}
+
+void VideoCtrls::on_TimeSlider_sliderReleased()
+{
+
+    pause();
+
+    return;
 }
