@@ -11,6 +11,9 @@
     <height>446</height>
    </rect>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>QtVsPlayer</string>
   </property>
@@ -86,6 +89,9 @@
      </disabled>
     </palette>
    </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
    <property name="autoFillBackground">
     <bool>true</bool>
    </property>
@@ -105,7 +111,7 @@
      <x>0</x>
      <y>0</y>
      <width>492</width>
-     <height>34</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichiers">
@@ -129,6 +135,7 @@
     </property>
     <addaction name="actionPlein_ecran"/>
     <addaction name="actionMasquer_les_controles"/>
+    <addaction name="actionAuto_hide_controls"/>
     <addaction name="actionListe_de_lecture"/>
     <addaction name="actionSettings"/>
     <addaction name="actionInfos"/>
@@ -204,6 +211,17 @@
   <action name="actionInfos">
    <property name="text">
     <string>Infos</string>
+   </property>
+  </action>
+  <action name="actionAuto_hide_controls">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Auto hide controls</string>
    </property>
   </action>
  </widget>

@@ -60,6 +60,8 @@ private slots:
 
     void on_actionInfos_triggered();
 
+    void ShowHide();
+
 private:
     Ui::QtVsPlayer *ui;
 
@@ -80,6 +82,8 @@ private:
     static void DisplayFsName(QString Name);
 
     static QWidget  *GetWidgetByName(QString Name);
+    //timer for play-process
+    QTimer *ShowHideTimer;
 /*signals:
 static void  FsChanged();*/
 

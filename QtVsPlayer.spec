@@ -5,7 +5,7 @@ BuildRequires:  lib64qt5multimedia-devel
 BuildRequires:  lib64qt5multimediawidgets-devel
 BuildRequires:  qtbase5-common-devel
 BuildRequires:  lib64qt5opengl-devel
-Version:        1.0.12
+Version:        1.0.14
 Release:        %mkrel 2
 License:        GPL-3.0 license
 Source:         %{name}-%{version}.tar.xz
@@ -56,7 +56,8 @@ make INSTALL_ROOT=%{buildroot} install
 
 %clean
 rm -rf %buildroot
-chmod -R ug+rwx ~/rpmbuild
+chmod -R ug+rw %{_rpmdir}
+chmod -R ug+rw %{_srcrpmdir}
 
 %files
 %defattr(755,root,root)
@@ -73,6 +74,12 @@ chmod -R ug+rwx ~/rpmbuild
 /usr/lib64/libSuperRender.so
 
 %changelog
+*Thu Aug 4 2022 surfzoid@gmail.com
++ Pause when TimeSlider move
+
+*Wed Aug 3 2022 surfzoid@gmail.com
++ Really TimeSlider more acurate
+
 *Mon Aug 1 2022 surfzoid@gmail.com
 + TimeSlider more acurate
  

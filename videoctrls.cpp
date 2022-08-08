@@ -37,7 +37,7 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
     m_pbqtimer = new QTimer(this);
     m_pbqtimer->setTimerType(Qt::PreciseTimer);
     //connect(m_pbqtimer, &QTimer::timeout, this, &VideoCtrls::updatelocalprocess);
-    m_pbqtimer->start( 100 );
+    m_pbqtimer->start( 1000 );
     connect(m_pbqtimer, SIGNAL(timeout()), this, SLOT(updatelocalprocess()));
 
     this->ui->CurSpeed->setText("0X");

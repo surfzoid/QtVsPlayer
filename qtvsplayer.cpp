@@ -70,6 +70,11 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 
     WVideoCtrls->raise();
 
+    ShowHideTimer = new QTimer(this);
+    //ShowHideTimer->setTimerType(Qt::PreciseTimer);
+    //connect(m_pbqtimer, &QTimer::timeout, this, &VideoCtrls::updatelocalprocess);
+    ShowHideTimer->start( 10000 );
+    connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(ShowHide()));
 }
 
 QtVsPlayer::~QtVsPlayer()
@@ -443,6 +448,40 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
                                 event->pos().y() - ui->centralwidget->height()/2);
 
         WinIdWorkarround();
+    }
+
+
+    if (!this->ui->actionMasquer_les_controles->isChecked() and
+            WVideoCtrls->isHidden() and
+            this->ui->actionAuto_hide_controls->isChecked()) {
+
+        WVideoCtrls->show();
+        WVideoCtrls->activateWindow();
+        WVideoCtrls->raise();
+        this->centralWidget()->lower();
+        this->centralWidget()->stackUnder(WVideoCtrls);
+        //WVideoCtrls->setParent(centralWidget());
+    }
+
+    if (QtVsPlayer::cursor() == Qt::BlankCursor) {
+        QtVsPlayer::unsetCursor();
+    }
+    return;
+}
+
+void QtVsPlayer::ShowHide()
+{
+
+    if (!this->ui->actionMasquer_les_controles->isChecked() and
+            !WVideoCtrls->isHidden() and
+            this->ui->actionAuto_hide_controls->isChecked() and
+            QApplication::focusWidget() != WVideoCtrls) {
+        WVideoCtrls->hide();
+    }
+
+    if (QtVsPlayer::cursor() != Qt::BlankCursor and
+            QApplication::focusWidget() != WVideoCtrls) {
+        QtVsPlayer::setCursor(Qt::BlankCursor);
     }
     return;
 }
