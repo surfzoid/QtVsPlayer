@@ -10,6 +10,12 @@
     <height>60</height>
    </rect>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="tabletTracking">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -43,6 +49,12 @@
      <height>16</height>
     </size>
    </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="tabletTracking">
+    <bool>true</bool>
+   </property>
    <property name="toolTip">
     <string extracomment="Move"/>
    </property>
@@ -64,6 +76,12 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="tabletTracking">
+    <bool>true</bool>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_5">
     <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
@@ -1140,6 +1158,9 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="tabletTracking">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
@@ -1158,6 +1179,12 @@
      <width>20</width>
      <height>51</height>
     </rect>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="tabletTracking">
+    <bool>true</bool>
    </property>
    <property name="maximum">
     <number>32768</number>

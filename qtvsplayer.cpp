@@ -475,12 +475,12 @@ void QtVsPlayer::ShowHide()
     if (!this->ui->actionMasquer_les_controles->isChecked() and
             !WVideoCtrls->isHidden() and
             this->ui->actionAuto_hide_controls->isChecked() and
-            QApplication::focusWidget() != WVideoCtrls) {
+            !WVideoCtrls->underMouse() ) {
         WVideoCtrls->hide();
     }
 
     if (QtVsPlayer::cursor() != Qt::BlankCursor and
-            QApplication::focusWidget() != WVideoCtrls) {
+            !WVideoCtrls->underMouse()) {
         QtVsPlayer::setCursor(Qt::BlankCursor);
     }
     return;
