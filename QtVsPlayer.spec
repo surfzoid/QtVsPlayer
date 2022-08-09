@@ -5,7 +5,7 @@ BuildRequires:  lib64qt5multimedia-devel
 BuildRequires:  lib64qt5multimediawidgets-devel
 BuildRequires:  qtbase5-common-devel
 BuildRequires:  lib64qt5opengl-devel
-Version:        1.0.15
+Version:        1.0.16
 Release:        %mkrel 2
 License:        GPL-3.0 license
 Source:         %{name}-%{version}.tar.xz
@@ -74,6 +74,10 @@ chmod -R ug+rw %{_srcrpmdir}
 /usr/lib64/libSuperRender.so
 
 %changelog
+* Thu Aug 9 2022 surfzoid@gmail.com
++ TimeSlider wheel mouse make pause
++ Auto_hide_controls bug fixed
+
 * Mon Aug 8 2022 surfzoid@gmail.com
 + Auto hide controls and mousse curssor
 
