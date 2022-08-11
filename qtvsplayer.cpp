@@ -415,6 +415,10 @@ void QtVsPlayer::mousePressEvent(QMouseEvent *event)
 
 void QtVsPlayer::wheelEvent(QWheelEvent *event)
 {
+    if (!WVideoCtrls->underMouse()) {
+        return;
+    }
+
     QPoint Scroll = event->angleDelta();
 
     if (Scroll.y() > 0)
