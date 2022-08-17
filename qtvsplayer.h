@@ -46,8 +46,6 @@ private slots:
 
     void on_actionMasquer_les_controles_triggered();
 
-    void on_actionListe_de_lecture_toggled(bool arg1);
-
     void on_actionListe_de_lecture_triggered();
 
     void on_actionDossier_triggered();

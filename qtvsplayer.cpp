@@ -514,18 +514,6 @@ void QtVsPlayer::HideCtrl()
 }
 
 
-void QtVsPlayer::on_actionListe_de_lecture_toggled(bool checked)
-{
-
-    if (checked) {
-        QtVsPlayer::filesLs->show();
-    } else {
-        filesLs->hide();
-    }
-    return;
-
-}
-
 void QtVsPlayer::SetWindowTitle(QString Title)
 {
     this->setWindowTitle(Title.toUtf8());
@@ -560,7 +548,9 @@ void QtVsPlayer::WinIdWorkarround()
 
 void QtVsPlayer::on_actionListe_de_lecture_triggered()
 {
-    filesLs->show();
+    QtVsPlayer::filesLs->show();
+    QtVsPlayer::filesLs->activateWindow();
+    QtVsPlayer::filesLs->raise();
     return;
 }
 
