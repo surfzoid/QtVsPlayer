@@ -123,6 +123,7 @@ void RtspWindow::PlayRtsp(QString Camuri)
     player->play();*/
 
     player->setMedia(QUrl(Camuri));
+    //player->setPlaybackRate(0);
     player->play();
     videoWidget->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
 }
@@ -803,3 +804,8 @@ void RtspWindow::displayErrorMessage()
 }
 
 
+
+void RtspWindow::on_PauseBtn_released()
+{
+    player->pause();
+}

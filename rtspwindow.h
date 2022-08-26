@@ -66,6 +66,8 @@ private slots:
 
     void on_RecordBtn_toggled(bool checked);
 
+    void on_PauseBtn_released();
+
 private:
     Ui::RtspWindow *ui;
     void PlayRtsp(QString Camuri);

@@ -26,6 +26,16 @@
      <widget class="QWidget" name="ComboBxs" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
+        <widget class="QPushButton" name="PauseBtn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Pause</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QSlider" name="PtzSliderSpeed">
          <property name="toolTip">
           <string>3</string>
