@@ -5,10 +5,11 @@ BuildRequires:  lib64qt5multimedia-devel
 BuildRequires:  lib64qt5multimediawidgets-devel
 BuildRequires:  qtbase5-common-devel
 BuildRequires:  lib64qt5opengl-devel
-Version:        1.0.16
+Version:        1.0.17
 Release:        %mkrel 2
 License:        GPL-3.0 license
 Source:         %{name}-%{version}.tar.xz
+#Source0: https://github.com/surfzoid/QtVsPlayer/archive/refs/heads/master.tar.gz#/%{name}-%{version}.tar.gz
 Group:          Video/Players
 URL: https://github.com/surfzoid/QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
@@ -74,7 +75,13 @@ chmod -R ug+rw %{_srcrpmdir}
 /usr/lib64/libSuperRender.so
 
 %changelog
-* Thu Aug 9 2022 surfzoid@gmail.com
+* Fri Aug 26 2022 surfzoid@gmail.com
++ Set PTZSpeed default value to 3.
++ Put FsList on top
++ Dont zoom if VideoCtrls has mouse focus
++ Solve a minor regression bug
+
+* Tue Aug 9 2022 surfzoid@gmail.com
 + TimeSlider wheel mouse make pause
 + Auto_hide_controls bug fixed
 

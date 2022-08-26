@@ -61,7 +61,11 @@ I broken git repo and so rename main to master, to update do on your local copy 
 git branch -m main master  
 git fetch origin  
 git branch -u origin/master master  
-git remote set-head origin -a  
+git remote set-head origin -a 
+
+You can now join IRC chanel to have a real time discution about QtVsPlayer : 
+https://matrix.to/#/#QtVsPlayer:matrix.org  
+
 # Enjoy.  
 
 ![Capture d’écran_2022-04-05_08-32-57](https://user-images.githubusercontent.com/20399920/161693235-66add3e2-b790-4b55-b8ed-dccb3d0b6aa5.png)
