@@ -105,6 +105,7 @@ protected slots:
     void onPlayStatusChanged(QMediaPlayer::MediaStatus status);
     void onPlayError(QMediaPlayer::Error error);
     void onPlayStateChanged(QMediaPlayer::State state);
+    void onbufferStatusChanged(int percentFilled);
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;

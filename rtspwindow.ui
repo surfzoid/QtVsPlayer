@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>887</width>
+    <width>974</width>
     <height>600</height>
    </rect>
   </property>
@@ -28,10 +28,10 @@
        <item>
         <widget class="QSlider" name="PtzSliderSpeed">
          <property name="toolTip">
-          <string>4</string>
+          <string>3</string>
          </property>
          <property name="statusTip">
-          <string>4</string>
+          <string>3</string>
          </property>
          <property name="minimum">
           <number>1</number>
@@ -43,10 +43,10 @@
           <number>1</number>
          </property>
          <property name="value">
-          <number>1</number>
+          <number>3</number>
          </property>
          <property name="sliderPosition">
-          <number>1</number>
+          <number>3</number>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -139,7 +139,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>887</width>
+     <width>974</width>
      <height>29</height>
     </rect>
    </property>

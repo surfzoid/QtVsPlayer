@@ -27,7 +27,7 @@ QString RtspWindow::CamUser = "admin";
 QString RtspWindow::CamPass = "hik12345";
 QString RtspWindow::CamPortHttp = "801";
 QString RtspWindow::Chanel = "101";
-unsigned int RtspWindow::PtzSpeed = 1;
+unsigned int RtspWindow::PtzSpeed = 3;
 
 bool RtspWindow::IsPressed = false;
 
@@ -38,7 +38,8 @@ RtspWindow::RtspWindow(QWidget *parent) :
     RtspWindow::player = new QMediaPlayer(this);
     RtspWindow::videoWidget = new QVideoWidget(this);
 
-    connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+    connect(player, SIGNAL(positionChanged(qint64)),
+            this, SLOT(positionChanged(qint64)));
 
 
     connect(player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
@@ -47,6 +48,8 @@ RtspWindow::RtspWindow(QWidget *parent) :
             this, SLOT(onPlayError(QMediaPlayer::Error)));
     connect(player, SIGNAL(stateChanged(QMediaPlayer::State)),
             this, SLOT(onPlayStateChanged(QMediaPlayer::State)));
+    connect(player, SIGNAL(bufferStatusChanged(int)),
+            this, SLOT(onbufferStatusChanged(int)));
 
     ui->setupUi(this);
 
@@ -166,6 +169,8 @@ void RtspWindow::positionChanged(qint64 pos)
     }else {
         ui->lblLoading->setVisible(true);//mis a true pour les tests
     }
+
+    if (pos > 0) ui->lblLoading->setVisible(false);
 
 }
 
@@ -746,6 +751,10 @@ void RtspWindow::onPlayStateChanged(QMediaPlayer::State state)
     }
 
 }
+void RtspWindow::onbufferStatusChanged(int percentFilled)
+{
+    qDebug() << "bufferStatusChanged - " << percentFilled;
+}
 
 void RtspWindow::onPlayStatusChanged(QMediaPlayer::MediaStatus status)
 {
@@ -765,7 +774,8 @@ void RtspWindow::onPlayStatusChanged(QMediaPlayer::MediaStatus status)
         break;
     case QMediaPlayer::BufferingMedia:
     case QMediaPlayer::BufferedMedia:
-        setStatusInfo(tr("Buffering %1%").arg(player->bufferStatus()));
+        //setStatusInfo(tr("Buffering %1%").arg(player->bufferStatus()));
+        setStatusInfo(tr("Loading video stream ........"));
         break;
     case QMediaPlayer::StalledMedia:
         setStatusInfo(tr("Stalled %1%").arg(player->bufferStatus()));
@@ -782,11 +792,13 @@ void RtspWindow::onPlayStatusChanged(QMediaPlayer::MediaStatus status)
 
 void RtspWindow::setStatusInfo(const QString &info)
 {
+    ui->lblLoading->show();
     ui->lblLoading->setText(info.toUtf8().data());
 }
 
 void RtspWindow::displayErrorMessage()
 {
+    ui->lblLoading->show();
     ui->lblLoading->setText(player->errorString());
 }
 
