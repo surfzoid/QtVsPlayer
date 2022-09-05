@@ -63,9 +63,12 @@ git fetch origin
 git branch -u origin/master master  
 git remote set-head origin -a 
 
-You can now join IRC chanel to have a real time discution about QtVsPlayer : 
-https://matrix.to/#/#QtVsPlayer:libera.chat or
+You can now join IRC chanel to have a real time discution about QtVsPlayer :  
+https://matrix.to/#/#QtVsPlayer:libera.chat  
+or  
 https://matrix.to/#/#QtVsPlayer:matrix.org  
+
+classicnotify.sh is a sample to monitor a shared network, for example, video files extracted by HikNetExtractor and saved at home, then send a notify with click action who start QtVsPlayer with the last video saved  
 
 # Enjoy.  
 
