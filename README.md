@@ -64,7 +64,7 @@ git branch -u origin/master master
 git remote set-head origin -a 
 
 You can now join IRC chanel to have a real time discution about QtVsPlayer : 
-#QtVsPlayer:libera.chat or
+https://matrix.to/#/#QtVsPlayer:libera.chat or
 https://matrix.to/#/#QtVsPlayer:matrix.org  
 
 # Enjoy.  
