@@ -17,14 +17,17 @@ if [ -d "$CHEMIN" ];then
        then
           first=$last
           echo $last created
+          #cp /usr/share/applications/QtVsPlayer.desktop /usr/share/applications/QtVsPlayernotif.desktop
+          #then edit it and replace exe by the script  /usr/bin/QtVsPlayernotif
+          sudo sed -i "2s|.*|QtVsPlayer $CHEMIN$last|" "/usr/bin/QtVsPlayernotif"
           #notify-send -h string:desktop-entry:nautilus -c "transfer.complete" -u critical -i $PWD../QtVsPlayer.png $CAM $last"\n\r"$CHEMIN 
-          reply=$(dunstify -a QtVsPlayer -A 'open,ouvrir' -i "QtVsPlayer" "$CAM $last"\n\r"$CHEMIN")
+          reply=$(dunstify -h int:value:12 -a QtVsPlayernotif -A 'open,ouvrir' -i "QtVsPlayer" "$CAM $last"\n\r"$CHEMIN")
             if [[ "$reply" == "open" ]]; then
-				QtVsPlayer -s $CHEMIN$last
+				QtVsPlayer $CHEMIN$last
 			fi
        fi
        fi
-       sleep 5m
+       sleep 3s
     done
     
 
