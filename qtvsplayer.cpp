@@ -648,3 +648,4 @@ void QtVsPlayer::showModified(const QString& str)
 
     filesLs->Populate(fileNames,false);
 }
+

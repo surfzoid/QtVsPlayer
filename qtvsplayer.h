@@ -60,6 +60,7 @@ private slots:
 
     void ShowHide();
 
+public slots:
     void showModified(const QString& str);
 
 private:
