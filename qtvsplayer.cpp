@@ -12,6 +12,7 @@
 #include <QSize>
 #include "videoctrls.h"
 #include <QMimeDatabase>
+#include <QFileSystemWatcher>
 
 QStringList QtVsPlayer::fileNames;
 int QtVsPlayer::LastPlayIdx = 0;
@@ -75,6 +76,17 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     //connect(m_pbqtimer, &QTimer::timeout, this, &VideoCtrls::updatelocalprocess);
     ShowHideTimer->start( 10000 );
     connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(ShowHide()));
+
+    watcher = new QFileSystemWatcher;
+    watcher->addPath(QStandardPaths::writableLocation(
+                         QStandardPaths::GenericCacheLocation)
+                     + "/QtVsPlayer");
+
+    /*QStringList directoryList = watcher.directories();
+    Q_FOREACH(QString directory, directoryList)
+            qDebug() << "Directory name" << directory <<"\n";*/
+
+    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showModified(QString)));
 }
 
 QtVsPlayer::~QtVsPlayer()
@@ -214,7 +226,7 @@ void QtVsPlayer::on_actionOuvrir_triggered()
 
 void QtVsPlayer::Play (QStringList Files)
 {
-    filesLs->Populate(Files);
+    filesLs->Populate(Files,true);
     VideoCtrls::PLast = false;
     LastPlayIdx = 0 ;
     playm4interface::SetPort();
@@ -346,7 +358,7 @@ void QtVsPlayer::keyPressEvent(QKeyEvent *event)
     int Cod = event->key();
     QString result = QString::number( Cod, 16 );
     qDebug() << "currentKeyPressed 0X" + result.toUpper();
-//    printf("pyd---currentKeyPressed :%s\n\r",result.toUpper().data());
+    //    printf("pyd---currentKeyPressed :%s\n\r",result.toUpper().data());
     return;
 }
 
@@ -615,4 +627,24 @@ void QtVsPlayer::on_actionInfos_triggered()
 {
     playm4interface::GetMetadatas();
 
+}
+
+void QtVsPlayer::showModified(const QString& str)
+{
+    qDebug() << "New file is stored in  : " << str <<"\n";
+
+    QFile file(QStandardPaths::writableLocation(
+                   QStandardPaths::GenericCacheLocation)
+               + "/QtVsPlayer");
+
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    QTextStream flux(&file);
+
+    while(! flux.atEnd())
+    {
+        fileNames.append(flux.readLine());
+    }
+    file.close();
+
+    filesLs->Populate(fileNames,false);
 }

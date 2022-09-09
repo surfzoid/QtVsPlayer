@@ -75,6 +75,11 @@ chmod -R ug+rw %{_srcrpmdir}
 /usr/lib64/libSuperRender.so
 
 %changelog
+
+* Fri Aug 26 2022 surfzoid@gmail.com
++ No middle click when use seek slider.
++ Single instance
+
 * Fri Aug 26 2022 surfzoid@gmail.com
 + Set PTZSpeed default value to 3.
 + Put FsList on top

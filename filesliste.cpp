@@ -59,9 +59,10 @@ void FilesListe::clearitems()
 
 static QString MemDay("");// = QDate::currentDate().toString("yyyy-mm-dd");
 static bool NextDay = false;
-void FilesListe::Populate(QStringList fileNames)
+void FilesListe::Populate(QStringList fileNames, bool ClearBefore)
 {
-    clearitems();
+    if (ClearBefore) clearitems();
+
     ui->tableWidget_2_localfilist->horizontalHeader()->sortIndicatorOrder();
     foreach (QString fileName, fileNames) {
 
@@ -192,6 +193,8 @@ void FilesListe::Populate(QStringList fileNames)
     }
     QHeaderView *header = ui->tableWidget_2_localfilist->horizontalHeader();
     header->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    if (!ClearBefore) QtVsPlayer::PlayNextFile(true,ui->tableWidget_2_localfilist->currentRow());;
 
     return;
 

@@ -17,7 +17,7 @@ public:
     ~FilesListe();
 
     void clearitems();
-    void Populate(QStringList fileName);
+    void Populate(QStringList fileName, bool ClearBefore);
     void SelCurPlay(unsigned int FsNumber);
 
 private:

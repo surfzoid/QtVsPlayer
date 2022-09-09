@@ -60,6 +60,8 @@ private slots:
 
     void ShowHide();
 
+    void showModified(const QString& str);
+
 private:
     Ui::QtVsPlayer *ui;
 
@@ -82,6 +84,7 @@ private:
     static QWidget  *GetWidgetByName(QString Name);
     //timer for play-process
     QTimer *ShowHideTimer;
+    QFileSystemWatcher *watcher;
 /*signals:
 static void  FsChanged();*/
 

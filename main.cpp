@@ -1,7 +1,6 @@
 #include "qtvsplayer.h"
 
 #include <QApplication>
-#include <QMessageBox>
 
 using namespace std;
 
@@ -10,25 +9,33 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QThreadPool::globalInstance()->setMaxThreadCount(1);
     QThreadPool::globalInstance()->setExpiryTimeout(3000);
-    /*QSharedMemory* shared = new QSharedMemory("62d60yyiassassasaasxss669-bb94-4a9gjhsfgjdhiuj4-8ihi8bb-b9648kjuiujhjhtgjdf90a7e04");
 
+    QSharedMemory sharedMemory;
+    sharedMemory.setKey("QvSPlayerUniqueInstance1");
 
-        shared->deleteLater(); // this solved the problem
+    if (!sharedMemory.create(1))
+    {
+        argv[1]= "/mnt/cams/cam4/HikExtracted/NVR/20220909/20220909-155012-20220909-155524-00010000024000213.mp4";
+        QFile file(QStandardPaths::writableLocation(
+                       QStandardPaths::GenericCacheLocation)
+                   + "/QtVsPlayer");
 
-        if( ! shared->create( 512, QSharedMemory::ReadWrite) )
-        {
-            QApplication::beep();
-            QMessageBox::about(0, "QvSPlayer for Hikvision local records", "QvSPlayer already runing");
-            exit(0);
+        file.open(QIODevice::WriteOnly | QIODevice::Text);
+
+        QString Towrite;
+        for (int a = 1; a < 2; ++a) {
+            Towrite = QString(argv[a]) + "\n";
+            file.write(Towrite.toUtf8());
         }
-        else
-        {*/
+        file.close();
+        exit(0); // Exit already a process running
+    }
 
     //Translation
     QTranslator qtTranslator;
     bool bsuc = false;
     bsuc = qtTranslator.load( QLocale(), QLatin1String("qt"), QLatin1String("_"),
-                             QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+                              QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 
     a.installTranslator(&qtTranslator);
 
@@ -47,7 +54,7 @@ int main(int argc, char *argv[])
     //End Translation
 
     QtVsPlayer w;
-//    a.installEventFilter(&w);
+    //    a.installEventFilter(&w);
     w.show();
 
     QStringList list;
