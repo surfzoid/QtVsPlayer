@@ -339,6 +339,10 @@ void VideoCtrls::on_SoudVolume_valueChanged(int value)
 
 void VideoCtrls::on_TimeSlider_actionTriggered(int action)
 {
+    if (QApplication::mouseButtons() == Qt::MiddleButton) {
+        return;
+    }
+
     pause();
     int value =ui->TimeSlider->value();
     PlayM4_SetPlayPos(HikNumPort, ((float)value)*0.01);
