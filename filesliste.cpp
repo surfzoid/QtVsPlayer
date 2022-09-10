@@ -62,6 +62,7 @@ static bool NextDay = false;
 void FilesListe::Populate(QStringList fileNames, bool ClearBefore)
 {
     if (ClearBefore) clearitems();
+    fileNames.removeDuplicates();
 
     ui->tableWidget_2_localfilist->horizontalHeader()->sortIndicatorOrder();
     foreach (QString fileName, fileNames) {

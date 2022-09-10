@@ -75,7 +75,7 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     //ShowHideTimer->setTimerType(Qt::PreciseTimer);
     //connect(m_pbqtimer, &QTimer::timeout, this, &VideoCtrls::updatelocalprocess);
     ShowHideTimer->start( 10000 );
-    connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(ShowHide()));
+    QtVsPlayer::connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(ShowHide()));
 
     watcher = new QFileSystemWatcher;
     watcher->addPath(QStandardPaths::writableLocation(
@@ -86,7 +86,8 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     Q_FOREACH(QString directory, directoryList)
             qDebug() << "Directory name" << directory <<"\n";*/
 
-    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showModified(QString)));
+    QtVsPlayer::connect(watcher, SIGNAL(fileChanged(QString)), this,
+                        SLOT(showModified(QString)), Qt::QueuedConnection);
 }
 
 QtVsPlayer::~QtVsPlayer()
@@ -646,6 +647,7 @@ void QtVsPlayer::showModified(const QString& str)
     }
     file.close();
 
-    filesLs->Populate(fileNames,false);
+    fileNames.removeDuplicates();
+    filesLs->Populate(fileNames,true);
 }
 
