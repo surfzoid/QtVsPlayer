@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     QThreadPool::globalInstance()->setExpiryTimeout(3000);
 
     QSharedMemory sharedMemory;
-    sharedMemory.setKey("QvSPlayerUniqueInstance1");
+    sharedMemory.setKey("QvSPlayerUniqueInstance");
 
     if (!sharedMemory.create(1))
     {

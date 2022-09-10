@@ -27,7 +27,7 @@ if [ -d "$CHEMIN" ];then
 			fi
        fi
        fi
-       sleep 3s
+       sleep 5m
     done
     
 
