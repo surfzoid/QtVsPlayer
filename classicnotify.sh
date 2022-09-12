@@ -21,7 +21,7 @@ if [ -d "$CHEMIN" ];then
           #then edit it and replace exe by the script  /usr/bin/QtVsPlayernotif
           sudo sed -i "2s|.*|QtVsPlayer $CHEMIN$last|" "/usr/bin/QtVsPlayernotif"
           #notify-send -h string:desktop-entry:nautilus -c "transfer.complete" -u critical -i $PWD../QtVsPlayer.png $CAM $last"\n\r"$CHEMIN 
-          reply=$(dunstify -h int:value:12 -a QtVsPlayernotif -A 'open,ouvrir' -i "QtVsPlayer" "$CAM $last"\n\r"$CHEMIN")
+          reply=$(dunstify -h int:value:12 -a QtVsPlayernotif -A 'open,ouvrir' -i "QtVsPlayer" "$CAM $last"\n\r"$CHEMIN") &
             if [[ "$reply" == "open" ]]; then
 				QtVsPlayer $CHEMIN$last
 			fi
