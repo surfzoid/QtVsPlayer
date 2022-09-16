@@ -1,3 +1,5 @@
+HELP WANTED, i'm alone and pretty old, i need almost feedback, translator, and so on, i wrote QTVsPlayer because after years of search i didn't find anything for Linux, normaly with Windows dll, QtVsPlayer should be able to compile under Windows.  
+
 # QtVsPlayer for Hikvision.
 Read local video files of Hikvision devices and display blue, green and red vectors. 
 This is the end of an full network backup solution in combination with HikNetExtractor.
