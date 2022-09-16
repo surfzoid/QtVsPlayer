@@ -648,6 +648,6 @@ void QtVsPlayer::showModified(const QString& str)
     file.close();
 
     fileNames.removeDuplicates();
-    filesLs->Populate(fileNames,true);
+    filesLs->Populate(fileNames,false);
 }
 

@@ -5,7 +5,7 @@ BuildRequires:  lib64qt5multimedia-devel
 BuildRequires:  lib64qt5multimediawidgets-devel
 BuildRequires:  qtbase5-common-devel
 BuildRequires:  lib64qt5opengl-devel
-Version:        1.0.17
+Version:        1.0.19
 Release:        %mkrel 2
 License:        GPL-3.0 license
 Source:         %{name}-%{version}.tar.xz
@@ -75,10 +75,13 @@ chmod -R ug+rw %{_srcrpmdir}
 /usr/lib64/libSuperRender.so
 
 %changelog
+* Fri Sep 16 2022 surfzoid@gmail.com
++ Detach sharedMemory after one crash.
 
-* Fri Aug 26 2022 surfzoid@gmail.com
+* Mon Sep 12 2022 surfzoid@gmail.com
 + No middle click when use seek slider.
 + Single instance
++ IRC and Matrix chanels
 
 * Fri Aug 26 2022 surfzoid@gmail.com
 + Set PTZSpeed default value to 3.

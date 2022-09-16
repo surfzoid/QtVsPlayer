@@ -15,19 +15,27 @@ int main(int argc, char *argv[])
 
     if (!sharedMemory.create(1))
     {
-        //argv[1]= "/mnt/cams/cam4/HikExtracted/NVR/20220909/20220909-155012-20220909-155524-00010000024000213.mp4";
-        QFile file(QStandardPaths::writableLocation(
-                       QStandardPaths::GenericCacheLocation)
-                   + "/QtVsPlayer");
+        if (argc > 1) {
+            //argv[1]= "/mnt/cams/cam4/HikExtracted/NVR/20220909/20220909-155012-20220909-155524-00010000024000213.mp4";
+            QFile file(QStandardPaths::writableLocation(
+                           QStandardPaths::GenericCacheLocation)
+                       + "/QtVsPlayer");
 
-        file.open(QIODevice::WriteOnly | QIODevice::Text);
+            file.open(QIODevice::WriteOnly | QIODevice::Text);
 
-        QString Towrite;
-        for (int a = 1; a < 2; ++a) {
-            Towrite = QString(argv[a]) + "\n";
-            file.write(Towrite.toUtf8());
+            QString Towrite;
+            for (int a = 1; a < 2; ++a) {
+                Towrite = QString(argv[a]) + "\n";
+                file.write(Towrite.toUtf8());
+            }
+            file.close();
         }
-        file.close();
+
+        //check if QtVsplayer crashed and free sharedMemory
+        sharedMemory.attach();
+        sharedMemory.detach();
+
+
         exit(0); // Exit already a process running
     }
 
