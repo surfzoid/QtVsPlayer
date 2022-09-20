@@ -4,7 +4,7 @@ QT       += core gui opengl multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11 debug_and_release link_prl
+CONFIG += c++11 debug_and_release link_prl static
 
 # Specifies name of the binary.
 TARGET = QtVsPlayer
@@ -18,20 +18,20 @@ unix {
         PREFIX = /usr/share
     }
 
-    shortcutfiles.path = $$PREFIX/applications/
+    shortcutfiles.path = $$(PREFIX)/applications/
     shortcutfiles.files = $$PWD/QtVsPlayer.desktop
-    iconfiles.path = $$PREFIX/icons/
+    iconfiles.path = $$(PREFIX)/icons/
     iconfiles.files = $$PWD/images/QtVsPlayer.png
     #INSTALLS += shortcutfiles
     #INSTALLS += iconfiles
     #For Mageia, adjust
-    libfiles.path = /usr/lib64
+    libfiles.path = $$(PREFIX)/../lib64
     libfiles.files += $$PWD/lib/$$QMAKE_HOST.arch/*
-    translationfiles.path = $$PREFIX/QtVsPlayer/translations
+    translationfiles.path = $$(PREFIX)/QtVsPlayer/translations
     translationfiles.files += $$PWD/*.qm
-    docfiles.path = $$PREFIX/doc/QtVsPlayer
+    docfiles.path = $$(PREFIX)/doc/QtVsPlayer
     docfiles.files += $$PWD/README.md
-    licfiles.path = $$PREFIX/licenses/QtVsPlayer
+    licfiles.path = $$(PREFIX)/licenses/QtVsPlayer
     licfiles.files += $$PWD/Licenses_playctrl_linux.txt LICENSE
     }
 #message("If mkdir of /opt/QtVsPlayer return erorror not permit, please do :")
