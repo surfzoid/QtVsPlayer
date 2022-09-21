@@ -1,0 +1,97 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - '*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+#env:
+#  QVPVers: "Will be define later"
+  
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup C++ environment
+      uses: kurocha/setup-cpp@v1
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2.14.0
+    - name: apt install qt5-qmake-bin
+      run: sudo apt update & sudo apt install -y qt5-qmake-bin qt5-default g++ make libqt5multimediawidgets5 qtmultimedia5-dev libqt5widgets5  curl ca-certificates build-essential
+      
+    #- name: set version
+    #  run: export QVPVers=$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)
+      
+    - name: Prepare install dir
+      run: |
+          mkdir -p .debpkg
+          # create DEBIAN directory if you want to add other pre/post scripts
+          mkdir -p .debpkg/DEBIAN
+          echo -e "echo postinst" > .debpkg/DEBIAN/postinst
+          chmod +x .debpkg/DEBIAN/postinst
+       
+  
+    - name: qmake
+      env:
+        PREFIX: .debpkg/usr/share
+        INSTALL_ROOT: .debpkg/usr/share
+      run: PREFIX=.debpkg/usr/share; qmake 
+    - name: make
+      run: make
+    - name: make check
+      run: make check
+          
+    - name: make install
+      run: INSTALL_ROOT=.debpkg/usr/share; make install
+      
+    - name: Version
+      run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
+      id: version
+      
+    - name: build-deb-action
+      uses: jiro4989/build-deb-action@v2
+      with:
+        package: QtVsPlayer
+        package_root: .debpkg
+        maintainer: surfzoid
+        version: ${{ steps.version.outputs.version }} # ${{ github.ref }} # refs/tags/v*.*.*
+        arch: 'amd64'
+        depends: 'libc6 (>= 2.2.1), lib64qt5multimedia5, lib64qt5multimediawidgets5'
+        desc: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
+
+    - name: Upload package as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: QtVsPlayer_${{ steps.version.outputs.version }}_amd64.deb # ${{ matrix.vendor }}-${{ matrix.dist }}-${{ matrix.arch }}
+        path: QtVsPlayer_${{ steps.version.outputs.version }}_amd64.deb # ~/pbuilder/${{ matrix.vendor }}-${{ matrix.dist }}-${{ matrix.arch }}_result/*
+  
+
+    - name: release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        draft: false
+        prerelease: false
+        release_name: ${{ steps.version.outputs.version }}
+        tag_name: ${{ github.ref }}
+        body_path: QtVsPlayer.spec
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        
+    - name: upload linux artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./QtVsPlayer_${{ steps.version.outputs.version }}_amd64.deb
+        asset_name: QtVsPlayer_${{ steps.version.outputs.version }}_amd64.deb
+        asset_content_type: application/gzip
+    
