@@ -40,9 +40,9 @@ unix {
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}
-else: unix:!android: target.path = /usr/bin #/opt/$${TARGET}
+else: unix:!android: target.path = $$(PREFIX)/../bin #/opt/$${TARGET}
 target.files += $${TARGET}
-debugfiles.path = /usr/lib/debug/usr/bin
+debugfiles.path = $$(PREFIX)/../lib/debug/usr/bin
 debugfiles.files = $${TARGET}.debug
 !isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles debugfiles docfiles licfiles
 
