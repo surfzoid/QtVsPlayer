@@ -94,3 +94,4 @@ jobs:
         asset_path: ./QtVsPlayer_${{ steps.version.outputs.version }}_amd64.deb
         asset_name: QtVsPlayer_${{ steps.version.outputs.version }}_amd64.deb
         asset_content_type: application/gzip
+        
