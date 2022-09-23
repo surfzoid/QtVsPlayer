@@ -80,8 +80,8 @@ jobs:
         draft: false
         prerelease: false
         release_name: ${{ steps.version.outputs.version }}
-        tag_name: ${{ github.ref }}
-        body_path: QtVsPlayer.spec
+        tag_name: ${{ steps.version.outputs.version }} # ${{ github.ref }}
+        body_path: "Automatic build from GitHub action, see QtVsPlayer.spec for change log"
       env:
         GITHUB_TOKEN: ${{ github.token }}
         
