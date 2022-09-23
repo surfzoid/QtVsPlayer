@@ -36,6 +36,7 @@ jobs:
           mkdir -p .debpkg/DEBIAN
           echo -e "echo postinst" > .debpkg/DEBIAN/postinst
           chmod +x .debpkg/DEBIAN/postinst
+          echo -e ""Automatic build from GitHub action, see QtVsPlayer.spec for change log"" > CHANGELOG
        
   
     - name: qmake
@@ -81,7 +82,7 @@ jobs:
         prerelease: false
         release_name: ${{ steps.version.outputs.version }}
         tag_name: ${{ steps.version.outputs.version }} # ${{ github.ref }}
-        body_path: "Automatic build from GitHub action, see QtVsPlayer.spec for change log"
+        body_path: CHANGELOG
       env:
         GITHUB_TOKEN: ${{ github.token }}
         
