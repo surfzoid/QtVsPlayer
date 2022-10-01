@@ -4,7 +4,7 @@ QT       += dbus core gui opengl multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11 debug_and_release link_prl static
+CONFIG += c++11 link_prl
 
 # Specifies name of the binary.
 TARGET = QtVsPlayer
@@ -48,6 +48,7 @@ debugfiles.files = $${TARGET}.debug
 
 unix {
 CONFIG += separate_debug_info
+CONFIG += force_debug_info
 # INCLUDEPATH += lib
 # DEPENDPATH += lib
 LIBS += -Llib/$$QMAKE_HOST.arch/ -Wl,-rpath=lib/$$QMAKE_HOST.arch:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender

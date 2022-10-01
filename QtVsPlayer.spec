@@ -1,15 +1,14 @@
-%global debug_package %{nil}
 Name:           QtVsPlayer
 # List of additional build dependencies
 BuildRequires:  lib64qt5multimedia-devel
 BuildRequires:  lib64qt5multimediawidgets-devel
 BuildRequires:  qtbase5-common-devel
 BuildRequires:  lib64qt5opengl-devel
-Version:        1.0.19
+Version:        1.0.20
 Release:        %mkrel 2
 License:        GPL-3.0 license
 Source:         %{name}-%{version}.tar.xz
-#Source0: https://github.com/surfzoid/QtVsPlayer/archive/refs/heads/master.tar.gz#/%{name}-%{version}.tar.gz
+
 Group:          Video/Players
 URL: https://github.com/surfzoid/QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
@@ -19,7 +18,9 @@ Requires:  lib64qt5multimediawidgets5
 
 %define distsuffix .surf.mlo8
 %define dist %distsuffix%distro_release
-%define debug_package %{name}-%{version}-%distsuffix%distro_release.debug
+
+
+
 
 %description
 QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.
@@ -35,25 +36,17 @@ Authors:
 --------
     Eric Petit <surfzoid@gmail.com>
 
-# %global debug_package %{nil}
-
 %prep
-%setup -n %{name}
-# %autosetup -n %{name} -p1
-	
+%setup -q -n %{name}
+
 %build
 qmake
-# %qmake_qt5
-	
-# %make_build debug
-make
+#make_install
 
-	
 %install
-# %make_install INSTALL_ROOT=%{buildroot} debug-install
 qmake
 
-make INSTALL_ROOT=%{buildroot} install
+make INSTALL_ROOT=%{buildroot}/usr/share install
 
 %clean
 rm -rf %buildroot
@@ -63,7 +56,6 @@ chmod -R ug+rw %{_srcrpmdir}
 %files
 %defattr(755,root,root)
 /usr/bin/QtVsPlayer
-/usr/lib/debug/usr/bin/QtVsPlayer.debug
 /usr/share/applications/QtVsPlayer.desktop
 /usr/share/icons/QtVsPlayer.png
 /usr/share/QtVsPlayer/translations/*.qm
@@ -75,6 +67,9 @@ chmod -R ug+rw %{_srcrpmdir}
 /usr/lib64/libSuperRender.so
 
 %changelog
+* Sat Oct 1 2022 surfzoid@gmail.com
++ Use DBus for single instance.
+
 * Fri Sep 16 2022 surfzoid@gmail.com
 + Detach sharedMemory after one crash.
 
