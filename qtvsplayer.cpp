@@ -13,6 +13,8 @@
 #include "videoctrls.h"
 #include <QMimeDatabase>
 #include <QFileSystemWatcher>
+#include "qtvsplayer_adaptor.h"
+#include "qtvsplayer_interface.h"
 
 QStringList QtVsPlayer::fileNames;
 int QtVsPlayer::LastPlayIdx = 0;
@@ -77,17 +79,14 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     ShowHideTimer->start( 10000 );
     QtVsPlayer::connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(ShowHide()));
 
-    watcher = new QFileSystemWatcher;
-    watcher->addPath(QStandardPaths::writableLocation(
-                         QStandardPaths::GenericCacheLocation)
-                     + "/QtVsPlayer");
+    new QtVsPlayerAdaptor(this);
+    QDBusConnection::sessionBus().registerObject("/", this);
 
-    /*QStringList directoryList = watcher.directories();
-    Q_FOREACH(QString directory, directoryList)
-            qDebug() << "Directory name" << directory <<"\n";*/
-
-    QtVsPlayer::connect(watcher, SIGNAL(fileChanged(QString)), this,
-                        SLOT(showModified(QString)), Qt::QueuedConnection);
+    local::QtVsPlayer *iface;
+    iface = new local::QtVsPlayer(QString(), QString(), QDBusConnection::sessionBus(), this);
+    //connect(iface, SIGNAL(message(QString)), this, SLOT(messageSlot(QString)));
+    QDBusConnection::sessionBus().connect(QString(), QString(), "local.QtVsPlayer", "message", this, SLOT(messageSlot(QString)));
+    connect(iface, SIGNAL(action(QString)), this, SLOT(actionSlot(QString)));
 }
 
 QtVsPlayer::~QtVsPlayer()
@@ -627,27 +626,37 @@ void QtVsPlayer::test()
 void QtVsPlayer::on_actionInfos_triggered()
 {
     playm4interface::GetMetadatas();
-
 }
 
-void QtVsPlayer::showModified(const QString& str)
+void QtVsPlayer::messageSlot(const QString &text)
 {
-    qDebug() << "New file is stored in  : " << str <<"\n";
+    QString msg( QLatin1String("<%1> %2") );
+    //msg = msg.arg(nickname, text);
+    //m_messages.append(text);
+    qDebug() << "New file catched  : " << text <<"\n";
+    QFileInfo fi(text.toUtf8());
+    if (fi.isDir()) {
 
-    QFile file(QStandardPaths::writableLocation(
-                   QStandardPaths::GenericCacheLocation)
-               + "/QtVsPlayer");
+        Scandir(fi.filePath().toUtf8());
+        if (fileNames.length() > 0) {
+            Play (fileNames);
+        }
 
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    QTextStream flux(&file);
-
-    while(! flux.atEnd())
-    {
-        fileNames.append(flux.readLine());
     }
-    file.close();
+    if (fi.isFile()) {
+        fileNames.append(text.toUtf8());
+        Play (fileNames);
+    }
 
     fileNames.removeDuplicates();
-    filesLs->Populate(fileNames,false);
+    filesLs->Populate(fileNames,true);
+
 }
 
+void QtVsPlayer::actionSlot(const QString &text)
+{
+    QString msg( QLatin1String("<%1> %2") );
+    //msg = msg.arg(nickname, text);
+    m_messages.append(text);
+
+}

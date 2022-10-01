@@ -1,12 +1,21 @@
 #include "qtvsplayer.h"
 
 #include <QApplication>
+#include "qtvsplayer_adaptor.h"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+
+    if (!QDBusConnection::sessionBus().isConnected()) {
+        qWarning("Cannot connect to the D-Bus session bus.\n"
+                 "Please check your system settings and try again.\n");
+        return 1;
+    }
+
     QThreadPool::globalInstance()->setMaxThreadCount(1);
     QThreadPool::globalInstance()->setExpiryTimeout(3000);
 
@@ -15,20 +24,15 @@ int main(int argc, char *argv[])
 
     if (!sharedMemory.create(1))
     {
+        //argv.append("/mnt/cams/cam4/HikExtracted/NVR/20220909/20220909-155012-20220909-155524-00010000024000213.mp4");
         if (argc > 1) {
-            //argv[1]= "/mnt/cams/cam4/HikExtracted/NVR/20220909/20220909-155012-20220909-155524-00010000024000213.mp4";
-            QFile file(QStandardPaths::writableLocation(
-                           QStandardPaths::GenericCacheLocation)
-                       + "/QtVsPlayer");
 
-            file.open(QIODevice::WriteOnly | QIODevice::Text);
-
-            QString Towrite;
-            for (int a = 1; a < 2; ++a) {
-                Towrite = QString(argv[a]) + "\n";
-                file.write(Towrite.toUtf8());
-            }
-            file.close();
+            new QtVsPlayerAdaptor(&a);
+            QDBusConnection::sessionBus().registerObject("/", &a);
+            //emit message(m_nickname, messageLineEdit->text());
+            QDBusMessage msg = QDBusMessage::createSignal("/", "local.QtVsPlayer", "message");
+            msg << QString(argv[1]);
+            QDBusConnection::sessionBus().send(msg);
         }
 
         //check if QtVsplayer crashed and free sharedMemory

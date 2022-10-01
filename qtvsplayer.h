@@ -21,6 +21,7 @@ class QtVsPlayer : public QMainWindow
 {
     Q_OBJECT
 
+    QStringList m_messages;
 public:
     QtVsPlayer(QWidget *parent = nullptr);
     ~QtVsPlayer();
@@ -60,8 +61,15 @@ private slots:
 
     void ShowHide();
 
+    void messageSlot(const QString &text);
+
+    void actionSlot(const QString &text);
+
 public slots:
-    void showModified(const QString& str);
+
+signals:
+    void message(const QString &text);
+    void action(const QString &text);
 
 private:
     Ui::QtVsPlayer *ui;
@@ -85,7 +93,6 @@ private:
     static QWidget  *GetWidgetByName(QString Name);
     //timer for play-process
     QTimer *ShowHideTimer;
-    QFileSystemWatcher *watcher;
 /*signals:
 static void  FsChanged();*/
 

@@ -1,6 +1,6 @@
-VERSION = 1.0.19
+VERSION = 1.0.20
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
-QT       += core gui opengl multimedia multimediawidgets
+QT       += dbus core gui opengl multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -84,6 +84,9 @@ FORMS += \
     rtspwindow.ui \
     settingsform.ui \
     videoctrls.ui
+
+DBUS_ADAPTORS += local.QtVsPlayer.xml
+DBUS_INTERFACES += local.QtVsPlayer.xml
 
 TRANSLATIONS += \
     QtVsPlayer_fr_FR.ts
