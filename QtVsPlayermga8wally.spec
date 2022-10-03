@@ -1,71 +1,55 @@
 Name:           QtVsPlayer
-# List of additional build dependencies
-BuildRequires:  lib64qt5multimedia-devel
-BuildRequires:  lib64qt5multimediawidgets-devel
-BuildRequires:  qtbase5-common-devel
-BuildRequires:  lib64qt5opengl-devel
+Summary:        QtVsPlayer for Hikvision
 Version:        1.0.20
 Release:        %mkrel 2
-License:        GPL-3.0 license
-Source:         %{name}-%{version}.tar.xz
-
+License:        GPLv3
 Group:          Video/Players
-URL: https://github.com/surfzoid/QtVsPlayer
-Summary:        QtVsPlayer for Hikvision
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Requires:  lib64qt5multimedia5
-Requires:  lib64qt5multimediawidgets5
-
-%define distsuffix .surf.mlo8
-%define dist %distsuffix%distro_release
-
-
-
-
+URL:            https://github.com/surfzoid/QtVsPlayer
+Source0:        https://github.com/surfzoid/QtVsPlayer/archive/%{version}/%{name}-%{version}.tar.gz
+Patch1:         QtVsPlayer-fix.patch
+# List of additional build dependencies
+BuildRequires:  pkgconfig(Qt5Multimedia)
+BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
+BuildRequires:  qtbase5-common-devel
+BuildRequires:  pkgconfig(Qt5OpenGL)
+ 
 %description
 QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.
 This is the end of an full network backup solution in combination with HikNetExtractor.
 https://github.com/surfzoid/HikNetExtractor
-
+ 
 This software use the PlayCtrl SDK libraries from HikVision, those librarys are under GPL-2 license.
 You will find it in /usr/share/licenses/QtVsPlayer/Licenses_playctrl_linux.txt or in SDK archive from HikVision website :
 https://www.hikvision.com/content/dam/hikvision/en/support/download/sdk/device-network-sdk/EN-HCNetSDKV6.1.9.4_build20220412_linux64.rar
 Licences are in the doc dir.
-
-Authors:
---------
-    Eric Petit <surfzoid@gmail.com>
-
+ 
 %prep
-%setup -q -n %{name}
-%qmake_qt5
-
+%autosetup -p1 -n %{name}-%{version}
+ 
 %build
-qmake
-#make_install
-
+%qmake_qt5
+%make_build
+ 
 %install
-qmake
-
-make INSTALL_ROOT=%{buildroot}/usr/share install
+%make_install INSTALL_ROOT=%{buildroot}%{_datadir}
 
 %clean
 rm -rf %buildroot
 chmod -R ug+rw %{_rpmdir}
 chmod -R ug+rw %{_srcrpmdir}
-
+ 
 %files
-%defattr(755,root,root)
-/usr/bin/QtVsPlayer
-/usr/share/applications/QtVsPlayer.desktop
-/usr/share/icons/QtVsPlayer.png
-/usr/share/QtVsPlayer/translations/*.qm
 %license LICENSE
 %license Licenses_playctrl_linux.txt
-/usr/share/doc/QtVsPlayer/README.md
-/usr/lib64/libAudioRender.so
-/usr/lib64/libPlayCtrl.so
-/usr/lib64/libSuperRender.so
+%doc README.md
+%{_bindir}/QtVsPlayer
+%{_datadir}/applications/QtVsPlayer.desktop
+%{_datadir}/icons/QtVsPlayer.png
+%{_datadir}/QtVsPlayer/
+%dir %{_libdir}/QtVsPlayer/
+%{_libdir}/QtVsPlayer/libAudioRender.so
+%{_libdir}/QtVsPlayer/libPlayCtrl.so
+%{_libdir}/QtVsPlayer/libSuperRender.so
 
 %changelog
 * Sat Oct 1 2022 surfzoid@gmail.com

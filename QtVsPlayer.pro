@@ -4,7 +4,7 @@ QT       += dbus core gui opengl multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11 link_prl
+CONFIG += c++11 shared
 
 # Specifies name of the binary.
 TARGET = QtVsPlayer
@@ -47,7 +47,7 @@ debugfiles.files = $${TARGET}.debug
 !isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles debugfiles docfiles licfiles
 
 unix {
-CONFIG += separate_debug_info
+#CONFIG += separate_debug_info
 CONFIG += force_debug_info
 # INCLUDEPATH += lib
 # DEPENDPATH += lib
@@ -99,6 +99,7 @@ DISTFILES += \
     Open Source Software Licenses_playctrl_linux.txt \
     QtVsPlayer.desktop \
     QtVsPlayer.spec \
+    QtVsPlayermga8wally.spec \
     README.md \
     TODO
 
