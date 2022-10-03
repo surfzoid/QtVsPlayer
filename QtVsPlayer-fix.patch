@@ -1,0 +1,38 @@
+diff --git a/QtVsPlayer.pro b/QtVsPlayer.pro
+index 1cd3d90..5875bba 100644
+--- a/QtVsPlayer.pro
++++ b/QtVsPlayer.pro
+@@ -4,7 +4,7 @@ QT       += dbus core gui opengl multimedia multimediawidgets
+ 
+ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+ 
+-CONFIG += c++11 debug_and_release link_prl static
++CONFIG += c++11 shared
+ 
+ # Specifies name of the binary.
+ TARGET = QtVsPlayer
+@@ -47,10 +47,9 @@ debugfiles.files = $${TARGET}.debug
+ !isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles debugfiles docfiles licfiles
+ 
+ unix {
+-CONFIG += separate_debug_info
+ # INCLUDEPATH += lib
+ # DEPENDPATH += lib
+-LIBS += -Llib/$$QMAKE_HOST.arch/ -Wl,-rpath=lib/$$QMAKE_HOST.arch:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
++LIBS += -Llib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer -lPlayCtrl -lAudioRender -lSuperRender
+ }
+ 
+ # You can make your code fail to compile if it uses deprecated APIs.
+diff --git a/QtVsPlayer.pro b/QtVsPlayer.pro
+index 5875bba..e7a7a65 100644
+--- a/QtVsPlayer.pro
++++ b/QtVsPlayer.pro
+@@ -25,7 +25,7 @@ unix {
+     #INSTALLS += shortcutfiles
+     #INSTALLS += iconfiles
+     #For Mageia, adjust
+-    libfiles.path = $$(PREFIX)/../lib64
++    libfiles.path = $$(PREFIX)/../lib64/QtVsPlayer
+     libfiles.files += $$PWD/lib/$$QMAKE_HOST.arch/*
+     translationfiles.path = $$(PREFIX)/QtVsPlayer/translations
+     translationfiles.files += $$PWD/*.qm

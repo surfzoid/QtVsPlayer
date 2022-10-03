@@ -97,6 +97,7 @@ RESOURCES += \
 
 DISTFILES += \
     Open Source Software Licenses_playctrl_linux.txt \
+    QtVsPlayer-fix.patch \
     QtVsPlayer.desktop \
     QtVsPlayer.spec \
     QtVsPlayermga8wally.spec \
