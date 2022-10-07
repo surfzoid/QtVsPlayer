@@ -73,10 +73,7 @@ jobs:
         uses: ncipollo/release-action@v1
         id: create_release
         with:
-          artifacts: |
-           'QtVsPlayer-${{ steps.version.outputs.version }}*'
-           'QtVsPlayer_${{ steps.version.outputs.version }}*'
-           'QtVsPlayer-debuginfo*'
+          artifacts: "QtVsPlayer-${{ steps.version.outputs.version }}*,QtVsPlayer_${{ steps.version.outputs.version }}*,QtVsPlayer-debuginfo*"
           replacesArtifacts: false
           token: ${{ github.TOKEN }}
           allowUpdates: true
@@ -176,21 +173,19 @@ jobs:
               mkdir -p "/artifacts/.debpkg"
               cp -frv .debpkgarm64/* "/artifacts/.debpkg/"
               ls -la .debpkgarm64
+
+
       - name: Show the artifact
         # Items placed in /artifacts in the container will be in
         # ${PWD}/artifacts on the host.
         run: |
-          sudo cp -frv "${PWD}/artifacts/*" ./
-          ls -alR "${PWD}/artifacts"
+          ls -alR "${PWD}/artifacts/"
           #mkdir -p ".debpkg"
-          #cp -frv "${PWD}/artifacts/.debpkg/*" ".debpkg/"
+          cp -frv "${PWD}/artifacts/.debpkg" ./
 
       - name: Version
         run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
         id: version
-
-      - name: cp build dir from dock
-        run: ls -la ~ #cp -fr "/artifacts/${artifact_name}"/.debpkgarm64 ~/
 
       - name: build-deb-action
         uses: jiro4989/build-deb-action@v2
@@ -204,7 +199,7 @@ jobs:
           desc: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
 
       - name: del DEBIAN
-        run: sudo rm -fr ${PWD}/artifacts/.debpkgarm64/DEBIAN
+        run: sudo rm -fr .debpkg/DEBIAN
 
       - uses: jiro4989/build-rpm-action@v2
         with:
@@ -213,18 +208,25 @@ jobs:
           package_root: .debpkg
           maintainer: surfzoid
           version: ${{ steps.version.outputs.version }}
-          arch: ${{ matrix.arch }}
+          arch: 'x86_64'
           desc: 'QtVsPlayer Hikvision .'
 
+      - name: Rename package with te good arch
+        run: |
+          for f in $(find ./|grep -i "rpm$"); do
+          echo -e $f
+          echo ${f//x86_64/aarch64}
+          ef=${f//x86_64/aarch64}
+          echo $ef
+          mv $f $ef
+          done
 
       - name: Create Github Release
         uses: ncipollo/release-action@v1
         id: create_release
         with:
-          artifacts: |
-           'QtVsPlayer-${{ steps.version.outputs.version }}*'
-           'QtVsPlayer_${{ steps.version.outputs.version }}*'
-           'QtVsPlayer-debuginfo*'
+          artifacts: "QtVsPlayer-${{ steps.version.outputs.version }}*,QtVsPlayer_${{ steps.version.outputs.version }}*,QtVsPlayer-debuginfo*"
+           
           replacesArtifacts: false
           token: ${{ github.TOKEN }}
           allowUpdates: true
