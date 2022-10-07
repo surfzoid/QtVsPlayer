@@ -195,7 +195,7 @@ jobs:
           maintainer: surfzoid
           version: ${{ steps.version.outputs.version }} # ${{ github.ref }} # refs/tags/v*.*.*
           arch: ${{ matrix.arch }}
-          depends: 'libc6 (>= 2.2.1), lib64qt5multimedia5, lib64qt5multimediawidgets5'
+          depends: 'libqt5multimedia5, libqt5multimediawidgets5' #libc6 (>= 2.2.1), 
           desc: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
 
       - name: del DEBIAN
