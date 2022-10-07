@@ -74,9 +74,9 @@ jobs:
         id: create_release
         with:
           artifacts: |
-           QtVsPlayer_1*
-           QtVsPlayer-1*
-           QtVsPlayer-debug*
+           'QtVsPlayer-${{ steps.version.outputs.version }}*'
+           'QtVsPlayer_${{ steps.version.outputs.version }}*'
+           'QtVsPlayer-debuginfo*'
           replacesArtifacts: false
           token: ${{ github.TOKEN }}
           allowUpdates: true
@@ -221,10 +221,10 @@ jobs:
         uses: ncipollo/release-action@v1
         id: create_release
         with:
-          artifacts: | 
-           QtVsPlayer-${{ steps.version.outputs.version }}* 
-           QtVsPlayer_${{ steps.version.outputs.version }}* 
-           QtVsPlayer-debuginfo*
+          artifacts: |
+           'QtVsPlayer-${{ steps.version.outputs.version }}*'
+           'QtVsPlayer_${{ steps.version.outputs.version }}*'
+           'QtVsPlayer-debuginfo*'
           replacesArtifacts: false
           token: ${{ github.TOKEN }}
           allowUpdates: true
