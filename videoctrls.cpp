@@ -19,8 +19,8 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
     ui(new Ui::VideoCtrls)
 {
     ui->setupUi(this);
-    setFocusPolicy( Qt::StrongFocus );
-    setFocus( Qt::PopupFocusReason );
+    //setFocusPolicy( Qt::StrongFocus );
+    //setFocus( Qt::PopupFocusReason );
     setEnabled( true );
     //Multimedia keys shortcut
     this->ui->previousButton->setShortcut(Qt::Key_MediaPrevious);
@@ -356,4 +356,8 @@ void VideoCtrls::on_TimeSlider_sliderReleased()
     pause();
 
     return;
+}
+void VideoCtrls::focusOutEvent(QFocusEvent *)
+{
+    hide();
 }

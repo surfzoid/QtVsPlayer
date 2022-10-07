@@ -51,7 +51,7 @@ unix {
 CONFIG += force_debug_info
 # INCLUDEPATH += lib
 # DEPENDPATH += lib
-LIBS += -Llib/$$QMAKE_HOST.arch/ -Wl,-rpath=lib/$$QMAKE_HOST.arch:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
+LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=lib/$$QMAKE_HOST.arch:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
 }
 
 # You can make your code fail to compile if it uses deprecated APIs.

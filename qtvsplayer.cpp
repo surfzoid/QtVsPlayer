@@ -74,7 +74,7 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     WVideoCtrls->raise();
 
     ShowHideTimer = new QTimer(this);
-    //ShowHideTimer->setTimerType(Qt::PreciseTimer);
+    ShowHideTimer->setTimerType(Qt::PreciseTimer);
     //connect(m_pbqtimer, &QTimer::timeout, this, &VideoCtrls::updatelocalprocess);
     ShowHideTimer->start( 10000 );
     QtVsPlayer::connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(ShowHide()));

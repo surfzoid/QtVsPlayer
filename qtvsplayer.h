@@ -38,6 +38,7 @@ public:
     static void WinIdWorkarround();
     static QStringList fileNames;
 
+
 private slots:
     void on_actionOuvrir_triggered();
 
@@ -59,11 +60,10 @@ private slots:
 
     void on_actionInfos_triggered();
 
-    void ShowHide();
-
     void messageSlot(const QString &text);
 
     void actionSlot(const QString &text);
+    void ShowHide();
 
 public slots:
 
