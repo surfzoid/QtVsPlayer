@@ -1,6 +1,6 @@
 VERSION = 1.0.20
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
-QT       += dbus core gui opengl multimedia multimediawidgets
+QT       += dbus core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
