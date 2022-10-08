@@ -25,6 +25,8 @@ jobs:
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
             echo "echo postinst" > .debpkg/DEBIAN/postinst
+            echo "mv -f /usr/lib64/lib* /usr/lib/" >> .debpkg/DEBIAN/postinst
+            echo "rm -fr /usr/lib64" >> .debpkg/DEBIAN/postinst
             chmod +x .debpkg/DEBIAN/postinst
             echo -e "Automatic build from GitHub action, see QtVsPlayer.spec for change log" > CHANGELOG
 
@@ -80,6 +82,7 @@ jobs:
           name: ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
           body: "Automatic build from GitHub action, see QtVsPlayer.spec for change log"
+
 
       - name: clean
         run:
@@ -153,6 +156,7 @@ jobs:
           # Produce a binary artifact and place it in the mounted volume
           run: |
               echo prepare build debian package
+              echo ARCH=arm64
               #cp $(which git) "/artifacts/${artifact_name}"
               echo "Produced artifact at /artifacts/${artifact_name}"
               #rm  -fr .debpkgarm64
@@ -160,6 +164,8 @@ jobs:
               # create DEBIAN directory if you want to add other pre/post scripts
               mkdir -p .debpkgarm64/DEBIAN
               echo "echo postinst" > .debpkgarm64/DEBIAN/postinst
+              echo "mv -f /usr/lib64/lib* /usr/lib/" >> .debpkgarm64/DEBIAN/postinst
+              echo "rm -fr /usr/lib64" >> .debpkgarm64/DEBIAN/postinst
               chmod +x .debpkgarm64/DEBIAN/postinst
               echo -e ""Automatic build from GitHub action, see QtVsPlayer.spec for change log"" > CHANGELOG
               export QT_SELECT=qt5
@@ -172,6 +178,7 @@ jobs:
               mkdir -p "/artifacts/.debpkg"
               cp -frv .debpkgarm64/* "/artifacts/.debpkg/"
               ls -la .debpkgarm64
+
 
       - name: Show the artifact
         # Items placed in /artifacts in the container will be in
