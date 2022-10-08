@@ -24,7 +24,7 @@ jobs:
             mkdir -p .debpkg
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
-            echo -e "echo postinst" > .debpkg/DEBIAN/postinst
+            echo "echo postinst" > .debpkg/DEBIAN/postinst
             chmod +x .debpkg/DEBIAN/postinst
             echo -e "Automatic build from GitHub action, see QtVsPlayer.spec for change log" > CHANGELOG
 
@@ -80,7 +80,6 @@ jobs:
           name: ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
           body: "Automatic build from GitHub action, see QtVsPlayer.spec for change log"
-
 
       - name: clean
         run:
@@ -160,7 +159,7 @@ jobs:
               mkdir -p .debpkgarm64
               # create DEBIAN directory if you want to add other pre/post scripts
               mkdir -p .debpkgarm64/DEBIAN
-              echo -e "echo postinst" > .debpkgarm64/DEBIAN/postinst
+              echo "echo postinst" > .debpkgarm64/DEBIAN/postinst
               chmod +x .debpkgarm64/DEBIAN/postinst
               echo -e ""Automatic build from GitHub action, see QtVsPlayer.spec for change log"" > CHANGELOG
               export QT_SELECT=qt5
@@ -173,7 +172,6 @@ jobs:
               mkdir -p "/artifacts/.debpkg"
               cp -frv .debpkgarm64/* "/artifacts/.debpkg/"
               ls -la .debpkgarm64
-
 
       - name: Show the artifact
         # Items placed in /artifacts in the container will be in
@@ -194,7 +192,7 @@ jobs:
           package_root: .debpkg
           maintainer: surfzoid
           version: ${{ steps.version.outputs.version }} # ${{ github.ref }} # refs/tags/v*.*.*
-          arch: ${{ matrix.arch }}
+          arch: arm64
           depends: 'libqt5multimedia5, libqt5multimediawidgets5' #libc6 (>= 2.2.1), 
           desc: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
 
