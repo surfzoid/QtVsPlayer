@@ -54,7 +54,7 @@ jobs:
           maintainer: surfzoid
           version: ${{ steps.version.outputs.version }} # ${{ github.ref }} # refs/tags/v*.*.*
           arch: 'amd64'
-          depends: 'libc6 (>= 2.2.1), lib64qt5multimedia5, lib64qt5multimediawidgets5'
+          depends: 'libqt5multimedia5, libqt5multimediawidgets5' #libc6 (>= 2.2.1),
           desc: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
       - name: del DEBIAN
         run: sudo rm -fr .debpkg/DEBIAN
@@ -74,7 +74,7 @@ jobs:
         id: create_release
         with:
           artifacts: "QtVsPlayer-${{ steps.version.outputs.version }}*,QtVsPlayer_${{ steps.version.outputs.version }}*,QtVsPlayer-debuginfo*"
-          replacesArtifacts: false
+          replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
           name: ${{ steps.version.outputs.version }}
@@ -227,7 +227,7 @@ jobs:
         with:
           artifacts: "QtVsPlayer-${{ steps.version.outputs.version }}*,QtVsPlayer_${{ steps.version.outputs.version }}*,QtVsPlayer-debuginfo*"
            
-          replacesArtifacts: false
+          replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
           name: ${{ steps.version.outputs.version }}
