@@ -102,8 +102,8 @@ jobs:
         include:
           - arch: aarch64
             distro: ubuntu_latest
-          - arch: arm64
-            distro: ubuntu_latest
+          #- arch: aarch64
+          #  distro: fedora_latest
     steps:
       - uses: actions/checkout@v2.1.0
 
