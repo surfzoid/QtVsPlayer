@@ -59,7 +59,7 @@ public:
            errtxt=QObject::tr("This API can only be called in stream decoding mode");
            break;
        case 16:
-           errtxt=QObject::tr("System not support, the SDK can only work with CPU above Pentium 3");
+           //errtxt=QObject::tr("System not support, the SDK can only work with CPU above Pentium 3");
            break;
        case 17:
            errtxt=QObject::tr("Missing file header");
