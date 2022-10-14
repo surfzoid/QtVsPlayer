@@ -101,7 +101,7 @@ jobs:
         # with a specific prefix, and dpkg's arch does its own thing
         include:
           - arch: aarch64
-            distro: ubuntu18.04
+            distro: ubuntu20.04
           #- arch: aarch64
           #  distro: fedora_latest
     steps:
