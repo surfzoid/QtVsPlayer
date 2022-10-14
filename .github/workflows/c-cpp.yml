@@ -141,7 +141,7 @@ jobs:
             case "${{ matrix.distro }}" in
               ubuntu*|jessie|stretch|buster|bullseye)
                 apt-get update -q -y
-                 apt-get install --assume-yes -q -y rpm qt5-qmake sudo qtchooser g++ make libqt5multimediawidgets5 libqt5widgets5 qtcreator apt-utils curl ca-certificates qtbase5-dev qtbase5-dev-tools qtbase5-doc-dev qtconnectivity5-dev qtdeclarative5-dev qtdeclarative5-dev-tools qtdeclarative5-doc-dev qtfeedback5-dev qtlocation5-dev qtlocation5-doc-dev qtpositioning5-dev qtmultimedia5-dev qtpim5-dev qtquickcontrols2-5-dev qtscript5-dev qtsystems5-dev qttools5-dev qttools5-dev-tools qtpdf5-dev qtwebengine5-dev qtwebengine5-dev-tools qtxmlpatterns5-dev-tools build-essential
+                 apt-get install --assume-yes -q -y rpm qt5-qmake sudo qtchooser g++ make libqt5multimediawidgets5 libqt5widgets5 qtcreator apt-utils curl ca-certificates qtbase5-dev qtbase5-dev-tools qtconnectivity5-dev qtdeclarative5-dev qtdeclarative5-dev-tools qtfeedback5-dev qtlocation5-dev qtlocation5-doc-dev qtpositioning5-dev qtmultimedia5-dev qtpim5-dev qtquickcontrols2-5-dev qtscript5-dev qtsystems5-dev qttools5-dev qttools5-dev-tools qtpdf5-dev qtwebengine5-dev qtwebengine5-dev-tools qtxmlpatterns5-dev-tools build-essential
                  #sudo apt -q -y install --assume-yes --no-install-recommends `apt-cache search qt | grep 5- | grep ^qt | awk '{print $1}' | xargs `
                 ;;
               fedora*)
