@@ -71,6 +71,16 @@ jobs:
           arch: 'x86_64'
           desc: 'QtVsPlayer Hikvision .'
 
+      - name: Rename package with te good arch/distro
+        run: |
+          for f in $(find ./|grep -i "deb$"); do
+          echo -e $f
+          echo ${f//amd64/${{ matrix.distro }}-amd64}
+          ef=${f//amd64/${{ matrix.distro }}-amd64}
+          echo $ef
+          mv $f $ef
+          done
+
       - name: Create Github Release
         uses: ncipollo/release-action@v1
         id: create_release
