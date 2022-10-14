@@ -107,6 +107,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2.1.0
 
+      - name: Install basic tools
+        run: |
+          apt-get update
+          apt-get install --assume-yes libc6=2.31-132
+
       - uses: uraimo/run-on-arch-action@v2.2.1
         name: Build artifact
         id: build
@@ -200,7 +205,7 @@ jobs:
           maintainer: surfzoid
           version: ${{ steps.version.outputs.version }} # ${{ github.ref }} # refs/tags/v*.*.*
           arch: arm64
-          depends: 'libqt5multimedia5:arm64, libqt5multimediawidgets5:arm64' #libc6 (>= 2.2.1), 
+          depends: 'libc6 (>= 2.31),libqt5multimedia5:arm64, libqt5multimediawidgets5:arm64' #libc6 (>= 2.2.1), 
           desc: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
 
       - name: del DEBIAN
