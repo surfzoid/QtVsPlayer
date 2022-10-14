@@ -216,12 +216,19 @@ jobs:
           arch: 'x86_64'
           desc: 'QtVsPlayer Hikvision .'
 
-      - name: Rename package with te good arch
+      - name: Rename package with te good arch/distro
         run: |
           for f in $(find ./|grep -i "rpm$"); do
           echo -e $f
           echo ${f//x86_64/aarch64}
           ef=${f//x86_64/aarch64}
+          echo $ef
+          mv $f $ef
+          done
+          for f in $(find ./|grep -i "deb$"); do
+          echo -e $f
+          echo ${f//arm64/${{ matrix.distro }}-arm64}
+          ef=${f//arm64/${{ matrix.distro }}-arm64}
           echo $ef
           mv $f $ef
           done
