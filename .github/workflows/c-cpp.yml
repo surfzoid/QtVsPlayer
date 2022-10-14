@@ -75,8 +75,8 @@ jobs:
         run: |
           for f in $(find ./|grep -i "deb$"); do
           echo -e $f
-          echo ${f//amd64/${{ matrix.distro }}-amd64}
-          ef=${f//amd64/${{ matrix.distro }}-amd64}
+          echo ${f//amd64/${{ matrix.os }}-amd64}
+          ef=${f//amd64/${{ matrix.os }}-amd64}
           echo $ef
           mv $f $ef
           done
