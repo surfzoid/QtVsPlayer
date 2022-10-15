@@ -150,6 +150,7 @@ jobs:
           install: |
             case "${{ matrix.distro }}" in
               ubuntu*|jessie|stretch|buster|bullseye)
+                apt-get update -q -y
                 apt-get install -q -y software-properties-common
                 add-apt-repository -y -u ppa:beineri/opt-qt-5.15.2-focal
                 apt-get update -q -y
