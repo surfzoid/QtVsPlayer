@@ -153,7 +153,7 @@ jobs:
                 apt-get update -q -y
                 apt-get install -q -y software-properties-common
                 #rm -fr /etc/apt/sources.list*
-                #add-apt-repository -m -y -u 'deb http://deb.debian.org/debian bullseye main contrib non-free' --keyserver=hkp://keyring.debian.org:80/
+                add-apt-repository -m -y -u 'deb http://deb.debian.org/debian bullseye main contrib non-free' --keyserver=hkp://keyring.debian.org:80/
                 gpg -v --keyserver keyring.debian.org --recv-keys 0x648ACFD622F3D138
                 gpg -v --keyserver keyring.debian.org --recv-keys 0x0E98404D386FA1D9
                 gpg -v --keyserver keyring.debian.org --recv-keys 0x605C66F00D6C9793
