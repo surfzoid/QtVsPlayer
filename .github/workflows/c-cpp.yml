@@ -152,13 +152,13 @@ jobs:
               ubuntu*|jessie|stretch|buster|bullseye)
                 apt-get update -q -y
                 apt-get install -q -y software-properties-common
-                rm -fr /etc/apt/sources.list*
-                add-apt-repository -m -y -u 'deb http://deb.debian.org/debian bullseye main contrib non-free' --keyserver=hkp://keyring.debian.org:80/
+                #rm -fr /etc/apt/sources.list*
+                #add-apt-repository -m -y -u 'deb http://deb.debian.org/debian bullseye main contrib non-free' --keyserver=hkp://keyring.debian.org:80/
                 gpg -v --keyserver keyring.debian.org --recv-keys 0x648ACFD622F3D138
                 gpg -v --keyserver keyring.debian.org --recv-keys 0x0E98404D386FA1D9
                 gpg -v --keyserver keyring.debian.org --recv-keys 0x605C66F00D6C9793
                 apt-get update -q -y
-                 apt-get install --assume-yes -q -y rpm qt5-qmake sudo qtchooser g++ make libqt5multimediawidgets5 libqt5widgets5 qtcreator apt-utils curl ca-certificates qtbase5-dev qtbase5-dev-tools qtconnectivity5-dev qtdeclarative5-dev qtdeclarative5-dev-tools qt5-default qtlocation5-dev qtpositioning5-dev qtmultimedia5-dev qtquickcontrols2-5-dev qtscript5-dev qttools5-dev qttools5-dev-tools qtwebengine5-dev qtwebengine5-dev-tools qtxmlpatterns5-dev-tools build-essential
+                 apt-get install --assume-yes -q -y rpm qt5-qmake sudo qtchooser g++ make libqt5multimediawidgets5 libqt5widgets5 qtcreator apt-utils curl ca-certificates qtbase5-dev qtbase5-dev-tools qtconnectivity5-dev qtdeclarative5-dev qtdeclarative5-dev-tools qt5-default qtlocation5-dev qtpositioning5-dev qtmultimedia5-dev qtquickcontrols2-5-dev qtscript5-dev qttools5-dev qttools5-dev-tools qtwebengine5-dev qtwebengine5-dev-tools qtxmlpatterns5-dev-tools qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libqt5core5a libqt5network5 libqt5gui5 build-essential
                  #sudo apt -q -y install --assume-yes --no-install-recommends `apt-cache search qt | grep 5- | grep ^qt | awk '{print $1}' | xargs `
                 ;;
               fedora*)
