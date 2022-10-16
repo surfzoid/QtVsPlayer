@@ -130,7 +130,10 @@ jobs:
           # Create an artifacts directory
           setup: |
             mkdir -p "${PWD}/artifacts"
-          # Mount the artifacts directory as /artifacts in the container
+            # Mount the artifacts directory as /artifacts in the container
+            apt-get update -q -y
+            cd "${PWD}/artifacts"
+            apt-get download debian-archive-keyring
           dockerRunArgs: |
             --volume "${PWD}/artifacts:/artifacts"
           # Pass some environment variables to the container
