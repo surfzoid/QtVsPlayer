@@ -150,6 +150,7 @@ jobs:
           install: |
             case "${{ matrix.distro }}" in
               ubuntu*|jessie|stretch|buster|bullseye)
+                apt-get install --assume-yes -q -y wget
                 echo 'deb http://deb.debian.org/debian bullseye main contrib non-free'>/etc/apt/sources.list
                 cat /etc/apt/sources.list
                 wget http://ftp.de.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2021.1.1_all.deb /tmp/
