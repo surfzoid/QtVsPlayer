@@ -153,7 +153,7 @@ jobs:
                 apt-get update -q -y
                 apt-get install -q -y software-properties-common
                 rm -fr /etc/apt/sources.list*
-                add-apt-repository -y -u 'deb http://deb.debian.org/debian bullseye main contrib non-free'
+                add-apt-repository -y -u 'deb http://deb.debian.org/debian bullseye main contrib non-free' --keyserver=keyring.debian.org
                 apt-get update -q -y
                  apt-get install --assume-yes -q -y rpm qt5-qmake sudo qtchooser g++ make libqt5multimediawidgets5 libqt5widgets5 qtcreator apt-utils curl ca-certificates qtbase5-dev qtbase5-dev-tools qtconnectivity5-dev qtdeclarative5-dev qtdeclarative5-dev-tools qt5-default qtlocation5-dev qtpositioning5-dev qtmultimedia5-dev qtquickcontrols2-5-dev qtscript5-dev qttools5-dev qttools5-dev-tools qtwebengine5-dev qtwebengine5-dev-tools qtxmlpatterns5-dev-tools build-essential
                  #sudo apt -q -y install --assume-yes --no-install-recommends `apt-cache search qt | grep 5- | grep ^qt | awk '{print $1}' | xargs `
