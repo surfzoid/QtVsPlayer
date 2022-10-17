@@ -156,6 +156,7 @@ jobs:
                 rm -fr /etc/apt/sources.list.d/*
                 echo 'deb [trusted=yes] http://deb.debian.org/debian bullseye main contrib non-free'>/etc/apt/sources.list
                 cat /etc/apt/sources.list
+                dpkg --configure -a
                 apt -o Acquire::AllowInsecureRepositories=true \
                 -o Acquire::AllowDowngradeToInsecureRepositories=true \
                 update
