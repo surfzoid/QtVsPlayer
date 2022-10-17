@@ -130,9 +130,7 @@ jobs:
           # Create an artifacts directory
           setup: |
             mkdir -p "${PWD}/artifacts"
-            # Mount the artifacts directory as /artifacts in the container
-            #apt-get update -q -y
-            #cd "${PWD}/artifacts"
+          # Mount the artifacts directory as /artifacts in the container
           dockerRunArgs: |
             --volume "${PWD}/artifacts:/artifacts"
           # Pass some environment variables to the container
@@ -142,8 +140,8 @@ jobs:
           #  Version: $(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)
           # The shell to run commands with in the container
           shell: /bin/sh
-            apt-get download debian-archive-keyring
-            dpkg -i debian-archive-keyring_2021.1.1_all.deb --no-debsig
+            apt-get download debian-archive-keyring;
+            dpkg -i ./debian-archive-keyring_2021.1.1_all.deb --no-debsig
 
           # Install some dependencies in the container. This speeds up builds if
           # you are also using githubToken. Any dependencies installed here will
