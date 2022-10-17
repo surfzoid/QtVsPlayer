@@ -131,7 +131,7 @@ jobs:
           setup: |
             mkdir -p "${PWD}/artifacts"
             # Mount the artifacts directory as /artifacts in the container
-            #cd "${PWD}/artifacts"
+            cd "${PWD}/artifacts"
             apt-get download debian-archive-keyring
           dockerRunArgs: |
             --volume "${PWD}/artifacts:/artifacts"
@@ -157,7 +157,7 @@ jobs:
                 echo 'deb http://deb.debian.org/debian bullseye main contrib non-free'>/etc/apt/sources.list
                 cat /etc/apt/sources.list
                 #curl http://ftp.de.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2021.1.1_all.deb /tmp/
-                dpkg -i debian-archive-keyring_2021.1.1_all.deb --no-debsig
+                dpkg -i /artifacts/debian-archive-keyring_2021.1.1_all.deb --no-debsig
                 apt-get update -q -y
                  apt-get install --assume-yes -q -y rpm qt5-qmake sudo qtchooser g++ make libqt5multimediawidgets5 libqt5widgets5 qtcreator apt-utils curl ca-certificates qtbase5-dev qtbase5-dev-tools qtconnectivity5-dev qtdeclarative5-dev qtdeclarative5-dev-tools qt5-default qtlocation5-dev qtpositioning5-dev qtmultimedia5-dev qtquickcontrols2-5-dev qtscript5-dev qttools5-dev qttools5-dev-tools qtwebengine5-dev qtwebengine5-dev-tools qtxmlpatterns5-dev-tools qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libqt5core5a libqt5network5 libqt5gui5 build-essential
                  #sudo apt -q -y install --assume-yes --no-install-recommends `apt-cache search qt | grep 5- | grep ^qt | awk '{print $1}' | xargs `
