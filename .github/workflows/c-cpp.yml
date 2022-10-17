@@ -144,6 +144,7 @@ jobs:
           env: | # YAML, but pipe character is necessary
             artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
             ARCHIVE_NAME: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}
+            set -x
           #  Version: $(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)
           # The shell to run commands with in the container
           shell: /bin/bash
