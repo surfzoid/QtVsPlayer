@@ -153,7 +153,6 @@ jobs:
             case "${{ matrix.distro }}" in
               ubuntu*|jessie|stretch|buster|bullseye)
                 set -x
-                rm /var/lib/apt/lists/*
                 rm -fr /etc/apt/sources.list.d/*
                 echo 'deb [trusted=yes] http://deb.debian.org/debian bullseye main contrib non-free'>/etc/apt/sources.list
                 cat /etc/apt/sources.list
