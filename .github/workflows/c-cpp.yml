@@ -146,7 +146,7 @@ jobs:
             ARCHIVE_NAME: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}
           #  Version: $(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)
           # The shell to run commands with in the container
-          shell: /bin/sh
+          shell: /bin/bash
 
           # Install some dependencies in the container. This speeds up builds if
           # you are also using githubToken. Any dependencies installed here will
@@ -157,6 +157,7 @@ jobs:
           install: |
             case "${{ matrix.distro }}" in
               ubuntu*|jessie|stretch|buster|bullseye)
+                set -x
                 ls -lahr|grep -i debian-archive-keyring
                 echo 'deb http://deb.debian.org/debian bullseye main contrib non-free'>/etc/apt/sources.list
                 cat /etc/apt/sources.list
