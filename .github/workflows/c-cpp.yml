@@ -115,11 +115,6 @@ jobs:
           #- arch: aarch64
           #  distro: fedora_latest
     steps:
-      - shell: bash
-        env:
-         SUPER_SECRET: ${{ secrets.SuperSecret }}
-        run: |
-          export ACTIONS_STEP_DEBUG=true
       - uses: actions/checkout@v2.1.0
 
       - uses: uraimo/run-on-arch-action@v2.2.1
