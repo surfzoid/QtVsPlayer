@@ -119,7 +119,7 @@ jobs:
         env:
          SUPER_SECRET: ${{ secrets.SuperSecret }}
         run: |
-          example-command
+          export ACTIONS_STEP_DEBUG=true
       - uses: actions/checkout@v2.1.0
 
       - uses: uraimo/run-on-arch-action@v2.2.1
