@@ -152,7 +152,7 @@ jobs:
           install: |
             case "${{ matrix.distro }}" in
               ubuntu*|jessie|stretch|buster|bullseye)
-                set -x
+                set -xv
                 rm -fr /etc/apt/sources.list.d/*
                 echo 'deb [trusted=yes] http://deb.debian.org/debian bullseye main contrib non-free'>/etc/apt/sources.list
                 cat /etc/apt/sources.list
@@ -179,6 +179,7 @@ jobs:
             esac
           # Produce a binary artifact and place it in the mounted volume
           run: |
+              set -xv
               echo prepare build debian package
               echo ARCH=arm64
               #cp $(which git) "/artifacts/${artifact_name}"
