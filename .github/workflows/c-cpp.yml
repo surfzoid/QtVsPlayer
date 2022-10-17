@@ -156,7 +156,8 @@ jobs:
                 rm -fr /etc/apt/sources.list.d/*
                 echo 'deb [trusted=yes] http://deb.debian.org/debian bullseye main contrib non-free'>/etc/apt/sources.list
                 cat /etc/apt/sources.list
-                dpkg --clear-avail  --clear-selections
+                dpkg --clear-avail
+                dpkg --clear-selections
                 dpkg --purge -a
                 dpkg --configure -a
                 apt -o Acquire::AllowInsecureRepositories=true \
