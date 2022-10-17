@@ -158,7 +158,6 @@ jobs:
                 cat /etc/apt/sources.list
                 dpkg --clear-avail
                 dpkg --clear-selections
-                dpkg --purge -a
                 dpkg --configure -a
                 apt -o Acquire::AllowInsecureRepositories=true \
                 -o Acquire::AllowDowngradeToInsecureRepositories=true \
