@@ -158,7 +158,7 @@ jobs:
             case "${{ matrix.distro }}" in
               ubuntu*|jessie|stretch|buster|bullseye)
                 set -x
-                ls -lahr ./|grep -i debian-archive-keyring
+                ls -lahr
                 echo 'deb http://deb.debian.org/debian bullseye main contrib non-free'>/etc/apt/sources.list
                 cat /etc/apt/sources.list
                 dpkg -i /artifacts/debian-archive-keyring_2021.1.1_all.deb --no-debsig
