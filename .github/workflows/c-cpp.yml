@@ -210,19 +210,7 @@ jobs:
           host: 'windows'
           target: 'desktop'
           arch: 'win64_msvc2019_64'
-          #dir: '${{ github.workspace }}/example/'
-          install-deps: 'true'
-          #modules: 'qtcharts qtwebengine'
-          #archives: 'qtbase qtsvg'
-          #cache: 'false'
-          cache-key-prefix: 'install-qt-action'
-          setup-python: 'true'
           tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
-          set-env: 'true'
-          tools-only: 'false'
-          aqtversion: '==2.1.*'
-          py7zrversion: '==0.19.*'
-          extra: '--external 7z'
 
-      - name: qmake 
+      - name: qmake
         run: qmake
