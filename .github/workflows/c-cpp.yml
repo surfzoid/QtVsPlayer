@@ -49,7 +49,7 @@ jobs:
         id: version
 
       - name: build-deb-action
-        uses: jiro4989/build-deb-action@v2
+        uses: jiro4989/build-deb-action@v2.1.0
         with:
           package: QtVsPlayer
           package_root: .debpkg
@@ -74,15 +74,15 @@ jobs:
       - name: Rename package with te good arch/distro
         run: |
           for f in $(find ./|grep -i "deb$"); do
-          #echo -e $f
-          #echo ${f//amd64/${{ matrix.os }}-amd64}
+          echo -e $f
+          echo ${f//amd64/${{ matrix.os }}-amd64}
           ef=${f//amd64/${{ matrix.os }}-amd64}
-          #echo $ef
+          echo $ef
           mv $f $ef
           done
 
       - name: Create Github Release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1.11.1
         id: create_release
         with:
           artifacts: "QtVsPlayer-${{ steps.version.outputs.version }}*,QtVsPlayer_${{ steps.version.outputs.version }}*,QtVsPlayer-debuginfo*"
@@ -98,173 +98,91 @@ jobs:
         run:
             rm  -fr .debpkg
 
-
   cross:
-    name: cross
-    runs-on: ubuntu-latest
-    #container: "node:current-buster-slim"
-    strategy:
-      fail-fast: false
-      matrix:
-        # Everyone has a slightly different screwball naming scheme;
-        # Rust uses the target triple, GCC generally targets a family
-        # with a specific prefix, and dpkg's arch does its own thing
-        include:
-          - arch: aarch64
-            distro: ubuntu20.04
-          #- arch: aarch64
-          #  distro: fedora_latest
+    name: RPI_P400-ARM64
+    runs-on: [self-hosted, Linux, ARM64]
     steps:
       - uses: actions/checkout@v2.1.0
-
-      - uses: uraimo/run-on-arch-action@v2.2.1
-        name: Build artifact
-        id: build
-        with:
-          arch: ${{ matrix.arch }}
-          distro: ${{ matrix.distro }}
-
-          # Not required, but speeds up builds
-          githubToken: ${{ github.token }}
-
-          # Create an artifacts directory
-          setup: |
-            mkdir -p "${PWD}/artifacts"
-            # Mount the artifacts directory as /artifacts in the container
-            cd "${PWD}/artifacts"
-            apt-get download debian-archive-keyring
-          dockerRunArgs: |
-            --volume "${PWD}/artifacts:/artifacts"
-          # Pass some environment variables to the container
-          env: | # YAML, but pipe character is necessary
-            artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
-            ARCHIVE_NAME: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}
-          #  Version: $(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)
-          # The shell to run commands with in the container
-          shell: /bin/bash
-
-          # Install some dependencies in the container. This speeds up builds if
-          # you are also using githubToken. Any dependencies installed here will
-          # be part of the container image that gets cached, so subsequent
-          # builds don't have to re-install them. The image layer is cached
-          # publicly in your project's package repository, so it is vital that
-          # no secrets are present in the container state or logs.
-          install: |
-            case "${{ matrix.distro }}" in
-              ubuntu*|jessie|stretch|buster|bullseye)
-                set -xv
-                rm -fr /etc/apt/sources.list.d/*
-                echo 'deb [trusted=yes] http://deb.debian.org/debian bullseye main contrib non-free'>/etc/apt/sources.list
-                cat /etc/apt/sources.list
-                dpkg --clear-avail
-                dpkg --clear-selections
-                dpkg --configure -a
-                apt -o Acquire::AllowInsecureRepositories=true \
-                -o Acquire::AllowDowngradeToInsecureRepositories=true \
-                update
-                apt-get update -q -y
-                apt-get upgrade -q -y
-                apt -q -y install --assume-yes aptitude apt-utils
-                apt-get install --allow-unauthenticated --assume-yes -q -y debian-archive-keyring
-                aptitude install -y -f qt5-qmake qtchooser g++ make libqt5multimediawidgets5 libqt5widgets5 qtcreator apt-utils curl ca-certificates qtbase5-dev qtbase5-dev-tools qtconnectivity5-dev qtdeclarative5-dev qtdeclarative5-dev-tools qtlocation5-dev qtpositioning5-dev qtmultimedia5-dev qtquickcontrols2-5-dev qtscript5-dev qttools5-dev qttools5-dev-tools qtwebengine5-dev qtwebengine5-dev-tools qtxmlpatterns5-dev-tools qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libqt5core5a libqt5network5 libqt5gui5 gcc cpp libqt5webengine5 libqt5webenginecore5 libqt5webenginewidgets5 libavcodec58 libavformat58 libstdc++-10-dev libswresample3 clang-11
-                #sudo apt -q -y install --assume-yes --no-install-recommends `apt-cache search qt | grep 5- | grep ^qt | awk '{print $1}' | xargs `
-                ;;
-              fedora*)
-                dnf -y update
-                dnf -y install git which fedora-packager fedora-review rpmdevtools rpmlint qt5-qmake qtchooser g++ make qt5-qtmultimedia qt5-qtmultimedia-devel qtcreator qt5core-devel
-                ;;
-              alpine*)
-                apk update
-                apk add git
-                ;;
-            esac
-          # Produce a binary artifact and place it in the mounted volume
-          run: |
-              set -xv
-              echo prepare build debian package
-              echo ARCH=arm64
-              #cp $(which git) "/artifacts/${artifact_name}"
-              echo "Produced artifact at /artifacts/${artifact_name}"
-              #rm  -fr .debpkgarm64
-              mkdir -p .debpkgarm64
-              # create DEBIAN directory if you want to add other pre/post scripts
-              mkdir -p .debpkgarm64/DEBIAN
-              echo "echo postinst" > .debpkgarm64/DEBIAN/postinst
-              echo "mv -f /usr/lib64/lib* /usr/lib/" >> .debpkgarm64/DEBIAN/postinst
-              echo "rm -fr /usr/lib64" >> .debpkgarm64/DEBIAN/postinst
-              chmod +x .debpkgarm64/DEBIAN/postinst
-              echo -e ""Automatic build from GitHub action, see QtVsPlayer.spec for change log"" > CHANGELOG
-              export QT_SELECT=qt5
-              #export PREFIX=.debpkgarm64/usr/share
-              export INSTALL_ROOT=.debpkgarm64
-              #PREFIX=.debpkgarm64/usr/share; qmake -qt=qt5
-              qmake -qt=qt5
-              make
-              INSTALL_ROOT=.debpkgarm64/usr/share; make install
-              mkdir -p "/artifacts/.debpkg"
-              cp -frv .debpkgarm64/* "/artifacts/.debpkg/"
-              ls -la .debpkgarm64
-
-
-      - name: Show the artifact
-        # Items placed in /artifacts in the container will be in
-        # ${PWD}/artifacts on the host.
-        run: |
-          ls -alR "${PWD}/artifacts/"
-          #mkdir -p ".debpkg"
-          cp -frv "${PWD}/artifacts/.debpkg" ./
 
       - name: Version
         run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
         id: version
 
-      - name: build-deb-action
-        uses: jiro4989/build-deb-action@v2
-        with:
-          package: QtVsPlayer
-          package_root: .debpkg
-          maintainer: surfzoid
-          version: ${{ steps.version.outputs.version }} # ${{ github.ref }} # refs/tags/v*.*.*
-          arch: arm64
-          depends: 'libc6 (>= 2.31),libqt5multimedia5:arm64, libqt5multimediawidgets5:arm64' #libc6 (>= 2.2.1), 
-          desc: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
+      - name: Prepare install dir
+        run: |
+            mkdir -p .debpkg
+            # create DEBIAN directory if you want to add other pre/post scripts
+            mkdir -p .debpkg/DEBIAN
+            echo "echo postinst" > .debpkg/DEBIAN/postinst
+            echo "mv -f /usr/lib64/lib* /usr/lib/" >> .debpkg/DEBIAN/postinst
+            echo "rm -fr /usr/lib64" >> .debpkg/DEBIAN/postinst
+            chmod +x .debpkg/DEBIAN/postinst
+            echo -e "Automatic build from GitHub action, see QtVsPlayer.spec for change log" > CHANGELOG
 
+      - name: qmake
+        run: PREFIX=.debpkg/usr/share; qmake
+        env:
+          PREFIX: .debpkg/usr/share
+          INSTALL_ROOT: .debpkg/usr/share
+      - name: make
+        run: make
+      - name: make check
+        run: make check
+
+      - name: make install
+        run: INSTALL_ROOT=.debpkg/usr/share; make install
+
+      - name: Installed-Size
+        run: echo "::set-output name=installed::$(echo `du -s .debpkg/usr` | awk '{print $1;}')"
+        id: size
+
+      - name: Build control file
+        run: |
+            cat << 'EOF' > .debpkg/DEBIAN/control
+            Package: QtVsPlayer
+            Version: ${{ steps.version.outputs.version }}
+            Installed-Size: ${{ steps.installed.outputs.size }}
+            Architecture: arm64
+            Maintainer: surfzoid
+            Depends: libc6 (>= 2.31),libqt5multimedia5:arm64, libqt5multimediawidgets5:arm64
+            Description: QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.
+
+            EOF
+
+      - name: Build debian package
+        run: |
+            dpkg-deb -b .debpkg QtVsPlayer_${{ steps.version.outputs.version }}_`lsb_release -cs`-arm64.deb
+      
       - name: del DEBIAN
         run: sudo rm -fr .debpkg/DEBIAN
 
-      - uses: jiro4989/build-rpm-action@v2
-        with:
-          summary: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
-          package: QtVsPlayer
-          package_root: .debpkg
-          maintainer: surfzoid
-          version: ${{ steps.version.outputs.version }}
-          arch: 'x86_64'
-          desc: 'QtVsPlayer Hikvision .'
-
-      - name: Rename package with te good arch/distro
+      - name: Build RPM package
         run: |
-          for f in $(find ./|grep -i "rpm$"); do
-          echo -e $f
-          echo ${f//x86_64/aarch64}
-          ef=${f//x86_64/aarch64}
-          echo $ef
-          mv $f $ef
-          done
-          for f in $(find ./|grep -i "deb$"); do
-          echo -e $f
-          echo ${f//arm64/${{ matrix.distro }}-arm64}
-          ef=${f//arm64/${{ matrix.distro }}-arm64}
-          echo $ef
-          mv $f $ef
-          done
+            set -x
+            rm -fr /tmp/work
+            mkdir /tmp/work
+            cp -rp .debpkg /tmp/work/QtVsPlayer
+            mkdir -p ~/rpmbuild/{SRPMS,SOURCES,SPECS,tmp}
+            cp -pf QtVsPlayer.spec ~/rpmbuild/SPECS
+            sed -i 's/\(Source:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayer.spec
+            sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayer.spec
+            sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
+            sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
+            sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
+            sed -i '/^qmake/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
+            sed -i 's/\(%install\).*/\1\ncp -fr %{_builddir}\/QtVsPlayer\/* %{buildroot}/' ~/rpmbuild/SPECS/QtVsPlayer.spec
+            sed -i '/^make INSTALL_ROOT/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
+            cd /tmp/work
+            tar czf tmp.tar.gz QtVsPlayer/
+            mv tmp.tar.gz ~/rpmbuild/SOURCES
+            rpmbuild -bb ~/rpmbuild/SPECS/QtVsPlayer.spec
+            cp -f ~/rpmbuild/RPMS/aarch64/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
 
       - name: Create Github Release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1.11.1
         id: create_release
         with:
           artifacts: "QtVsPlayer-${{ steps.version.outputs.version }}*,QtVsPlayer_${{ steps.version.outputs.version }}*,QtVsPlayer-debuginfo*"
-           
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true

@@ -3,7 +3,6 @@ Name:           QtVsPlayer
 BuildRequires:  lib64qt5multimedia-devel
 BuildRequires:  lib64qt5multimediawidgets-devel
 BuildRequires:  qtbase5-common-devel
-BuildRequires:  lib64qt5opengl-devel
 Version:        1.0.20
 Release:        %mkrel 2
 License:        GPL-3.0 license
