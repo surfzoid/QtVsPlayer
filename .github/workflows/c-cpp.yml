@@ -191,7 +191,7 @@ jobs:
           body: "Automatic build from GitHub action, see QtVsPlayer.spec for change log"
 
   windoze:
-    name: window
+    name: window-2019
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2.1.0
@@ -219,4 +219,6 @@ jobs:
         run: qmake
 
       - name: make
-        run: make
+        run: |
+            cat Makefile.Release
+            make
