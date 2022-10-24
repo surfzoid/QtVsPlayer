@@ -225,4 +225,4 @@ jobs:
           extra: '--external 7z'
 
       - name: qmake
-        run: PREFIX=.debpkg/usr/share; qmake
+        run: qmake
