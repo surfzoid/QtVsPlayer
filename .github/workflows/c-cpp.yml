@@ -203,6 +203,8 @@ jobs:
       - name: Check Version
         run: echo ${{ steps.version.outputs.version }}
 
+      - uses: ilammy/msvc-dev-cmd@v1
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -212,7 +214,9 @@ jobs:
           arch: 'win64_msvc2019_64'
           tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
 
-      - uses: ilammy/msvc-dev-cmd@v1
 
       - name: qmake
         run: qmake
+
+      - name: make
+        run: make
