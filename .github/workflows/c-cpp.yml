@@ -190,3 +190,12 @@ jobs:
           tag: ${{ steps.version.outputs.version }}
           body: "Automatic build from GitHub action, see QtVsPlayer.spec for change log"
 
+  windoze:
+    name: window
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2.1.0
+
+      - name: Version
+        run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
+        id: version
