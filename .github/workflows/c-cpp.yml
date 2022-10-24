@@ -199,3 +199,6 @@ jobs:
       - name: Version
         run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
         id: version
+
+      - name: Check Version
+        run: echo ${{ steps.version.outputs.version }}
