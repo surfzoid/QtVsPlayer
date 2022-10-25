@@ -327,7 +327,7 @@ void playm4interface::InitCallback( unsigned int nBeginTime, unsigned int nEndTi
 
 }
 
-void CALLBACK playm4interface::SetFileRefCallBack(unsigned int nPort,void* nUser)
+void CALLBACK playm4interface::SetFileRefCallBack(int nPort,void* nUser)
 {
     printf("SetFileRefCallBack---%u:%u\n\r",nPort, nUser);
 
