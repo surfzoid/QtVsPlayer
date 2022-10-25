@@ -241,14 +241,9 @@ jobs:
         run: |
             #setx QMAKESPEC="%QTDIR%\/mkspecs\/win32-g++" /M
             qmake -Wnone
-            #cat "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
 
       - name: make
         run: |
-            # sed -i 's/\(CC            = \).*/\1gcc/' Makefile.Release
-            #sed -i 's/\(CXX           = \).*/\1g++/' Makefile.Release
-            #sed -i 's/\(     cl \)/\        g++ /'  Makefile.Release
-            #sed -i $'s/\t/    /g' Makefile.Release
             #remove double return
             #sed -i ':a;N;$!ba;s/\n\n/\n/g' Makefile.Release
             #cat Makefile.Release
