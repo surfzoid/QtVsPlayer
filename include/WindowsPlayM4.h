@@ -343,7 +343,7 @@ typedef enum _PLAYM4_TEM_FLAG
 //Proposed Interface
 /////////////////////////////////////////////////////////////////////////////////////////////
 ///<<Initialization
-PLAYM4_API BOOL __stdcall PlayM4_GetPort(long int* nPort);
+PLAYM4_API BOOL __stdcall PlayM4_GetPort(int* nPort);
 PLAYM4_API BOOL __stdcall PlayM4_FreePort(int nPort);
 PLAYM4_API BOOL __stdcall PlayM4_OpenFile(int nPort,LPSTR sFileName);
 PLAYM4_API BOOL __stdcall PlayM4_CloseFile(int nPort);
