@@ -985,6 +985,6 @@ PLAYM4_API BOOL __stdcall PlayM4_SetDeflash(int nPort,BOOL bDefalsh);
 PLAYM4_API BOOL __stdcall PlayM4_SetPicQuality(int nPort,BOOL bHighQuality);
 PLAYM4_API BOOL __stdcall PlayM4_GetPictureQuality(int nPort,BOOL *bHighQuality);
 
-PLAYM4_API int __stdcall PlayM4_WndResolutionChange(int nPort);//new add
-PLAYM4_API int __stdcall PlayM4_SetVideoWindow(int nPort, unsigned int nRegionNum, PLAYM4_HWND hWnd);
+int PlayM4_WndResolutionChange(int nPort);//new add
+int  PlayM4_SetVideoWindow(int nPort, unsigned int nRegionNum, PLAYM4_HWND hWnd);
 #endif //_PLAYM4_H_
