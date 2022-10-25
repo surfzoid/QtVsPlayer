@@ -7,6 +7,23 @@
     #define PLAYM4_API  extern "C" __declspec(dllimport)
 #endif
 
+typedef unsigned int PLAYM4_HWND;
+typedef void * PLAYM4_HDC;
+
+#define  BOOL  int
+#define DWORD unsigned int;
+#define WORD unsigned short;
+#define USHORT unsigned short;
+#define SHORT short;
+#define  LONG int;
+#define BYTE unsigned char;
+#define UINT unsigned int;
+#define LPVOID void*;
+#define HANDLE void*;
+#define LPDWORD unsigned int*;
+#define UINT64 unsigned long long;
+#define INT64 signed long long;
+
 //Max channel numbers
 #define PLAYM4_MAX_SUPPORTS 500
 //Wave coef range;
