@@ -193,6 +193,8 @@ jobs:
   windoze:
     name: window-2019
     runs-on: windows-2019
+    env:
+      CXX: g++
     steps:
       - uses: actions/checkout@v2.1.0
 
@@ -216,7 +218,7 @@ jobs:
 
 
       - name: qmake
-        run: qmake
+        run: qmake -Wnone
 
       - name: make
         run: |
