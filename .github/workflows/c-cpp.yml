@@ -233,10 +233,12 @@ jobs:
       - name: qmake
         run: |
             qmake -Wnone
-            cat "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
+            #cat "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
 
       - name: make
         run: |
+            sed -i 's/\(CC            = \).*/\1gcc/' Makefile.Release
+            sed -i 's/\(CXX            = \).*/\1g++/' Makefile.Release
             cat Makefile.Release
             #sed -e 's@\\\([^ ]\)@/\1@g' -e 's@[cC]:@/cygdrive/c@' -i Makefile.Release
             mingw32-make
