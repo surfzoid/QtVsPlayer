@@ -19,6 +19,8 @@ QMAKE_CXXFLAGS_RELEASE -= -O2
 win32 { # For Windows
   QMAKE_CXXFLAGS += -openmp
   QMAKE_CXXFLAGS += -D "_CRT_SECURE_NO_WARNINGS"
+  QMAKE_CC = gcc
+  QMAKE_CXX = g++
 }
 
 linux { # For Linux
