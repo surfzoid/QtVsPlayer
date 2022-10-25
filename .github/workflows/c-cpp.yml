@@ -191,10 +191,23 @@ jobs:
           body: "Automatic build from GitHub action, see QtVsPlayer.spec for change log"
 
   windoze:
-    name: window-2019
-    runs-on: windows-2019
-    env:
-      CXX: g++
+    # The type of runner that the job will run on
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config: 
+        - {
+            name: "Windows Latest MinGW",
+            os: windows-latest,
+            artifact: "windows_mingw.7z",
+            build_type: "Release",
+            cc: "gcc",
+            cxx: "g++",
+            archiver: "7z a",
+            generators: "Ninja"
+          }
     steps:
       - uses: actions/checkout@v2.1.0
 
