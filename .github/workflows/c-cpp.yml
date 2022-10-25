@@ -204,7 +204,7 @@ jobs:
         config: 
         - {
             name: "Windows Latest MinGW",
-            os: windows-latest,
+            os: windows-2019,
             #artifact: "windows_mingw.7z",
             #build_type: "Release",
             #cc: "cl",
