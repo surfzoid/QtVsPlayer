@@ -8,7 +8,7 @@
     #define PLAYM4_API  extern "C" __declspec(dllimport)
 #endif
 
-typedef int* PLAYM4_HWND;
+typedef int PLAYM4_HWND;
 
 //Max channel numbers
 #define PLAYM4_MAX_SUPPORTS 500
