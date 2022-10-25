@@ -251,5 +251,5 @@ jobs:
             #sed -i $'s/\t/    /g' Makefile.Release
             #remove double return
             #sed -i ':a;N;$!ba;s/\n\n/\n/g' Makefile.Release
-            cat Makefile.Release
+            #cat Makefile.Release
             make

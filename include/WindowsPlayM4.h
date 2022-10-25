@@ -10,19 +10,19 @@
 typedef unsigned int PLAYM4_HWND;
 typedef void * PLAYM4_HDC;
 
-#define  BOOL  int
-#define DWORD unsigned int;
-#define WORD unsigned short;
-#define USHORT unsigned short;
-#define SHORT short;
-#define  LONG int;
-#define BYTE unsigned char;
-#define UINT unsigned int;
-#define LPVOID void*;
-#define HANDLE void*;
-#define LPDWORD unsigned int*;
-#define UINT64 unsigned long long;
-#define INT64 signed long long;
+typedef  unsigned int       BOOL;
+typedef  unsigned int       DWORD;
+typedef  unsigned short     WORD;
+typedef  unsigned short     USHORT;
+typedef  short              SHORT;
+typedef  int                LONG;
+typedef  unsigned char      BYTE;
+typedef  unsigned int       UINT;
+typedef  void*              LPVOID;
+typedef  void*              HANDLE;
+typedef  unsigned int*      LPDWORD;
+typedef  unsigned long long UINT64;
+typedef  signed long long   INT64;
 
 //Max channel numbers
 #define PLAYM4_MAX_SUPPORTS 500
