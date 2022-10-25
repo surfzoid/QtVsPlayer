@@ -231,7 +231,9 @@ jobs:
 
 
       - name: qmake
-        run: qmake -Wnone
+        run: |
+            qmake -Wnone
+            cat "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
 
       - name: make
         run: |
