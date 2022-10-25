@@ -194,9 +194,9 @@ jobs:
     # The type of runner that the job will run on
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
-    #env:
-        #CC: gcc-${{ matrix.gcc }}
-        #CXX: g++-${{ matrix.gcc }}
+    env:
+        CC: cl
+        CXX: cl
     strategy:
       fail-fast: false
       matrix:
@@ -206,8 +206,8 @@ jobs:
             os: windows-latest,
             #artifact: "windows_mingw.7z",
             #build_type: "Release",
-            #cc: "gcc",
-            #cxx: "g++",
+            cc: "cl",
+            cxx: "cl",
             #archiver: "7z a",
             #generators: "Ninja"
           }
@@ -244,6 +244,6 @@ jobs:
             #sed -i 's/\(CXX           = \).*/\1g++/' Makefile.Release
             #sed -i 's/\(     cl \)/\        g++ /'  Makefile.Release
             #sed -i $'s/\t/    /g' Makefile.Release
-            sed -i 's/\(\n\n\)/\\n/'  Makefile.Release
+            #sed -i 's/\(\n\n\)/\\n/'  Makefile.Release
             cat Makefile.Release
             mingw32-make
