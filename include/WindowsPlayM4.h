@@ -8,7 +8,7 @@
     #define PLAYM4_API  extern "C" __declspec(dllimport)
 #endif
 
-typedef HWND__ PLAYM4_HWND;
+typedef HWND__* PLAYM4_HWND;
 
 //Max channel numbers
 #define PLAYM4_MAX_SUPPORTS 500
@@ -343,7 +343,7 @@ typedef enum _PLAYM4_TEM_FLAG
 //Proposed Interface
 /////////////////////////////////////////////////////////////////////////////////////////////
 ///<<Initialization
-PLAYM4_API BOOL __stdcall PlayM4_GetPort(LONG* nPort);
+PLAYM4_API BOOL __stdcall PlayM4_GetPort(long int* nPort);
 PLAYM4_API BOOL __stdcall PlayM4_FreePort(LONG nPort);
 PLAYM4_API BOOL __stdcall PlayM4_OpenFile(LONG nPort,LPSTR sFileName);
 PLAYM4_API BOOL __stdcall PlayM4_CloseFile(LONG nPort);
