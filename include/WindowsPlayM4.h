@@ -1,3 +1,4 @@
+#include <windows.h>
 #ifndef _WINDOWS_PLAYM4_H_
 #define _WINDOWS_PLAYM4_H_
 
