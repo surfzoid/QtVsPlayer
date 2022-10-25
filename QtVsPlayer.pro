@@ -4,7 +4,7 @@ QT       += dbus core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += shared
+CONFIG += c++11 shared
 
 # Specifies name of the binary.
 TARGET = QtVsPlayer
