@@ -244,6 +244,6 @@ jobs:
             #sed -i 's/\(CXX           = \).*/\1g++/' Makefile.Release
             #sed -i 's/\(     cl \)/\        g++ /'  Makefile.Release
             #sed -i $'s/\t/    /g' Makefile.Release
-            #sed -i 's/\(\n\n\)/\\n/'  Makefile.Release
+            sed -i 's/\(\n\n\)/\\n/'  Makefile.Release
             cat Makefile.Release
             mingw32-make
