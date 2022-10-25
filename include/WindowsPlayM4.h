@@ -8,6 +8,8 @@
     #define PLAYM4_API  extern "C" __declspec(dllimport)
 #endif
 
+typedef unsigned int PLAYM4_HWND;
+
 //Max channel numbers
 #define PLAYM4_MAX_SUPPORTS 500
 //Wave coef range;
