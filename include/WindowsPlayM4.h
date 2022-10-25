@@ -396,7 +396,7 @@ PLAYM4_API DWORD __stdcall PlayM4_GetCurrentFrameNum(int nPort);
 PLAYM4_API BOOL __stdcall PlayM4_SetCurrentFrameNum(int nPort,DWORD nFrameNum);
 PLAYM4_API BOOL __stdcall PlayM4_GetSystemTime(int nPort, PLAYM4_SYSTEM_TIME *pstSystemTime);
 PLAYM4_API DWORD __stdcall PlayM4_GetSpecialData(int nPort);
-PLAYM4_API BOOL __stdcall PlayM4_GetPictureSize(int nPort,LONG *pWidth,LONG *pHeight);
+PLAYM4_API BOOL __stdcall PlayM4_GetPictureSize(int nPort,int *pWidth,int *pHeight);
 PLAYM4_API BOOL __stdcall PlayM4_SetFileEndCallback(int nPort, void(CALLBACK*FileEndCallback)(int nPort, void *pUser), void *pUser);
 ///<Time zone, unit: second, +: eastern time zone, -: western time zone
 PLAYM4_API BOOL __stdcall PlayM4_SetSupplementaryTimeZone(int nPort, int nTimeZone);

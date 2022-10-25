@@ -305,7 +305,7 @@ void VideoCtrls::on_SnapshotButton_released()
     IsSnapShoot = true;
 
 #if (defined(_WIN32))
-    PlayM4_SetDisplayCallBack(HikNumPort, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
+    PlayM4_SetDisplayCallBack(HikNumPort, (void (__stdcall *)(long,char *,long,long,long,long,long))PlayM4DisplayCallBack);
 #elif defined(__linux__)
     PlayM4_SetDisplayCallBack(HikNumPort, (void (CALLBACK *)(int,char *,int,int,int,int,int,int))PlayM4DisplayCallBack);
 #endif
