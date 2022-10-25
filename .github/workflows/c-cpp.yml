@@ -197,7 +197,7 @@ jobs:
     env:
         CC: gcc
         CXX: g++
-        QMAKESPEC: "%QTDIR%\/mkspecs\/win32-g++"
+        #QMAKESPEC: "%QTDIR%\/mkspecs\/win32-g++"
     strategy:
       fail-fast: false
       matrix:
@@ -231,9 +231,9 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '5.15.2'
-          host: 'windows'
-          target: 'desktop'
-          arch: 'win64_msvc2019_64'
+          #host: 'windows'
+          #target: 'desktop'
+          #arch: 'win64_msvc2019_64'
           tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
 
 
