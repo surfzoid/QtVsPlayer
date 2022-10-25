@@ -207,8 +207,8 @@ jobs:
             os: windows-2019,
             #artifact: "windows_mingw.7z",
             #build_type: "Release",
-            #cc: "cl",
-            #cxx: "cl",
+            cc: "gcc",
+            cxx: "g++",
             #archiver: "7z a",
             #generators: "Ninja"
           }
