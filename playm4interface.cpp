@@ -80,7 +80,9 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
     SetVideoWin(0);
     RefreshPlay();
-    PlayM4_WndResolutionChange(m_pblocalportnum);
+#if (defined(__linux__))
+PlayM4_WndResolutionChange(m_pblocalportnum);
+#endif
 
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));
     return 0;//PlayM4_GetLastError(m_pblocalportnum);
@@ -202,7 +204,10 @@ int playm4interface::OneByOne()
 int playm4interface::OneByOneBack()
 {
 
-    PlayM4_WndResolutionChange(m_pblocalportnum);
+
+#if (defined(__linux__))
+PlayM4_WndResolutionChange(m_pblocalportnum);
+#endif
 
     return PlayM4_ReversePlay(m_pblocalportnum);
     //return PlayM4_OneByOneBack(m_pblocalportnum);
