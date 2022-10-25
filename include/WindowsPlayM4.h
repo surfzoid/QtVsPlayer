@@ -8,7 +8,7 @@
     #define PLAYM4_API  extern "C" __declspec(dllimport)
 #endif
 
-typedef HWND__* PLAYM4_HWND;
+typedef int* PLAYM4_HWND;
 
 //Max channel numbers
 #define PLAYM4_MAX_SUPPORTS 500
@@ -362,7 +362,7 @@ PLAYM4_API BOOL __stdcall PlayM4_GetKeyFramePos(int nPort,DWORD nValue, DWORD nT
 PLAYM4_API BOOL __stdcall PlayM4_GetNextKeyFramePos(int nPort,DWORD nValue, DWORD nType, PFRAME_POS pFramePos);
 
 ///<Play Control
-PLAYM4_API BOOL __stdcall PlayM4_Play(int nPort, HWND hWnd);
+PLAYM4_API BOOL __stdcall PlayM4_Play(int nPort, int hWnd);
 PLAYM4_API BOOL __stdcall PlayM4_Stop(int nPort);
 PLAYM4_API BOOL __stdcall PlayM4_Pause(int nPort,DWORD nPause);
 PLAYM4_API BOOL __stdcall PlayM4_Fast(int nPort);
@@ -433,7 +433,7 @@ PLAYM4_API BOOL __stdcall PlayM4_SetDecCallBackExMend(int nPort, void (CALLBACK*
 PLAYM4_API BOOL __stdcall PlayM4_SetEncryptTypeCallBack(int nPort, DWORD nType, void (CALLBACK* EncryptTypeCBFun)(int nPort, ENCRYPT_INFO* pEncryptInfo, void* nUser, long nReserved2), void* nUser);
 
 ///<Display
-PLAYM4_API BOOL __stdcall PlayM4_SetDisplayRegion(int nPort,DWORD nRegionNum, RECT *pSrcRect, HWND hDestWnd, BOOL bEnable);///<Digital Zoom
+PLAYM4_API BOOL __stdcall PlayM4_SetDisplayRegion(int nPort,DWORD nRegionNum, RECT *pSrcRect, int hDestWnd, BOOL bEnable);///<Digital Zoom
 PLAYM4_API BOOL __stdcall PlayM4_SetDisplayRegionOnWnd(int nPort,DWORD nRegionNum, RECT *pSrcRect, BOOL bEnable);///<Multi-Screen Splicing Interface
 PLAYM4_API BOOL __stdcall PlayM4_SetDisplayType(int nPort,LONG nType);
 PLAYM4_API long __stdcall PlayM4_GetDisplayType(int nPort);
@@ -748,7 +748,7 @@ PLAYM4_API BOOL __stdcall PlayM4_FEC_GetViewParam(int nPort, unsigned int nSubPo
 //Set view change parameters (the configured value=obtained value + offset)
 PLAYM4_API BOOL __stdcall PlayM4_FEC_SetViewParam(int nPort, unsigned int nSubPort, PLAYM4HRVIEWPARAMTYPE enViewParamType, float fValue);
 
-PLAYM4_API BOOL __stdcall PlayM4_FEC_SetDisplayRegion(int nPort, unsigned int nSubPort,unsigned int nType, DWORD nRegionNum, RECT *pSrcRect, HWND hDestWnd, BOOL bEnable);
+PLAYM4_API BOOL __stdcall PlayM4_FEC_SetDisplayRegion(int nPort, unsigned int nSubPort,unsigned int nType, DWORD nRegionNum, RECT *pSrcRect, int hDestWnd, BOOL bEnable);
 
 PLAYM4_API BOOL __stdcall PlayM4_FEC_SetCorrectEffect(int nPort, unsigned int nSubPort, FECCORRECTEFFECT nCorrectEffect, float fValue);
 
@@ -954,9 +954,9 @@ PLAYM4_API BOOL __stdcall PlayM4_SetPreRecordFlag(LONG lPort, BOOL bFlag);
 //Callback function of pre-recorded data
 PLAYM4_API BOOL __stdcall PlayM4_SetPreRecordCallBack(LONG lPort, void (CALLBACK* PreRecordCBfun)(int nPort, RECORD_DATA_INFO* pRecordDataInfo, void* pUser), void* pUser);
 
-PLAYM4_API BOOL __stdcall PlayM4_InitDDraw(HWND hWnd);
+PLAYM4_API BOOL __stdcall PlayM4_InitDDraw(int hWnd);
 PLAYM4_API BOOL __stdcall PlayM4_RealeseDDraw();
-PLAYM4_API BOOL __stdcall PlayM4_SetFileEndMsg(int nPort,HWND hWnd,UINT nMsg);
+PLAYM4_API BOOL __stdcall PlayM4_SetFileEndMsg(int nPort,int hWnd,UINT nMsg);
 PLAYM4_API int  __stdcall PlayM4_GetCaps();
 PLAYM4_API BOOL __stdcall PlayM4_SetOverlayMode(int nPort,BOOL bOverlay,COLORREF colorKey);
 PLAYM4_API LONG __stdcall PlayM4_GetOverlayMode(int nPort);
@@ -976,7 +976,7 @@ PLAYM4_API BOOL __stdcall PlayM4_SetTimerType(int nPort,DWORD nTimerType,DWORD n
 PLAYM4_API BOOL __stdcall PlayM4_GetTimerType(int nPort,DWORD *pTimerType,DWORD *pReserved);
 PLAYM4_API BOOL __stdcall PlayM4_SetVerifyCallBack(int nPort, DWORD nBeginTime, DWORD nEndTime, void (__stdcall * funVerify)(int nPort, FRAME_POS * pFilePos, DWORD bIsVideo, DWORD nUser),  DWORD  nUser);
 PLAYM4_API BOOL __stdcall PlayM4_SetAudioCallBack(int nPort, void (__stdcall * funAudio)(int nPort, char * pAudioBuf, long nSize, long nStamp, long nType, long nUser), long nUser);
-PLAYM4_API BOOL __stdcall PlayM4_SetEncChangeMsg(int nPort,HWND hWnd,UINT nMsg);
+PLAYM4_API BOOL __stdcall PlayM4_SetEncChangeMsg(int nPort,int hWnd,UINT nMsg);
 PLAYM4_API BOOL __stdcall PlayM4_GetOriginalFrameCallBack(int nPort, BOOL bIsChange,BOOL bNormalSpeed,long nStartFrameNum,long nStartStamp,long nFileHeader,void(CALLBACK *funGetOrignalFrame)(int nPort,FRAME_TYPE *frameType, long nUser),long nUser);
 PLAYM4_API BOOL __stdcall PlayM4_GetFileSpecialAttr(int nPort, DWORD *pTimeStamp,DWORD *pFileNum ,DWORD *pReserved);
 PLAYM4_API BOOL __stdcall PlayM4_SetPlayMode(int nPort,BOOL bNormal);
