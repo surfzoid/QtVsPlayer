@@ -195,8 +195,9 @@ jobs:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     env:
-        CC: cl
-        CXX: cl
+        CC: gcc
+        CXX: g++
+        QMAKESPEC: "%QTDIR%\/mkspecs\/win32-g++"
     strategy:
       fail-fast: false
       matrix:
@@ -206,8 +207,8 @@ jobs:
             os: windows-latest,
             #artifact: "windows_mingw.7z",
             #build_type: "Release",
-            cc: "cl",
-            cxx: "cl",
+            #cc: "cl",
+            #cxx: "cl",
             #archiver: "7z a",
             #generators: "Ninja"
           }
@@ -221,7 +222,7 @@ jobs:
       - name: Check Version
         run: echo ${{ steps.version.outputs.version }}
 
-      - uses: ilammy/msvc-dev-cmd@v1
+      - uses: ilammy/msvc-dev-cmd@v1.12.0
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
