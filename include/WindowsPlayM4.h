@@ -3,26 +3,9 @@
 
 #if defined( _WINDLL)
     #define PLAYM4_API  extern "C" __declspec(dllexport)
-#else 
+#else
     #define PLAYM4_API  extern "C" __declspec(dllimport)
 #endif
-
-typedef unsigned int PLAYM4_HWND;
-typedef void * PLAYM4_HDC;
-
-typedef  unsigned int       BOOL;
-typedef  unsigned int       DWORD;
-typedef  unsigned short     WORD;
-typedef  unsigned short     USHORT;
-typedef  short              SHORT;
-typedef  int                LONG;
-typedef  unsigned char      BYTE;
-typedef  unsigned int       UINT;
-typedef  void*              LPVOID;
-typedef  void*              HANDLE;
-typedef  unsigned int*      LPDWORD;
-typedef  unsigned long long UINT64;
-typedef  signed long long   INT64;
 
 //Max channel numbers
 #define PLAYM4_MAX_SUPPORTS 500
@@ -35,10 +18,10 @@ typedef  signed long long   INT64;
 #define TIMER_2 2 //Not limit;But the precision less than TIMER_1;
 
 //BUFFER AND DATA TYPE
-#define BUF_VIDEO_SRC               (1) //mixed input,total src buffer size;splited input,video src buffer size 
+#define BUF_VIDEO_SRC               (1) //mixed input,total src buffer size;splited input,video src buffer size
 #define BUF_AUDIO_SRC               (2) //mixed input,not defined;splited input,audio src buffer size
-#define BUF_VIDEO_RENDER            (3) //video render node count 
-#define BUF_AUDIO_RENDER            (4) //audio render node count 
+#define BUF_VIDEO_RENDER            (3) //video render node count
+#define BUF_AUDIO_RENDER            (4) //audio render node count
 #define BUF_VIDEO_DECODED           (5) //video decoded node count to render
 #define BUF_AUDIO_DECODED           (6) //audio decoded node count to render
 
@@ -55,13 +38,13 @@ typedef  signed long long   INT64;
 #define  PLAYM4_CREATE_DDRAW_ERROR              9   //Create DirectDraw object failed.
 #define  PLAYM4_CREATE_OFFSCREEN_ERROR          10  //failed when creating off-screen surface.
 #define  PLAYM4_BUF_OVER                        11  //buffer is overflow
-#define  PLAYM4_CREATE_SOUND_ERROR              12  //failed when creating audio device.	
+#define  PLAYM4_CREATE_SOUND_ERROR              12  //failed when creating audio device.
 #define  PLAYM4_SET_VOLUME_ERROR                13  //Set volume failed
 #define  PLAYM4_SUPPORT_FILE_ONLY               14  //The function only support play file.
 #define  PLAYM4_SUPPORT_STREAM_ONLY             15  //The function only support play stream.
 #define  PLAYM4_SYS_NOT_SUPPORT                 16  //System not support.
 #define  PLAYM4_FILEHEADER_UNKNOWN              17  //No file header.
-#define  PLAYM4_VERSION_INCORRECT               18  //The version of decoder and encoder is not adapted.  
+#define  PLAYM4_VERSION_INCORRECT               18  //The version of decoder and encoder is not adapted.
 #define  PLAYM4_INIT_DECODER_ERROR              19  //Initialize decoder failed.
 #define  PLAYM4_CHECK_FILE_ERROR                20  //The file data is unknown.
 #define  PLAYM4_INIT_TIMER_ERROR                21  //Initialize multimedia clock failed.
@@ -78,7 +61,7 @@ typedef  signed long long   INT64;
 #define  PLAYM4_INVALID_PORT                    32  //add by cj 20100913
 #define  PLAYM4_NOT_FIND                        33  //add by cj 20110428
 #define  PLAYM4_NEED_LARGER_BUFFER              34  //add by pzj 20130528
-#define  PLAYM4_FAIL_UNKNOWN                    99  //Fail, but the reason is unknown;	
+#define  PLAYM4_FAIL_UNKNOWN                    99  //Fail, but the reason is unknown;
 
 //Error Codes of Fisheye Camera
 #define PLAYM4_FEC_ERR_ENABLEFAIL               100 // Fisheye camera module loading failed.
@@ -88,17 +71,17 @@ typedef  signed long long   INT64;
 #define PLAYM4_FEC_ERR_SUBPORTOVER              104 // No sub port available.
 #define PLAYM4_FEC_ERR_EFFECTNOTSUPPORT         105 // This installation mode does not support this effect.
 #define PLAYM4_FEC_ERR_INVALIDWND               106 // Illegal Window
-#define PLAYM4_FEC_ERR_PTZOVERFLOW              107 // Line Crossing of PTZ Position 
-#define PLAYM4_FEC_ERR_RADIUSINVALID            108 // Invalid parameter of the center of a circle 
-#define PLAYM4_FEC_ERR_UPDATENOTSUPPORT         109 // Some installation modes and correction modes do not support the update of this parameters. 
-#define PLAYM4_FEC_ERR_NOPLAYPORT               110 // The port of the player is disabled. 
-#define PLAYM4_FEC_ERR_PARAMVALID               111 // No parameter. 
+#define PLAYM4_FEC_ERR_PTZOVERFLOW              107 // Line Crossing of PTZ Position
+#define PLAYM4_FEC_ERR_RADIUSINVALID            108 // Invalid parameter of the center of a circle
+#define PLAYM4_FEC_ERR_UPDATENOTSUPPORT         109 // Some installation modes and correction modes do not support the update of this parameters.
+#define PLAYM4_FEC_ERR_NOPLAYPORT               110 // The port of the player is disabled.
+#define PLAYM4_FEC_ERR_PARAMVALID               111 // No parameter.
 #define PLAYM4_FEC_ERR_INVALIDPORT              112 // Invalid sub port.
 #define PLAYM4_FEC_ERR_PTZZOOMOVER              113 // Line Crossing of PTZ Correction Range
-#define PLAYM4_FEC_ERR_OVERMAXPORT              114 // No more correction channel is allowed. Up to 4 correction channels are supported. 
-#define PLAYM4_FEC_ERR_ENABLED                  115 // The fisheye module has been enabled in this port. 
-#define PLAYM4_FEC_ERR_D3DACCENOTENABLE         116 // D3D acceleration function is disabled. 
-#define PLAYM4_FEC_ERR_PLACETYPE                117 // Invalid installation mode. One port of the player corresponds to one kind of the installation mode. 
+#define PLAYM4_FEC_ERR_OVERMAXPORT              114 // No more correction channel is allowed. Up to 4 correction channels are supported.
+#define PLAYM4_FEC_ERR_ENABLED                  115 // The fisheye module has been enabled in this port.
+#define PLAYM4_FEC_ERR_D3DACCENOTENABLE         116 // D3D acceleration function is disabled.
+#define PLAYM4_FEC_ERR_PLACETYPE                117 // Invalid installation mode. One port of the player corresponds to one kind of the installation mode.
 #define PLAYM4_FEC_ERR_CorrectType              118 // Dewarping mode erroor: If a dewarping mode is already selected for the camera, you can not enable                                                              other dewarping modes any more. For one player SDK port, each dewarping mode (excepts PTZ mode and                                                             fisheye mode) is available in one camera only. Dual-180 degree panorama mode cannot be enabled                                                                 together with the PTZ mode. And there is no relation between fisheye mode and other modes.
 #define PLAYM4_FEC_ERR_NULLWND                  119 // The fisheye window is empty.
 #define PLAYM4_FEC_ERR_PARA                     120 // Invalid parameter
@@ -200,9 +183,9 @@ typedef  signed long long   INT64;
 
 ///<Rotation Degree
 #define R_ANGLE_0           -1      //No rotation
-#define R_ANGLE_L90         0       //Rotate Left 90¡ã
-#define R_ANGLE_R90         1       //Rotate Right 90¡ã
-#define R_ANGLE_180         2       //Rotate 180¡ã
+#define R_ANGLE_L90         0       //Rotate Left 90??
+#define R_ANGLE_R90         1       //Rotate Right 90??
+#define R_ANGLE_180         2       //Rotate 180??
 
 
 //Frame position
@@ -226,7 +209,7 @@ typedef struct{
     DWORD dwFrameNum;
 }FRAME_INFO;
 
-//Frame 
+//Frame
 typedef struct{
     char *pDataBuf;
     long  nSize;
@@ -244,11 +227,11 @@ typedef struct{
     long  nReserved;
 }WATERMARK_INFO;
 
-typedef struct SYNCDATA_INFO 
+typedef struct SYNCDATA_INFO
 {
-    DWORD dwDataType;       //Subsidiary information type which is synchronized with the stream data: smart function information and the mobile camera information. 
+    DWORD dwDataType;       //Subsidiary information type which is synchronized with the stream data: smart function information and the mobile camera information.
     DWORD dwDataLen;        // The Data Length of Subsidiary Information
-    BYTE* pData;            // Pointer to the structure of subsidiary information, e.g., IVS_INFO structure 
+    BYTE* pData;            // Pointer to the structure of subsidiary information, e.g., IVS_INFO structure
 } SYNCDATA_INFO;
 
 #ifndef _HIK_MEDIAINFO_FLAG_
@@ -259,12 +242,12 @@ typedef struct _HIK_MEDIAINFO_
     unsigned short  media_version;          // Version No.: the version No. of the current information. The current version is 0x0101, that is, V1.01. The first 01 refers to the main version No., and the last 01 refers to the sub version No..
     unsigned short  device_id;              // Device ID, Easy for being tracked down and analyzed.
     unsigned short  system_format;          // System Package Layer
-    unsigned short  video_format;           // Video Encoding Type 
+    unsigned short  video_format;           // Video Encoding Type
     unsigned short  audio_format;           // Audio Encoding Type
-    unsigned char   audio_channels;         // Channel Number 
+    unsigned char   audio_channels;         // Channel Number
     unsigned char   audio_bits_per_sample;  // Sample Bitrate
     unsigned int    audio_samplesrate;      // Sampling Rate
-    unsigned int    audio_bitrate;          // Compression Audio Bitrate £¨Unit: Bit£©
+    unsigned int    audio_bitrate;          // Compression Audio Bitrate ??Unit: Bit??
     unsigned int    reserved[4];            // Reserved
 }HIK_MEDIAINFO;
 #endif
@@ -315,8 +298,8 @@ typedef struct
     DWORD dwBufSize;      //Buffer of Data Size
     DWORD dwPicWidth;     //Width of Screenshot
     DWORD dwPicHeight;    //Height of Screenshot
-    DWORD dwReserve;      //Add a segment of reserve. 
-    RECT  *pCropRect;     //Select region NULL, same with the previous capturing interface. 
+    DWORD dwReserve;      //Add a segment of reserve.
+    RECT  *pCropRect;     //Select region NULL, same with the previous capturing interface.
 }CROP_PIC_INFO;
 #endif
 
@@ -327,15 +310,15 @@ typedef struct{
     long nSetSecretKey;      //Whether to set the key. 1: Yes; 2: No.
 }ENCRYPT_INFO;
 
-///<Private Information Module Type 
+///<Private Information Module Type
 typedef enum _PLAYM4_PRIDATA_RENDER
 {
     PLAYM4_RENDER_ANA_INTEL_DATA    = 0x00000001, // VCA
     PLAYM4_RENDER_MD                = 0x00000002, //Motion Detection
     PLAYM4_RENDER_ADD_POS           = 0x00000004, //POS Overlay
-    PLAYM4_RENDER_ADD_PIC           = 0x00000008, //Picture Overlay 
+    PLAYM4_RENDER_ADD_PIC           = 0x00000008, //Picture Overlay
     PLAYM4_RENDER_FIRE_DETCET       = 0x00000010, //Thermal Imagery Information
-    PLAYM4_RENDER_TEM               = 0x00000020, //Temperature Information 
+    PLAYM4_RENDER_TEM               = 0x00000020, //Temperature Information
 }PLAYM4_PRIDATA_RENDER;
 
 typedef enum _PLAYM4_FIRE_ALARM
@@ -413,9 +396,9 @@ PLAYM4_API DWORD __stdcall PlayM4_GetSpecialData(LONG nPort);
 PLAYM4_API BOOL __stdcall PlayM4_GetPictureSize(LONG nPort,LONG *pWidth,LONG *pHeight);
 PLAYM4_API BOOL __stdcall PlayM4_SetFileEndCallback(LONG nPort, void(CALLBACK*FileEndCallback)(long nPort, void *pUser), void *pUser);
 ///<Time zone, unit: second, +: eastern time zone, -: western time zone
-PLAYM4_API BOOL __stdcall PlayM4_SetSupplementaryTimeZone(int nPort, int nTimeZone); 
+PLAYM4_API BOOL __stdcall PlayM4_SetSupplementaryTimeZone(int nPort, int nTimeZone);
 ///<If the time zone is configured, the time zone will be returned, otherwise, returns failure
-PLAYM4_API BOOL __stdcall PlayM4_GetSupplementaryTimeZone(int nPort, int* pTimeZone); 
+PLAYM4_API BOOL __stdcall PlayM4_GetSupplementaryTimeZone(int nPort, int* pTimeZone);
 
 ///<Buffer Operation
 PLAYM4_API DWORD __stdcall PlayM4_GetSourceBufferRemain(LONG nPort);
@@ -566,7 +549,7 @@ PLAYM4_API int __stdcall PlayM4_SetConfigFontPath(int nPort, char* pFontPath);
 //nSessionInfoType
 #define PLAYM4_SESSION_INFO_SDP 1
 
-typedef struct _PLAYM4_SESSION_INFO_   //Interaction Information Structure 
+typedef struct _PLAYM4_SESSION_INFO_   //Interaction Information Structure
 {
     int            nSessionInfoType;   //Interaction Information Type, only SDP is supported
     int            nSessionInfoLen;    //Interaction Information Length
@@ -593,9 +576,9 @@ typedef enum tagFECCorrectType
 {
     FEC_CORRECT_NULL                    = 0x0000,  // Not correct
     FEC_CORRECT_PTZ                     = 0x0100,  // PTZ
-    FEC_CORRECT_180                     = 0x0200,  // 180 Degree£¨Corresponds to 2P£©
-    FEC_CORRECT_360                     = 0x0300,  // 360 Degree£¨Corresponds to 1P£©
-    FEC_CORRECT_LAT                     = 0x0400,  // Expend Dimensionality 
+    FEC_CORRECT_180                     = 0x0200,  // 180 Degree??Corresponds to 2P??
+    FEC_CORRECT_360                     = 0x0300,  // 360 Degree??Corresponds to 1P??
+    FEC_CORRECT_LAT                     = 0x0400,  // Expend Dimensionality
     FEC_CORRECT_SEMISPHERE              = 0x0500,  // Fisheye dewarping (not supported by hardware decoding, but supports multiple channels)
     FEC_CORRECT_CYLINDER                = 0x0600,  // Cylindrical-surface-sharped view (ceiling mounting or ground mounting)
     FEC_CORRECT_CYLINDER_SPLIT          = 0x0700,  // Dissected-cylindrical-surface-sharped view (ceiling mounting or ground mounting)
@@ -645,7 +628,7 @@ typedef struct tagFECColor
 typedef struct tagFECParam
 {
     unsigned int    nUpDateType;            // Updated type
-    unsigned int    nPlaceAndCorrect;       // Installation and correction mode, can be getonly,  invalid when the value is SetParam, this value indicate the sum of installation mode value and correction mode value. 
+    unsigned int    nPlaceAndCorrect;       // Installation and correction mode, can be getonly,  invalid when the value is SetParam, this value indicate the sum of installation mode value and correction mode value.
     PTZPARAM        stPTZParam;             // PTZ correction parameters
     CYCLEPARAM      stCycleParam;           // Fish-eye image circle center parameters
     float           fZoom;                  // PTZ displayed range
@@ -666,7 +649,7 @@ typedef enum tagFECShowMode
 #define    FEC_BMP    1  // BMP Capture
 
 // Hardware Decoding Sign
-#define FEC_DISPLAYSURFACE          0x400  // Fish-eye Hardware Sign 
+#define FEC_DISPLAYSURFACE          0x400  // Fish-eye Hardware Sign
 
 // Rotation Unit Structure
 typedef struct tagPLAYM4SRTransformElement
@@ -779,7 +762,7 @@ PLAYM4_API BOOL __stdcall PlayM4_FEC_GetSpecialViewParam(int nPort, unsigned int
 
 typedef struct _PLAYM4_VIE_DYNPARAM_
 {
-    int moduFlag;      //Enables Algorithm Processing Module, identified in PLAYM4_VIE_MODULES, such as PLAYM4_VIE_MODU_ADJ | PLAYM4_VIE_MODU_EHAN, you need to set the parameters after enable the module. 
+    int moduFlag;      //Enables Algorithm Processing Module, identified in PLAYM4_VIE_MODULES, such as PLAYM4_VIE_MODU_ADJ | PLAYM4_VIE_MODU_EHAN, you need to set the parameters after enable the module.
     //PLAYM4_VIE_MODU_ADJ
     int brightVal;     //Brightness,[-255, 255]
     int contrastVal;   //Contrast, [-256, 255]
@@ -812,20 +795,20 @@ typedef enum _PLAYM4_VIE_MODULES
 {
     PLAYM4_VIE_MODU_ADJ      = 0x00000001, //Basic Settings
     PLAYM4_VIE_MODU_EHAN     = 0x00000002, //Parts Enhance Module
-    PLAYM4_VIE_MODU_DEHAZE   = 0x00000004, //Defog Module 
+    PLAYM4_VIE_MODU_DEHAZE   = 0x00000004, //Defog Module
     PLAYM4_VIE_MODU_DENOISE  = 0x00000008, //Denoise Module
     PLAYM4_VIE_MODU_SHARPEN  = 0x00000010, //Sharpen Module
     PLAYM4_VIE_MODU_DEBLOCK  = 0x00000020, //Deblock Module
-    PLAYM4_VIE_MODU_CRB      = 0x00000040, //CRB Module 
+    PLAYM4_VIE_MODU_CRB      = 0x00000040, //CRB Module
     PLAYM4_VIE_MODU_LENS     = 0x00000080, //Lens Correction Module
 }PLAYM4_VIE_MODULES;
 #endif
 
-//Enable/Disable Module 
-//dwModuFlag Corresponded PLAYM4_VIE_MODULES Macro, can be combined. 
+//Enable/Disable Module
+//dwModuFlag Corresponded PLAYM4_VIE_MODULES Macro, can be combined.
 //Enable the module and set module parameters.
 //Clear the parameters set last time when disabling the module.
-//Callback other API only if the module is enabled, otherwise, system will return error code. 
+//Callback other API only if the module is enabled, otherwise, system will return error code.
 PLAYM4_API BOOL __stdcall PlayM4_VIE_SetModuConfig(LONG lPort,int nModuFlag,BOOL bEnable);
 
 //Set image enhance region, NULL full screen, min region: 32*32 pixel
@@ -878,7 +861,7 @@ typedef struct
     int            nFrameTimeStamp;    //Frame No.
     int            nFrameNum;          //Timestamp
     int            nErrorCode;         //Error Coe
-    unsigned char  reserved[12];       //Reserved 
+    unsigned char  reserved[12];       //Reserved
 }RunTimeInfo;
 
 PLAYM4_API BOOL __stdcall PlayM4_SetRunTimeInfoCallBackEx(LONG nPort, int nModule, void (CALLBACK* RunTimeInfoCBFun)(long nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
@@ -891,22 +874,22 @@ PLAYM4_API BOOL __stdcall PlayM4_SetRunTimeInfoCallBackEx(LONG nPort, int nModul
 // Module Texture Mode 0- Both Sides, 1-Outer Side, 2- Inner Side
 typedef enum tagPLAYM4SRTextureMode
 {
-    PLAYM4_TEXTURE_DOUBLE       = 0x0,           // Texture on Both Sides 
+    PLAYM4_TEXTURE_DOUBLE       = 0x0,           // Texture on Both Sides
     PLAYM4_TEXTURE_OUTER        = 0x1,           // Texture on Outer Side
-    PLAYM4_TEXTURE_INNER        = 0x2,           // Texture on Inner Side 
+    PLAYM4_TEXTURE_INNER        = 0x2,           // Texture on Inner Side
 }PLAYM4SRTEXTUREMODE;
 
 //Module Type
 typedef enum tagPLAYM4SRModelType
 {
-    PLAYM4_MODELTYPE_HEMISPHERE = 0x0,           //Dome Camera Module for Fish-eye Camera 
+    PLAYM4_MODELTYPE_HEMISPHERE = 0x0,           //Dome Camera Module for Fish-eye Camera
     PLAYM4_MODELTYPE_EAGLE_EYE  = 0x1,           //Module of PanoVu without PTZ
-    PLAYM4_MODELTYPE_CUBE       = 0x2,           //Cube Module 
+    PLAYM4_MODELTYPE_CUBE       = 0x2,           //Cube Module
 }PLAYM4SRMODELTYPE;
 
 #define PLAYM4_MODEL_SOLID      0x0001           //Entity Module
 #define PLAYM4_MODEL_FRAME      0x0010           //Frame Module
-#define PLAYM4_MODEL_AXIS       0x0100           //Coordinate 
+#define PLAYM4_MODEL_AXIS       0x0100           //Coordinate
 
 //Parameters of Rendering to 3D Module
 typedef struct tagRenderModelMode
@@ -914,7 +897,7 @@ typedef struct tagRenderModelMode
     bool                          bModelMode;      // Whether to render to 3D Module
     PLAYM4SRTEXTUREMODE           emTextureMode;   // Texure Mode, two sides, inner side, outer side
     unsigned long                 ulDisplayType;   // Combied by Sign Position SR_MODEL_SOLID | SR_MODEL_FRAME | SR_MODEL_AXIS
-    unsigned int                  nTransformMode;  // 0 Frame coordinate changed according to the module, 1- Frame coordinate not changed according to the module, 
+    unsigned int                  nTransformMode;  // 0 Frame coordinate changed according to the module, 1- Frame coordinate not changed according to the module,
     PLAYM4SRMODELTYPE             emModelType;     // Module Type, fish-eye, PanoVu, etc,.
 }PLAYM4SRMODELMODE;
 
@@ -933,20 +916,20 @@ PLAYM4_API BOOL __stdcall PlayM4_SR_Capture(LONG nPort, unsigned int nType, char
 
 
 ///<Pre-record API-Not Support//////////////////////////////////////////////////////////////////////////
-#define PLAYM4_MEDIA_HEAD     1   
-#define PLAYM4_VIDEO_DATA     2   
-#define PLAYM4_AUDIO_DATA     3   
-#define PLAYM4_PRIVT_DATA     4   
+#define PLAYM4_MEDIA_HEAD     1
+#define PLAYM4_VIDEO_DATA     2
+#define PLAYM4_AUDIO_DATA     3
+#define PLAYM4_PRIVT_DATA     4
 
 
-typedef struct  
+typedef struct
 {
-    long nType;                    
-    long nStamp;                    
-    long nFrameNum;                 
-    long nBufLen;                   
-    char* pBuf;                     
-    PLAYM4_SYSTEM_TIME  stSysTime;  
+    long nType;
+    long nStamp;
+    long nFrameNum;
+    long nBufLen;
+    char* pBuf;
+    PLAYM4_SYSTEM_TIME  stSysTime;
 }RECORD_DATA_INFO;
 
 /////////////////////////////////////////////////////////////////////////////////////////////

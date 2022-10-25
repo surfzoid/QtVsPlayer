@@ -7,7 +7,7 @@
 #elif defined(ANDROID)
 	#include"LinuxPlayM4.h"
 #elif defined(WIN32)
-    #include"LinuxPlayM4.h"
+    #include"WindowsPlayM4.h"
 #endif
 
 
