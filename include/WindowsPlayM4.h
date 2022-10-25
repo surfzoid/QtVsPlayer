@@ -8,7 +8,7 @@
     #define PLAYM4_API  extern "C" __declspec(dllimport)
 #endif
 
-typedef unsigned int PLAYM4_HWND;
+typedef HWND__ PLAYM4_HWND;
 
 //Max channel numbers
 #define PLAYM4_MAX_SUPPORTS 500
@@ -985,4 +985,6 @@ PLAYM4_API BOOL __stdcall PlayM4_SetDeflash(LONG nPort,BOOL bDefalsh);
 PLAYM4_API BOOL __stdcall PlayM4_SetPicQuality(LONG nPort,BOOL bHighQuality);
 PLAYM4_API BOOL __stdcall PlayM4_GetPictureQuality(LONG nPort,BOOL *bHighQuality);
 
+PLAYM4_API int __stdcall PlayM4_WndResolutionChange(int nPort);//new add
+PLAYM4_API int __stdcall PlayM4_SetVideoWindow(int nPort, unsigned int nRegionNum, PLAYM4_HWND hWnd);
 #endif //_PLAYM4_H_
