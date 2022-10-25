@@ -4,7 +4,7 @@ QT       += dbus core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += g++11 shared
+CONFIG += shared
 
 # Specifies name of the binary.
 TARGET = QtVsPlayer
@@ -12,6 +12,19 @@ TARGET = QtVsPlayer
 # Denotes that project is an application.
 TEMPLATE = app
 
+QMAKE_CXXFLAGS_RELEASE -= -O
+QMAKE_CXXFLAGS_RELEASE -= -O1
+QMAKE_CXXFLAGS_RELEASE -= -O2
+
+win32 { # For Windows
+  QMAKE_CXXFLAGS += -openmp
+  QMAKE_CXXFLAGS += -D "_CRT_SECURE_NO_WARNINGS"
+}
+
+linux { # For Linux
+  QMAKE_CXXFLAGS += -fopenmp
+  QMAKE_LFLAGS += -fopenmp
+}
 unix {
     isEmpty(PREFIX) {
         #PREFIX = $$(HOME)/.local/share
