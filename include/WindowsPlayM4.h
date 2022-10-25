@@ -437,7 +437,7 @@ PLAYM4_API BOOL __stdcall PlayM4_SetDisplayRegion(int nPort,DWORD nRegionNum, RE
 PLAYM4_API BOOL __stdcall PlayM4_SetDisplayRegionOnWnd(int nPort,DWORD nRegionNum, RECT *pSrcRect, BOOL bEnable);///<Multi-Screen Splicing Interface
 PLAYM4_API BOOL __stdcall PlayM4_SetDisplayType(int nPort,LONG nType);
 PLAYM4_API long __stdcall PlayM4_GetDisplayType(int nPort);
-PLAYM4_API BOOL __stdcall PlayM4_SetDisplayCallBack(int nPort,void (CALLBACK* DisplayCBFun)(int nPort,char * pBuf,long nSize,long nWidth,long nHeight,long nStamp,long nType,void* nReserved));
+PLAYM4_API BOOL __stdcall PlayM4_SetDisplayCallBack(int nPort,void (CALLBACK* DisplayCBFun)(int nPort,char * pBuf,int nSize,int nWidth,int nHeight,int nStamp,int nType,int nReserved));
 PLAYM4_API BOOL __stdcall PlayM4_SetDisplayCallBackEx(int nPort,void (CALLBACK* DisplayCBFun)(DISPLAY_INFO *pstDisplayInfo), void* nUser);
 PLAYM4_API BOOL __stdcall PlayM4_RegisterDrawFun(int nPort,void (CALLBACK* DrawFun)(int nPort,HDC hDc,void* nUser),void* nUser);
 PLAYM4_API BOOL __stdcall PlayM4_SetEncTypeChangeCallBack(int nPort,void(CALLBACK *funEncChange)(int nPort,void* nUser),void* nUser);
