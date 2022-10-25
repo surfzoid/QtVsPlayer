@@ -223,8 +223,8 @@ jobs:
         run: echo ${{ steps.version.outputs.version }}
 
       #- uses: ilammy/msvc-dev-cmd@v1.12.0
-      - name: Install MinGW
-        uses: egor-tensin/setup-mingw@v2
+      #- name: Install MinGW
+      #  uses: egor-tensin/setup-mingw@v2
 
 
       - name: Install Qt
