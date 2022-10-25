@@ -88,6 +88,7 @@ HEADERS += \
     filesliste.h \
     include/LinuxPlayM4.h \
     include/PlayM4.h \
+    include/WindowsPlayM4.h \
     playm4interface.h \
     qtvsplayer.h \
     rtspwindow.h \
