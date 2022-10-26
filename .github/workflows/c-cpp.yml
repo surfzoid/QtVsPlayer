@@ -253,3 +253,15 @@ jobs:
             make
             dir debug
             dir release
+
+      - name: Create Github Release
+        uses: ncipollo/release-action@v1.11.1
+        id: create_release
+        with:
+          artifacts: "release/QtVsPlayer.exe"
+          replacesArtifacts: true
+          token: ${{ github.TOKEN }}
+          allowUpdates: true
+          name: ${{ steps.version.outputs.version }}
+          tag: ${{ steps.version.outputs.version }}
+          body: "Automatic build from GitHub action, see QtVsPlayer.spec for change log"
