@@ -251,4 +251,5 @@ jobs:
             #sed -i ':a;N;$!ba;s/-Wextra -Wextra/-Wextra/g' Makefile.Release
             #cat Makefile.Release
             make
-            dir
+            dir debug
+            dir release
