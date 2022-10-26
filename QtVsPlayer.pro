@@ -18,7 +18,7 @@ TEMPLATE = app
 
 win32 { # For Windows
   #QMAKE_CXXFLAGS += -openmp
-  QMAKE_CXXFLAGS += -declspec
+  #QMAKE_CXXFLAGS += -declspec
   QMAKE_CXXFLAGS += -D "_CRT_SECURE_NO_WARNINGS"
   QMAKE_CXXFLAGS += -std=c++11
   QMAKE_CC = gcc
