@@ -257,6 +257,9 @@ jobs:
             cp release/QtVsPlayer.exe application/
             cp lib/w86_64/* application/
             rm application/PlayCtrl.lib
+            
+      - name: Install go-msi
+        run: choco install -y "go-msi"
 
       - name: Build Windows Installer MSI from exe file
         uses: AliceOh/CreateWindowsInstaller@1.0.0
