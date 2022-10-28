@@ -254,6 +254,11 @@ jobs:
             dir debug
             dir release
 
+      - name: Build Windows Installer MSI from exe file
+        uses: AliceOh/CreateWindowsInstaller@1.0.0
+        with:
+          exefile: 'release/QtVsPlayer.exe'
+
       - name: Create Github Release
         uses: ncipollo/release-action@v1.11.1
         id: create_release
