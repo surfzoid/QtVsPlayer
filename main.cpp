@@ -9,12 +9,16 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-
+#if (defined(_WIN32))
+    printf("Debug---DBus is bugy under windows");
+#elif defined(__linux__)
     if (!QDBusConnection::sessionBus().isConnected()) {
         qWarning("Cannot connect to the D-Bus session bus.\n"
                  "Please check your system settings and try again.\n");
         return 1;
     }
+#endif
+
 
     QThreadPool::globalInstance()->setMaxThreadCount(1);
     QThreadPool::globalInstance()->setExpiryTimeout(3000);
