@@ -120,7 +120,8 @@ DISTFILES += \
     QtVsPlayer.spec \
     QtVsPlayermga8wally.spec \
     README.md \
-    TODO
+    TODO \
+    install-win.md
 
 
 
