@@ -257,20 +257,13 @@ jobs:
             cp release/QtVsPlayer.exe application/
             cp lib/w86_64/* application/
             rm application/PlayCtrl.lib
-            
-      - name: Install go-msi
-        run: choco install -y "go-msi"
-
-      - name: Build Windows Installer MSI from exe file
-        uses: AliceOh/CreateWindowsInstaller@1.0.0
-        with:
-          exefile: 'QtVsPlayer.exe'
+            Compress-Archive -Path application\* -DestinationPath QtVsPlayer-win64-${{ steps.version.outputs.version }}.zip
 
       - name: Create Github Release
         uses: ncipollo/release-action@v1.11.1
         id: create_release
         with:
-          artifacts: "release/QtVsPlayer.exe"
+          artifacts: "QtVsPlayer-win64-${{ steps.version.outputs.version }}.zip"
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
