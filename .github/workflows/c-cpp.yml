@@ -256,6 +256,7 @@ jobs:
             mkdir application
             cp release/QtVsPlayer.exe application/
             cp lib/w86_64/* application/
+            cp install-win.md application/README.TXT
             rm application/PlayCtrl.lib
             Compress-Archive -Path application\* -DestinationPath QtVsPlayer-win64-${{ steps.version.outputs.version }}.zip
 
