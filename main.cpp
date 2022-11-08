@@ -58,6 +58,11 @@ int main(int argc, char *argv[])
     QTranslator myappTranslator;
     bsuc = myappTranslator.load(QLocale(), QLatin1String("QtVsPlayer"), QLatin1String("_"),
                                 "/usr/share/QtVsPlayer/translations");
+#if (defined(_WIN32))
+    bsuc = myappTranslator.load(QLocale(), QLatin1String("QtVsPlayer"), QLatin1String("_"),
+                                QCoreApplication::applicationDirPath());
+#endif
+
     a.installTranslator(&myappTranslator);
 
     //surpress warning!
