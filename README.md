@@ -77,8 +77,8 @@ https://matrix.to/#/#QtVsPlayer:matrix.org
 classicnotify.sh is a sample to monitor a shared network, for example, video files extracted by HikNetExtractor and saved at home, then send a notify with click action who start QtVsPlayer with the last video saved 
 
 Add a debian repository, to use it, do :  
-curl -s --compressed "https://${GITHUB_USERNAME}.github.io/my_ppa/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/my_ppa.gpg >/dev/null  
-sudo curl -s --compressed -o /etc/apt/sources.list.d/my_list_file.list "https://${GITHUB_USERNAME}.github.io/my_ppa/my_list_file.list"  
+curl -s --compressed "https://surfzoid.github.io/ppa/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/surfzoidppa.gpg >/dev/null  
+sudo curl -s --compressed -o /etc/apt/sources.list.d/surfzoid_list_file.list "https://surfzoid.github.io/ppa/surfzoid_list_file.list"  
 sudo apt update  
 sudo apt install qtvsplayer  
 
