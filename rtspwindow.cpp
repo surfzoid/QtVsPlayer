@@ -280,6 +280,8 @@ void RtspWindow::on_action_Streaming_Channels_3_triggered()
 void RtspWindow::on_actionMetadata_triggered()
 {
     GetMetaData(player);
+    QSize Vreso = videoWidget->sizeHint();
+    printf("Video resolution: %dX%d\n\r",Vreso.width(),Vreso.height());
     return;
 
     bool IsMeta ;
