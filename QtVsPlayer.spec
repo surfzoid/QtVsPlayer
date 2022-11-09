@@ -3,7 +3,7 @@ Name:           QtVsPlayer
 BuildRequires:  lib64qt5multimedia-devel
 BuildRequires:  lib64qt5multimediawidgets-devel
 BuildRequires:  qtbase5-common-devel
-Version:        1.0.20
+Version:        1.0.21
 Release:        %mkrel 2
 License:        GPL-3.0 license
 Source:         %{name}-%{version}.tar.xz
@@ -67,6 +67,11 @@ chmod -R ug+rw %{_srcrpmdir}
 /usr/lib64/libSuperRender.so
 
 %changelog
+* Wed Nov 9 2022 surfzoid@gmail.com
++ RTSP Video resolution info.
++ MS Windows support.
++ Add a github PPA(see README.md).
+
 * Sat Oct 1 2022 surfzoid@gmail.com
 + Use DBus for single instance.
 
