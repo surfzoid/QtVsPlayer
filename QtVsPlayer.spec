@@ -36,17 +36,14 @@ Authors:
     Eric Petit <surfzoid@gmail.com>
 
 %prep
-%setup -q -n %{name}
-%qmake_qt5
-
+%autosetup -p1 -n %{name}-%{version}
+ 
 %build
-qmake
-#make_install
-
+%qmake_qt5
+%make_build
+ 
 %install
-qmake
-
-make INSTALL_ROOT=%{buildroot}/usr/share install
+%make_install INSTALL_ROOT=%{buildroot}%{_datadir}
 
 %clean
 rm -rf %buildroot
@@ -54,17 +51,16 @@ chmod -R ug+rw %{_rpmdir}
 chmod -R ug+rw %{_srcrpmdir}
 
 %files
-%defattr(755,root,root)
-/usr/bin/QtVsPlayer
-/usr/share/applications/QtVsPlayer.desktop
-/usr/share/icons/QtVsPlayer.png
-/usr/share/QtVsPlayer/translations/*.qm
-%license LICENSE
 %license Licenses_playctrl_linux.txt
-/usr/share/doc/QtVsPlayer/README.md
-/usr/lib64/libAudioRender.so
-/usr/lib64/libPlayCtrl.so
-/usr/lib64/libSuperRender.so
+%doc README.md
+%{_bindir}/QtVsPlayer
+%{_datadir}/applications/QtVsPlayer.desktop
+%{_datadir}/icons/QtVsPlayer.png
+%{_datadir}/QtVsPlayer/
+%{_datadir}/QtVsPlayer/translations/*.qm
+%{_libdir}/libAudioRender.so
+%{_libdir}/libPlayCtrl.so
+%{_libdir}/libSuperRender.so
 
 %changelog
 * Wed Nov 9 2022 surfzoid@gmail.com
