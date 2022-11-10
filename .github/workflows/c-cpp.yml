@@ -11,7 +11,7 @@ jobs:
         os: [ubuntu-latest]
     steps:
       - name: Checkout onto ${{ runner.os }}
-        uses: actions/checkout@v2.5.0
+        uses: actions/checkout@v3
       - name: Setup C++ environment
         uses: kurocha/setup-cpp@v1
       - name: Install Qt
@@ -102,7 +102,7 @@ jobs:
     name: RPI_P400-ARM64
     runs-on: [self-hosted, Linux, ARM64]
     steps:
-      - uses: actions/checkout@v2.5.0
+      - uses: actions/checkout@v3
 
       - name: Version
         run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
@@ -118,6 +118,7 @@ jobs:
             echo "rm -fr /usr/lib64" >> .debpkg/DEBIAN/postinst
             chmod +x .debpkg/DEBIAN/postinst
             echo -e "Automatic build from GitHub action, see QtVsPlayer.spec for change log" > CHANGELOG
+            perl -i -pe 's/licenses\/QtVsPlayer/licenses\/QtVsPlayer-\$\$VERSION/g;' QtVsPlayer.pro
 
       - name: qmake
         run: PREFIX=.debpkg/usr/share; qmake
@@ -174,7 +175,6 @@ jobs:
             sed -i '/^%make_install/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
             sed -i '/^rm -rf %{buildroot}%{_datadir}/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
             cd /tmp/work
-            perl -i -pe 's/licenses\/QtVsPlayer/licenses\/QtVsPlayer-\$\$VERSION/g;' QtVsPlayer/QtVsPlayer.pro
             tar czf tmp.tar.gz QtVsPlayer/
             mv tmp.tar.gz ~/rpmbuild/SOURCES
             rpmbuild -bb ~/rpmbuild/SPECS/QtVsPlayer.spec
@@ -216,7 +216,7 @@ jobs:
             #generators: "Ninja"
           }
     steps:
-      - uses: actions/checkout@v2.5.0
+      - uses: actions/checkout@v3
 
       - name: Version
         run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
