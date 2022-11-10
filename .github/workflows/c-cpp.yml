@@ -165,6 +165,7 @@ jobs:
             cp -rp .debpkg /tmp/work/QtVsPlayer
             mkdir -p ~/rpmbuild/{SRPMS,SOURCES,SPECS,tmp}
             cp -pf QtVsPlayer.spec ~/rpmbuild/SPECS
+            sed -i 's/\(Source:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayer.spec
             sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayer.spec
             sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
