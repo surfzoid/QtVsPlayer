@@ -169,9 +169,9 @@ jobs:
             sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
             sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
-            sed -i '/^qmake/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
-            sed -i 's/\(%install\).*/\1\ncp -fr %{_builddir}\/QtVsPlayer\/* %{buildroot}/' ~/rpmbuild/SPECS/QtVsPlayer.spec
-            sed -i '/^make INSTALL_ROOT/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
+            sed -i '/^%make_build/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
+            sed -i 's/\(make_install\).*/\1\ncp -fr %{_builddir}\/QtVsPlayer\/* %{buildroot}/' ~/rpmbuild/SPECS/QtVsPlayer.spec
+            sed -i '/^%make_install/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
             cd /tmp/work
             tar czf tmp.tar.gz QtVsPlayer/
             mv tmp.tar.gz ~/rpmbuild/SOURCES

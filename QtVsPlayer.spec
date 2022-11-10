@@ -1,19 +1,15 @@
 Name:           QtVsPlayer
-# List of additional build dependencies
-BuildRequires:  lib64qt5multimedia-devel
-BuildRequires:  lib64qt5multimediawidgets-devel
-BuildRequires:  qtbase5-common-devel
+Summary:        QtVsPlayer for Hikvision
 Version:        1.0.21
 Release:        %mkrel 2
-License:        GPL-3.0 license
-Source:         %{name}-%{version}.tar.xz
-
+License:        GPLv3
 Group:          Video/Players
 URL: https://github.com/surfzoid/QtVsPlayer
-Summary:        QtVsPlayer for Hikvision
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Requires:  lib64qt5multimedia5
-Requires:  lib64qt5multimediawidgets5
+Source:         %{name}-%{version}.tar.xz
+# List of additional build dependencies
+BuildRequires:  pkgconfig(Qt5Multimedia)
+BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
+BuildRequires:  qtbase5-common-devel
 
 %define distsuffix .surf.mlo8
 %define dist %distsuffix%distro_release
@@ -35,6 +31,7 @@ Authors:
 --------
     Eric Petit <surfzoid@gmail.com>
 
+ 
 %prep
 %autosetup -p1 -n %{name}
  
@@ -44,6 +41,7 @@ Authors:
  
 %install
 %make_install INSTALL_ROOT=%{buildroot}%{_datadir}
+rm -rf %{buildroot}%{_datadir}/licenses/%{name}-%{version}
 
 %clean
 rm -rf %buildroot
@@ -51,13 +49,13 @@ chmod -R ug+rw %{_rpmdir}
 chmod -R ug+rw %{_srcrpmdir}
 
 %files
+%license LICENSE
 %license Licenses_playctrl_linux.txt
 %doc README.md
 %{_bindir}/QtVsPlayer
 %{_datadir}/applications/QtVsPlayer.desktop
 %{_datadir}/icons/QtVsPlayer.png
 %{_datadir}/QtVsPlayer/
-%{_datadir}/QtVsPlayer/translations/*.qm
 %{_libdir}/libAudioRender.so
 %{_libdir}/libPlayCtrl.so
 %{_libdir}/libSuperRender.so
