@@ -11,6 +11,7 @@ BuildRequires:  pkgconfig(Qt5Multimedia)
 BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
 BuildRequires:  qtbase5-common-devel
 
+BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %define distsuffix .surf.mlo8
 %define dist %distsuffix%distro_release
 
@@ -38,6 +39,7 @@ Authors:
  
 %install
 %make_install INSTALL_ROOT=%{buildroot}%{_datadir}
+# rm -rf %{buildroot}%{_datadir}/licenses/%{name}-%{version}
 
 %clean
 rm -rf %buildroot
