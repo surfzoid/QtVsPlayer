@@ -14,9 +14,6 @@ BuildRequires:  qtbase5-common-devel
 %define distsuffix .surf.mlo8
 %define dist %distsuffix%distro_release
 
-
-
-
 %description
 QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.
 This is the end of an full network backup solution in combination with HikNetExtractor.
@@ -33,15 +30,14 @@ Authors:
 
  
 %prep
-%autosetup -p1 -n %{name}
- 
+%autosetup -n %{name}
+
 %build
 %qmake_qt5
 %make_build
  
 %install
 %make_install INSTALL_ROOT=%{buildroot}%{_datadir}
-rm -rf %{buildroot}%{_datadir}/licenses/%{name}-%{version}
 
 %clean
 rm -rf %buildroot

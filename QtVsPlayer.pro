@@ -48,7 +48,7 @@ unix {
     translationfiles.files += $$PWD/*.qm
     docfiles.path = $$(PREFIX)/doc/QtVsPlayer
     docfiles.files += $$PWD/README.md
-    licfiles.path = $$(PREFIX)/licenses/QtVsPlayer-$$VERSION
+    licfiles.path = $$(PREFIX)/licenses/QtVsPlayer
     licfiles.files += $$PWD/Licenses_playctrl_linux.txt LICENSE
     }
 #message("If mkdir of /opt/QtVsPlayer return erorror not permit, please do :")
