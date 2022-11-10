@@ -47,9 +47,9 @@ chmod -R ug+rw %{_rpmdir}
 chmod -R ug+rw %{_srcrpmdir}
 
 %files
-%license LICENSE
-%license Licenses_playctrl_linux.txt
-%doc README.md
+%{_datadir}/licenses/%{name}/LICENSE
+%{_datadir}/licenses/%{name}/Licenses_playctrl_linux.txt
+%{_datadir}/doc/%{name}/README.md
 %{_bindir}/QtVsPlayer
 %{_datadir}/applications/QtVsPlayer.desktop
 %{_datadir}/icons/QtVsPlayer.png
