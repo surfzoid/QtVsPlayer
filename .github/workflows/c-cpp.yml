@@ -11,7 +11,7 @@ jobs:
         os: [ubuntu-latest]
     steps:
       - name: Checkout onto ${{ runner.os }}
-        uses: actions/checkout@v2.1.0
+        uses: actions/checkout@v3.2.0
       - name: Setup C++ environment
         uses: kurocha/setup-cpp@v1
       - name: Install Qt
@@ -102,7 +102,7 @@ jobs:
     name: RPI_P400-ARM64
     runs-on: [self-hosted, Linux, ARM64]
     steps:
-      - uses: actions/checkout@v2.1.0
+      - uses: actions/checkout@v3.2.0
 
       - name: Version
         run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
@@ -215,7 +215,7 @@ jobs:
             #generators: "Ninja"
           }
     steps:
-      - uses: actions/checkout@v2.1.0
+      - uses: actions/checkout@v3.2.0
 
       - name: Version
         run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
