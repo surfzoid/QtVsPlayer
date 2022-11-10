@@ -174,7 +174,7 @@ jobs:
             sed -i '/^%make_install/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
             sed -i '/^rm -rf %{buildroot}%{_datadir}/d' ~/rpmbuild/SPECS/QtVsPlayer.spec
             cd /tmp/work
-            sed -i '/licenses\/QtVsPlayer\/licenses\/QtVsPlayer-$$VERSION/' QtVsPlayer/QtVsPlayer.pro
+            perl -i -pe 's/licenses\/QtVsPlayer/licenses\/QtVsPlayer-\$\$VERSION/g;' QtVsPlayer/QtVsPlayer.pro
             tar czf tmp.tar.gz QtVsPlayer/
             mv tmp.tar.gz ~/rpmbuild/SOURCES
             rpmbuild -bb ~/rpmbuild/SPECS/QtVsPlayer.spec
