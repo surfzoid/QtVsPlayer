@@ -339,7 +339,7 @@ jobs:
             mkdir macbuild
             mv qtvsplayer.app macbuild/
             cd macbuild/
-            pkgbuild --root ./ --version steps.version.outputs.version --identifier com.github.QtVsPlayer --install-location /Applications QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg
+            pkgbuild --root ./ --version steps.version.outputs.version --auth none --identifier com.github.QtVsPlayer --install-location /Applications QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg
             tar -czf QtVsPlayer-mac64-${{ steps.version.outputs.version }}.tgz qtvsplayer.app
 
 
