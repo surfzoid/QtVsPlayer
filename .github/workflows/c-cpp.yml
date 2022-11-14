@@ -16,8 +16,6 @@ jobs:
         uses: kurocha/setup-cpp@v1
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
-      - name: apt install qt5-qmake-bin
-        run: sudo apt update & sudo apt install -y qt5-qmake-bin qt5-default g++ make libqt5multimediawidgets5 qtmultimedia5-dev libqt5widgets5 curl ca-certificates build-essential rpm
 
       - name: Prepare install dir
         run: |
@@ -272,6 +270,84 @@ jobs:
         id: create_release
         with:
           artifacts: "QtVsPlayer-win64-${{ steps.version.outputs.version }}.zip"
+          replacesArtifacts: true
+          token: ${{ github.TOKEN }}
+          allowUpdates: true
+          name: ${{ steps.version.outputs.version }}
+          tag: ${{ steps.version.outputs.version }}
+          body: "Automatic build from GitHub action, see QtVsPlayer.spec for change log"
+
+  Mac:
+    # The type of runner that the job will run on
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.os }}
+    env:
+        CC: gcc
+        CXX: g++
+        Qt5_DIR: $GITHUB_WORKSPACE/qt/Qt/5.15.2/{arch}/bin
+        QT_PLUGIN_PATH: $GITHUB_WORKSPACE/qt/Qt/5.15.2/{arch}/plugins/
+
+    strategy:
+      matrix:
+        os: [macos-10.15]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Version
+        run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
+        id: version
+
+      - name: Check Version
+        run: echo ${{ steps.version.outputs.version }}
+
+      #- name: Setup C++ environment
+      #  run: |
+      #      pip3 install setuptools
+
+      - name: py setup
+        run: |
+            pip3 install --upgrade pip
+            pip3 install --upgrade setuptools
+            pip3 install wheel
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3.0.0
+        with:
+          version: '5.15.2'
+          dir: 'qt'
+          #arch: 'clang_64'
+
+        env:
+          PREFIX: ~/QtVsPlayer-mac64-${{ steps.version.outputs.version }}/usr/share
+          INSTALL_ROOT: ~/QtVsPlayer-mac64-${{ steps.version.outputs.version }}/usr/share
+          
+      - name: qmake
+        run: |
+            PREFIX=~/QtVsPlayer-mac64-${{ steps.version.outputs.version }}/usr/share; qmake -Wnone
+
+      - name: make
+        run: |
+            make
+
+      - name: make check
+        run: make check
+
+      - name: make install
+        run: |
+            cp lib/x86_64/*.dylib qtvsplayer.app/Contents/MacOS/
+            mkdir macbuild
+            mv qtvsplayer.app macbuild/
+            cd macbuild/
+            pkgbuild --root ./ --version steps.version.outputs.version --identifier com.github.QtVsPlayer --install-location /Applications QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg
+            tar -czf QtVsPlayer-mac64-${{ steps.version.outputs.version }}.tgz qtvsplayer.app
+
+
+      - name: Create Github Release
+        uses: ncipollo/release-action@v1.11.1
+        id: create_release
+        with:
+          artifacts: "macbuild/QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg,macbuild/QtVsPlayer-mac64-${{ steps.version.outputs.version }}.tgz"
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true

@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 
 #if (defined(_WIN32)| defined(__APPLE__))
     printf("Debug---DBus is bugy under windows and macx");
-#elif defined(__linux__)
+#elif (defined(__linux__) & !defined(__APPLE__))
     if (!QDBusConnection::sessionBus().isConnected()) {
         qWarning("Cannot connect to the D-Bus session bus.\n"
                  "Please check your system settings and try again.\n");
