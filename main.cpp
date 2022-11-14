@@ -9,12 +9,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-#if (defined(_WIN32)| defined(__APPLE__))
-    printf("Debug---DBus is bugy under windows and macx");
-#elif (defined(__linux__) & !defined(__APPLE__))
+#if (defined(_WIN32))
+    printf("Debug---DBus is bugy under windows");
+#elif (defined(__linux__) | defined(__APPLE__))
     if (!QDBusConnection::sessionBus().isConnected()) {
         qWarning("Cannot connect to the D-Bus session bus.\n"
-                 "Please check your system settings and try again.\n");
+                 "Please check your system settings and try again.\n mac :brew services start dbus\n linux:systemctl start dbus.service\n");
         return 1;
     }
 #endif

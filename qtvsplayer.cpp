@@ -378,14 +378,14 @@ void QtVsPlayer::FullScr()
 
 void QtVsPlayer::resizeEvent(QResizeEvent *event)
 {
-    WinIdWorkarround();
-    WVideoCtrls->move(0,this->height() -
-                      WVideoCtrls->height() -
-                      this->statusBar()->height());
+    if (playm4interface::m_pblocalportnum)WinIdWorkarround();
+        WVideoCtrls->move(0,this->height() -
+                          WVideoCtrls->height() -
+                          this->statusBar()->height());
 
-    //this->ui->FsDisplay->setVisible(false);
-    originH = ui->centralwidget->rect();
-    Zoomed = false;
+        //this->ui->FsDisplay->setVisible(false);
+        originH = ui->centralwidget->rect();
+        Zoomed = false;
 
     //surpress warning!
     if (event == nullptr) {
@@ -550,7 +550,7 @@ void QtVsPlayer::WinIdWorkarround()
     playm4interface::RefreshPlay();
 
 #if (defined(__linux__))
-PlayM4_WndResolutionChange(playm4interface::m_pblocalportnum);
+    PlayM4_WndResolutionChange(playm4interface::m_pblocalportnum);
 #endif
     //}
     //}
