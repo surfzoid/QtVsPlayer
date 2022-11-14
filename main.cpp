@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-#if (defined(_WIN32)| defined(_MACX))
+#if (defined(_WIN32)| defined(__APPLE__))
     printf("Debug---DBus is bugy under windows and macx");
 #elif defined(__linux__)
     if (!QDBusConnection::sessionBus().isConnected()) {
