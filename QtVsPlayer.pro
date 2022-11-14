@@ -71,10 +71,13 @@ CONFIG += force_debug_info
 LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=lib/$$QMAKE_HOST.arch:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
 }
 
-macx: LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -lPlayCtrl -lSuperRender
+macx: {
+LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -lPlayCtrl -lSuperRender
 
 INCLUDEPATH += $$PWD/lib/$$QMAKE_HOST.arch/
 DEPENDPATH += $$PWD/lib/$$QMAKE_HOST.arch/
+ICON = $$PWD/images/QtVsPlayer.icns
+}
 
 # macx: PRE_TARGETDEPS += $$PWD/lib/$$QMAKE_HOST.arch/libbench2.a
 
