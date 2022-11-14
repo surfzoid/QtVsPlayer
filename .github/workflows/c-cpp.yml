@@ -336,10 +336,10 @@ jobs:
       - name: make install
         run: |
             cp lib/x86_64/*.dylib qtvsplayer.app/Contents/MacOS/
-            mkdir macbuild
-            mv qtvsplayer.app macbuild/
-            cd macbuild/
-            pkgbuild --root ./ --version ${{ steps.version.outputs.version }} --identifier com.github.QtVsPlayer --install-location /Applications QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg
+            #mkdir macbuild
+            #mv qtvsplayer.app macbuild/
+            #cd macbuild/
+            pkgbuild --root ./qtvsplayer.app --version ${{ steps.version.outputs.version }} --identifier com.github.QtVsPlayer --install-location /Applications QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg
             tar -czf QtVsPlayer-mac64-${{ steps.version.outputs.version }}.tgz qtvsplayer.app
 
 
@@ -347,7 +347,7 @@ jobs:
         uses: ncipollo/release-action@v1.11.1
         id: create_release
         with:
-          artifacts: "macbuild/QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg,macbuild/QtVsPlayer-mac64-${{ steps.version.outputs.version }}.tgz"
+          artifacts: "QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg,QtVsPlayer-mac64-${{ steps.version.outputs.version }}.tgz"
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
