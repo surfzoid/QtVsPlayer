@@ -63,13 +63,20 @@ debugfiles.path = $$(PREFIX)/../lib/debug/usr/bin
 debugfiles.files = $${TARGET}.debug
 !isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles debugfiles docfiles licfiles
 
-unix {
+unix:!macx: {
 #CONFIG += separate_debug_info
 CONFIG += force_debug_info
 # INCLUDEPATH += lib
 # DEPENDPATH += lib
 LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=lib/$$QMAKE_HOST.arch:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
 }
+
+macx: LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -lPlayCtrl -lSuperRender
+
+INCLUDEPATH += $$PWD/lib/$$QMAKE_HOST.arch/
+DEPENDPATH += $$PWD/lib/$$QMAKE_HOST.arch/
+
+# macx: PRE_TARGETDEPS += $$PWD/lib/$$QMAKE_HOST.arch/libbench2.a
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
