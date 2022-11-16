@@ -340,6 +340,8 @@ jobs:
             #mv qtvsplayer.app macbuild/
             #cd macbuild/
             pkgbuild --root ./qtvsplayer.app --version ${{ steps.version.outputs.version }} --identifier com.github.QtVsPlayer --install-location /Applications QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg
+            macdeployqt "QtVsPlayer.app" -dmg -always-overwrite
+            mv QtVsPlayer.dmg QtVsPlayer-mac64-${{ steps.version.outputs.version }}.dmg
             tar -czf QtVsPlayer-mac64-${{ steps.version.outputs.version }}.tgz qtvsplayer.app
 
 
@@ -347,7 +349,7 @@ jobs:
         uses: ncipollo/release-action@v1.11.1
         id: create_release
         with:
-          artifacts: "QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg,QtVsPlayer-mac64-${{ steps.version.outputs.version }}.tgz"
+          artifacts: "QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg,QtVsPlayer-mac64-${{ steps.version.outputs.version }}.tgz.pkg,QtVsPlayer-mac64-${{ steps.version.outputs.version }}.dmg"
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
