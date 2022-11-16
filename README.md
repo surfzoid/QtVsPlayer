@@ -83,8 +83,8 @@ sudo apt update
 sudo apt install qtvsplayer  
 
 # Funding  
-If you like my job and be happy to buy me a beer or a coffee:
-https://paypal.me/EricPetit?  
+If you like my job and be happy to buy me a beer or a coffee: 
+https://paypal.me/EricPetit  
 or  
 https://fr.tipeee.com/eric-utopiste  
 
