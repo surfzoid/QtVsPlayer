@@ -82,6 +82,12 @@ sudo curl -s --compressed -o /etc/apt/sources.list.d/surfzoid_list_file.list "ht
 sudo apt update  
 sudo apt install qtvsplayer  
 
+# Fu  
+If you like my job and be happy to buy me a beer or a coffee:
+https://paypal.me/EricPetit?  
+or  
+https://fr.tipeee.com/eric-utopiste  
+
 # Enjoy.  
 
 ![Capture d’écran_2022-04-05_08-32-57](https://user-images.githubusercontent.com/20399920/161693235-66add3e2-b790-4b55-b8ed-dccb3d0b6aa5.png)
