@@ -1,6 +1,7 @@
 VERSION = 1.0.21
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
-QT       += dbus core gui multimedia multimediawidgets
+QT       += core gui multimedia multimediawidgets
+!android:QT       += dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -63,7 +64,7 @@ debugfiles.path = $$(PREFIX)/../lib/debug/usr/bin
 debugfiles.files = $${TARGET}.debug
 !isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles debugfiles docfiles licfiles
 
-unix:!macx: {
+unix:!macx:!android: {
 #CONFIG += separate_debug_info
 CONFIG += force_debug_info
 # INCLUDEPATH += lib
@@ -77,6 +78,14 @@ LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -lPlayCtrl -lSuperRender
 INCLUDEPATH += $$PWD/lib/$$QMAKE_HOST.arch/
 DEPENDPATH += $$PWD/lib/$$QMAKE_HOST.arch/
 ICON = $$PWD/images/QtVsPlayer.icns
+}
+
+android: {
+LIBS += -L$$PWD/lib/armeabi-v7a/ -lPlayCtrl
+
+INCLUDEPATH += $$PWD/lib/armeabi-v7a/
+DEPENDPATH += $$PWD/lib/armeabi-v7a/
+ICON = $$PWD/images/QtVsPlayer.png
 }
 
 # macx: PRE_TARGETDEPS += $$PWD/lib/$$QMAKE_HOST.arch/libbench2.a
@@ -114,8 +123,8 @@ FORMS += \
     settingsform.ui \
     videoctrls.ui
 
-DBUS_ADAPTORS += local.QtVsPlayer.xml
-DBUS_INTERFACES += local.QtVsPlayer.xml
+!android:DBUS_ADAPTORS += local.QtVsPlayer.xml
+!android:DBUS_INTERFACES += local.QtVsPlayer.xml
 
 TRANSLATIONS += \
     QtVsPlayer_fr_FR.ts

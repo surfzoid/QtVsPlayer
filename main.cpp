@@ -1,7 +1,9 @@
 #include "qtvsplayer.h"
 
 #include <QApplication>
+#if (!defined(__ANDROID__))
 #include "qtvsplayer_adaptor.h"
+#endif
 
 using namespace std;
 
@@ -9,9 +11,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-#if (defined(_WIN32))
+#if (!defined(__linux__))
     printf("Debug---DBus is bugy under windows");
-#elif (defined(__linux__) | defined(__APPLE__))
+#elif ((defined(__linux__) | defined(__APPLE__)) &  !defined(__ANDROID__))
     if (!QDBusConnection::sessionBus().isConnected()) {
         qWarning("Cannot connect to the D-Bus session bus.\n"
                  "Please check your system settings and try again.\n mac :brew services start dbus\n linux:systemctl start dbus.service\n");
@@ -30,13 +32,14 @@ int main(int argc, char *argv[])
     {
         //argv.append("/mnt/cams/cam4/HikExtracted/NVR/20220909/20220909-155012-20220909-155524-00010000024000213.mp4");
         if (argc > 1) {
-
+#if (defined(_WIN32))
             new QtVsPlayerAdaptor(&a);
             QDBusConnection::sessionBus().registerObject("/", &a);
             //emit message(m_nickname, messageLineEdit->text());
             QDBusMessage msg = QDBusMessage::createSignal("/", "local.QtVsPlayer", "message");
             msg << QString(argv[1]);
             QDBusConnection::sessionBus().send(msg);
+#endif
         }
 
         //check if QtVsplayer crashed and free sharedMemory

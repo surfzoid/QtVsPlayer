@@ -13,8 +13,11 @@
 #include "videoctrls.h"
 #include <QMimeDatabase>
 #include <QFileSystemWatcher>
+
+#if (!defined(__ANDROID__))
 #include "qtvsplayer_adaptor.h"
 #include "qtvsplayer_interface.h"
+#endif
 
 QStringList QtVsPlayer::fileNames;
 int QtVsPlayer::LastPlayIdx = 0;
@@ -79,6 +82,7 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     ShowHideTimer->start( 10000 );
     QtVsPlayer::connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(ShowHide()));
 
+#if (!defined(__ANDROID__))
     new QtVsPlayerAdaptor(this);
     QDBusConnection::sessionBus().registerObject("/", this);
 
@@ -87,6 +91,7 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     //connect(iface, SIGNAL(message(QString)), this, SLOT(messageSlot(QString)));
     QDBusConnection::sessionBus().connect(QString(), QString(), "local.QtVsPlayer", "message", this, SLOT(messageSlot(QString)));
     connect(iface, SIGNAL(action(QString)), this, SLOT(actionSlot(QString)));
+#endif
 }
 
 QtVsPlayer::~QtVsPlayer()
