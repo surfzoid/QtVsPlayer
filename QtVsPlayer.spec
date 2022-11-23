@@ -59,6 +59,11 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/libSuperRender.so
 
 %changelog
+* Wed Nov 23 2022 surfzoid@gmail.com
++ Regression bug.
++ Don't pause when move slide.
++ Mac support.
+
 * Wed Nov 9 2022 surfzoid@gmail.com
 + RTSP Video resolution info.
 + MS Windows support.
