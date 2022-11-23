@@ -289,7 +289,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-10.15]
+        os: [macos-10.13, macos-10.15]
 
     steps:
       - uses: actions/checkout@v3
@@ -297,6 +297,10 @@ jobs:
       - name: Version
         run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
         id: version
+
+      - name: MacVersion
+        run: echo "::set-output name=version::$(sw_vers -productVersion)"
+        id: MacVersion
 
       - name: Check Version
         run: echo ${{ steps.version.outputs.version }}
@@ -319,12 +323,12 @@ jobs:
           #arch: 'clang_64'
 
         env:
-          PREFIX: ~/QtVsPlayer-mac64-${{ steps.version.outputs.version }}/usr/share
-          INSTALL_ROOT: ~/QtVsPlayer-mac64-${{ steps.version.outputs.version }}/usr/share
+          PREFIX: ~/QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}/usr/share
+          INSTALL_ROOT: ~/QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}/usr/share
           
       - name: qmake
         run: |
-            PREFIX=~/QtVsPlayer-mac64-${{ steps.version.outputs.version }}/usr/share; qmake -Wnone
+            PREFIX=~/QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}/usr/share; qmake -Wnone
 
       - name: make
         run: |
@@ -339,17 +343,17 @@ jobs:
             #mkdir macbuild
             #mv qtvsplayer.app macbuild/
             #cd macbuild/
-            pkgbuild --root ./qtvsplayer.app --version ${{ steps.version.outputs.version }} --identifier com.github.QtVsPlayer --install-location /Applications QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg
+            pkgbuild --root ./qtvsplayer.app --version ${{ steps.version.outputs.version }} --identifier com.github.QtVsPlayer --install-location /Applications QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.pkg
             macdeployqt "QtVsPlayer.app" -dmg -always-overwrite
-            mv QtVsPlayer.dmg QtVsPlayer-mac64-${{ steps.version.outputs.version }}.dmg
-            tar -czf QtVsPlayer-mac64-${{ steps.version.outputs.version }}.tgz qtvsplayer.app
+            mv QtVsPlayer.dmg QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.dmg
+            tar -czf QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.tgz qtvsplayer.app
 
 
       - name: Create Github Release
         uses: ncipollo/release-action@v1.11.1
         id: create_release
         with:
-          artifacts: "QtVsPlayer-mac64-${{ steps.version.outputs.version }}.pkg,QtVsPlayer-mac64-${{ steps.version.outputs.version }}.tgz,QtVsPlayer-mac64-${{ steps.version.outputs.version }}.dmg"
+          artifacts: "QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.pkg,QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.tgz,QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.dmg"
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true

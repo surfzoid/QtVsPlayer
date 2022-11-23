@@ -21,7 +21,7 @@ void* playm4interface::nUser;
 unsigned int  playm4interface::VideoFs(QString fileName)
 {
     VideoCtrls::EndRead = false;
-    BOOL bSuccess;
+    bool bSuccess;
 
     //initval();
     m_pblocalfilepath = fileName;
@@ -81,7 +81,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     SetVideoWin(0);
     RefreshPlay();
 #if (defined(__linux__))
-PlayM4_WndResolutionChange(m_pblocalportnum);
+    PlayM4_WndResolutionChange(m_pblocalportnum);
 #endif
 
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));
@@ -110,7 +110,7 @@ void playm4interface::SetPort()
 {
     if (m_pblocalportnum == -1) {
         //FreePort();
-        BOOL bSuccess;
+        bool bSuccess;
         //from qtdemo//////
         unsigned int dwVersion = PlayM4_GetSdkVersion();
         QString strPlaySDKVersion;
@@ -138,7 +138,7 @@ void playm4interface::SetPort()
 void playm4interface::FreePort()
 {
     if (FsOpened == true) {
-        BOOL bSuccess = false;
+        bool bSuccess = false;
         bSuccess = Stop();
 
         bSuccess = PlayM4_CloseFile(m_pblocalportnum);
@@ -168,6 +168,7 @@ int playm4interface::SetVideoWin(unsigned int nRegionNum)
 #if (defined(__linux__))
     return PlayM4_SetVideoWindow(m_pblocalportnum,nRegionNum,hwnd);
 #endif
+    return nRegionNum;
 
 }
 
@@ -209,7 +210,7 @@ int playm4interface::OneByOneBack()
 
 
 #if (defined(__linux__))
-PlayM4_WndResolutionChange(m_pblocalportnum);
+    PlayM4_WndResolutionChange(m_pblocalportnum);
 #endif
 
     return PlayM4_ReversePlay(m_pblocalportnum);
