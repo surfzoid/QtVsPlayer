@@ -383,14 +383,15 @@ void QtVsPlayer::FullScr()
 
 void QtVsPlayer::resizeEvent(QResizeEvent *event)
 {
-    if (playm4interface::m_pblocalportnum)WinIdWorkarround();
-        WVideoCtrls->move(0,this->height() -
-                          WVideoCtrls->height() -
-                          this->statusBar()->height());
+    WinIdWorkarround();
 
-        //this->ui->FsDisplay->setVisible(false);
-        originH = ui->centralwidget->rect();
-        Zoomed = false;
+    WVideoCtrls->move(0,this->height() -
+                      WVideoCtrls->height() -
+                      this->statusBar()->height());
+
+    //this->ui->FsDisplay->setVisible(false);
+    originH = ui->centralwidget->rect();
+    Zoomed = false;
 
     //surpress warning!
     if (event == nullptr) {
