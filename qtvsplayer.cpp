@@ -542,11 +542,6 @@ void QtVsPlayer::SetWindowTitle(QString Title)
 
 void QtVsPlayer::WinIdWorkarround()
 {
-    /*if (this->isEnabled()) {
-
-        if (this->centralWidget())
-        {*/
-
     playm4interface::hwnd = 0;
 
     playm4interface::SetVideoWin(0);
@@ -558,8 +553,7 @@ void QtVsPlayer::WinIdWorkarround()
 #if (defined(__linux__))
     PlayM4_WndResolutionChange(playm4interface::m_pblocalportnum);
 #endif
-    //}
-    //}
+
     return;
 }
 

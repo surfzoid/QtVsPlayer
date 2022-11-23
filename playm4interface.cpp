@@ -165,7 +165,10 @@ int playm4interface::RefreshPlay()
 
 int playm4interface::SetVideoWin(unsigned int nRegionNum)
 {
+#if (defined(__linux__))
     return PlayM4_SetVideoWindow(m_pblocalportnum,nRegionNum,hwnd);
+#endif
+
 }
 
 int playm4interface::Pause(unsigned int nPause)//nPause=1 pause, =0 resume
