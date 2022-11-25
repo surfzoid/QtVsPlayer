@@ -1,3 +1,18 @@
+Don't use timer to show/hide cursor and videoctrl
+Encrypt password
+
+Remenber size and position of windows.
+
+When saving presset name, save in the device
+
+Make ptz command more accurate
+
+Add the first callback descripe in the doc
+
+Playctrl when zoom and move , make mousse position relative to the center of the picture, or to offset
+
+Setup qtcreator on PI400 to compil with clang
+
 An stop/play and/or play from playlist, break order of calling Hik API.Did  ok
 
 Add sound managment ok 2022.05.09
@@ -6,28 +21,12 @@ Select the line in the playlist of the curent play file.Did  ok
 
 Tweak the pro/qmake file to provide better make install.Did  ok
 
-Setup qtcreator on PI400 to compil with clang
-
 add play rtsp.Did it ok
 
 add save setting.Did it ok
 
-aarch64, try the lib of UOS deb pkg
-
-Make ptz command more accurate
-
-Playctrl when zoom and move , make mousse position relative to the center of the picture, or to offset
-
 Save preset and patrol name. Did it 2022.04.12
-
-Add the first callback descripe in the doc
 
 Add ptz->reboot Did it 2022.05.24
 
-When saving presset name, save in the device
-
 Rtsp player, set default filename of snapshot to camName + date now Did it 2022.05.24
-
-Encrypt password
-
-Remenber size and position of windows.

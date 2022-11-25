@@ -279,7 +279,7 @@ jobs:
 
   Mac:
     # The type of runner that the job will run on
-    name: ${{ matrix.config.name }}
+    name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     env:
         CC: gcc
