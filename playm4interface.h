@@ -52,6 +52,7 @@ public:
     static void SetPort();
     static void FreePort();
     static void GetMetadatas();
+    static FRAME_INFO * pFRAME_INFO;
 private:
 
     static void DisplayError(QString Source, unsigned int  ErrMess);

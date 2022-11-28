@@ -17,6 +17,7 @@ int playm4interface::m_pblocalportnum = -1;
 QString playm4interface::m_pblocalfilepath;
 bool playm4interface::FsOpened = false;
 void* playm4interface::nUser;
+FRAME_INFO *playm4interface::pFRAME_INFO;
 
 unsigned int  playm4interface::VideoFs(QString fileName)
 {
@@ -57,7 +58,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 #elif defined(__linux__)
     //callback work, but no sound anymore !!!
     //int  PlayM4_SetDecCallBackMend(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2), void* nUser);
-    //PlayM4_SetDecCallBackMend(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack, nUser);
+    PlayM4_SetDecCallBackMend(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack, nUser);
 #endif
 
     bSuccess = PlayM4_Play(m_pblocalportnum, hwnd);
@@ -356,6 +357,7 @@ void CALLBACK playm4interface::SetVerifyCallBack(int nPort, FRAME_POS* pFilePos,
 
 void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2)
 {
-    //printf("SetDecCallBack---%ld:%ld\n\r",nPort, nSize);
-
+    //printf("SetDecCallBack---%l:%l\n\r",nPort, nSize);
+    //qDebug() <<  pFrameInfo;
+    pFRAME_INFO = pFrameInfo;
 }

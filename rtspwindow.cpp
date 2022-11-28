@@ -282,6 +282,7 @@ void RtspWindow::on_actionMetadata_triggered()
     GetMetaData(player);
     QSize Vreso = videoWidget->sizeHint();
     printf("Video resolution: %dX%d\n\r",Vreso.width(),Vreso.height());
+    qDebug() << "Video resolution: " << Vreso.width() <<"X" << Vreso.height();
     return;
 
     bool IsMeta ;

@@ -223,11 +223,6 @@ jobs:
       - name: Check Version
         run: echo ${{ steps.version.outputs.version }}
 
-      #- uses: ilammy/msvc-dev-cmd@v1.12.0
-      #- name: Install MinGW
-      #  uses: egor-tensin/setup-mingw@v2
-
-
       - name: Install Qt
         uses: jurplel/install-qt-action@v3.0.0
         with:
@@ -305,10 +300,6 @@ jobs:
       - name: Check Version
         run: echo ${{ steps.version.outputs.version }}
 
-      #- name: Setup C++ environment
-      #  run: |
-      #      pip3 install setuptools
-
       - name: py setup
         run: |
             pip3 install --upgrade pip
@@ -320,7 +311,6 @@ jobs:
         with:
           version: '5.15.2'
           dir: 'qt'
-          #arch: 'clang_64'
 
         env:
           PREFIX: ~/QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}/usr/share

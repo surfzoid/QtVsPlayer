@@ -625,6 +625,13 @@ void QtVsPlayer::test()
 void QtVsPlayer::on_actionInfos_triggered()
 {
     playm4interface::GetMetadatas();
+
+    qDebug() << "FrameNum : " <<playm4interface::pFRAME_INFO->dwFrameNum;
+    qDebug() << "FrameRate : " <<playm4interface::pFRAME_INFO->nFrameRate;
+    qDebug() << "Width : " <<playm4interface::pFRAME_INFO->nWidth;
+    qDebug() << "Height : " <<playm4interface::pFRAME_INFO->nHeight;
+    qDebug() << "Stamp : " <<playm4interface::pFRAME_INFO->nStamp;
+    qDebug() << "Type : " <<playm4interface::pFRAME_INFO->nType;
 }
 
 void QtVsPlayer::messageSlot(const QString &text)
@@ -659,3 +666,4 @@ void QtVsPlayer::actionSlot(const QString &text)
     m_messages.append(text);
 
 }
+
