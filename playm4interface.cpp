@@ -43,8 +43,6 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         //DisplayError("PlayM4_GetPort", PlayM4_GetLastError(m_pblocalportnum));
     }
 
-    //InitCallback(0,PlayM4_GetFileTime(m_pblocalportnum));
-    InitCallback(0,1);
 
     FsOpened= PlayM4_OpenFile(m_pblocalportnum, m_pblocalfilepath.toUtf8().data());
     DisplayError("PlayM4_OpenFile",PlayM4_GetLastError(m_pblocalportnum));
@@ -53,13 +51,6 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
     //BOOL __stdcall    PlayM4_SetDecCallBack(LONG nPort,void (CALLBACK* DecCBFun)(long nPort,char * pBuf,long nSize,FRAME_INFO * pFrameInfo, long nReserved1,long nReserved2));
 
-#if (defined(_WIN32))
-    //PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
-#elif defined(__linux__)
-    //callback work, but no sound anymore !!!
-    //int  PlayM4_SetDecCallBackMend(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2), void* nUser);
-    PlayM4_SetDecCallBackMend(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack, nUser);
-#endif
 
     bSuccess = PlayM4_Play(m_pblocalportnum, hwnd);
     DisplayError("PlayM4_Play",PlayM4_GetLastError(m_pblocalportnum));
@@ -85,6 +76,15 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     PlayM4_WndResolutionChange(m_pblocalportnum);
 #endif
 
+    //InitCallback(0,PlayM4_GetFileTime(m_pblocalportnum));
+    InitCallback(0,1);
+#if (defined(_WIN32))
+    //PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
+#elif defined(__linux__)
+    //callback work, but no sound anymore !!!
+    //int  PlayM4_SetDecCallBackMend(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2), void* nUser);
+    PlayM4_SetDecCallBackMend(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack, nUser);
+#endif
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));
     return 0;//PlayM4_GetLastError(m_pblocalportnum);
 }
