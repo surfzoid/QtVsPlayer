@@ -44,8 +44,12 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     }
 
 
+    InitCallback(0,1);
     FsOpened= PlayM4_OpenFile(m_pblocalportnum, m_pblocalfilepath.toUtf8().data());
     DisplayError("PlayM4_OpenFile",PlayM4_GetLastError(m_pblocalportnum));
+    qDebug() << "File Time" << PlayM4_GetFileTime(m_pblocalportnum);
+    qDebug() << "TotalFrames" <<  PlayM4_GetFileTotalFrames(m_pblocalportnum);
+    //qDebug() << PlayM4_GetPictureSize(m_pblocalportnum,pWidth, *pHeight);
 
     GetCap(PlayM4_GetCaps());
 
@@ -54,6 +58,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
     bSuccess = PlayM4_Play(m_pblocalportnum, hwnd);
     DisplayError("PlayM4_Play",PlayM4_GetLastError(m_pblocalportnum));
+    //PlayM4_SetCurrentFrameNum(m_pblocalportnum, 0);
 
     bSuccess = PlayM4_PlaySound(m_pblocalportnum);
     DisplayError("PlayM4_PlaySound",PlayM4_GetLastError(m_pblocalportnum));
@@ -76,15 +81,6 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     PlayM4_WndResolutionChange(m_pblocalportnum);
 #endif
 
-    //InitCallback(0,PlayM4_GetFileTime(m_pblocalportnum));
-    InitCallback(0,1);
-#if (defined(_WIN32))
-    //PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
-#elif defined(__linux__)
-    //callback work, but no sound anymore !!!
-    //int  PlayM4_SetDecCallBackMend(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2), void* nUser);
-    PlayM4_SetDecCallBackMend(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack, nUser);
-#endif
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));
     return 0;//PlayM4_GetLastError(m_pblocalportnum);
 }
@@ -309,20 +305,6 @@ void playm4interface::GetMetadatas()
 void playm4interface::InitCallback( unsigned int nBeginTime, unsigned int nEndTime)
 {
 
-#if (defined(_WIN32))
-    //PlayM4_SetFileRefCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
-#elif defined(__linux__)
-    //int  PlayM4_SetFileRefCallBack(int nPort, void (CALLBACK *pFileRefDone)(unsigned int nPort,void* nUser),void* nUser);
-    PlayM4_SetFileRefCallBack(m_pblocalportnum, (void (CALLBACK *)(unsigned int,void*))SetFileRefCallBack,nUser);
-#endif
-
-#if (defined(_WIN32))
-    //PlayM4_SetAudioCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
-#elif defined(__linux__)
-    //int          PlayM4_SetAudioCallBack(int nPort, void (__stdcall* funAudio)(int nPort, char* pAudioBuf, int nSize, int nStamp, int nType, int nUser), int nUser);
-    PlayM4_SetAudioCallBack(m_pblocalportnum, (void (CALLBACK *)(int, char*, int, int, int, int))SetAudioCallBack,0);
-#endif
-
 
 #if (defined(_WIN32))
     //PlayM4_SetVerifyCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
@@ -332,6 +314,13 @@ void playm4interface::InitCallback( unsigned int nBeginTime, unsigned int nEndTi
 #endif
 
 
+#if (defined(_WIN32))
+    //PlayM4_SetFileRefCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
+#elif defined(__linux__)
+    //int  PlayM4_SetFileRefCallBack(int nPort, void (CALLBACK *pFileRefDone)(unsigned int nPort,void* nUser),void* nUser);
+    PlayM4_SetFileRefCallBack(m_pblocalportnum, (void (CALLBACK *)(unsigned int,void*))SetFileRefCallBack,nUser);
+#endif
+
     //PlayM4_SetFileEndMsg(m_pblocalportnum, hwnd,0);
 
 
@@ -340,6 +329,25 @@ void playm4interface::InitCallback( unsigned int nBeginTime, unsigned int nEndTi
 void CALLBACK playm4interface::SetFileRefCallBack(int nPort,void* nUser)
 {
     printf("SetFileRefCallBack---%u:%u\n\r",nPort, nUser);
+
+    //InitCallback(0,PlayM4_GetFileTime(m_pblocalportnum));
+
+#if (defined(_WIN32))
+    //PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
+#elif defined(__linux__)
+    //callback work, but no sound anymore !!!
+    //int  PlayM4_SetDecCallBackMend(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2), void* nUser);
+    //or
+    //int  PlayM4_SetDecCallBack(int nPort,void (CALLBACK* DecCBFun)(int nPort,char* pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2));
+    PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
+#endif
+
+#if (defined(_WIN32))
+    //PlayM4_SetAudioCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long))SetAudioCallBack,0);
+#elif defined(__linux__)
+    //int          PlayM4_SetAudioCallBack(int nPort, void (__stdcall* funAudio)(int nPort, char* pAudioBuf, int nSize, int nStamp, int nType, int nUser), int nUser);
+    PlayM4_SetAudioCallBack(m_pblocalportnum, (void (CALLBACK *)(int, char*, int, int, int, int))SetAudioCallBack,0);
+#endif
 
 }
 
