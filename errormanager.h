@@ -121,11 +121,11 @@ public:
 
 
        }
-       if (errcode > 0) {
+       if (errcode > 0 && errcode != 16) {
            printf("pyd---Hik Sdk error response :from %s : %s\n\r", Source.toUtf8().data(), errtxt.toUtf8().data());
        }
 
-       if (errtxt == "") {
+       if (errcode != 16 && errtxt == "") {
            printf("pyd---Hik Sdk error unknow response :from %s : %u\n\r", Source.toUtf8().data(), errcode);
        }
 
