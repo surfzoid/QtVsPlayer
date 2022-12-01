@@ -139,7 +139,7 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
 void QtVsPlayer::ParseArgs(QStringList args)
 {
     //HideCtrl();
-    playm4interface::SetPort();
+    //playm4interface::SetPort();
     if (playm4interface::hwnd == 0) {
         playm4interface::hwnd = centralWidgetwinId;
         playm4interface::SetVideoWin(0);
@@ -234,7 +234,7 @@ void QtVsPlayer::Play (QStringList Files)
     filesLs->Populate(Files,true);
     VideoCtrls::PLast = false;
     LastPlayIdx = 0 ;
-    playm4interface::SetPort();
+    //playm4interface::SetPort();
     PlayNextFile(false,0);
 
     return;

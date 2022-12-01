@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.23
+Version:        1.0.24
 Release:        %mkrel 2
 License:        GPLv3
 Group:          Video/Players
@@ -59,6 +59,9 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/libSuperRender.so
 
 %changelog
+* Thu Dec 1 2022 surfzoid@gmail.com
++ Always hell of callbacks
+
 * Mon Nov 28 2022 surfzoid@gmail.com
 + Display video infos in the terminal
 
