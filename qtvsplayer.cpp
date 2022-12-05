@@ -96,7 +96,7 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 
 QtVsPlayer::~QtVsPlayer()
 {
-    playm4interface::FreePort();
+    //playm4interface::FreePort();
     /*playm4interface::~playm4interface();*/
     if (filesLs != NULL)
     {
@@ -142,7 +142,6 @@ void QtVsPlayer::ParseArgs(QStringList args)
     //playm4interface::SetPort();
     if (playm4interface::hwnd == 0) {
         playm4interface::hwnd = centralWidgetwinId;
-        playm4interface::SetVideoWin(0);
         playm4interface::RefreshPlay();
     }
 
@@ -544,16 +543,9 @@ void QtVsPlayer::WinIdWorkarround()
 {
     playm4interface::hwnd = 0;
 
-    playm4interface::SetVideoWin(0);
     playm4interface::RefreshPlay();
     playm4interface::hwnd = centralWidgetwinId;
-    playm4interface::SetVideoWin(0);
     playm4interface::RefreshPlay();
-
-#if (defined(__linux__))
-    PlayM4_WndResolutionChange(playm4interface::m_pblocalportnum);
-#endif
-
     return;
 }
 

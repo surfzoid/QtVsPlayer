@@ -40,18 +40,18 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         {
             DisplayError("PlayM4_CloseFile", PlayM4_GetLastError(m_pblocalportnum));
         }
-
+        FreePort();
         FsOpened = false;
         m_pblocalportnum = -1;
     }
     if (m_pblocalportnum == -1) {
 
         SetPort();
-        InitCallback(1,360);
     }
 
 
     FsOpened= PlayM4_OpenFile(m_pblocalportnum, m_pblocalfilepath.toUtf8().data());
+    InitCallback(1,360);
 
     if (!FsOpened)
     {
@@ -66,15 +66,11 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         }
     }
 
-    int width = 0, height = 0;
-    PlayM4_GetPictureSize(m_pblocalportnum,&width,&height);
-    qDebug()  << width << "x" << height << " <- PlayM4_GetPictureSize()" ;
-
-    int FsTime =PlayM4_GetFileTime(m_pblocalportnum);
-    qDebug() << "File Time" << FsTime;
-    int frames = PlayM4_GetFileTotalFrames(m_pblocalportnum); // STEP-6
-    qDebug()  << frames << " <- PlayM4_GetFileTotalFrames()";
-
+    if (!PlayM4_GetCaps())
+    {
+        DisplayError("PlayM4_GetCaps",PlayM4_GetLastError(m_pblocalportnum));
+        //PlayM4_SetCurrentFrameNum(m_pblocalportnum, 0);
+    }
 
     //BOOL __stdcall    PlayM4_SetDecCallBack(LONG nPort,void (CALLBACK* DecCBFun)(long nPort,char * pBuf,long nSize,FRAME_INFO * pFrameInfo, long nReserved1,long nReserved2));
 
@@ -89,6 +85,20 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         DisplayError("PlayM4_PlaySound",PlayM4_GetLastError(m_pblocalportnum));
     }
 
+    int frames = PlayM4_GetFileTotalFrames(m_pblocalportnum); // STEP-6
+    qDebug()  << frames << " <- PlayM4_GetFileTotalFrames()";
+
+    int FsTime =PlayM4_GetFileTime(m_pblocalportnum);
+    qDebug() << "File Time" << FsTime;
+
+    PlayM4_GetSourceBufferRemain(m_pblocalportnum);
+    PlayM4_ResetSourceBuffer(m_pblocalportnum);
+    PlayM4_ResetSourceBufFlag(m_pblocalportnum);
+
+    int width = 0, height = 0;
+    PlayM4_GetPictureSize(m_pblocalportnum,&width,&height);
+    qDebug()  << width << "x" << height << " <- PlayM4_GetPictureSize()" ;
+
 
     //delay();
     QtVsPlayer::WVideoCtrls->RestoreSeek();
@@ -97,14 +107,8 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     QtVsPlayer::WVideoCtrls->InitTimeSlide();
 
 
-    SetVideoWin(0);
+
     RefreshPlay();
-#if (defined(__linux__))
-    if (!PlayM4_WndResolutionChange(m_pblocalportnum))
-    {
-        DisplayError("PlayM4_WndResolutionChange",PlayM4_GetLastError(m_pblocalportnum));
-    }
-#endif
 
     if (!PlayM4_SyncToAudio(m_pblocalportnum, true))
     {
@@ -185,12 +189,12 @@ void playm4interface::FreePort()
             DisplayError("PlayM4_StopSound", PlayM4_GetLastError(m_pblocalportnum));
         }
 
-        if (PlayM4_CloseFile(m_pblocalportnum))
+        if (!PlayM4_CloseFile(m_pblocalportnum))
         {
             DisplayError("PlayM4_CloseFile", PlayM4_GetLastError(m_pblocalportnum));
         }
 
-        if (PlayM4_FreePort(m_pblocalportnum))
+        if (!PlayM4_FreePort(m_pblocalportnum))
         {
             DisplayError("PlayM4_FreePort", PlayM4_GetLastError(m_pblocalportnum));
         }
@@ -204,8 +208,21 @@ void playm4interface::FreePort()
 
 int playm4interface::RefreshPlay()
 {
-    //return PlayM4_RefreshPlay(m_pblocalportnum);
-    //DisplayError("PlayM4_RefreshPlay", PlayM4_GetLastError(m_pblocalportnum));
+    if(isIndexed) {
+        SetVideoWin(0);
+#if (defined(__linux__))
+        if (!PlayM4_WndResolutionChange(m_pblocalportnum))
+        {
+            DisplayError("PlayM4_WndResolutionChange",PlayM4_GetLastError(m_pblocalportnum));
+        }
+#endif
+        //return PlayM4_RefreshPlay(m_pblocalportnum);
+
+        if (!PlayM4_RefreshPlay(m_pblocalportnum))
+        {
+            DisplayError("PlayM4_RefreshPlay",PlayM4_GetLastError(m_pblocalportnum));
+        }
+    }
     return 0;
 }
 
@@ -225,7 +242,9 @@ int playm4interface::Pause(unsigned int nPause)//nPause=1 pause, =0 resume
 
 int playm4interface::Play()
 {
-    return PlayM4_Play(m_pblocalportnum,hwnd);
+    bool Ret = PlayM4_Play(m_pblocalportnum,hwnd);
+    RefreshPlay();
+    return Ret;
 }
 
 int playm4interface::Stop()
@@ -385,16 +404,6 @@ void playm4interface::InitCallback( unsigned int nBeginTime, unsigned int nEndTi
         DisplayError("PlayM4_SetAudioCallBack",PlayM4_GetLastError(m_pblocalportnum));
     }
 
-#if (defined(_WIN32))
-    //CallBResp = PlayM4_SetVerifyCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
-#elif defined(__linux__)
-    //int          PlayM4_SetVerifyCallBack(int nPort, unsigned int nBeginTime, unsigned int nEndTime, void (__stdcall* funVerify)(int nPort, FRAME_POS* pFilePos, unsigned int bIsVideo, unsigned int nUser), unsigned int nUser);
-    CallBResp = PlayM4_SetVerifyCallBack(m_pblocalportnum, nBeginTime, nEndTime,(void (CALLBACK *)(int, FRAME_POS*, unsigned int, unsigned int ))SetVerifyCallBack,0);
-#endif
-    if (!CallBResp){
-        DisplayError("PlayM4_SetVerifyCallBack",PlayM4_GetLastError(m_pblocalportnum));
-    }
-
 
 }
 
@@ -402,6 +411,18 @@ void CALLBACK playm4interface::SetFileRefCallBack(int nPort,void* nUser)
 {
     isIndexed = true;
     qDebug()  << "Callback called, file is indexed (" << nPort << "," << nUser<< ")";
+
+    bool CallBResp = false;
+
+#if (defined(_WIN32))
+    //CallBResp = PlayM4_SetVerifyCallBack(m_pblocalportnum, (void (__stdcall *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
+#elif defined(__linux__)
+    //int          PlayM4_SetVerifyCallBack(int nPort, unsigned int nBeginTime, unsigned int nEndTime, void (__stdcall* funVerify)(int nPort, FRAME_POS* pFilePos, unsigned int bIsVideo, unsigned int nUser), unsigned int nUser);
+    CallBResp = PlayM4_SetVerifyCallBack(m_pblocalportnum, 0, 360,(void (CALLBACK *)(int, FRAME_POS*, unsigned int, unsigned int ))SetVerifyCallBack,0);
+#endif
+    if (!CallBResp){
+        DisplayError("PlayM4_SetVerifyCallBack",PlayM4_GetLastError(m_pblocalportnum));
+    }
 }
 
 void CALLBACK playm4interface::SetAudioCallBack(int nPort, char* pAudioBuf, int nSize, int nStamp, int nType, int nUser)

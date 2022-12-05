@@ -297,10 +297,9 @@ void CALLBACK PlayM4DisplayCallBack(int nPort, char *pBuf, int size, int width, 
 void VideoCtrls::on_SnapshotButton_released()
 {
     PlayM4_SetPicQuality(HikNumPort,1);
-    int *width = new int(1024);
-    int *height = new int(768);
 
-    PlayM4_GetPictureSize(HikNumPort,width,height);
+    int width = 0, height = 0;
+    PlayM4_GetPictureSize(HikNumPort,&width,&height);
 
     IsSnapShoot = true;
 

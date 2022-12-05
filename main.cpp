@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     {
         //argv.append("/mnt/cams/cam4/HikExtracted/NVR/20220909/20220909-155012-20220909-155524-00010000024000213.mp4");
         if (argc > 1) {
-#if (defined(_WIN32))
+#if (defined(__linux__) | defined(__APPLE__))
             new QtVsPlayerAdaptor(&a);
             QDBusConnection::sessionBus().registerObject("/", &a);
             //emit message(m_nickname, messageLineEdit->text());

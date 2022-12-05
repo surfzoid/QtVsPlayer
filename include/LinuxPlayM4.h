@@ -2,19 +2,16 @@
 #define __LINUX_PLAYM4_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+    extern "C"
+    {
 #endif
 
 typedef unsigned int PLAYM4_HWND;
 typedef void * PLAYM4_HDC;
 
-#define  BOOL  int
-typedef unsigned int   COLORKEY;
-typedef unsigned int   COLORREF;
 #define PLAYM4_API
 
-//#define __stdcall
+#define __stdcall
 
 #ifndef CALLBACK
 #define CALLBACK
@@ -32,12 +29,12 @@ typedef unsigned int   COLORREF;
 #define TIMER_2 2 //Not limit;But the precision less than TIMER_1;
 
 //BUFFER AND DATA TYPE
-#define BUF_VIDEO_SRC      (1) //mixed input,total src buffer size;splited input,video src buffer size
-#define BUF_AUDIO_SRC      (2) //mixed input,not defined;splited input,audio src buffer size
-#define BUF_VIDEO_RENDER   (3) //video render node count or node cout for decoded data
-#define BUF_AUDIO_RENDER   (4) //audio render node count
-#define BUF_VIDEO_DECODED  (5) //video decoded node count to render
-#define BUF_AUDIO_DECODED  (6) //audio decoded node count to render
+#define BUF_VIDEO_SRC               (1) //mixed input,total src buffer size;splited input,video src buffer size
+#define BUF_AUDIO_SRC               (2) //mixed input,not defined;splited input,audio src buffer size
+#define BUF_VIDEO_RENDER            (3) //video render node count or node cout for decoded data
+#define BUF_AUDIO_RENDER            (4) //audio render node count
+#define BUF_VIDEO_DECODED           (5) //video decoded node count to render
+#define BUF_AUDIO_DECODED           (6) //audio decoded node count to render
 
 //Error code
 #define  PLAYM4_NOERROR					0	//no error
@@ -73,39 +70,39 @@ typedef unsigned int   COLORREF;
 #define  PLAYM4_DECODE_KEYFRAME_ERROR  30   //add by hy 20090318
 #define  PLAYM4_NEED_MORE_DATA         31   //add by hy 20100617
 #define  PLAYM4_INVALID_PORT		   32	//add by cj 20100913
-#define  PLAYM4_NOT_FIND      33	//add by cj 20110428
+#define  PLAYM4_NOT_FIND               33	//add by cj 20110428
 #define  PLAYM4_NEED_LARGER_BUFFER     34  //add by pzj 20130528
 #define  PLAYM4_FAIL_UNKNOWN		   99   //Fail, but the reason is unknown;
 
-//ÓãÑÛ¹¦ÄÜ´íÎóÂë
-#define PLAYM4_FEC_ERR_ENABLEFAIL				100 // ÓãÑÛÄ£¿é¼ÓÔØÊ§°Ü
-#define PLAYM4_FEC_ERR_NOTENABLE				101 // ÓãÑÛÄ£¿éÃ»ÓÐ¼ÓÔØ
-#define PLAYM4_FEC_ERR_NOSUBPORT				102 // ×Ó¶Ë¿ÚÃ»ÓÐ·ÖÅä
-#define PLAYM4_FEC_ERR_PARAMNOTINIT				103 // Ã»ÓÐ³õÊ¼»¯¶ÔÓ¦¶Ë¿ÚµÄ²ÎÊý
-#define PLAYM4_FEC_ERR_SUBPORTOVER				104 // ×Ó¶Ë¿ÚÒÑ¾­ÓÃÍê
-#define PLAYM4_FEC_ERR_EFFECTNOTSUPPORT			105 // ¸Ã°²×°·½Ê½ÏÂÕâÖÖÐ§¹û²»Ö§³Ö
-#define PLAYM4_FEC_ERR_INVALIDWND				106 // ·Ç·¨µÄ´°¿Ú
-#define PLAYM4_FEC_ERR_PTZOVERFLOW				107 // PTZÎ»ÖÃÔ½½ç
-#define PLAYM4_FEC_ERR_RADIUSINVALID			108 // Ô²ÐÄ²ÎÊý·Ç·¨
-#define PLAYM4_FEC_ERR_UPDATENOTSUPPORT			109 // Ö¸¶¨µÄ°²×°·½Ê½ºÍ½ÃÕýÐ§¹û£¬¸Ã²ÎÊý¸üÐÂ²»Ö§³Ö
-#define PLAYM4_FEC_ERR_NOPLAYPORT				110 // ²¥·Å¿â¶Ë¿ÚÃ»ÓÐÆôÓÃ
-#define PLAYM4_FEC_ERR_PARAMVALID				111 // ²ÎÊýÎª¿Õ
-#define PLAYM4_FEC_ERR_INVALIDPORT				112 // ·Ç·¨×Ó¶Ë¿Ú
-#define PLAYM4_FEC_ERR_PTZZOOMOVER				113 // PTZ½ÃÕý·¶Î§Ô½½ç
-#define PLAYM4_FEC_ERR_OVERMAXPORT				114 // ½ÃÕýÍ¨µÀ±¥ºÍ£¬×î´óÖ§³ÖµÄ½ÃÕýÍ¨µÀÎªËÄ¸ö
-#define PLAYM4_FEC_ERR_ENABLED         115 // ¸Ã¶Ë¿ÚÒÑ¾­ÆôÓÃÁËÓãÑÛÄ£¿é
-#define PLAYM4_FEC_ERR_D3DACCENOTENABLE			116 // D3D¼ÓËÙÃ»ÓÐ¿ªÆô-windowsÓãÑÛ´íÎóÂë-LinuxÎÞ
-#define PLAYM4_FEC_ERR_PLACETYPE       117 // °²×°·½Ê½²»¶Ô.Ò»¸ö²¥·Å¿âport£¬¶ÔÓ¦Ò»ÖÖ°²×°·½Ê½
-#define PLAYM4_FEC_ERR_NULLWND         118 // ÉèÖÃµÄÓãÑÛ´°¿ÚhWndÎªnull»òÕßÓãÑÛportµÄ´°¿Ú¸ü»»
-#define PLAYM4_FEC_ERR_CorrectType     119 // ½ÃÕý·½Ê½ÒÑÓÐ,²»ÄÜ¿ª¶à¸ö,Ò»¸ö²¥·Å¿âport,³ýÁËPTZ,ÆäËû½ÃÕý·½Ê½Ö»ÄÜ¿ªÒ»Â·;ÇÒÉèÖÃ180¶È½ÃÕýÊ±Ö»ÄÜÎªµ¥¶ÀµÄÒ»Â·¡£
+//Error Code of Fisheye Module
+#define PLAYM4_FEC_ERR_ENABLEFAIL				100 // Loading fisheye module failed.
+#define PLAYM4_FEC_ERR_NOTENABLE				101 // The fisheye module is not loaded.
+#define PLAYM4_FEC_ERR_NOSUBPORT				102 // The sub port is not allocated.
+#define PLAYM4_FEC_ERR_PARAMNOTINIT				103 // No initialized port parameters.
+#define PLAYM4_FEC_ERR_SUBPORTOVER				104 // The sub port is occupied.
+#define PLAYM4_FEC_ERR_EFFECTNOTSUPPORT			105 // This function is not supported under this mounting type.
+#define PLAYM4_FEC_ERR_INVALIDWND				106 // Illegal window.
+#define PLAYM4_FEC_ERR_PTZOVERFLOW				107 // PTZ position is out of limit.
+#define PLAYM4_FEC_ERR_RADIUSINVALID			108 // Illegal parameters of the circle center
+#define PLAYM4_FEC_ERR_UPDATENOTSUPPORT			109 // Specified mounting type and dewarping effect. Updating parameters is not supported.
+#define PLAYM4_FEC_ERR_NOPLAYPORT				110 // The player port is not enabled.
+#define PLAYM4_FEC_ERR_PARAMVALID				111 // The parameter is empty.
+#define PLAYM4_FEC_ERR_INVALIDPORT				112 // Illegal sub port
+#define PLAYM4_FEC_ERR_PTZZOOMOVER				113 // The PTZ dewarping range is out of limit.
+#define PLAYM4_FEC_ERR_OVERMAXPORT				114 // No more dewarping channel is allowed. Up to four channels are supported.
+#define PLAYM4_FEC_ERR_ENABLED                  115 // The fisheye module of this port is enabled.
+#define PLAYM4_FEC_ERR_D3DACCENOTENABLE			116 // D3D acceleration is not enabled-Error code of fisheye in the Windows system-not available for Linux system
+#define PLAYM4_FEC_ERR_PLACETYPE                117 // Invalid mounting type, one player port corresponds to one mounting type.
+#define PLAYM4_FEC_ERR_NULLWND                  118 // The configured fisheye window hWnd is null or the fisheye port window changed.
+#define PLAYM4_FEC_ERR_CorrectType              119 // The dewarping type already exists. Only one dewarping type can be enabled for one player port (except PTZ dewarping). And only one channel is supported when setting 180 panorama dewarping.
 
 //Max display regions.
 #define MAX_DISPLAY_WND 4
 
 //Display type
-#define DISPLAY_NORMAL   0x00000001
-#define DISPLAY_QUARTER  0x00000002
-#define DISPLAY_YC_SCALE 0x00000004	//add by gb 20091116
+#define DISPLAY_NORMAL            0x00000001
+#define DISPLAY_QUARTER           0x00000002
+#define DISPLAY_YC_SCALE          0x00000004	//add by gb 20091116
 #define DISPLAY_NOTEARING         0x00000008
 //Display buffers
 #define MAX_DIS_FRAMES 50
@@ -141,34 +138,34 @@ typedef unsigned int   COLORREF;
 #define SUPPORT_SSE         128
 #define SUPPORT_MMX			256
 
-// ÒÔÏÂºê¶¨ÒåÓÃÓÚHIK_MEDIAINFO½á¹¹
-#define FOURCC_HKMI			0x484B4D49	// "HKMI" HIK_MEDIAINFO½á¹¹±ê¼Ç
-// ÏµÍ³·â×°¸ñÊ½
-#define SYSTEM_NULL			0x0				// Ã»ÓÐÏµÍ³²ã£¬´¿ÒôÆµÁ÷»òÊÓÆµÁ÷
-#define SYSTEM_HIK 0x1				// º£¿µÎÄ¼þ²ã
-#define SYSTEM_MPEG2_PS     0x2				// PS·â×°
-#define SYSTEM_MPEG2_TS     0x3				// TS·â×°
-#define SYSTEM_RTP 0x4				// rtp·â×°
-#define SYSTEM_RTPHIK       0x401				// rtp·â×°
+// The following macro definitions are for HIK_MEDIAINFO structure
+#define FOURCC_HKMI			0x484B4D49	// Mark of "HKMI" HIK_MEDIAINFO structure
+// System packaging format
+#define SYSTEM_NULL			0x0				// No system layer, audio stream or video stream
+#define SYSTEM_HIK          0x1				// Hikvision file layer
+#define SYSTEM_MPEG2_PS     0x2				// PS packaging
+#define SYSTEM_MPEG2_TS     0x3				// TS packaging
+#define SYSTEM_RTP          0x4				// RTP packaging
+#define SYSTEM_RTPHIK       0x401				// RTP packaging
 
-// ÊÓÆµ±àÂëÀàÐÍ
-#define VIDEO_NULL 0x0 // Ã»ÓÐÊÓÆµ
-#define VIDEO_H264 0x1 // ±ê×¼H.264ºÍº£¿µH.264¶¼¿ÉÒÔÓÃÕâ¸ö¶¨Òå
-#define VIDEO_MPEG2			0x2	// ±ê×¼MPEG2
-#define VIDEO_MPEG4         0x3 // ±ê×¼MPEG4
+// Video encoding type
+#define VIDEO_NULL          0x0 // No video
+#define VIDEO_H264          0x1 // This definition is available for both the standard H.264 and hivision H.264
+#define VIDEO_MPEG2			0x2	// Standard MPEG2
+#define VIDEO_MPEG4         0x3 // Standard MPEG4
 #define VIDEO_MJPEG			0x4
 #define VIDEO_AVC264        0x0100
 
-// ÒôÆµ±àÂëÀàÐÍ
-#define AUDIO_NULL 0x0000 // Ã»ÓÐÒôÆµ
+// Audio Encoding Type
+#define AUDIO_NULL          0x0000 // No audio
 #define AUDIO_ADPCM         0x1000 // ADPCM
-#define AUDIO_MPEG 0x2000 // MPEG ÏµÁÐÒôÆµ£¬½âÂëÆ÷ÄÜ×ÔÊÊÓ¦¸÷ÖÖMPEGÒôÆµ
-#define AUDIO_AAC  0x2001 // AAC
-#define AUDIO_RAW_DATA8     0x7000 //²ÉÑùÂÊÎª8kµÄÔ­Ê¼Êý¾Ý
-#define AUDIO_RAW_UDATA16   0x7001 //²ÉÑùÂÊÎª16kµÄÔ­Ê¼Êý¾Ý£¬¼´L16
-// GÏµÁÐÒôÆµ
-#define AUDIO_RAW_DATA8		0x7000      //²ÉÑùÂÊÎª8kµÄÔ­Ê¼Êý¾Ý
-#define AUDIO_RAW_UDATA16	0x7001      //²ÉÑùÂÊÎª16kµÄÔ­Ê¼Êý¾Ý£¬¼´L16
+#define AUDIO_MPEG          0x2000 // MPEG series audio, the decoder self-adapts to every MPEG audio.
+#define AUDIO_AAC           0x2001 // AAC
+#define AUDIO_RAW_DATA8     0x7000 // Original data with the sampling rate of 8k
+#define AUDIO_RAW_UDATA16   0x7001 // Original data with the sampling rate of 16k, i.e., L16
+// G Series Audio
+#define AUDIO_RAW_DATA8		0x7000      //Original data with the sampling rate of 8k
+#define AUDIO_RAW_UDATA16	0x7001      //Original data with the sampling rate of 16k, i.e., L16
 #define AUDIO_G711_U		0x7110
 #define AUDIO_G711_A		0x7111
 #define AUDIO_G722_1		0x7221
@@ -176,18 +173,18 @@ typedef unsigned int   COLORREF;
 #define AUDIO_G726_U        0x7260
 #define AUDIO_G726_A        0x7261
 #define AUDIO_G726_16       0x7262
-#define AUDIO_G729 0x7290
+#define AUDIO_G729          0x7290
 #define AUDIO_AMR_NB		0x3000
 
-#define SYNCDATA_VEH	    1 //Í¬²½Êý¾Ý:³µÔØÐÅÏ¢
-#define SYNCDATA_IVS	    2 //Í¬²½Êý¾Ý:ÖÇÄÜÐÅÏ¢
+#define SYNCDATA_VEH	    1 //Synchronize data: Mobile information
+#define SYNCDATA_IVS	    2 //Synchronize data: VCA information
 
 //motion flow type
 #define	MOTION_FLOW_NONE			0
 #define MOTION_FLOW_CPU				1
 #define MOTION_FLOW_GPU				2
 
-//ÒôÊÓÆµ¼ÓÃÜÀàÐÍ
+//Encryption Type of Audio and Video
 #define ENCRYPT_AES_3R_VIDEO     1
 #define ENCRYPT_AES_10R_VIDEO    2
 #define ENCRYPT_AES_3R_AUDIO     1
@@ -196,12 +193,12 @@ typedef unsigned int   COLORREF;
 
 #ifndef PLAYM4_ADDITION_INFO_TAG
 #define PLAYM4_ADDITION_INFO_TAG
-typedef struct _PLAYM4_ADDITION_INFO_     //½»»¥ÐÅÏ¢½á¹¹
+typedef struct _PLAYM4_ADDITION_INFO_     //Interaction information structure
 {
-    unsigned char*  pData;			//¸½¼þÊý¾Ý
-    unsigned int    dwDatalen;		//¸½¼þÊý¾Ý³¤¶È
-    unsigned int	dwDataType;		//Êý¾ÝÀàÐÍ
-    unsigned int	dwTimeStamp;	//Ïà¶ÔÊ±¼ä´Á
+    unsigned char*  pData;			//Attachment data
+    unsigned int    dwDatalen;		//Length of attachment data
+    unsigned int	dwDataType;		//Data type
+    unsigned int	dwTimeStamp;	//Relative time stamp
 } PLAYM4_ADDITION_INFO;
 #endif
 
@@ -219,10 +216,10 @@ typedef struct tagSystemTime
 
 typedef struct tagHKRect
 {
-    unsigned int left;
-    unsigned int top;
-    unsigned int right;
-    unsigned int bottom;
+    unsigned long left;
+    unsigned long top;
+    unsigned long right;
+    unsigned long bottom;
 }HKRECT;
 
 //Frame position
@@ -235,7 +232,7 @@ typedef struct
     SYSTEMTIME *pErrorTime;
     int nErrorLostFrameNum;
     int nErrorFrameSize;
-}FRAME_POS,*PFRAME_POS;
+}FRAME_POS, *PFRAME_POS;
 
 //Frame Info
 typedef struct
@@ -270,9 +267,9 @@ typedef struct
 
 typedef struct SYNCDATA_INFO
 {
-    unsigned int dwDataType;        //ºÍÂëÁ÷Êý¾ÝÍ¬²½µÄ¸½ÊôÐÅÏ¢ÀàÐÍ£¬Ä¿Ç°ÓÐ£ºÖÇÄÜÐÅÏ¢£¬³µÔØÐÅÏ¢
-    unsigned int dwDataLen;         //¸½ÊôÐÅÏ¢Êý¾Ý³¤¶È
-    unsigned char* pData;  //Ö¸Ïò¸½ÊôÐÅÏ¢Êý¾Ý½á¹¹µÄÖ¸Õë,±ÈÈçIVS_INFO½á¹¹
+    unsigned int dwDataType;        //Attachment information type which is synchronous with the stream data: VCA Information, Mobile Information
+    unsigned int dwDataLen;         //Length of attachment information
+    unsigned char* pData;           //Pointer of attachment information structure, e.g., IVS_INFO structure
 } SYNCDATA_INFO;
 
 #ifndef _HIK_MEDIAINFO_FLAG_
@@ -280,19 +277,19 @@ typedef struct SYNCDATA_INFO
 typedef struct _HIK_MEDIAINFO_				// modified by gb 080425
 {
     unsigned int    media_fourcc;			// "HKMI": 0x484B4D49 Hikvision Media Information
-    unsigned short  media_version;			// °æ±¾ºÅ£ºÖ¸±¾ÐÅÏ¢½á¹¹°æ±¾ºÅ£¬Ä¿Ç°Îª0x0101,¼´1.01°æ±¾£¬01£ºÖ÷°æ±¾ºÅ£»01£º×Ó°æ±¾ºÅ¡£
-    unsigned short  device_id;				// Éè±¸ID£¬±ãÓÚ¸ú×Ù/·ÖÎö
+    unsigned short  media_version;			// Version No.: The version No. of this information structure, the current version 0x0101, i.e., Version 1.01, 01-Main version                                               No., 01: Sub version No.
+    unsigned short  device_id;				// Device ID, which is for tracking or analysis
 
-    unsigned short  system_format; // ÏµÍ³·â×°²ã
-    unsigned short  video_format;  // ÊÓÆµ±àÂëÀàÐÍ
+    unsigned short  system_format;          // System Packaging Layer
+    unsigned short  video_format;           // Video Encoding Type
 
-    unsigned short  audio_format;  // ÒôÆµ±àÂëÀàÐÍ
-    unsigned char   audio_channels;         // Í¨µÀÊý
-    unsigned char   audio_bits_per_sample;  // ÑùÎ»ÂÊ
-    unsigned int    audio_samplesrate;      // ²ÉÑùÂÊ
-    unsigned int    audio_bitrate; // Ñ¹ËõÒôÆµÂëÂÊ,µ¥Î»£ºbit
+    unsigned short  audio_format;           // Audio Encoding Type
+    unsigned char   audio_channels;         // Channel Number
+    unsigned char   audio_bits_per_sample;  // Bit Rate
+    unsigned int    audio_samplesrate;      // Sampling Rate
+    unsigned int    audio_bitrate;          // Compressed audio stream rate, unit: bit
 
-    unsigned int    reserved[4];   // ±£Áô
+    unsigned int    reserved[4];            // Reserved
 }HIK_MEDIAINFO;
 #endif
 
@@ -322,235 +319,186 @@ typedef struct
     void* nUser;
 }DISPLAY_INFOEX;
 
-typedef struct PLAYM4_SYSTEM_TIME //¾ø¶ÔÊ±¼ä
+typedef struct PLAYM4_SYSTEM_TIME //Absolute Time
 {
-    unsigned int dwYear; //Äê
-    unsigned int dwMon;  //ÔÂ
-    unsigned int dwDay;  //ÈÕ
-    unsigned int dwHour; //Ê±
-    unsigned int dwMin;  //·Ö
-    unsigned int dwSec;  //Ãë
-    unsigned int dwMs;   //ºÁÃë
+    unsigned int dwYear; //Year
+    unsigned int dwMon;  //Month
+    unsigned int dwDay;  //Day
+    unsigned int dwHour; //Time
+    unsigned int dwMin;  //Minute
+    unsigned int dwSec;  //Second
+    unsigned int dwMs;   //Millisecond
 } PLAYM4_SYSTEM_TIME;
 
 #ifndef CROP_PIC_INFO_TAG
 #define CROP_PIC_INFO_TAG
 typedef struct
 {
-    unsigned char* pDataBuf;      //×¥Í¼Êý¾Ýbuffer
-    unsigned int   dwPicSize;	  //Êµ¼ÊÍ¼Æ¬´óÐ¡
-    unsigned int   dwBufSize;      //Êý¾Ýbuffer´óÐ¡
-    unsigned int   dwPicWidth;	  //½ØÍ¼¿í
-    unsigned int   dwPicHeight;    //½ØÍ¼¸ß
-    unsigned int   dwReserve;      //¶à¼ÓÒ»¸öreserve×Ö¶Î
-    HKRECT*        pCropRect;     //Ñ¡ÔñÇøÓòNULL, Í¬ÀÏµÄ×¥Í¼½Ó¿Ú
+    unsigned char* pDataBuf;      //Buffer for captured data
+    unsigned int   dwPicSize;	  //Actual picture size
+    unsigned int   dwBufSize;      //Data buffer size
+    unsigned int   dwPicWidth;	  //Width of captured picture
+    unsigned int   dwPicHeight;    //Height of captured picture
+    unsigned int   dwReserve;      //Reserved
+    HKRECT*        pCropRect;     //The selected region is NULL, which is same with the old API
 }CROP_PIC_INFO;
 #endif
 
 
 //ENCRYPT Info
 typedef struct{
-    int nVideoEncryptType;  //ÊÓÆµ¼ÓÃÜÀàÐÍ
-    int nAudioEncryptType;  //ÒôÆµ¼ÓÃÜÀàÐÍ
-    int nSetSecretKey;      //ÊÇ·ñÉèÖÃ£¬1±íÊ¾ÉèÖÃÃÜÔ¿£¬0±íÊ¾Ã»ÓÐÉèÖÃÃÜÔ¿
+    long nVideoEncryptType;  //Video encryption type
+    long nAudioEncryptType;  //Audio encryption type
+    long nSetSecretKey;      //Set or not? 1- Set key, 0- No key is set
 }ENCRYPT_INFO;
 
-// Ë½ÓÐÐÅÏ¢Ä£¿éÀàÐÍ
+// Private Information Module Type
 typedef enum _PLAYM4_PRIDATA_RENDER
 {
-    PLAYM4_RENDER_ANA_INTEL_DATA   = 0x00000001, //ÖÇÄÜ·ÖÎö
-    PLAYM4_RENDER_MD      = 0x00000002, //ÒÆ¶¯Õì²â
-    PLAYM4_RENDER_ADD_POS = 0x00000004, //POSÐÅÏ¢ºóµþ¼Ó
-    PLAYM4_RENDER_ADD_PIC = 0x00000008, //Í¼Æ¬µþ¼ÓÐÅÏ¢
-    PLAYM4_RENDER_FIRE_DETCET      = 0x00000010, //ÈÈ³ÉÏñÐÅÏ¢
-    PLAYM4_RENDER_TEM     = 0x00000020, //ÎÂ¶ÈÐÅÏ¢
+    PLAYM4_RENDER_ANA_INTEL_DATA   = 0x00000001, //VCA
+    PLAYM4_RENDER_MD               = 0x00000002, //Motion Detection
+    PLAYM4_RENDER_ADD_POS          = 0x00000004, //POS Information Overlay
+    PLAYM4_RENDER_ADD_PIC          = 0x00000008, //Picture Information Overlay
+    PLAYM4_RENDER_FIRE_DETCET      = 0x00000010, //Thermal Imaging Information
+    PLAYM4_RENDER_TEM              = 0x00000020, //Temperature Information
 }PLAYM4_PRIDATA_RENDER;
 
 typedef enum _PLAYM4_FIRE_ALARM
 {
-    PLAYM4_FIRE_FRAME_DIS  = 0x00000001, //»ðµã¿òÏÔÊ¾
-    PLAYM4_FIRE_MAX_TEMP   = 0x00000002, //×î¸ßÎÂ¶È
-    PLAYM4_FIRE_MAX_TEMP_POSITION   = 0x00000004, //×î¸ßÎÂ¶ÈÎ»ÖÃÏÔÊ¾
-    PLAYM4_FIRE_DISTANCE   = 0x00000008, //×î¸ßÎÂ¶È¾àÀë
+    PLAYM4_FIRE_FRAME_DIS           = 0x00000001, //Display Fire Source Frame
+    PLAYM4_FIRE_MAX_TEMP            = 0x00000002, //Highest Temperature
+    PLAYM4_FIRE_MAX_TEMP_POSITION   = 0x00000004, //Display Position of Highest Temperature
+    PLAYM4_FIRE_DISTANCE            = 0x00000008, //Distance from Highest Temperature
 }PLAYM4_FIRE_ALARM;
 
 typedef enum _PLAYM4_TEM_FLAG
 {
-    PLAYM4_TEM_REGION_BOX    = 0x00000001, //¿ò²âÎÂ
-    PLAYM4_TEM_REGION_LINE   = 0x00000002, //Ïß²âÎÂ
-    PLAYM4_TEM_REGION_POINT  = 0x00000004, //µã²âÎÂ
+    PLAYM4_TEM_REGION_BOX             = 0x00000001, //Measure by rectangle
+    PLAYM4_TEM_REGION_LINE            = 0x00000002, //Measure by line
+    PLAYM4_TEM_REGION_POINT           = 0x00000004, //Measure by point
 }PLAYM4_TEM_FLAG;
 
 
 //////////////////////////////////////////////////////////////////////////////
-//API-Proposed Interface ½¨ÒéÊ¹ÓÃµÄ½Ó¿Ú
+//Recommended APIs
 //////////////////////////////////////////////////////////////////////////////
-///<³õÊ¼»¯
+///<Initialize
+int  PlayM4_GetPort(int* nPort);
+int  PlayM4_FreePort(int nPort);
+int  PlayM4_OpenFile(int nPort,char * sFileName);
+int  PlayM4_CloseFile(int nPort);
+int  PlayM4_SetStreamOpenMode(int nPort,unsigned int nMode);
+int  PlayM4_GetStreamOpenMode(int nPort);
+int  PlayM4_OpenStream(int nPort,unsigned char * pFileHeadBuf,unsigned int nSize,unsigned int nBufPoolSize);
+int  PlayM4_CloseStream(int nPort);
+int  PlayM4_InputData(int nPort,unsigned char * pBuf,unsigned int nSize);
 
-//////////////////////////////////////////////////////////////////////////////
-//API
-//////////////////////////////////////////////////////////////////////////////
+///<Index
+int  PlayM4_SetFileRefCallBack(int nPort, void (CALLBACK *pFileRefDone)(unsigned int nPort,void* nUser),void* nUser);
+int  PlayM4_GetRefValue(int nPort,unsigned char  *pBuffer, unsigned int *pSize);
+int  PlayM4_GetRefValueEx(int nPort,unsigned char  *pBuffer, unsigned int *pSize);///<Add frame type callback
+int  PlayM4_SetRefValue(int nPort,unsigned char  *pBuffer, unsigned int nSize);
+int  PlayM4_GetKeyFramePos(int nPort,unsigned int nValue, unsigned int nType, PFRAME_POS pFramePos);
+int  PlayM4_GetNextKeyFramePos(int nPort,unsigned int nValue, unsigned int nType, PFRAME_POS pFramePos);
 
-////////////////ver 1.0///////////////////////////////////////
-//Initialize DirecDraw.Now invalid.
-int  PlayM4_InitDDraw(PLAYM4_HWND hWnd);
-//Release directDraw; Now invalid.
-int PlayM4_RealeseDDraw();
-int PlayM4_OpenFile(int nPort,char * sFileName);
-int PlayM4_CloseFile(int nPort);
-int PlayM4_Play(int nPort, PLAYM4_HWND hWnd);
-int PlayM4_Stop(int nPort);
-int PlayM4_Pause(int nPort,unsigned int nPause);
-int PlayM4_Fast(int nPort);
-int PlayM4_Slow(int nPort);
-int PlayM4_OneByOne(int nPort);
-int PlayM4_SetPlayPos(int nPort,float fRelativePos);
-float PlayM4_GetPlayPos(int nPort);
-int PlayM4_SetFileEndMsg(int nPort, PLAYM4_HWND hWnd, unsigned int nMsg);
-int PlayM4_SetVolume(int nPort,unsigned short nVolume);
-int PlayM4_StopSound();
-int PlayM4_PlaySound(int nPort);
-int PlayM4_OpenStream(int nPort,unsigned char * pFileHeadBuf,unsigned int nSize,unsigned int nBufPoolSize);
-int PlayM4_InputData(int nPort,unsigned char * pBuf,unsigned int nSize);
-int PlayM4_CloseStream(int nPort);
-int PlayM4_GetCaps();
+///<Play Control
+int  PlayM4_Play(int nPort, PLAYM4_HWND hWnd);
+int  PlayM4_Stop(int nPort);
+int  PlayM4_Pause(int nPort,unsigned int nPause);
+int  PlayM4_Fast(int nPort);
+int  PlayM4_Slow(int nPort);
+int  PlayM4_OneByOne(int nPort);
+int  PlayM4_OneByOneBack(int nPort);
+int  PlayM4_ReversePlay(int nPort);
+int  PlayM4_RefreshPlay(int nPort);
+int  PlayM4_RefreshPlayEx(int nPort, unsigned int nRegionNum);
+
+///<Play Audio
+int  PlayM4_PlaySound(int nPort);
+int  PlayM4_StopSound();
+int  PlayM4_PlaySoundShare(int nPort);
+int  PlayM4_StopSoundShare(int nPort);
+int  PlayM4_SetVolume(int nPort,unsigned short nVolume);
+unsigned short  PlayM4_GetVolume(int nPort);
+
+///<Get Information
+int  PlayM4_SetPlayPos(int nPort,float fRelativePos);
+float  PlayM4_GetPlayPos(int nPort);
 unsigned int  PlayM4_GetFileTime(int nPort);
 unsigned int  PlayM4_GetPlayedTime(int nPort);
 unsigned int  PlayM4_GetPlayedFrames(int nPort);
-
-//23
-////////////////ver 2.0 added///////////////////////////////////////
-int  PlayM4_SetDecCallBack(int nPort,void (CALLBACK* DecCBFun)(int nPort,char* pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2));
-int    PlayM4_SetDisplayCallBack(int nPort,void (CALLBACK* DisplayCBFun)(int nPort,char * pBuf,int nSize,int nWidth,int nHeight,int nStamp,int nType,int nReserved));
-int    PlayM4_ConvertToBmpFile(char * pBuf,int nSize,int nWidth,int nHeight,int nType,char *sFileName);
-unsigned int     PlayM4_GetFileTotalFrames(int nPort);
-unsigned int     PlayM4_GetCurrentFrameRate(int nPort);
-unsigned int     PlayM4_GetPlayedTimeEx(int nPort);
-int    PlayM4_SetPlayedTimeEx(int nPort,unsigned int nTime);
-unsigned int     PlayM4_GetCurrentFrameNum(int nPort);
-int    PlayM4_SetStreamOpenMode(int nPort,unsigned int nMode);
-unsigned int     PlayM4_GetFileHeadLength();
-unsigned int     PlayM4_GetSdkVersion();
-//11
-////////////////ver 2.2 added///////////////////////////////////////
-unsigned int   PlayM4_GetLastError(int nPort);
-int PlayM4_RefreshPlay(int nPort);
-int PlayM4_SetOverlayMode(int nPort,BOOL bOverlay,COLORREF colorKey);
-int PlayM4_GetPictureSize(int nPort,int *pWidth,int *pHeight);
-int PlayM4_SetPicQuality(int nPort,BOOL bHighQuality);
-int PlayM4_PlaySoundShare(int nPort);
-int PlayM4_StopSoundShare(int nPort);
-//7
-////////////////ver 2.4 added///////////////////////////////////////
-int PlayM4_GetStreamOpenMode(int nPort);
-int PlayM4_GetOverlayMode(int nPort);
-COLORREF PlayM4_GetColorKey(int nPort);
-unsigned short PlayM4_GetVolume(int nPort);
-int PlayM4_GetPictureQuality(int nPort,BOOL *bHighQuality);
-unsigned int  PlayM4_GetSourceBufferRemain(int nPort);
-int PlayM4_ResetSourceBuffer(int nPort);
-int PlayM4_SetSourceBufCallBack(int nPort,unsigned int nThreShold,void (CALLBACK * SourceBufCallBack)(int nPort,unsigned int nBufSize,unsigned int dwUser,void*pResvered),unsigned int dwUser,void *pReserved);
-int PlayM4_ResetSourceBufFlag(int nPort);
-int PlayM4_SetDisplayBuf(int nPort,unsigned int nNum);
-unsigned int  PlayM4_GetDisplayBuf(int nPort);
-int PlayM4_OneByOneBack(int nPort);
-int  PlayM4_SetFileRefCallBack(int nPort, void (CALLBACK *pFileRefDone)(unsigned int nPort,void* nUser),void* nUser);
-int PlayM4_SetCurrentFrameNum(int nPort,unsigned int nFrameNum);
-int PlayM4_GetKeyFramePos(int nPort,unsigned int nValue, unsigned int nType, PFRAME_POS pFramePos);
-int PlayM4_GetNextKeyFramePos(int nPort,unsigned int nValue, unsigned int nType, PFRAME_POS pFramePos);
-#if (WINVER >= 0x0400)
-//Note: These funtion must be builded under win2000 or above with Microsoft Platform sdk.
-//        You can download the sdk from "http://www.microsoft.com/msdownload/platformsdk/sdkupdate/";
-int PlayM4_InitDDrawDevice();
-PLAYM4_API void __stdcall PlayM4_ReleaseDDrawDevice();
-unsigned int  PlayM4_GetDDrawDeviceTotalNums();
-int PlayM4_SetDDrawDevice(int nPort,unsigned int nDeviceNum);
-//int PlayM4_GetDDrawDeviceInfo(unsigned int nDeviceNum,char *  lpDriverDescription,unsigned int nDespLen,char * lpDriverName ,unsigned int nNameLen,HMONITOR *hhMonitor);
-int PlayM4_GetCapsEx(unsigned int nDDrawDeviceNum);
-#endif
-int PlayM4_ThrowBFrameNum(int nPort,unsigned int nNum);
-//23
-////////////////ver 2.5 added///////////////////////////////////////
-int PlayM4_SetDisplayType(int nPort,int nType);
-int PlayM4_GetDisplayType(int nPort);
-//2
-////////////////ver 3.0 added///////////////////////////////////////
-int PlayM4_SetDecCBStream(int nPort,unsigned int nStream);
-int  PlayM4_SetDisplayRegion(int nPort,unsigned int nRegionNum, HKRECT *pSrcRect, PLAYM4_HWND hDestWnd, int bEnable);///<µç×Ó·Å´ó
-int PlayM4_RefreshPlayEx(int nPort,unsigned int nRegionNum);
-#if (WINVER >= 0x0400)
-//Note: The funtion must be builded under win2000 or above with Microsoft Platform sdk.
-//        You can download the sdk from http://www.microsoft.com/msdownload/platformsdk/sdkupdate/;
-int PlayM4_SetDDrawDeviceEx(int nPort,unsigned int nRegionNum,unsigned int nDeviceNum);
-#endif
-//4
-/////////////////v3.2 added/////////////////////////////////////////
-
-int PlayM4_GetRefValue(int nPort,unsigned char *pBuffer, unsigned int *pSize);
-int PlayM4_SetRefValue(int nPort,unsigned char *pBuffer, unsigned int nSize);
-int PlayM4_OpenStreamEx(int nPort,unsigned char * pFileHeadBuf,unsigned int nSize,unsigned int nBufPoolSize);
-int PlayM4_CloseStreamEx(int nPort);
-int PlayM4_InputVideoData(int nPort,unsigned char * pBuf,unsigned int nSize);
-int PlayM4_InputAudioData(int nPort,unsigned char * pBuf,unsigned int nSize);
-int PlayM4_RegisterDrawFun(int nPort,void (CALLBACK* DrawFun)(int nPort,PLAYM4_HDC hDc,int nUser),int nUser);
-int PlayM4_RigisterDrawFun(int nPort,void (CALLBACK* DrawFun)(int nPort,PLAYM4_HDC hDc,int nUser),int nUser);
-//8
-//////////////////v3.4/////////////////////////////////////////////////////
-int PlayM4_SetTimerType(int nPort,unsigned int nTimerType,unsigned int nReserved);
-int PlayM4_GetTimerType(int nPort,unsigned int *pTimerType,unsigned int *pReserved);
-int PlayM4_ResetBuffer(int nPort,unsigned int nBufType);
-unsigned int  PlayM4_GetBufferValue(int nPort,unsigned int nBufType);
-
-//////////////////V3.6/////////////////////////////////////////////////////////
-int PlayM4_AdjustWaveAudio(int nPort,int nCoefficient);
-int PlayM4_SetVerifyCallBack(int nPort, unsigned int nBeginTime, unsigned int nEndTime, void (CALLBACK* funVerify)(int nPort, FRAME_POS* pFilePos, unsigned int bIsVideo, unsigned int nUser), unsigned int nUser);
-int PlayM4_SetAudioCallBack(int nPort, void (CALLBACK* funAudio)(int nPort, char* pAudioBuf, int nSize, int nStamp, int nType, int nUser), int nUser);
-int PlayM4_SetEncTypeChangeCallBack(int nPort,void(CALLBACK *funEncChange)(int nPort,int nUser),int nUser);
-int PlayM4_SetColor(int nPort, unsigned int nRegionNum, int nBrightness, int nContrast, int nSaturation, int nHue);
-int PlayM4_GetColor(int nPort, unsigned int nRegionNum, int *pBrightness, int *pContrast, int *pSaturation, int *pHue);
-int PlayM4_SetEncChangeMsg(int nPort,PLAYM4_HWND hWnd,unsigned int nMsg);
-int PlayM4_GetOriginalFrameCallBack(int nPort, BOOL bIsChange,BOOL bNormalSpeed,int nStartFrameNum,int nStartStamp,int nFileHeader,void(CALLBACK *funGetOrignalFrame)(int nPort,FRAME_TYPE *frameType, int nUser),int nUser);
-int PlayM4_GetFileSpecialAttr(int nPort, unsigned int *pTimeStamp,unsigned int *pFileNum ,unsigned int *pReserved);
+unsigned int  PlayM4_GetFileTotalFrames(int nPort);
+unsigned int  PlayM4_GetCurrentFrameRate(int nPort);
+unsigned int  PlayM4_GetPlayedTimeEx(int nPort);
+int           PlayM4_SetPlayedTimeEx(int nPort,unsigned int nTime);
+unsigned int  PlayM4_GetCurrentFrameNum(int nPort);
+int           PlayM4_SetCurrentFrameNum(int nPort,unsigned int nFrameNum);
+int           PlayM4_GetSystemTime(int nPort, PLAYM4_SYSTEM_TIME *pstSystemTime);
 unsigned int  PlayM4_GetSpecialData(int nPort);
-int PlayM4_SetCheckWatermarkCallBack(int nPort,void(CALLBACK* funCheckWatermark)(int nPort,WATERMARK_INFO* pWatermarkInfo,unsigned int nUser),unsigned int nUser);
-int PlayM4_SetImageSharpen(int nPort,unsigned int nLevel);
-int PlayM4_SetDecodeFrameType(int nPort,unsigned int nFrameType);
-int PlayM4_SetPlayMode(int nPort,BOOL bNormal);
-int PlayM4_SetOverlayFlipMode(int nPort,BOOL bTrue);
-//unsigned int  PlayM4_GetAbsFrameNum(int nPort);
+int           PlayM4_GetPictureSize(int nPort,int *pWidth,int *pHeight);
+int           PlayM4_SetFileEndCallback(int nPort, void(CALLBACK*FileEndCallback)(int nPort, void *pUser), void *pUser);
 
-//////////////////V4.7.0.0//////////////////////////////////////////////////////
-////convert yuv to jpeg
-int PlayM4_ConvertToJpegFile(char * pBuf,int nSize,int nWidth,int nHeight,int nType,char *sFileName);
-int PlayM4_SetJpegQuality(int nQuality);
-//set deflash
-int PlayM4_SetDeflash(int nPort,BOOL bDefalsh);
-//int PlayM4_SetDecCallBackEx(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, int nReserved1,int nReserved2), char* pDest, int nDestSize);
-//////////////////V4.8.0.0/////////////////////////////////////////////////////////
-//check discontinuous frame number as error data?
-int PlayM4_CheckDiscontinuousFrameNum(int nPort, BOOL bCheck);
-//get bmp or jpeg
-int PlayM4_GetBMP(int nPort,unsigned char * pBitmap,unsigned int nBufSize,unsigned int* pBmpSize);
-int PlayM4_GetJPEG(int nPort,unsigned char * pJpeg,unsigned int nBufSize,unsigned int* pJpegSize);
-//dec call back mend
+///<Cache Operation
+unsigned int  PlayM4_GetSourceBufferRemain(int nPort);
+int           PlayM4_ResetSourceBuffer(int nPort);
+int           PlayM4_ResetBuffer(int nPort,unsigned int nBufType);
+unsigned int  PlayM4_GetBufferValue(int nPort,unsigned int nBufType);
+int           PlayM4_SetDisplayBuf(int nPort, unsigned int nNum);
+unsigned int  PlayM4_GetDisplayBuf(int nPort);
+
+///<Capture
+int  PlayM4_SetJpegQuality(int nQuality);
+int  PlayM4_GetBMP(int nPort,unsigned char * pBitmap,unsigned int nBufSize,unsigned int* pBmpSize);
+int  PlayM4_GetJPEG(int nPort,unsigned char * pJpeg,unsigned int nBufSize,unsigned int* pJpegSize);
+int  PlayM4_ConvertToBmpFile(char * pBuf,int nSize,int nWidth,int nHeight,int nType,char *sFileName);
+int  PlayM4_ConvertToJpegFile(char * pBuf,int nSize,int nWidth,int nHeight,int nType,char *sFileName);
+
+///<Decode
+int  PlayM4_SetSecretKey(int nPort, int lKeyType, char *pSecretKey, int lKeyLen);
+int  PlayM4_ThrowBFrameNum(int nPort,unsigned int nNum);
+int  PlayM4_SetDecCBStream(int nPort,unsigned int nStream);
+int  PlayM4_SetDecodeFrameType(int nPort,unsigned int nFrameType);
+int  PlayM4_SkipErrorData(int nPort, int bSkip);
 int  PlayM4_SetDecCallBackMend(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2), void* nUser);
-int PlayM4_SetSecretKey(int nPort, int lKeyType, char *pSecretKey, int lKeyLen);
-
-// add by gb 2007-12-23
-int PlayM4_SetFileEndCallback(int nPort, void(CALLBACK*FileEndCallback)(int nPort, void *pUser), void *pUser);
-
-// add by gb 080131 version 4.9.0.1
-int PlayM4_GetPort(int* nPort);
-int PlayM4_FreePort(int nPort);
-int PlayM4_SetDisplayCallBackEx(int nPort,void (CALLBACK* DisplayCBFun)(DISPLAY_INFO *pstDisplayInfo), int nUser);
-int PlayM4_SkipErrorData(int nPort, BOOL bSkip);
 int  PlayM4_SetDecCallBackExMend(int nPort, void (CALLBACK* DecCBFun)(int nPort, char* pBuf, int nSize, FRAME_INFO* pFrameInfo, void* nUser, int nReserved2), char* pDest, int nDestSize, void* nUser);
-//reverse play add by chenjie 110609
-int PlayM4_ReversePlay(int nPort);
-int PlayM4_GetSystemTime(int nPort, PLAYM4_SYSTEM_TIME *pstSystemTime);
+// Encryption stream callback, nType=0: Call back when the stream encryption mark changed. nType=1: The encryption bit of the stream is called back
+int  PlayM4_SetEncryptTypeCallBack(int nPort, unsigned int nType, void (CALLBACK* EncryptTypeCBFun)(int nPort, ENCRYPT_INFO* pEncryptInfo, void* nUser, int nReserved2), void* nUser);
 
-//int PlayM4_SetDecodeERC(int nPort, unsigned int nLevel);
+///<Display
+int  PlayM4_SetDisplayRegion(int nPort,unsigned int nRegionNum, HKRECT *pSrcRect, PLAYM4_HWND hDestWnd, int bEnable);///<Digital Zoom
+int  PlayM4_SetDisplayRegionOnWnd(int nPort,unsigned int nRegionNum, HKRECT *pSrcRect, int bEnable);///<Window Division
+int  PlayM4_SetDisplayCallBack(int nPort,void (CALLBACK* DisplayCBFun)(int nPort,char * pBuf,int nSize,int nWidth,int nHeight,int nStamp,int nType,int nReserved));
+int  PlayM4_SetDisplayCallBackEx(int nPort,void (CALLBACK* DisplayCBFun)(DISPLAY_INFO *pstDisplayInfo), void* nUser);
+int  PlayM4_RegisterDrawFun(int nPort,void (CALLBACK* DrawFun)(int nPort,PLAYM4_HDC hDc,void* nUser),void* nUser);
+int  PlayM4_SetEncTypeChangeCallBack(int nPort, void(CALLBACK *funEncChange)(int nPort, void* nUser), void* nUser);
+int  PlayM4_SetCheckWatermarkCallBack(int nPort, void(CALLBACK* funCheckWatermark)(int nPort, WATERMARK_INFO* pWatermarkInfo, void* nUser), void* nUser);
+int  PlayM4_SetDisplayType(int nPort, int nType);
+int  PlayM4_GetDisplayType(int nPort);
 
+// VCA Information Switch
+PLAYM4_API int __stdcall PlayM4_RenderPrivateData(int nPort, int nIntelType, int bTrue);
+PLAYM4_API int __stdcall PlayM4_RenderPrivateDataEx(int nPort, int nIntelType, int nSubType, int bTrue);
+PLAYM4_API int __stdcall PlayM4_SetConfigFontPath(int nPort, char* pFontPath);///<Set font library path for OSD- Set before playing.
+
+//lType: 1  refers to get the PTZ information of displayed frame. It is stored in the pInfo with specified structure type, and plLen returns length information. First you should set pInfo = null to get the memory length (plLen) needed to allocate.
+PLAYM4_API int __stdcall PlayM4_GetStreamAdditionalInfo(int nPort, int lType, unsigned char* pInfo, int* plLen);
+
+///<Process Image
+#define R_ANGLE_0   -1  //No rotation
+#define R_ANGLE_L90  0  //Rotate left 90 degree
+#define R_ANGLE_R90  1  //Rotate right 90 degree
+#define R_ANGLE_180  2  //Rotate 180 degree
+
+PLAYM4_API int __stdcall PlayM4_SetRotateAngle(int nPort, unsigned int nRegionNum, unsigned int dwType);
+
+///<Others
+unsigned int  PlayM4_GetFileHeadLength();
+unsigned int  PlayM4_GetSdkVersion();
+unsigned int  PlayM4_GetLastError(int nPort);
+//The predefined value of dwGroupIndex is ranging from 0 to 3. For the first version, synchronization function is canceled, so it should be processed in same closestream
+PLAYM4_API int __stdcall PlayM4_SetSycGroup(int nPort, unsigned int dwGroupIndex);
+
+///<SDP Streaming//////////////////////////////////////////////////////////////////////////
 #ifndef PLAYM4_SESSION_INFO_TAG
 #define PLAYM4_SESSION_INFO_TAG
 //nProtocolType
@@ -558,259 +506,348 @@ int PlayM4_GetSystemTime(int nPort, PLAYM4_SYSTEM_TIME *pstSystemTime);
 //nSessionInfoType
 #define PLAYM4_SESSION_INFO_SDP 1
 
-typedef struct _PLAYM4_SESSION_INFO_     //SessionInfo structure
+typedef struct _PLAYM4_SESSION_INFO_     //Interaction information structure
 {
-    int   nSessionInfoType;   //Session Info type, e.x. SDP
-    int   nSessionInfoLen;    //Data length of Session Info
-    unsigned char* pSessionInfoData;   //Session Info data
+    int            nSessionInfoType;   //Interaction information type, only SDP is supported.
+    int            nSessionInfoLen;    //Length of interaction information
+    unsigned char* pSessionInfoData;   //Interaction information data
 
 } PLAYM4_SESSION_INFO;
 #endif
 
-int PlayM4_OpenStreamAdvanced(int nPort, int nProtocolType, PLAYM4_SESSION_INFO* pstSessionInfo, unsigned int nBufPoolSize);
+PLAYM4_API int __stdcall PlayM4_OpenStreamAdvanced(int nPort, int nProtocolType, PLAYM4_SESSION_INFO* pstSessionInfo, unsigned int nBufPoolSize);
 
-#define R_ANGLE_0   -1  //No rotation
-#define R_ANGLE_L90  0  //Rotate left by 90 degrees
-#define R_ANGLE_R90  1  //Rotate right by 90 degrees
-#define R_ANGLE_180  2  //Rotate 180 degrees
-
-int PlayM4_SetRotateAngle(int nPort, unsigned int nRegionNum, unsigned int dwType);
-
-#ifndef PLAYM4_ADDITION_INFO_TAG
-#define PLAYM4_ADDITION_INFO_TAG
-typedef struct _PLAYM4_ADDITION_INFO_     //additional data structrues
-{
-    BYTE*   pData;   //the attachment data
-    unsigned int   dwDatalen;        //the length of the attachment data
-    unsigned int    dwDataType;        //the data type
-    unsigned int    dwTimeStamp;    //the relative time stamp
-} PLAYM4_ADDITION_INFO;
-#endif
-
-//dwGroupIndex temporary agreed value 0~3,the first version to cancel the synchronization only withe colsetream treatment
-int PlayM4_SetSycGroup(int nPort, unsigned int dwGroupIndex);
-//ont to realize this function ,the starting time withe a group of seetings is not the same,withe a minuimun of time sa the starting point of the sampe group play,only a road
-int PlayM4_SetSycStartTime(int nPort, PLAYM4_SYSTEM_TIME *pstSystemTime);
-
-
-// the followint API of the fisheye related :
+///<Fisheye Related//////////////////////////////////////////////////////////////////////////
 #ifndef FISH_EYE_TAG
 #define FISH_EYE_TAG
 
-// place type
+// Mounting Type
 typedef enum tagFECPlaceType
 {
-    FEC_PLACE_WALL    = 0x1,        // Wall-mount        (normal level)
-    FEC_PLACE_FLOOR   = 0x2,        // Desktop-mount        (normal upwaed)
-    FEC_PLACE_CEILING = 0x3,        // Ceiling-mount        (normal down)
+    FEC_PLACE_WALL    = 0x1, // Wall Mounting (horizontal normal)
+    FEC_PLACE_FLOOR   = 0x2, // Ground Mounting (upward normal)
+    FEC_PLACE_CEILING = 0x3, // Ceiling Mounting (downward normal)
 
 }FECPLACETYPE;
 
 typedef enum tagFECCorrectType
 {
-    FEC_CORRECT_PTZ = 0x100,        // PTZ viewing mode
-    FEC_CORRECT_180 = 0x200,        //180¡ã viewing mode (2-screen-split mode)
-    FEC_CORRECT_360 = 0x300,        // 360¡ã panoramic mode
+    FEC_CORRECT_NULL = 0x0, // No dewarping
+    FEC_CORRECT_PTZ = 0x100, // PTZ
+    FEC_CORRECT_180 = 0x200, // 180 degree dewarping (corresponds to 2P)
+    FEC_CORRECT_360 = 0x300, // 360 panoramic dewarping (corresponds to 1P£©
+    FEC_CORRECT_LAT = 0x400         // Latitude Expansion
 
 }FECCORRECTTYPE;
 
 typedef struct tagCycleParam
 {
-    float    fRadiusLeft;    // Left coordinate of circular image
-    float    fRadiusRight;    // Right coordinate of circular image
-    float   fRadiusTop;        // Top coordinate of circular image
-    float   fRadiusBottom;    // Bottom coordinate of circular image
+    float	fRadiusLeft;	// X-Coordinate of circle left
+    float	fRadiusRight;	// X-Coordinate of circle right
+    float   fRadiusTop;		// Y-Coordinate of circle top
+    float   fRadiusBottom;	// Y-Coordinate of circle bottom
 
 }CYCLEPARAM;
 
 typedef struct tagPTZParam
 {
-    float fPTZPositionX;        // the center of PTZ, X coordinates
-    float fPTZPositionY;        // the center of PTZ, Y coordinates
+    float fPTZPositionX;		// Center position of PTZ display, X-Coordinate
+    float fPTZPositionY;		// Center position of PTZ display, Y-Coordinate
 
 }PTZPARAM;
 
+// Update Mark Variable Definitions
 
-// error code
-/*********************************************
-
-
- ********************************************/
-
-
-// update flag variable definitions
+#define 		FEC_UPDATE_RADIUS			 0x1
+#define 		FEC_UPDATE_PTZZOOM			 0x2
+#define 		FEC_UPDATE_WIDESCANOFFSET	 0x4
+#define 		FEC_UPDATE_PTZPARAM			 0x8
+#define         FEC_UPDATT_PTZCOLOR          0x10
 
 
-#define         FEC_UPDATE_RADIUS    0x1
-#define         FEC_UPDATE_PTZZOOM    0x2
-#define         FEC_UPDATE_WIDESCANOFFSET     0x4
-#define         FEC_UPDATE_PTZPARAM    0x8
-
+// Color Structure
+typedef struct tagFECColor
+{
+    unsigned char nR;     // R Component
+    unsigned char nG;	  // G Component
+    unsigned char nB;     // B Component
+    unsigned char nAlpha; // Alpha Component
+}FECCOLOR;
 
 typedef struct tagFECParam
 {
+    unsigned int 	nUpDateType;			// Updated type
 
+    unsigned int	nPlaceAndCorrect;		// Mounting type and dewarping type, get only. When SetParam is invalid, this value is the sum of mounting type and dewarping
 
-    unsigned int     nUpDateType;   // Update type
+    PTZPARAM		stPTZParam;				// PTZ dewarping parameters
 
-    unsigned int    nPlaceAndCorrect;        // Sum of installation and correction mode   (read ¨Conly, invalid under SetParam mode)
+    CYCLEPARAM		stCycleParam;			// Circle center parameter of fisheye image
 
-    PTZPARAM        stPTZParam;       // Parameter for PTZ correction
+    float			fZoom;					// PTZ display parameter
 
-    CYCLEPARAM        stCycleParam;   // Centre info of fisheye image
-
-    float   fZoom;  //PTZ display range
-
-    float   fWideScanOffset;        // Offset angle for 180¡ã or 360¡ã correction
-
-    int       nResver[16];   // Reserved
+    float			fWideScanOffset;		// Offset angle of 180 degree or 360 panoramic dewarping
+    FECCOLOR        stPTZColor;             // PTZ Color
+    int				nResver[15];			// Reserved field
 
 }FISHEYEPARAM;
 
-typedef void (CALLBACK * FISHEYE_CallBack )( void* pUser  , unsigned int  nSubPort , unsigned int nCBType , void * hDC ,   unsigned int nWidth , unsigned int nHeight);
+// PTZ Display Mode on Original Fisheye Image
+typedef enum tagFECShowMode
+{
+    FEC_PTZ_OUTLINE_NULL, // No display
+    FEC_PTZ_OUTLINE_RECT, // Display in rectangle
+    FEC_PTZ_OUTLINE_RANGE, // Display real region
+}FECSHOWMODE;
+
+#define    FEC_JPEG   0  // JPEG Capture
+#define    FEC_BMP    1  // BMP Capture
+
+typedef void (__stdcall * FISHEYE_CallBack )(void* pUser, unsigned int nPort, unsigned int nCBType, void * hDC, unsigned int nWidth, unsigned int nHeight);
 
 #endif
-// 6.121    Enable Fisheye APIs
-int PlayM4_FEC_Enable(int nPort);
-
-// 6.122    Disable Fisheye APIs
-int PlayM4_FEC_Disable(int nPort);
-
-// Get Sub-port for Fisheye Correction [1~31]
-BOOL PlayM4_FEC_GetPort(int nPort, unsigned int* nSubPort,FECPLACETYPE emPlaceType,FECCORRECTTYPE emCorrectType);
-
-// 6.124    Delete Sub-port for Fisheye Correction
-int PlayM4_FEC_DelPort(int nPort , unsigned int nSubPort);
-
-// 6.125    Set Fisheye Correction Parameters
-int PlayM4_FEC_SetParam(int nPort , unsigned int nSubPort , FISHEYEPARAM * pPara);
-
-// 6.126    Get Fisheye Correction Parameters
-int PlayM4_FEC_GetParam(int nPort , unsigned int nSubPort , FISHEYEPARAM * pPara);
-
-// Set Display Window
-int PlayM4_FEC_SetWnd(int nPort , unsigned int nSubPort , void * hWnd);
-
-//Set DDraw Callback for Fisheye Window
-int PlayM4_FEC_SetCallBack(int nPort , unsigned int nSubPort , FISHEYE_CallBack cbFunc , void * pUser);
-
-//motionflow
-int PlayM4_MotionFlow(int nPort, unsigned int dwAdjustType);
 
 
-//about video enhancement
+
+// Enable fisheye
+PLAYM4_API int __stdcall PlayM4_FEC_Enable(int nPort);
+
+// Close fisheye module
+PLAYM4_API int __stdcall PlayM4_FEC_Disable(int nPort);
+
+// Get the sub port of fisheye dewarping [1~31]
+PLAYM4_API int  __stdcall PlayM4_FEC_GetPort(int nPort , unsigned int* nSubPort , FECPLACETYPE emPlaceType , FECCORRECTTYPE emCorrectType);
+
+// Delete the sub port of fisheye dewarping
+PLAYM4_API int __stdcall PlayM4_FEC_DelPort(int nPort , unsigned int nSubPort);
+
+// Set fisheye dewarping parameters
+PLAYM4_API int __stdcall PlayM4_FEC_SetParam(int nPort , unsigned int nSubPort , FISHEYEPARAM * pPara);
+
+// Get fisheye dewarping parameters
+PLAYM4_API int __stdcall PlayM4_FEC_GetParam(int nPort , unsigned int nSubPort , FISHEYEPARAM * pPara);
+
+// Set display window, which can be switched at any time
+PLAYM4_API int __stdcall PlayM4_FEC_SetWnd(int nPort , unsigned int nSubPort , void * hWnd);
+
+// Set drawing callback of fisheye window
+PLAYM4_API int __stdcall PlayM4_FEC_SetCallBack(int nPort , unsigned int nSubPort , FISHEYE_CallBack cbFunc , void * pUser);
+
+// Fisheye Capture
+PLAYM4_API int __stdcall PlayM4_FEC_Capture(int nPort, unsigned int nSubPort, unsigned int nType, char* pFileName);
+
+PLAYM4_API int __stdcall PlayM4_FEC_GetCurrentPTZPort(int nPort, float fPositionX,float fPositionY, unsigned int *pnPort);
+
+PLAYM4_API int __stdcall PlayM4_FEC_SetCurrentPTZPort(int nPort, unsigned int nSubPort);
+
+PLAYM4_API int __stdcall PlayM4_FEC_SetPTZOutLineShowMode(int nPort,FECSHOWMODE nPTZShowMode);
+
+
+//Image Enhancement Related --Unsupported APIs//////////////////////////////////////////////////////////////////////////
 #ifndef PLAYM4_HIKVIE_TAG
 #define PLAYM4_HIKVIE_TAG
 
 typedef struct _PLAYM4_VIE_DYNPARAM_
 {
-    int moduFlag;      //the enable module,defined in the PLAYM4_VIE_MODULES such as PLAYM4_VIE_MODU_ADJ | PLAYM4_VIE_MODU_EHAN,module is enabled ,you must set the corresponding parameters
-
+    int moduFlag;      //Enabled algorithm processing module, see the definitions in PLAYM4_VIE_MODULES
+    //Èç PLAYM4_VIE_MODU_ADJ | PLAYM4_VIE_MODU_EHAN
+    //After enabling module, the corresponding parameters should be configured.
     //PLAYM4_VIE_MODU_ADJ
-    int brightVal;     //brightness value,the range is[-255, 255]
-    int contrastVal;   //contrast value,the range is[-256, 255]
-    int colorVal;      //color value,the range is [-256, 255]
+    int brightVal;     //Brightness , [-255, 255]
+    int contrastVal;   //Contrast, [-256, 255]
+    int colorVal;      //Saturation, [-256, 255]
     //PLAYM4_VIE_MODU_EHAN
-    int toneScale;     //filter scale,the range is[0, 100]
-    int toneGain;      //contrast adjustment,the global contrast gain  value,the range is [-256, 255]
-    int toneOffset;    //adjust brightness,the offset of the bright  average ,the range is[-255, 255] range is [-256, 255]
-    int toneColor;     //Adjust the color value, color fidelity,[-256, 255]
+    int toneScale;     //Filtering range, [0, 100]
+    int toneGain;      //Contrast, Global contrast gain, [-256, 255]
+    int toneOffset;    //Brightness, Average brightness offset, [-255, 255]
+    int toneColor;     //Color, color fidelity, [-256, 255]
     //PLAYM4_VIE_MODU_DEHAZE
-    int dehazeLevel;   //the intensity of dehaze,the range is [0, 255]
-    int dehazeTrans;   //the transparent value,the range is [0, 255]
-    int dehazeBright;  //luminance compensation,the range is[0, 255]
+    int dehazeLevel;   //Defog strength, [0, 255]
+    int dehazeTrans;   //Dehaze strength, [0, 255]
+    int dehazeBright;  //illumination compensation, [0, 255]
     //PLAYM4_VIE_MODU_DENOISE
-    int denoiseLevel;  //the intensity of denoise,the range is [0, 255]
+    int denoiseLevel;  //Denoise intensity, [0, 255]
     //PLAYM4_VIE_MODU_SHARPEN
-    int usmAmount;     //sharpen intensity,the range is [0, 255]
-    int usmRadius;     //the radius of sharpen,the range is[1, 15]
-    int usmThreshold;  //the threshold of sharpen,the range is[0, 255]
+    int usmAmount;     //Sharpen strength, [0, 255]
+    int usmRadius;     //Sharpen radius, [1, 15]
+    int usmThreshold;  //Sharpen threshold, [0, 255]
     //PLAYM4_VIE_MODU_DEBLOCK
-    int deblockLevel;  //the level of deblock ,the range is [0, 100]
+    int deblockLevel;  //Sharpen strength, [0, 100]
     //PLAYM4_VIE_MODU_LENS
-    int lensWarp;      //warp value,the range is[-256, 255]
-    int lensZoom;      //zoom value,the range is[-256, 255]
+    int lensWarp;      //Distortion, [-256, 255]
+    int lensZoom;      //Zoom, [-256, 255]
     //PLAYM4_VIE_MODU_CRB
-
+    //No response parameter
 } PLAYM4_VIE_PARACONFIG;
 
 typedef enum _PLAYM4_VIE_MODULES
 {
-    PLAYM4_VIE_MODU_ADJ      = 0x00000001, //the basic image adjustment
-    PLAYM4_VIE_MODU_EHAN     = 0x00000002, //part enhancement module
-    PLAYM4_VIE_MODU_DEHAZE   = 0x00000004, //dehaze module
-    PLAYM4_VIE_MODU_DENOISE  = 0x00000008, //denoise module
-    PLAYM4_VIE_MODU_SHARPEN  = 0x00000010, //sharpen module
-    PLAYM4_VIE_MODU_DEBLOCK  = 0x00000020, //deblock module
-    PLAYM4_VIE_MODU_CRB      = 0x00000040, //color balance module
-    PLAYM4_VIE_MODU_LENS     = 0x00000080, //Lens warp correction
+    PLAYM4_VIE_MODU_ADJ      = 0x00000001, //Basic Adjustment of Image
+    PLAYM4_VIE_MODU_EHAN     = 0x00000002, //Local Enhancement Module
+    PLAYM4_VIE_MODU_DEHAZE   = 0x00000004, //Defog Module
+    PLAYM4_VIE_MODU_DENOISE  = 0x00000008, //Denoise Module
+    PLAYM4_VIE_MODU_SHARPEN  = 0x00000010, //Sharpen Module
+    PLAYM4_VIE_MODU_DEBLOCK  = 0x00000020, //Deblock and Filtering Module
+    PLAYM4_VIE_MODU_CRB      = 0x00000040, //Color Balance Module
+    PLAYM4_VIE_MODU_LENS     = 0x00000080, //Image Distortion Correction Module
 }PLAYM4_VIE_MODULES;
 #endif
 
-//Set Enable or disable the mode APIs
-int PlayM4_VIE_SetModuConfig(int lPort,int nModuFlag,BOOL bEnable);
+//Disable/Enable Module
+//Macros PLAYM4_VIE_MODULES of dwModuFlag, which can be combined.
+//First enable module, and then set module parameters; Before setting, the default parameters will be adopted.
+//After disabling the module, the previous settings will be cleared.
+//Before calling other APIs, you should enable the module via this API, otherwise, error will be returned.
+PLAYM4_API int __stdcall PlayM4_VIE_SetModuConfig(int nPort, int nModuFlag, int bEnable);
+
+//Set image enhancement region, NULL-Full Image. If the image is larger than full image, adopts full image. The minimum region is 16*16 pixels.
+//Supports setting region, up to 4 regions are supported. For the first version, only one region is supported. The regions cannot be overlaid, otherwise, error occurs.
+PLAYM4_API int __stdcall PlayM4_VIE_SetRegion(int nPort, int nRegNum, HKRECT* pRect);
+
+//Get enabled module
+PLAYM4_API int __stdcall PlayM4_VIE_GetModuConfig(int nPort, int* pdwModuFlag);
+
+//Set parameters
+//The disabled parameter settings will be ignored.
+PLAYM4_API int __stdcall PlayM4_VIE_SetParaConfig(int nPort, PLAYM4_VIE_PARACONFIG* pParaConfig);
+
+//Get enabled module parameters
+PLAYM4_API int __stdcall PlayM4_VIE_GetParaConfig(int nPort, PLAYM4_VIE_PARACONFIG* pParaConfig);
 
 
-//Set image region of image enhancement
-int PlayM4_VIE_SetRegion(int lPort,int lRegNum,HKRECT* pRect);
-
-//Get the enable module of image enhancement
-int PlayM4_VIE_GetModuConfig(int lPort,int* pdwModuFlag);
-
-//Set the parameter of the enable module of image enhancement
-int PlayM4_VIE_SetParaConfig(int lPort,PLAYM4_VIE_PARACONFIG* pParaConfig);
-
-//Get the parameter of the enable module of image enhancement
-int PlayM4_VIE_GetParaConfig(int lPort,PLAYM4_VIE_PARACONFIG* pParaConfig);
-
-//synchronization audio and video
-int PlayM4_SyncToAudio(int nPort, BOOL bSyncToAudio);
-
-// int PlayM4_EnableIVS(int nPort, BOOL bTrue);
 
 
-typedef enum _PLAYM4_THERMAL_FLAG
+#define PLAYM4_MEDIA_HEAD     1   //System header data
+#define PLAYM4_VIDEO_DATA     2   //Video stream data
+#define PLAYM4_AUDIO_DATA     3   //Audio stream data
+#define PLAYM4_PRIVT_DATA     4   //Private stream data
+
+//Pre-record Data Information--Unsupported APIs////////////////////////
+typedef struct
 {
-    PLAYM4_THERMAL_FIREMASK = 0x00000001,
-    PLAYM4_THERMAL_RULEGAS = 0x00000002,
-    PLAYM4_THERMAL_TARGETGAS = 0x00000004
-}PLAYM4_THERMAL_FLAG;
+    long nType;                     // Data type, e.g., file header, video, audio, private data, and so on.
+    long nStamp;                    // Time stamp
+    long nFrameNum;                 // Frame No.
+    long nBufLen;                   // Data length
+    char* pBuf;                     // Frame data, callback by frame
+    PLAYM4_SYSTEM_TIME  stSysTime;  // Global Time
+}RECORD_DATA_INFO;
 
-typedef enum _PLAYM4_TRACK_FLAG
+//Enable pre-record or not, bFlag=1: Enable, bFlag=0: Disable
+PLAYM4_API int __stdcall PlayM4_SetPreRecordFlag(int nPort, int bFlag);
+
+//Pre-record data callback
+PLAYM4_API int __stdcall PlayM4_SetPreRecordCallBack(int nPort, void (CALLBACK* PreRecordCBfun)(int nPort, RECORD_DATA_INFO* pRecordDataInfo, void* pUser), void* pUser);
+
+
+typedef struct
 {
-    PLAYM4_TRACK_PEOPLE = 0x00000001,
-    PLAYM4_TRACK_VEHICLE = 0x00000002
-}PLAYM4_TRACK_FLAG;
+    long    lDataType;          //Private data type
+    long    lDataStrVersion;    //Structure version returned by data, which is mainly for compatibility
+    long    lDataTimeStamp;
+    long    lDataLength;
+    char*   pData;
+}AdditionDataInfo;
 
-typedef struct TI_PTZ_INFO_
+PLAYM4_API int __stdcall PlayM4_SetAdditionDataCallBack(int nPort, unsigned int nSyncType, void (CALLBACK* AdditionDataCBFun)(int nPort, AdditionDataInfo* pstAddDataInfo, void* pUser), void* pUser);
+
+///<Real-Time Information Callback
+#define PLAYM4_SOURCE_MODULE             0 // Data Source Module
+#define PLAYM4_DEMUX_MODULE              1 // Analysis Module
+#define PLAYM4_DECODE_MODULE             2 // Decoding Module
+#define PLAYM4_RENDER_MODULE             3 // Render Module
+
+#define PLAYM4_RTINFO_SOFTDECODE_ERROR   1 // Software decoding error
+#define PLAYM4_RTINFO_MEDIAHEADER_ERROR  2 // Media header error
+#define PLAYM4_RTINFO_ALLOC_MEMORY_ERROR 4 // Allocating memory failed
+
+typedef struct
 {
-    unsigned short dwDefVer;
-    unsigned short dwLength;
-    unsigned int dwP;    //P(0~3600)
-    unsigned int dwT;         //T(0~3600)
-    unsigned int dwZ;         //Z(0~3600)
-    unsigned char        chFSMState;
-    unsigned char  bClearFocusState;
-    unsigned char        reserved[6];
-}PTZ_INFO;
+    int            nRunTimeModule;     //Running module
+    int            nStrVersion;        //Structure version returned by data, which is mainly for compatibility. In the first version, it is defined as 0x0001
+    int            nFrameTimeStamp;    //Frame No.
+    int            nFrameNum;          //Time stamp
+    int            nErrorCode;         //Error code
+    unsigned char  reserved[12];       //Reserved byte
+}RunTimeInfo;
+
+PLAYM4_API int __stdcall PlayM4_SetRunTimeInfoCallBackEx(int nPort, int nModule, void (CALLBACK* RunTimeInfoCBFun)(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
 
 
+///<Window Size Changed Notification
+PLAYM4_API int __stdcall PlayM4_WndResolutionChange(int nPort);//new add
 
-int PlayM4_RenderPrivateData(int nPort, int nIntelType, BOOL bTrue);
+/////////////////////////////////////////////////////////////////////////////
 
-int PlayM4_RenderPrivateDataEx(int nPort, int nIntelType, int nSubType, BOOL bTrue);
-
-int PlayM4_SetEncryptTypeCallBack(int nPort,void (CALLBACK* EncryptTypeCBFun)(int nPort, ENCRYPT_INFO* pEncryptInfo, int nReserved));
-
-int PlayM4_GetStreamAdditionalInfo(int nPort, int lType, unsigned char* pInfo, int* plLen);
-
-
-///<´°¿Ú´óÐ¡¸Ä±äÍ¨Öª½Ó¿Ú
-int PlayM4_WndResolutionChange(int nPort);//new add
+//Unrecommended APIs
+/////////////////////////////////////////////////////////////////////////////////////////////
+int  PlayM4_RigisterDrawFun(int nPort,void (CALLBACK* DrawFun)(int nPort,PLAYM4_HDC hDc,void* nUser),void* nUser);
+int  PlayM4_SetDecCallBack(int nPort,void (CALLBACK* DecCBFun)(int nPort,char* pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2));
+int  PlayM4_SetDecCallBackEx(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2), char* pDest, int nDestSize);
 int  PlayM4_SetVideoWindow(int nPort, unsigned int nRegionNum, PLAYM4_HWND hWnd);
+int  PlayM4_SetColor(int nPort, unsigned int nRegionNum, int nBrightness, int nContrast, int nSaturation, int nHue);
+int  PlayM4_GetColor(int nPort, unsigned int nRegionNum, int* pBrightness, int* pContrast, int* pSaturation, int* pHue);
+int  PlayM4_GetFileTimeEx(int nPort, unsigned int* pStart, unsigned int* pStop, unsigned int* pRev);
+int  PlayM4_GetCurrentFrameRateEx(int nPort, float* pfFrameRate);
+int  PlayM4_SyncToAudio(int nPort, int bSyncToAudio);
+int  PlayM4_SetImageSharpen(int nPort, unsigned int nLevel);
+int  PlayM4_ResetSourceBufFlag(int nPort);
+int  PlayM4_SetSourceBufCallBack(int nPort, unsigned int nThreShold, void (CALLBACK* SourceBufCallBack)(int nPort, unsigned int nBufSize, unsigned int dwUser, void* pResvered), unsigned int dwUser, void* pReserved);
+unsigned int PlayM4_GetAbsFrameNum(int nPort);
+PLAYM4_API int __stdcall PlayM4_SetRunTimeInfoCallBack(int nPort, void (CALLBACK* RunTimeInfoCBFun)(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+////////////////NO SUPPORT///////////////////////////////////////////////////
+
+int          PlayM4_InitDDraw(PLAYM4_HWND hWnd);
+int          PlayM4_RealeseDDraw();
+#if (WINVER >= 0x0400)
+//Note: These function must be built under win2000 or above with Microsoft System SDK.
+//You can download the sdk from "http://www.microsoft.com/msdownload/platformsdk/sdkupdate/";
+int          PlayM4_InitDDrawDevice();
+void         PlayM4_ReleaseDDrawDevice();
+int          PlayM4_SetDDrawDevice(int nPort, unsigned int nDeviceNum);
+int          PlayM4_SetDDrawDeviceEx(int nPort,unsigned int nRegionNum,unsigned int nDeviceNum);
+int          PlayM4_GetDDrawDeviceInfo(unsigned int nDeviceNum, char* lpDriverDescription, unsigned int nDespLen, char* lpDriverName, unsigned int nNameLen, HMONITOR* hhMonitor);
+int          PlayM4_GetCapsEx(unsigned int nDDrawDeviceNum);
+unsigned int PlayM4_GetDDrawDeviceTotalNums();
+#endif
+int          PlayM4_SetFileEndMsg(int nPort, PLAYM4_HWND hWnd, unsigned int nMsg);
+int          PlayM4_GetCaps();
+int          PlayM4_OpenStreamEx(int nPort, unsigned char* pFileHeadBuf, unsigned int nSize, unsigned int nBufPoolSize);
+int          PlayM4_CloseStreamEx(int nPort);
+int          PlayM4_InputVideoData(int nPort, unsigned char* pBuf, unsigned int nSize);
+int          PlayM4_InputAudioData(int nPort, unsigned char* pBuf, unsigned int nSize);
+//int          PlayM4_SetOverlayMode(int nPort, int bOverlay, COLORREF colorKey);
+int          PlayM4_GetOverlayMode(int nPort);
+int          PlayM4_SetOverlayFlipMode(int nPort, int bTrue);
+//COLORREF     PlayM4_GetColorKey(int nPort);
+int          PlayM4_SetPicQuality(int nPort, int bHighQuality);
+int          PlayM4_GetPictureQuality(int nPort, int* bHighQuality);
+int          PlayM4_AdjustWaveAudio(int nPort, int nCoefficient);
+int          PlayM4_SetPlayMode(int nPort, int bNormal);
+int          PlayM4_SetDeflash(int nPort, int bDefalsh);
+int          PlayM4_CheckDiscontinuousFrameNum(int nPort, int bCheck);
+int          PlayM4_SetVerifyCallBack(int nPort, unsigned int nBeginTime, unsigned int nEndTime, void (__stdcall* funVerify)(int nPort, FRAME_POS* pFilePos, unsigned int bIsVideo, unsigned int nUser), unsigned int nUser);
+int          PlayM4_SetEncChangeMsg(int nPort, PLAYM4_HWND hWnd, unsigned int nMsg);
+int          PlayM4_SetGetUserDataCallBack(int nPort, void(CALLBACK* funGetUserData)(int nPort, unsigned char* pUserBuf, unsigned int nBufLen, unsigned int nUser), unsigned int nUser);
+int          PlayM4_GetOriginalFrameCallBack(int nPort, int bIsChange, int bNormalSpeed, int nStartFrameNum, int nStartStamp, int nFileHeader, void(CALLBACK *funGetOrignalFrame)(int nPort, FRAME_TYPE* frameType, int nUser), int nUser);
+int          PlayM4_GetFileSpecialAttr(int nPort, unsigned int* pTimeStamp, unsigned int* pFileNum, unsigned int* pReserved);
+int          PlayM4_GetThrowBFrameCallBack(int nPort, void(CALLBACK* funThrowBFrame)(int nPort, unsigned int nBFrame, unsigned int nUser), unsigned int nUser);
+int          PlayM4_SetAudioCallBack(int nPort, void (__stdcall* funAudio)(int nPort, char* pAudioBuf, int nSize, int nStamp, int nType, int nUser), int nUser);
+//motionflow Multiple Frame
+PLAYM4_API int __stdcall PlayM4_MotionFlow(int nPort, unsigned int dwAdjustType);
+
+int  PlayM4_SetTimerType(int nPort,unsigned int nTimerType,unsigned int nReserved);
+int  PlayM4_GetTimerType(int nPort,unsigned int *pTimerType,unsigned int *pReserved);
+int  PlayM4_SetDisplayMode(int nPort, unsigned int dwType);
+//This function is not available.
+PLAYM4_API int __stdcall PlayM4_SetSycStartTime(int nPort, PLAYM4_SYSTEM_TIME *pstSystemTime);
+
+////////////////////////////////////////////////////////////////////////////////
 
 #ifdef __cplusplus
-}
+    }
 #endif
 
 #endif //_PLAYM4_H_
