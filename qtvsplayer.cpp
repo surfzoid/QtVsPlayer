@@ -543,7 +543,7 @@ void QtVsPlayer::WinIdWorkarround()
 {
     playm4interface::hwnd = 0;
 
-    playm4interface::RefreshPlay();
+    //playm4interface::RefreshPlay();
     playm4interface::hwnd = centralWidgetwinId;
     playm4interface::RefreshPlay();
     return;
@@ -625,6 +625,12 @@ void QtVsPlayer::on_actionInfos_triggered()
     qDebug() << "Stamp : " <<playm4interface::pFRAME_INFO->nStamp;
     qDebug() << "Type : " <<playm4interface::pFRAME_INFO->nType;
 
+    }
+    else
+    {
+        int width = 0, height = 0;
+        PlayM4_GetPictureSize(playm4interface::m_pblocalportnum,&width,&height);
+        qDebug()  << width << "x" << height << " <- PlayM4_GetPictureSize()" ;
     }
 }
 

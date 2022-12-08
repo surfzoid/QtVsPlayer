@@ -16,6 +16,7 @@
 #include <QStandardPaths>
 #include <QMessageBox>
 #include <QMediaMetaData>
+#include "errormanager.h"
 
 QMediaPlayer *RtspWindow::player;
 QVideoWidget *RtspWindow::videoWidget;
@@ -48,9 +49,8 @@ RtspWindow::RtspWindow(QWidget *parent) :
             this, SLOT(onPlayError(QMediaPlayer::Error)));
     connect(player, SIGNAL(stateChanged(QMediaPlayer::State)),
             this, SLOT(onPlayStateChanged(QMediaPlayer::State)));
-    connect(player, SIGNAL(bufferStatusChanged(int)),
-            this, SLOT(onbufferStatusChanged(int)));
-
+    //connect(player, SIGNAL(bufferStatusChanged(int)),this, SLOT(onbufferStatusChanged(int)));
+    connect(player, &QMediaPlayer::bufferStatusChanged, this, &RtspWindow::onbufferStatusChanged);
     ui->setupUi(this);
 
     setCentralWidget(videoWidget);
@@ -78,7 +78,9 @@ RtspWindow::RtspWindow(QWidget *parent) :
     connect(manager, SIGNAL(authenticationRequired(QNetworkReply*, QAuthenticator*)),
             this, SLOT(authenticationRequired(QNetworkReply*, QAuthenticator*)));
 
-
+    m_videoProbe = new QVideoProbe(this);
+    connect(m_videoProbe, &QVideoProbe::videoFrameProbed, this, &RtspWindow::processFrame);
+    m_videoProbe->setSource(player);
 }
 
 RtspWindow::~RtspWindow()
@@ -126,6 +128,9 @@ void RtspWindow::PlayRtsp(QString Camuri)
     //player->setPlaybackRate(0);
     player->play();
     videoWidget->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
+    //videoWidget->hide();
+
+
 }
 
 void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
@@ -740,7 +745,7 @@ void RtspWindow::onPlayError(QMediaPlayer::Error error)
 void RtspWindow::onPlayStateChanged(QMediaPlayer::State state)
 {
     qDebug() << "play State - " << state;
-
+    QNetworkRequest PStream;
     // handle state message
     switch (state) {
     case QMediaPlayer::State::PausedState:
@@ -764,7 +769,7 @@ void RtspWindow::onPlayStatusChanged(QMediaPlayer::MediaStatus status)
 {
     qDebug() << "play Status - " << status;
     //ui->lblLoading->setText(QString(status).toUtf8().data());
-
+    QNetworkRequest PStream;
 
     // handle status message
     switch (status) {
@@ -793,7 +798,6 @@ void RtspWindow::onPlayStatusChanged(QMediaPlayer::MediaStatus status)
     }
 }
 
-
 void RtspWindow::setStatusInfo(const QString &info)
 {
     ui->lblLoading->show();
@@ -806,9 +810,107 @@ void RtspWindow::displayErrorMessage()
     ui->lblLoading->setText(player->errorString());
 }
 
-
-
 void RtspWindow::on_PauseBtn_released()
 {
     player->pause();
+}
+
+void RtspWindow::DisplayError(QString Source, unsigned int  ErrMess)
+{
+
+    QString QerrMess=ErrorManager::error_codes(Source, ErrMess);
+
+    //printf("pyd---Hik Sdk error response :from %s : %s\n\r", Source.toUtf8().data(), QerrMess.toUtf8().data());
+
+    return;
+
+}
+
+void RtspWindow::HikRtsp(unsigned char *pBuffer,unsigned int dwBufSize)
+{
+    int nPort = -1 ;
+qDebug() << "pBuffer  : " << pBuffer <<"\n";
+    if (!PlayM4_GetPort(&nPort))
+    {
+        DisplayError("PlayM4_GetPort", PlayM4_GetLastError(nPort));
+    }
+
+    if (!PlayM4_SetStreamOpenMode(nPort, STREAME_REALTIME))
+    {
+        DisplayError("PlayM4_SetStreamOpenMode", PlayM4_GetLastError(nPort));
+        PlayM4_FreePort(nPort);
+        DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
+    }
+
+    if (dwBufSize > 0)
+    {
+        if (!PlayM4_OpenStream(nPort, pBuffer, dwBufSize, 1920*1080*3))
+        {
+            DisplayError("PlayM4_OpenStream", PlayM4_GetLastError(nPort));
+            PlayM4_FreePort(nPort);
+            DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
+        }
+
+        if (!PlayM4_SetDisplayCallBack(nPort, RemoteDisplayCBFun))
+        {
+            DisplayError("PlayM4_SetDisplayCallBack", PlayM4_GetLastError(nPort));
+            PlayM4_CloseStream(nPort);
+            DisplayError("PlayM4_CloseStream", PlayM4_GetLastError(nPort));
+            PlayM4_FreePort(nPort);
+            DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
+        }
+
+        PLAYM4_HWND pWnd= centralWidget()->winId();
+        if (!pWnd)
+        {
+            PlayM4_CloseStream(nPort);
+            DisplayError("PlayM4_CloseStream", PlayM4_GetLastError(nPort));
+            PlayM4_FreePort(nPort);
+            DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
+            return;
+        }
+        if (!PlayM4_Play(nPort, pWnd))
+        {
+            DisplayError("PlayM4_Play", PlayM4_GetLastError(nPort));
+            PlayM4_CloseStream(nPort);
+            DisplayError("PlayM4_CloseStream", PlayM4_GetLastError(nPort));
+            PlayM4_FreePort(nPort);
+            DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
+        }
+    }
+    else
+    {
+
+        if (!PlayM4_Play(nPort,NULL))
+        {
+            DisplayError("PlayM4_Play", PlayM4_GetLastError(nPort));
+            PlayM4_CloseStream(nPort);
+            DisplayError("PlayM4_CloseStream", PlayM4_GetLastError(nPort));
+            PlayM4_FreePort(nPort);
+            DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
+        }
+    }
+}
+
+/*********************************************************
+  Function:	DisplayCBFun
+  Desc:		the call back function to snatch the bmp pictrue
+  Input:	nPort,port;pBuf,pic buffer;nSize,pic size;nWidth,pic width;nHeight,pic height;nType,type;
+  Output:	none
+  Return:	none
+**********************************************************/
+void CALLBACK RtspWindow::RemoteDisplayCBFun(int nPort, char *pBuf, int size, int width, int height,int stamp, int type, int reserved)
+{
+    DisplayError("RemoteDisplayCBFun", PlayM4_GetLastError(nPort));
+}
+
+
+void RtspWindow::processFrame(const QVideoFrame &frame)
+{
+    if (frame.isValid())
+
+
+        //HikRtsp(reinterpret_cast<unsigned char*>(frame.buffer()), sizeof(frame.buffer()));
+    return; //drop frame
+
 }

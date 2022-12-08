@@ -251,8 +251,7 @@ void VideoCtrls::on_previousButton_released()
  *  Output          :  	none
  *  Return          :  	none
 ************************************************************************/
-void CALLBACK PlayM4DisplayCallBack(int nPort, char *pBuf, int size, int width, int height,
-                                    int stamp, int type, int reserved)
+void CALLBACK PlayM4DisplayCallBack(int nPort, char *pBuf, int size, int width, int height,int stamp, int type, int reserved)
 {
     if (IsSnapShoot == true) {
         QString picturepathname(CAPTURE_PICTURE_PATH);
@@ -360,4 +359,9 @@ void VideoCtrls::on_TimeSlider_sliderReleased()
 void VideoCtrls::focusOutEvent(QFocusEvent *)
 {
     hide();
+}
+
+void VideoCtrls::on_Audio_released()
+{
+    playm4interface::PlaySound();
 }

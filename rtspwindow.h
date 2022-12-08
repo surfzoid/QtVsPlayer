@@ -6,6 +6,11 @@
 #include <QVideoWidget>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <include/PlayM4.h>
+#include <QVideoProbe>
+
+class QVideoProbe;
+
 
 namespace Ui {
 class RtspWindow;
@@ -98,10 +103,17 @@ private:
     void setStatusInfo(const QString &info);
     void displayErrorMessage();
     void SetmediaRecorder();
+    void HikRtsp(unsigned char *pBuffer,unsigned int dwBufSize);
+    static void DisplayError(QString Source, unsigned int  ErrMess);
+    static void CALLBACK RemoteDisplayCBFun(int nPort, char *pBuf, int size, int width, int height,int stamp, int type, int reserved);
+
+    QVideoProbe *m_videoProbe = nullptr;
 
 public slots:
     void replyFinished (QNetworkReply *reply);
     void authenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
+    //void processFrame(QVideoFrame frame, int levels);
+    void processFrame(const QVideoFrame &frame);
 
 protected slots:
     void onPlayStatusChanged(QMediaPlayer::MediaStatus status);

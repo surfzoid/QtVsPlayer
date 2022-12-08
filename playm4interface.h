@@ -53,6 +53,8 @@ public:
     static void FreePort();
     static void GetMetadatas();
     static FRAME_INFO * pFRAME_INFO;
+    static void PlaySound();
+
 private:
 
     static void DisplayError(QString Source, unsigned int  ErrMess);

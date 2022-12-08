@@ -54,6 +54,7 @@ private slots:
     void on_SoudVolume_valueChanged(int value);
     void on_TimeSlider_actionTriggered(int action);
     void on_TimeSlider_sliderReleased();
+    void on_Audio_released();
 };
 
 #endif // VIDEOCTRLS_H

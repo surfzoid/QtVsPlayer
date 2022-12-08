@@ -13,6 +13,7 @@ using namespace std;
 
 
 bool isIndexed = false;
+bool isound = false;
 PLAYM4_HWND  playm4interface::hwnd;
 int playm4interface::m_pblocalportnum = -1;
 QString playm4interface::m_pblocalfilepath;
@@ -22,8 +23,9 @@ FRAME_INFO *playm4interface::pFRAME_INFO;
 
 unsigned int  playm4interface::VideoFs(QString fileName)
 {
+
     VideoCtrls::EndRead = false;
-    //bool bSuccess;
+    isound = false;
     isIndexed = false;
     //initval();
     m_pblocalfilepath = fileName;
@@ -32,14 +34,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
     if (FsOpened == true) {
 
-        if (!Stop())
-        {
-            DisplayError("PlayM4_StopSound", PlayM4_GetLastError(m_pblocalportnum));
-        }
-        if (!PlayM4_CloseFile(m_pblocalportnum))
-        {
-            DisplayError("PlayM4_CloseFile", PlayM4_GetLastError(m_pblocalportnum));
-        }
+        Stop();
         FreePort();
         FsOpened = false;
         m_pblocalportnum = -1;
@@ -60,7 +55,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
 
     QTime dieTime= QTime::currentTime().addSecs(10);
     while(!isIndexed) { // STEP-5
-        delay();
+        //delay();
         if (QTime::currentTime() > dieTime) {
             break;
         }
@@ -72,17 +67,16 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         //PlayM4_SetCurrentFrameNum(m_pblocalportnum, 0);
     }
 
-    //BOOL __stdcall    PlayM4_SetDecCallBack(LONG nPort,void (CALLBACK* DecCBFun)(long nPort,char * pBuf,long nSize,FRAME_INFO * pFrameInfo, long nReserved1,long nReserved2));
+
+    if (!PlayM4_PlaySound(m_pblocalportnum))
+    {
+        DisplayError("PlayM4_PlaySound",PlayM4_GetLastError(m_pblocalportnum));
+    }
 
     if (!PlayM4_Play(m_pblocalportnum, hwnd))
     {
         DisplayError("PlayM4_Play",PlayM4_GetLastError(m_pblocalportnum));
         //PlayM4_SetCurrentFrameNum(m_pblocalportnum, 0);
-    }
-
-    if (!PlayM4_PlaySound(m_pblocalportnum))
-    {
-        DisplayError("PlayM4_PlaySound",PlayM4_GetLastError(m_pblocalportnum));
     }
 
     int frames = PlayM4_GetFileTotalFrames(m_pblocalportnum); // STEP-6
@@ -181,13 +175,7 @@ void playm4interface::SetPort()
 
 void playm4interface::FreePort()
 {
-    if (FsOpened == true) {
-        //bool bSuccess = false;
-
-        if (!Stop())
-        {
-            DisplayError("PlayM4_StopSound", PlayM4_GetLastError(m_pblocalportnum));
-        }
+    if (m_pblocalportnum > -1) {
 
         if (!PlayM4_CloseFile(m_pblocalportnum))
         {
@@ -199,10 +187,8 @@ void playm4interface::FreePort()
             DisplayError("PlayM4_FreePort", PlayM4_GetLastError(m_pblocalportnum));
         }
 
-
-
     }
-
+    m_pblocalportnum = -1;
     return;
 }
 
@@ -216,12 +202,11 @@ int playm4interface::RefreshPlay()
             DisplayError("PlayM4_WndResolutionChange",PlayM4_GetLastError(m_pblocalportnum));
         }
 #endif
-        //return PlayM4_RefreshPlay(m_pblocalportnum);
 
-        if (!PlayM4_RefreshPlay(m_pblocalportnum))
+        /*if (!PlayM4_RefreshPlay(m_pblocalportnum))
         {
             DisplayError("PlayM4_RefreshPlay",PlayM4_GetLastError(m_pblocalportnum));
-        }
+        }*/
     }
     return 0;
 }
@@ -242,18 +227,38 @@ int playm4interface::Pause(unsigned int nPause)//nPause=1 pause, =0 resume
 
 int playm4interface::Play()
 {
-    bool Ret = PlayM4_Play(m_pblocalportnum,hwnd);
-    RefreshPlay();
+    bool Ret = false;
+
+    Ret = PlayM4_Play(m_pblocalportnum,hwnd);
+    if (!Ret)
+    {
+        DisplayError("PlayM4_Play",PlayM4_GetLastError(m_pblocalportnum));
+    }else{
+        RefreshPlay();
+        FsOpened = true;
+    }
+
     return Ret;
 }
 
 int playm4interface::Stop()
 {
-    if (!PlayM4_Stop(m_pblocalportnum))
-    {
-        DisplayError("PlayM4_Stop", PlayM4_GetLastError(m_pblocalportnum));
+    if (FsOpened) {
+        if (isound) {
+            if (!PlayM4_StopSound())
+            {
+                DisplayError("PlayM4_StopSound", PlayM4_GetLastError(m_pblocalportnum));
+            }
+        }
+        if (!PlayM4_Stop(m_pblocalportnum))
+        {
+            DisplayError("PlayM4_Stop", PlayM4_GetLastError(m_pblocalportnum));
+        }
+
+        FsOpened = false;
+        isound = false;
     }
-    return PlayM4_StopSound();
+    return 1;
 }
 
 int playm4interface::Fast()
@@ -288,6 +293,7 @@ int playm4interface::OneByOneBack()
 int playm4interface::SetVolume(unsigned short Volume)
 {
     unsigned short GetVolume = PlayM4_GetVolume(m_pblocalportnum);
+    qDebug() <<  GetVolume;
     return PlayM4_SetVolume(m_pblocalportnum, Volume);
 }
 
@@ -379,19 +385,6 @@ void playm4interface::InitCallback( unsigned int nBeginTime, unsigned int nEndTi
     bool CallBResp = false;
 
 #if (defined(_WIN32))
-    //CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
-#elif defined(__linux__)
-    //callback work, but no sound anymore !!!
-    //int  PlayM4_SetDecCallBackMend(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2), void* nUser);
-    //or
-    //int  PlayM4_SetDecCallBack(int nPort,void (CALLBACK* DecCBFun)(int nPort,char* pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2));
-    CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
-#endif
-    if (!CallBResp){
-        DisplayError("PlayM4_SetDecCallBack",PlayM4_GetLastError(m_pblocalportnum));
-    }
-
-#if (defined(_WIN32))
     //PlayM4_SetAudioCallBack
     BOOL _stdcall PlayM4_SetAudioCallBack (LONG nPort, void (_stdcall * funAudio) (long
                                                                                    nPort, char * pAudioBuf, long nSize, long nStamp, long nType, long nUser), long nUser);
@@ -403,6 +396,19 @@ void playm4interface::InitCallback( unsigned int nBeginTime, unsigned int nEndTi
     if (!CallBResp){
         DisplayError("PlayM4_SetAudioCallBack",PlayM4_GetLastError(m_pblocalportnum));
     }
+
+#if (defined(_WIN32))
+    //CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
+#elif defined(__linux__)
+    //callback work, but no sound anymore !!!
+    //int  PlayM4_SetDecCallBackMend(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2), void* nUser);
+    //or
+    //int  PlayM4_SetDecCallBack(int nPort,void (CALLBACK* DecCBFun)(int nPort,char* pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2));
+    //CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
+#endif
+    /*if (!CallBResp){
+        DisplayError("PlayM4_SetDecCallBack",PlayM4_GetLastError(m_pblocalportnum));
+    }*/
 
 
 }
@@ -442,4 +448,27 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
     //printf("SetDecCallBack---%l:%l\n\r",nPort, nSize);
     //qDebug() <<  pFrameInfo;
     pFRAME_INFO = pFrameInfo;
+
+    if ((pFRAME_INFO->nType == T_AUDIO16 | pFRAME_INFO->nType == T_AUDIO8) && !isound) {
+        PlaySound();
+    }
+}
+
+bool AudioSwitch = true;
+void playm4interface::PlaySound()
+{
+    if (!AudioSwitch) {
+        if (!PlayM4_PlaySound(m_pblocalportnum))
+        {
+            DisplayError("PlayM4_PlaySound",PlayM4_GetLastError(m_pblocalportnum));
+        }
+        AudioSwitch = true;
+    } else {
+        if (!PlayM4_StopSound())
+        {
+            DisplayError("PlayM4_StopSound",PlayM4_GetLastError(m_pblocalportnum));
+        }
+        AudioSwitch = false;
+    }
+    isound = true;
 }
