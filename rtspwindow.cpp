@@ -36,7 +36,7 @@ RtspWindow::RtspWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::RtspWindow)
 {
-    RtspWindow::player = new QMediaPlayer(this);
+    RtspWindow::player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
     RtspWindow::videoWidget = new QVideoWidget(this);
 
     connect(player, SIGNAL(positionChanged(qint64)),
@@ -108,27 +108,19 @@ void RtspWindow::PlayRtsp(QString Camuri)
 
     player->setVolume(50);
 
-
     player->setVideoOutput(videoWidget);
     videoWidget->setAutoFillBackground(true);
     videoWidget->setAspectRatioMode(Qt::KeepAspectRatio);
     videoWidget->setSizePolicy(QSizePolicy::Preferred,
                                QSizePolicy::Maximum);
 
-
-
-    /*QUrl Adresse(Camuri.replace("rtsp:","http:") + "/metadata");
-    Adresse.setPort(CamPortHttp.toInt());
-    manager->get((QNetworkRequest)Adresse);
-
-    player->setMedia(QUrl(Camuri + "/trackID=1"));
-    player->play();*/
-
     player->setMedia(QUrl(Camuri));
     //player->setPlaybackRate(0);
     player->play();
     videoWidget->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
     //videoWidget->hide();
+
+
 
 
 }
@@ -826,9 +818,10 @@ void RtspWindow::DisplayError(QString Source, unsigned int  ErrMess)
 
 }
 
+int nPort = -1 ;
 void RtspWindow::HikRtsp(unsigned char *pBuffer,unsigned int dwBufSize)
 {
-    int nPort = -1 ;
+
 qDebug() << "pBuffer  : " << pBuffer <<"\n";
     if (!PlayM4_GetPort(&nPort))
     {
@@ -908,9 +901,10 @@ void CALLBACK RtspWindow::RemoteDisplayCBFun(int nPort, char *pBuf, int size, in
 void RtspWindow::processFrame(const QVideoFrame &frame)
 {
     if (frame.isValid())
+//qDebug() << MediaStream->bytesAvailable();
 
-
-        //HikRtsp(reinterpret_cast<unsigned char*>(frame.buffer()), sizeof(frame.buffer()));
+        //HikRtsp((unsigned char*)frame.buffer(), sizeof(frame.buffer()));
+    //PlayM4_InputData(nPort,(unsigned char*)frame.buffer(), sizeof(frame.buffer()));
     return; //drop frame
 
 }

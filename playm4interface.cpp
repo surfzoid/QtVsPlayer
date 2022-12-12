@@ -373,9 +373,7 @@ void playm4interface::GetCap(int nFlag)
 
 void playm4interface::GetMetadatas()
 {
-
-    HIK_MEDIAINFO HIKMI;
-    qDebug() <<  HIKMI.video_format;
+PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
 }
 
 
@@ -452,6 +450,24 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
     if ((pFRAME_INFO->nType == T_AUDIO16 | pFRAME_INFO->nType == T_AUDIO8) && !isound) {
         PlaySound();
     }
+
+    if (pFRAME_INFO) {
+    qDebug() << "FrameNum : " <<playm4interface::pFRAME_INFO->dwFrameNum;
+    qDebug() << "FrameRate : " <<playm4interface::pFRAME_INFO->nFrameRate;
+    qDebug() << "Width : " <<playm4interface::pFRAME_INFO->nWidth;
+    qDebug() << "Height : " <<playm4interface::pFRAME_INFO->nHeight;
+    qDebug() << "Stamp : " <<playm4interface::pFRAME_INFO->nStamp;
+    qDebug() << "Type : " <<playm4interface::pFRAME_INFO->nType;
+
+    }
+    else
+    {
+        int width = 0, height = 0;
+        PlayM4_GetPictureSize(playm4interface::m_pblocalportnum,&width,&height);
+        qDebug()  << width << "x" << height << " <- PlayM4_GetPictureSize()" ;
+    }
+
+    PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))NULL);
 }
 
 bool AudioSwitch = true;

@@ -1,4 +1,4 @@
-VERSION = 1.0.26
+VERSION = 1.0.27
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT       += core gui multimedia multimediawidgets
 !android:QT       += dbus
@@ -6,7 +6,7 @@ QT       += core gui multimedia multimediawidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11 shared
-
+OUTPUT += Console
 # Specifies name of the binary.
 TARGET = QtVsPlayer
 
