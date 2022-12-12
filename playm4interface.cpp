@@ -373,7 +373,15 @@ void playm4interface::GetCap(int nFlag)
 
 void playm4interface::GetMetadatas()
 {
-PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
+bool CallBResp = false;
+#if (defined(_WIN32))
+    CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(long,char *,long,long,long,long,long,long))PlayM4DisplayCallBack);
+#elif defined(__linux__)
+    CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
+#endif
+    if (!CallBResp){
+        DisplayError("PlayM4_SetDecCallBack",PlayM4_GetLastError(m_pblocalportnum));
+    }
 }
 
 
