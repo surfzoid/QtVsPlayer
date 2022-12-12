@@ -375,7 +375,7 @@ void playm4interface::GetMetadatas()
 {
 bool CallBResp = false;
 #if (defined(_WIN32))
-    CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(long,char *,long,long,long,long,long,long))SetDecCallBack);
+    //CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,long,int,FRAME_INFO*, void*, void*))SetDecCallBack);
 #elif defined(__linux__)
     CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
 #endif
@@ -476,7 +476,7 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
     }
 
 #if (defined(_WIN32))
-    PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(long,char *,long,long,long,long,long,long))NULL);
+    //PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,long,int,FRAME_INFO*, void*, void*))NULL);
 #elif defined(__linux__)
     PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))NULL);
 #endif
