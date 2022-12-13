@@ -12,7 +12,6 @@
 #include <QSize>
 #include "videoctrls.h"
 #include <QMimeDatabase>
-#include <QFileSystemWatcher>
 
 #if (!defined(__ANDROID__))
 #include "qtvsplayer_adaptor.h"
