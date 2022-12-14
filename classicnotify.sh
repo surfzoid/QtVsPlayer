@@ -5,6 +5,8 @@ DAT=$(date +%Y%m%d)
 CAM="NVR"
 CHEMIN=/mnt/cams/cam4/$CAM/$DAT/
 #CHEMIN=/home/eric/Musique/$DAT/
+CAMLOW=$(echo "$CAM" | tr '[:upper:]' '[:lower:]')
+CURPATH=/home/eric/scripts/hik/$CAMLOW
 
 #dbus-send --dest=org.freedesktop.Notifications --print-reply  /org/freedesktop/Notifications org.freedesktop.Notifications.GetCapabilities
 
@@ -32,7 +34,7 @@ if [ -d "$CHEMIN" ];then
           #sudo sed -i "2s|.*|QtVsPlayer $CHEMIN$last|" "/usr/bin/QtVsPlayernotif$CAM"
 		sudo sh -c "echo -e '$CHEMIN$last \c' >> /usr/bin/QtVsPlayernotif$CAM"
           #notify-send -h string:desktop-entry:nautilus -c "transfer.complete" -u critical -i $PWD../QtVsPlayer.png $CAM $last"\n\r"$CHEMIN 
-./notify-send.sh --icon=QtVsPlayer --app-name=QtVsPlayer-Notif --hint=string:sound-name:bark -o QtVsPlayer:"QtVsPlayer $CHEMIN$last > /dev/null" -d "QtVsPlayer $CHEMIN$last > /dev/null" QtVsPlayer "$CAM : $last$CHEMIN" &
+$CURPATH/notify-send.sh --icon=QtVsPlayer --app-name=QtVsPlayer-Notif --hint=string:sound-name:bark -o QtVsPlayer:"QtVsPlayer $CHEMIN$last > /dev/null" -d "QtVsPlayer $CHEMIN$last > /dev/null" QtVsPlayer "$CAM : $last$CHEMIN" &
           #reply=$(dunstify -h int:value:12 -a `QtVsPlayer "$CHEMIN$last"` -A 'open,ouvrir' -i "QtVsPlayer" "$CAM : $last$CHEMIN") &
             #if [[ "$reply" == "open" ]]; then
 				#QtVsPlayer $CHEMIN$last
