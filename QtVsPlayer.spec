@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.27
+Version:        1.0.28
 Release:        %mkrel 2
 License:        GPLv3
 Group:          Video/Players
@@ -59,6 +59,9 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/libSuperRender.so
 
 %changelog
+* Thu Dec 15 2022 surfzoid@gmail.com
++ Manage VCA displayed.
+
 * Mon Dec 12 2022 surfzoid@gmail.com
 + Audio and Video decoder callback work together!
 

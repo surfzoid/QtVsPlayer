@@ -65,6 +65,22 @@ private slots:
     void actionSlot(const QString &text);
     void ShowHide();
 
+    void on_actionVCA_toggled(bool arg1);
+
+    void on_actionMotion_detection_toggled(bool arg1);
+
+    void on_actionPOS_Text_Overlay_toggled(bool arg1);
+
+    void on_actionPicture_Overlay_toggled(bool arg1);
+
+    void on_actionFire_Source_toggled(bool arg1);
+
+    void on_actionTemperature_toggled(bool arg1);
+
+    void on_actionAll_triggered();
+
+    void on_actionNone_triggered();
+
 public slots:
 
 signals:
@@ -95,6 +111,8 @@ private:
     QTimer *ShowHideTimer;
 /*signals:
 static void  FsChanged();*/
+    void VCASwitch(QString Name, int Info, bool IsActive);
+    void enumerateMenu(QMenu *menu, bool ChkState);
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

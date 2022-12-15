@@ -448,11 +448,10 @@ void RtspWindow::replyFinished(QNetworkReply *reply)
 void RtspWindow::authenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
 {
 
+    qDebug()<< "authenticationRequired";
     if(reply->error())
     {
-        qDebug() << "ERROR!";
-        qDebug() << reply->errorString();
-        printf("finish : %s\n\r", reply->errorString().toUtf8().data());
+        qDebug()<< "ERROR!" << reply->errorString();
     }
     else
     {

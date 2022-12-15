@@ -54,10 +54,10 @@ public:
     static void GetMetadatas();
     static FRAME_INFO * pFRAME_INFO;
     static void PlaySound();
+    static void DisplayError(QString Source, unsigned int  ErrMess);
 
 private:
 
-    static void DisplayError(QString Source, unsigned int  ErrMess);
     static bool FsOpened;
     static void GetCap(int nFlag);
     static void delay();
@@ -68,7 +68,9 @@ private:
     static void CALLBACK SetAudioCallBack(int nPort, char* pAudioBuf, int nSize, int nStamp, int nType, int nUser);
     static void CALLBACK SetVerifyCallBack(int nPort, FRAME_POS* pFilePos, unsigned int bIsVideo, unsigned int nUser);
     static void CALLBACK SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2);
-};
+    static int nModule;
+    static void CALLBACK SetRunTimeInfoCBFun(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser);
 
+};
 
 #endif // PLAYM4INTERFACE_H

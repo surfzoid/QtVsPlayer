@@ -150,12 +150,29 @@
     <property name="title">
      <string>Display</string>
     </property>
+    <widget class="QMenu" name="menuVCA_Ino_Overlay">
+     <property name="title">
+      <string>VCA Ino Overlay</string>
+     </property>
+     <addaction name="actionAll"/>
+     <addaction name="actionNone"/>
+     <addaction name="actionVCA"/>
+     <addaction name="actionMotion_detection"/>
+     <addaction name="actionPOS_Text_Overlay"/>
+     <addaction name="actionTemperature"/>
+     <addaction name="actionPicture_Overlay"/>
+     <addaction name="actionFire_Source"/>
+     <addaction name="actionTrack"/>
+     <addaction name="actionDisplay_Schield_Area"/>
+    </widget>
     <addaction name="actionPlein_ecran"/>
     <addaction name="actionMasquer_les_controles"/>
     <addaction name="actionAuto_hide_controls"/>
     <addaction name="actionListe_de_lecture"/>
     <addaction name="actionSettings"/>
     <addaction name="actionInfos"/>
+    <addaction name="separator"/>
+    <addaction name="menuVCA_Ino_Overlay"/>
    </widget>
    <addaction name="menuFichiers"/>
    <addaction name="menuAffichage"/>
@@ -239,6 +256,110 @@
    </property>
    <property name="text">
     <string>Auto hide controls</string>
+   </property>
+  </action>
+  <action name="actionVCA">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>VCA</string>
+   </property>
+  </action>
+  <action name="actionMotion_detection">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Motion Detection</string>
+   </property>
+  </action>
+  <action name="actionPOS_Text_Overlay">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>POS Text Overlay</string>
+   </property>
+  </action>
+  <action name="actionTemperature">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Temperature</string>
+   </property>
+  </action>
+  <action name="actionPicture_Overlay">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Picture Overlay</string>
+   </property>
+  </action>
+  <action name="actionFire_Source">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fire Source</string>
+   </property>
+  </action>
+  <action name="actionTrack">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Track</string>
+   </property>
+  </action>
+  <action name="actionDisplay_Schield_Area">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Display Schield Area</string>
+   </property>
+  </action>
+  <action name="actionAll">
+   <property name="text">
+    <string>All</string>
+   </property>
+  </action>
+  <action name="actionNone">
+   <property name="text">
+    <string>None</string>
    </property>
   </action>
  </widget>

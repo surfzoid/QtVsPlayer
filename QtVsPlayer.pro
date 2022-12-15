@@ -1,4 +1,4 @@
-VERSION = 1.0.27
+VERSION = 1.0.28
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT       += core gui multimedia multimediawidgets
 !android:QT       += dbus
@@ -108,6 +108,7 @@ SOURCES += \
 HEADERS += \
     errormanager.h \
     filesliste.h \
+    include/ApplePlayM4.h \
     include/LinuxPlayM4.h \
     include/PlayM4.h \
     include/WindowsPlayM4.h \

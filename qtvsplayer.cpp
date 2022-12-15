@@ -651,3 +651,68 @@ void QtVsPlayer::actionSlot(const QString &text)
 
 }
 
+
+void QtVsPlayer::on_actionVCA_toggled(bool arg1)
+{
+VCASwitch("PLAYM4_RENDER_ANA_INTEL_DATA", PLAYM4_RENDER_ANA_INTEL_DATA, arg1);
+}
+
+void QtVsPlayer::on_actionMotion_detection_toggled(bool arg1)
+{
+VCASwitch("PLAYM4_RENDER_MD", PLAYM4_RENDER_MD, arg1);
+}
+
+void QtVsPlayer::on_actionPOS_Text_Overlay_toggled(bool arg1)
+{
+VCASwitch("PLAYM4_RENDER_ADD_POS", PLAYM4_RENDER_ADD_POS, arg1);
+}
+
+void QtVsPlayer::on_actionPicture_Overlay_toggled(bool arg1)
+{
+VCASwitch("PLAYM4_RENDER_ADD_PIC", PLAYM4_RENDER_ADD_PIC, arg1);
+}
+
+void QtVsPlayer::on_actionFire_Source_toggled(bool arg1)
+{
+VCASwitch("PLAYM4_RENDER_FIRE_DETCET", PLAYM4_RENDER_FIRE_DETCET, arg1);
+}
+
+void QtVsPlayer::on_actionTemperature_toggled(bool arg1)
+{
+VCASwitch("PLAYM4_RENDER_TEM", PLAYM4_RENDER_TEM, arg1);
+}
+
+void QtVsPlayer::VCASwitch(QString Name, int Info, bool IsActive)
+{
+    if (!PlayM4_RenderPrivateData(playm4interface::m_pblocalportnum, Info, IsActive))
+    {
+        playm4interface::DisplayError(Name,PlayM4_GetLastError(playm4interface::m_pblocalportnum));
+    }
+}
+
+void QtVsPlayer::on_actionAll_triggered()
+{
+    enumerateMenu(ui->menuVCA_Ino_Overlay, true);
+}
+
+void QtVsPlayer::on_actionNone_triggered()
+{
+    enumerateMenu(ui->menuVCA_Ino_Overlay, false);
+}
+
+void QtVsPlayer::enumerateMenu(QMenu *menu, bool ChkState)
+{
+    foreach (QAction *action, menu->actions()) {
+        if (action->isSeparator()) {
+            //qDebug("this action is a separator");
+        } else if (action->menu()) {
+            //qDebug("action: %s", qUtf8Printable(action->text()));
+            //qDebug(">>> this action is associated with a submenu, iterating it recursively...");
+            enumerateMenu(action->menu(), ChkState);
+            //qDebug("<<< finished iterating the submenu");
+        } else {
+            //qDebug("action: %s", qUtf8Printable(action->text()));
+            action->setChecked(ChkState);
+        }
+    }
+}

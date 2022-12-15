@@ -20,6 +20,7 @@ QString playm4interface::m_pblocalfilepath;
 bool playm4interface::FsOpened = false;
 void* playm4interface::nUser;
 FRAME_INFO *playm4interface::pFRAME_INFO;
+int playm4interface::nModule = 0;
 
 unsigned int  playm4interface::VideoFs(QString fileName)
 {
@@ -59,6 +60,50 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         if (QTime::currentTime() > dieTime) {
             break;
         }
+    }
+
+    if (!PlayM4_GetDecodeEngine(m_pblocalportnum))
+    {
+        qDebug()  << "Using SOFT_DECODE_ENGINE";
+    }else{
+        qDebug()  << "Using HARD_DECODE_ENGINE";
+    }
+
+#if (defined(_WIN32))
+    if (!PlayM4_SetDecodeEngineEx(m_pblocalportnum,HARD_DECODE_ENGINE))
+    {
+        DisplayError("PlayM4_SetDecodeEngineEx",PlayM4_GetLastError(m_pblocalportnum));
+    }
+#elif defined(__linux__) | defined(__APPLE__)
+
+    qDebug()  << "Try to set HARD_DECODE_ENGINE";
+    if (!PlayM4_SetDecodeEngine(m_pblocalportnum,HARD_DECODE_ENGINE))
+    {
+        DisplayError("PlayM4_SetDecodeEngine",PlayM4_GetLastError(m_pblocalportnum));
+    }
+#endif
+
+    if (!PlayM4_GetDecodeEngine(m_pblocalportnum))
+    {
+        qDebug()  << "Using SOFT_DECODE_ENGINE";
+    }else{
+        qDebug()  << "Using HARD_DECODE_ENGINE";
+    }
+
+    //PlayM4_SetRunTimeInfoCallBack(int nPort, void (CALLBACK* RunTimeInfoCBFun)(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
+    playm4interface::nModule = 1;
+    if (! PlayM4_SetRunTimeInfoCallBackEx(m_pblocalportnum, nModule, (void (CALLBACK *)(int , RunTimeInfo* , void* ))SetRunTimeInfoCBFun, nUser))
+    {
+        DisplayError("PlayM4_SetRunTimeInfoCallBackEx",PlayM4_GetLastError(m_pblocalportnum));
+    }
+    ENGINESUPPORT* pstEngineSupport;
+    if (!PlayM4_GetEngineSupport(m_pblocalportnum, pstEngineSupport))
+    {
+        DisplayError("PlayM4_GetEngineSupport",PlayM4_GetLastError(m_pblocalportnum));
+    }else{
+        qDebug()  << pstEngineSupport->chReserved;
+        qDebug()  << &pstEngineSupport->stHDecodeSupport;
+        qDebug()  << &pstEngineSupport->stRenderSupport;
     }
 
     if (!PlayM4_GetCaps())
@@ -373,7 +418,7 @@ void playm4interface::GetCap(int nFlag)
 
 void playm4interface::GetMetadatas()
 {
-bool CallBResp = false;
+    bool CallBResp = false;
 #if (defined(_WIN32))
     //CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,long,int,FRAME_INFO*, void*, void*))SetDecCallBack);
 #elif defined(__linux__)
@@ -460,12 +505,12 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
     }
 
     if (pFRAME_INFO) {
-    qDebug() << "FrameNum : " <<playm4interface::pFRAME_INFO->dwFrameNum;
-    qDebug() << "FrameRate : " <<playm4interface::pFRAME_INFO->nFrameRate;
-    qDebug() << "Width : " <<playm4interface::pFRAME_INFO->nWidth;
-    qDebug() << "Height : " <<playm4interface::pFRAME_INFO->nHeight;
-    qDebug() << "Stamp : " <<playm4interface::pFRAME_INFO->nStamp;
-    qDebug() << "Type : " <<playm4interface::pFRAME_INFO->nType;
+        qDebug() << "FrameNum : " <<playm4interface::pFRAME_INFO->dwFrameNum;
+        qDebug() << "FrameRate : " <<playm4interface::pFRAME_INFO->nFrameRate;
+        qDebug() << "Width : " <<playm4interface::pFRAME_INFO->nWidth;
+        qDebug() << "Height : " <<playm4interface::pFRAME_INFO->nHeight;
+        qDebug() << "Stamp : " <<playm4interface::pFRAME_INFO->nStamp;
+        qDebug() << "Type : " <<playm4interface::pFRAME_INFO->nType;
 
     }
     else
@@ -480,6 +525,12 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
 #elif defined(__linux__)
     PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))NULL);
 #endif
+}
+
+void CALLBACK playm4interface::SetRunTimeInfoCBFun(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser)
+{
+    qDebug()  << pstRunTimeInfo << " <- pstRunTimeInfo()" ;
+    qDebug()  << pUser << " <- pUser()" ;
 }
 
 bool AudioSwitch = true;

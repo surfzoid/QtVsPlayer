@@ -476,8 +476,8 @@ int  PlayM4_SetDisplayType(int nPort, int nType);
 int  PlayM4_GetDisplayType(int nPort);
 
 // VCA Information Switch
-PLAYM4_API int __stdcall PlayM4_RenderPrivateData(int nPort, int nIntelType, int bTrue);
-PLAYM4_API int __stdcall PlayM4_RenderPrivateDataEx(int nPort, int nIntelType, int nSubType, int bTrue);
+int PlayM4_RenderPrivateData(int nPort, int nIntelType, int bTrue);
+int PlayM4_RenderPrivateDataEx(int nPort, int nIntelType, int nSubType, int bTrue);
 PLAYM4_API int __stdcall PlayM4_SetConfigFontPath(int nPort, char* pFontPath);///<Set font library path for OSD- Set before playing.
 
 //lType: 1  refers to get the PTZ information of displayed frame. It is stored in the pInfo with specified structure type, and plLen returns length information. First you should set pInfo = null to get the memory length (plLen) needed to allocate.
@@ -771,7 +771,7 @@ typedef struct
     unsigned char  reserved[12];       //Reserved byte
 }RunTimeInfo;
 
-PLAYM4_API int __stdcall PlayM4_SetRunTimeInfoCallBackEx(int nPort, int nModule, void (CALLBACK* RunTimeInfoCBFun)(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
+int PlayM4_SetRunTimeInfoCallBackEx(int nPort, int nModule, void (CALLBACK* RunTimeInfoCBFun)(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
 
 
 ///<Window Size Changed Notification
@@ -794,7 +794,7 @@ int  PlayM4_SetImageSharpen(int nPort, unsigned int nLevel);
 int  PlayM4_ResetSourceBufFlag(int nPort);
 int  PlayM4_SetSourceBufCallBack(int nPort, unsigned int nThreShold, void (CALLBACK* SourceBufCallBack)(int nPort, unsigned int nBufSize, unsigned int dwUser, void* pResvered), unsigned int dwUser, void* pReserved);
 unsigned int PlayM4_GetAbsFrameNum(int nPort);
-PLAYM4_API int __stdcall PlayM4_SetRunTimeInfoCallBack(int nPort, void (CALLBACK* RunTimeInfoCBFun)(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
+int PlayM4_SetRunTimeInfoCallBack(int nPort, void (CALLBACK* RunTimeInfoCBFun)(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////NO SUPPORT///////////////////////////////////////////////////
@@ -844,6 +844,62 @@ int  PlayM4_SetDisplayMode(int nPort, unsigned int dwType);
 //This function is not available.
 PLAYM4_API int __stdcall PlayM4_SetSycStartTime(int nPort, PLAYM4_SYSTEM_TIME *pstSystemTime);
 
+
+//Set hard or soft decoder engine
+
+#define SOFT_DECODE_ENGINE 0 ///<Software Decoding
+#define HARD_DECODE_ENGINE 1 ///<Hardware Decoding
+
+int  PlayM4_SetDecodeEngine(int nPort, unsigned int nDecodeEngine);
+int  PlayM4_SetDecodeEngineEx(int nPort, unsigned int nDecodeEngine);
+unsigned int PlayM4_GetDecodeEngine(int nPort);
+
+#define PLAYM4_SOURCE_MODULE             0 // Data Source Module
+#define PLAYM4_DEMUX_MODULE              1 // Parsing Module
+#define PLAYM4_DECODE_MODULE             2 // Decoding Module
+#define PLAYM4_RENDER_MODULE             3 // Render Module
+
+#define PLAYM4_RTINFO_HARDDECODE_ERROR   0 // Hardware Decoding Error
+#define PLAYM4_RTINFO_SOFTDECODE_ERROR   1 // Software Decoding Error
+#define PLAYM4_RTINFO_MEDIAHEADER_ERROR  2 // Media Header Error
+#define PLAYM4_RTINFO_SWITCH_SOFT_DEC    3 // Switch to software decoding.
+#define PLAYM4_RTINFO_ALLOC_MEMORY_ERROR 4 // Memory Allocation failed.
+#define PLAYM4_RTINFO_ENCRYPT_ERROR      5 // Private key error.
+
+
+typedef struct _tagHDECODESUPPORT_
+{
+    unsigned char  chGPUType;
+    unsigned char  bDXVA_D3D9;
+    unsigned char  bCUVID_D3D11;
+    unsigned char  chDXVAH264_Max_Resolution;
+    unsigned char  chDXVAH265_Max_Resolution;
+    unsigned char  chCUVIDH264_Max_Resolution;
+    unsigned char  chCUVIDH265_Max_Resolution;
+    unsigned char  chValidFlag;
+    unsigned char  nReserved[12];
+}HDECODESUPPORT;
+
+typedef struct _tagRENDERSUPPORT_
+{
+    unsigned char  bDDraw;
+    unsigned char  bD3D9Surface;
+    unsigned char  bD3D9Texture;
+    unsigned char  bD3D11;
+    unsigned char  chValidFlag;
+    unsigned char  nReserved[11];
+}RENDERSUPPORT;
+
+
+typedef struct _tagENGINESUPPORT_
+{
+    HDECODESUPPORT stHDecodeSupport;
+    RENDERSUPPORT  stRenderSupport;
+    unsigned int   chReserved[4];
+}ENGINESUPPORT;
+
+
+int PlayM4_GetEngineSupport(int nPort, ENGINESUPPORT* pstEngineSupport);
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifdef __cplusplus
