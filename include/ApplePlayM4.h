@@ -16,6 +16,16 @@ typedef unsigned int   COLORREF;
 
 //#define __stdcall
 
+typedef struct
+{
+    int            nRunTimeModule;     //Running module
+    int            nStrVersion;        //Structure version returned by data, which is mainly for compatibility. In the first version, it is defined as 0x0001
+    int            nFrameTimeStamp;    //Frame No.
+    int            nFrameNum;          //Time stamp
+    int            nErrorCode;         //Error code
+    unsigned char  reserved[12];       //Reserved byte
+}RunTimeInfo;
+
 #ifndef CALLBACK
 #define CALLBACK
 #endif
