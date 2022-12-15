@@ -62,7 +62,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         }
     }
 
-    if (!PlayM4_GetDecodeEngine(m_pblocalportnum))
+/*    if (!PlayM4_GetDecodeEngine(m_pblocalportnum))
     {
         qDebug()  << "Using SOFT_DECODE_ENGINE";
     }else{
@@ -104,7 +104,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         qDebug()  << pstEngineSupport->chReserved;
         qDebug()  << &pstEngineSupport->stHDecodeSupport;
         qDebug()  << &pstEngineSupport->stRenderSupport;
-    }
+    }*/
 
     if (!PlayM4_GetCaps())
     {
