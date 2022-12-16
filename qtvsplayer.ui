@@ -145,14 +145,15 @@
     </property>
     <addaction name="actionBeer_and_Coffee"/>
     <addaction name="actionA_propos"/>
+    <addaction name="actionOnline_documentation"/>
    </widget>
    <widget class="QMenu" name="menuAffichage">
     <property name="title">
      <string>Display</string>
     </property>
-    <widget class="QMenu" name="menuVCA_Ino_Overlay">
+    <widget class="QMenu" name="menuVCA_Info_Overlay">
      <property name="title">
-      <string>VCA Ino Overlay</string>
+      <string>VCA Info Overlay</string>
      </property>
      <addaction name="actionAll"/>
      <addaction name="actionNone"/>
@@ -172,7 +173,7 @@
     <addaction name="actionSettings"/>
     <addaction name="actionInfos"/>
     <addaction name="separator"/>
-    <addaction name="menuVCA_Ino_Overlay"/>
+    <addaction name="menuVCA_Info_Overlay"/>
    </widget>
    <addaction name="menuFichiers"/>
    <addaction name="menuAffichage"/>
@@ -360,6 +361,11 @@
   <action name="actionNone">
    <property name="text">
     <string>None</string>
+   </property>
+  </action>
+  <action name="actionOnline_documentation">
+   <property name="text">
+    <string>Online documentation</string>
    </property>
   </action>
  </widget>

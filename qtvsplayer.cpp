@@ -692,12 +692,12 @@ void QtVsPlayer::VCASwitch(QString Name, int Info, bool IsActive)
 
 void QtVsPlayer::on_actionAll_triggered()
 {
-    enumerateMenu(ui->menuVCA_Ino_Overlay, true);
+    enumerateMenu(ui->menuVCA_Info_Overlay, true);
 }
 
 void QtVsPlayer::on_actionNone_triggered()
 {
-    enumerateMenu(ui->menuVCA_Ino_Overlay, false);
+    enumerateMenu(ui->menuVCA_Info_Overlay, false);
 }
 
 void QtVsPlayer::enumerateMenu(QMenu *menu, bool ChkState)
@@ -715,4 +715,15 @@ void QtVsPlayer::enumerateMenu(QMenu *menu, bool ChkState)
             action->setChecked(ChkState);
         }
     }
+}
+
+void QtVsPlayer::on_actionAuto_hide_controls_triggered(bool checked)
+{
+    VideoCtrls::AutoHide = checked;
+}
+
+void QtVsPlayer::on_actionOnline_documentation_triggered()
+{
+    QString link = "https://github.com/surfzoid/QtVsPlayer/wiki/Doc";
+    QDesktopServices::openUrl(QUrl(link));
 }

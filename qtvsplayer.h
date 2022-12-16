@@ -81,6 +81,10 @@ private slots:
 
     void on_actionNone_triggered();
 
+    void on_actionAuto_hide_controls_triggered(bool checked);
+
+    void on_actionOnline_documentation_triggered();
+
 public slots:
 
 signals:
