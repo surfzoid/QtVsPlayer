@@ -27,6 +27,7 @@ public:
     void RestoreSeek();
     static void pause();
     static int Duration;
+    static bool AutoHide;
 
 private:
     Ui::VideoCtrls *ui;

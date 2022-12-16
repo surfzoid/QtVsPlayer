@@ -812,6 +812,9 @@
         </disabled>
        </palette>
       </property>
+      <property name="toolTip">
+       <string>mute/unmute</string>
+      </property>
       <property name="text">
        <string/>
       </property>

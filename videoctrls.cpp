@@ -9,6 +9,7 @@ bool VideoCtrls::PLast = false;
 int VideoCtrls::HikNumPort = -1;
 int VideoCtrls::seekSpeed = 0;
 int VideoCtrls::Duration = 0;
+bool VideoCtrls::AutoHide = true;
 //QString VideoCtrls::picturepathname = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/PlayBackPictureDir/";
 static QString PicPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/";
 static bool IsSnapShoot = false;
@@ -358,7 +359,7 @@ void VideoCtrls::on_TimeSlider_sliderReleased()
 }
 void VideoCtrls::focusOutEvent(QFocusEvent *)
 {
-    hide();
+    if (AutoHide)hide();
 }
 
 void VideoCtrls::on_Audio_released()
