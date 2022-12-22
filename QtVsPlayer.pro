@@ -142,6 +142,7 @@ DISTFILES += \
     QtVsPlayermga8wally.spec \
     README.md \
     TODO \
+    install-mac.md \
     install-win.md
 
 
