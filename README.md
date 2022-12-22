@@ -21,21 +21,31 @@ use https://github.com/surfzoid/HikNetExtractor in an shelde task to automatical
 
 PI P400 raspian 64 bit, PcmanFm and thunar don't respect the %U in the desktop file but nautillus do it.  
 
-To debug, open a consol and :  
+To debug, open a terminal and :  
+```
 export QT_LOGGING_RULES=*.debug=true  
 QtVsPlayer  
+```
 
 # Depandancys  
-If once installed QtVsPlayer doesn't start, go in the install dir from an console :  
+If once installed QtVsPlayer doesn't start, go in the install dir from an terminal : 
+``` 
 cd /op/QtVsPlayer  
+```
 and then check depandancies like that  
+```
 ldd ./QtVsPlayer|grep -i found  
+```
 
 Qt5 runtime  
 Developper package qtmultimedia5-dev   lib64qt5opengl-devel  
+```
 sudo apt-get install qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia5-plugins libqt5multimedia5  
-or
+```
+or  
+```
 sudo urpmi qtmultimedia5 lib64qt5multimediawidgets-devel lib64qt5multimedia5 libqt5multimedia-devel 
+```
 
 Qt use platform tool, so qtmultimedia can use Gstreamer, ffmpeg and so on, it could be necessary to install :  
 sudo urpmi gstreamer1.0-plugins-good "something RTSP too"  
@@ -79,7 +89,7 @@ https://matrix.to/#/#QtVsPlayer:matrix.org
 classicnotify.sh is a sample to monitor a shared network, for example, video files extracted by HikNetExtractor and saved at home, then send a notify with click action who start QtVsPlayer with the last video saved 
 
 Add a debian repository, to use it, do : 
-``` 
+```
 curl -s --compressed "https://surfzoid.github.io/ppa/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/surfzoidppa.gpg >/dev/null  
 sudo curl -s --compressed -o /etc/apt/sources.list.d/surfzoid_list_file.list "https://surfzoid.github.io/ppa/surfzoid_list_file.list"  
 sudo apt update  
