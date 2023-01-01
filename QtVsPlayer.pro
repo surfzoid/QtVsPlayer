@@ -1,4 +1,4 @@
-VERSION = 1.0.28
+VERSION = 1.0.29
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT       += core gui multimedia multimediawidgets
 !android:QT       += dbus
@@ -103,6 +103,7 @@ SOURCES += \
     qtvsplayer.cpp \
     rtspwindow.cpp \
     settingsform.cpp \
+    simplecrypt.cpp \
     videoctrls.cpp
 
 HEADERS += \
@@ -116,6 +117,7 @@ HEADERS += \
     qtvsplayer.h \
     rtspwindow.h \
     settingsform.h \
+    simplecrypt.h \
     videoctrls.h
 
 FORMS += \

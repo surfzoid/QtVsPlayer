@@ -126,5 +126,8 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    QString GetWinState();
+    void SaveMenuItemState(QMenu *menu);
+    void GetMenuItemState(QMenu *menu);
 };
 #endif // QTVSPLAYER_H

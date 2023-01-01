@@ -2,7 +2,6 @@
 #include "ui_rtspwindow.h"
 #include <QComboBox>
 #include <QWidgetAction>
-#include <QSettings>
 #include <QVBoxLayout>
 #include <QTime>
 #include <QTimer>
@@ -36,6 +35,8 @@ RtspWindow::RtspWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::RtspWindow)
 {
+
+    QSettings settings;//init settings before combo idx change
     RtspWindow::player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
     RtspWindow::videoWidget = new QVideoWidget(this);
 
@@ -58,7 +59,6 @@ RtspWindow::RtspWindow(QWidget *parent) :
     ui->menubar->setCornerWidget(ui->ComboBxs);
     ui->statusbar->addPermanentWidget(ui->lblLoading);
 
-    QSettings settings;
     settings.beginGroup("CamsName");
     QStringList keys = settings.allKeys();
 
@@ -128,15 +128,13 @@ void RtspWindow::PlayRtsp(QString Camuri)
 void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
 {
 
-    QSettings settings;
-
     settings.beginGroup(arg1);
 
     CamIp = settings.value("Ip", "").value<QString>();
     CamPort = settings.value("Port", "554").value<QString>();
     CamPortHttp = settings.value("PortHttp", "800").value<QString>();
     CamUser = settings.value("User", "admin").value<QString>();
-    CamPass = settings.value("Password", "hik12345").value<QString>();
+    CamPass = SetFrm.crypto.decryptToString(settings.value("Password", "hik12345").value<QString>());
     settings.endGroup();
 
     RtspUri = "rtsp://" + CamUser + ":" + CamPass +
@@ -551,8 +549,6 @@ void RtspWindow::on_PtzSliderSpeed_valueChanged(int value)
 
 void RtspWindow::on_actionPreset_triggered()
 {
-    QSettings settings;
-
     settings.beginGroup(ui->ComboBxCam->currentText() + "_Preset");
 
     for (int i=0; i<15; i++){
@@ -566,8 +562,6 @@ void RtspWindow::on_actionPreset_triggered()
 
 void RtspWindow::on_actionPatrol_triggered()
 {
-    QSettings settings;
-
     settings.beginGroup(ui->ComboBxCam->currentText() + "_Patrol");
 
     for (int i=0; i<9; i++){
@@ -595,7 +589,6 @@ void RtspWindow::LoadPreset()
 
     ui->comboBxPresset->clear();
 
-    QSettings settings;
     settings.beginGroup(ui->ComboBxCam->currentText() + "_Preset");
     QStringList keys = settings.allKeys();
 
@@ -620,7 +613,6 @@ void RtspWindow::LoadPatrol()
 {
     ui->comboBxPatrol->clear();
 
-    QSettings settings;
     settings.beginGroup(ui->ComboBxCam->currentText() + "_Patrol");
     QStringList keys = settings.allKeys();
 
@@ -811,7 +803,7 @@ void RtspWindow::DisplayError(QString Source, unsigned int  ErrMess)
 
     QString QerrMess=ErrorManager::error_codes(Source, ErrMess);
 
-    //printf("pyd---Hik Sdk error response :from %s : %s\n\r", Source.toUtf8().data(), QerrMess.toUtf8().data());
+    //printf("---Hik Sdk error response :from %s : %s\n\r", Source.toUtf8().data(), QerrMess.toUtf8().data());
 
     return;
 
@@ -821,7 +813,7 @@ int nPort = -1 ;
 void RtspWindow::HikRtsp(unsigned char *pBuffer,unsigned int dwBufSize)
 {
 
-qDebug() << "pBuffer  : " << pBuffer <<"\n";
+    qDebug() << "pBuffer  : " << pBuffer <<"\n";
     if (!PlayM4_GetPort(&nPort))
     {
         DisplayError("PlayM4_GetPort", PlayM4_GetLastError(nPort));
@@ -900,10 +892,10 @@ void CALLBACK RtspWindow::RemoteDisplayCBFun(int nPort, char *pBuf, int size, in
 void RtspWindow::processFrame(const QVideoFrame &frame)
 {
     if (frame.isValid())
-//qDebug() << MediaStream->bytesAvailable();
+        //qDebug() << MediaStream->bytesAvailable();
 
         //HikRtsp((unsigned char*)frame.buffer(), sizeof(frame.buffer()));
-    //PlayM4_InputData(nPort,(unsigned char*)frame.buffer(), sizeof(frame.buffer()));
-    return; //drop frame
+        //PlayM4_InputData(nPort,(unsigned char*)frame.buffer(), sizeof(frame.buffer()));
+        return; //drop frame
 
 }

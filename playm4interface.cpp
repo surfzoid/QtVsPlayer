@@ -31,7 +31,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     //initval();
     m_pblocalfilepath = fileName;
 
-    printf("pyd---File name:%s\n\r",m_pblocalfilepath.toUtf8().data());
+    printf("---File name:%s\n\r",m_pblocalfilepath.toUtf8().data());
 
     if (FsOpened == true) {
 
@@ -169,7 +169,7 @@ void playm4interface::DisplayError(QString Source, unsigned int  ErrMess)
 
     QString QerrMess=ErrorManager::error_codes(Source, ErrMess);
 
-    //printf("pyd---Hik Sdk error response :from %s : %s\n\r", Source.toUtf8().data(), QerrMess.toUtf8().data());
+    //printf("---Hik Sdk error response :from %s : %s\n\r", Source.toUtf8().data(), QerrMess.toUtf8().data());
 
     return;
 

@@ -8,6 +8,8 @@
 #include <QNetworkReply>
 #include <include/PlayM4.h>
 #include <QVideoProbe>
+#include <QSettings>
+#include <settingsform.h>
 
 class QVideoProbe;
 
@@ -108,6 +110,8 @@ private:
     static void CALLBACK RemoteDisplayCBFun(int nPort, char *pBuf, int size, int width, int height,int stamp, int type, int reserved);
 
     QVideoProbe *m_videoProbe = nullptr;
+    QSettings settings;
+    SettingsForm SetFrm;
 
 public slots:
     void replyFinished (QNetworkReply *reply);

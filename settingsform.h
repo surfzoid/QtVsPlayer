@@ -2,6 +2,8 @@
 #define SETTINGSFORM_H
 
 #include <QWidget>
+#include <simplecrypt.h>
+#include <QSettings>
 
 namespace Ui {
 class SettingsForm;
@@ -22,6 +24,8 @@ public:
     QString CamUser = "admin";
     QString CamPass = "hik12345";
 
+    static SimpleCrypt crypto;
+
 private slots:
     void on_BtnSave_released();
 
@@ -35,6 +39,7 @@ private slots:
 
 private:
     Ui::SettingsForm *ui;
+    QSettings settings;
 };
 
 #endif // SETTINGSFORM_H

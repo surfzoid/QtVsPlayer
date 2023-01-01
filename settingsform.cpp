@@ -5,17 +5,17 @@
 #include "errormanager.h"
 #include "qtvsplayer.h"
 
-#include <QSettings>
 
-
-
+SimpleCrypt SettingsForm::crypto;
 SettingsForm::SettingsForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SettingsForm)
 {
     ui->setupUi(this);
-
     QSettings settings;
+
+
+crypto.setKey(Q_UINT64_C(0x0c2ad4a4acb9f023 * 3));//some random number
     settings.beginGroup("CamsName");
     QStringList keys = settings.allKeys();
 
@@ -36,7 +36,7 @@ SettingsForm::~SettingsForm()
 
 void SettingsForm::on_BtnSave_released()
 {
-    QSettings settings;
+
     CamName = ui->CamNameEd->currentText();
     settings.setValue( "CamsName/" + CamName,"Name");
     //settings.endGroup();
@@ -49,7 +49,7 @@ void SettingsForm::on_BtnSave_released()
     settings.setValue("Port", ui->PortEd->text());
     settings.setValue("PortHttp", ui->PortHttpEd->text());
     settings.setValue("User", ui->UserEd->text());
-    settings.setValue("Password", ui->PassEd->text());
+    settings.setValue("Password",crypto.encryptToString(ui->PassEd->text()) );
 
     settings.endGroup();
     settings.sync();
@@ -58,9 +58,6 @@ void SettingsForm::on_BtnSave_released()
 
 void SettingsForm::on_CamNameEd_currentIndexChanged(const QString &arg1)
 {
-
-    QSettings settings;
-
     CamName = arg1;
     settings.beginGroup(CamName);
 
@@ -68,7 +65,7 @@ void SettingsForm::on_CamNameEd_currentIndexChanged(const QString &arg1)
     CamPort = settings.value("Port", "554").value<QString>();
     CamPortHttp = settings.value("PortHttp", "800").value<QString>();
     CamUser = settings.value("User", "admin").value<QString>();
-    CamPass = settings.value("Password", "hik12345").value<QString>();
+    CamPass = crypto.decryptToString(settings.value("Password", "hik12345").value<QString>());
     settings.endGroup();
 
     ui->IpEd->setText(CamIp);
@@ -81,7 +78,7 @@ void SettingsForm::on_CamNameEd_currentIndexChanged(const QString &arg1)
 
 void SettingsForm::on_BtnDel_released()
 {
-    QSettings settings;
+
     settings.remove(CamName);
     settings.remove("CamsName/" + CamName);
     settings.sync();
@@ -98,7 +95,7 @@ void SettingsForm::on_BtPlay_released()
 
 
     int bsucces = __stdcall PlayM4_OpenStreamAdvanced(playm4interface::m_pblocalportnum, PLAYM4_PROTOCOL_RTSP, &SessionInf, 2048);
-    printf("pyd---PlayM4_OpenStreamAdvanced :%d\n\r",bsucces);
+    printf("---PlayM4_OpenStreamAdvanced :%d\n\r",bsucces);
     ErrorManager::error_codes("PlayM4_OpenStreamAdvanced",PlayM4_GetLastError(playm4interface::m_pblocalportnum));*/
 
 }

@@ -42,6 +42,7 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
     connect(m_pbqtimer, SIGNAL(timeout()), this, SLOT(updatelocalprocess()));
 
     this->ui->CurSpeed->setText("0X");
+
 }
 
 VideoCtrls::~VideoCtrls()
@@ -69,7 +70,22 @@ void VideoCtrls::InitTimeSlide()
 void VideoCtrls::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::MiddleButton) {
+        QPoint Memo = event->pos();
         move(event->pos() + pos());
+
+        if (x() > parentWidget()->height() || y() > parentWidget()->width()) {
+            move(Memo);
+        }
+        QSettings settings;
+        settings.beginGroup("VideoCtrls");
+
+        settings.setValue( "X", x());
+        settings.setValue("Y", y());
+        settings.setValue("Width", width());
+        settings.setValue("Height", height());
+
+        settings.endGroup();
+        settings.sync();
     }
     return;
 }
@@ -200,7 +216,7 @@ void VideoCtrls::updatelocalprocess()
                     //PlayM4_CloseFile(playm4interface::m_pblocalportnum);
                     QThreadPool::globalInstance()->releaseThread();
                     QThreadPool::globalInstance()->clear();
-                    printf("pyd---activeThreadCount:%d\n\r",QThreadPool::globalInstance()->activeThreadCount());
+                    printf("---activeThreadCount:%d\n\r",QThreadPool::globalInstance()->activeThreadCount());
 
                     QtVsPlayer::PlayNextFile(false,0);
 
@@ -210,7 +226,7 @@ void VideoCtrls::updatelocalprocess()
                     }
                 }
             }  catch (QException e ) {
-                printf("pyd---Hik SDK Exception:%s\n\r",e.what());
+                printf("---Hik SDK Exception:%s\n\r",e.what());
             }
 
 

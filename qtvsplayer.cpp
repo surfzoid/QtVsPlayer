@@ -53,13 +53,44 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 
     ui->statusbar->addPermanentWidget(ui->SatusLbl,1);
 
+    printf("---QtVsPlayer %s\n\r",APP_VERSION);
+
     QString CpuArch = QSysInfo::buildCpuArchitecture();
-    printf("pyd---buildCpuArchitecture :%s\n\r",CpuArch.toUtf8().data());
+    printf("---buildCpuArchitecture :%s\n\r",CpuArch.toUtf8().data());
 
     //settings//
     QCoreApplication::setOrganizationName("Surfzoid");
     QCoreApplication::setOrganizationDomain("https://github.com/surfzoid");
     QCoreApplication::setApplicationName("QtVsPlayer");
+
+    QSettings settings;
+    settings.beginGroup("QtVsPlayer");
+    QPoint NewPos;
+    QSize NewSize;
+    NewPos.setX(settings.value("X", x()).value<int>());
+    NewPos.setY(settings.value("Y", y()).value<int>());
+    NewSize.setWidth(settings.value("Width", width()).value<int>());
+    NewSize.setHeight(settings.value("Height", height()).value<int>());
+    setWindowState(windowState() ^ settings.value("State", height()).value<Qt::WindowStates>());
+
+    settings.endGroup();
+    move(NewPos);
+    resize(NewSize);
+
+
+    settings.beginGroup("VideoCtrls");
+    int ThisY = this->height() - WVideoCtrls->height() -
+            this->statusBar()->height();
+    NewPos.setX(settings.value("X", 0).value<int>());
+    NewPos.setY(settings.value("Y", ThisY).value<int>());
+    NewSize.setWidth(settings.value("Width", WVideoCtrls->width()).value<int>());
+    NewSize.setHeight(settings.value("Height", WVideoCtrls->height()).value<int>());
+
+    settings.endGroup();
+    WVideoCtrls->move(NewPos);
+    WVideoCtrls->resize(NewSize);
+
+    GetMenuItemState(ui->menuAffichage);
     //settings//
 
     qApp->installEventFilter(this);
@@ -113,7 +144,7 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
         if(obj->objectName() == "centralwidget")
         {
 
-            printf("pyd---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
+            printf("---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
             playm4interface::hwnd = this->centralWidget()->winId();
 
             playm4interface::RefreshPlay();
@@ -129,7 +160,7 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
     }
 
 
-    /*printf("pyd---Event type %i :%s\n\r", event->type(), QEvent::staticMetaObject
+    /*printf("---Event type %i :%s\n\r", event->type(), QEvent::staticMetaObject
        .enumerator(eventEnumIndex).valueToKey(event->type()));*/
 
     return QObject::eventFilter(obj, event);
@@ -314,7 +345,7 @@ void QtVsPlayer::DisplayFsName(QString Name)
         /*this->ui->statusbar->clearMessage();
     this->ui->statusbar-> showMessage(Name.toUtf8());*/
         SatusLbl->setText(Name.toUtf8());
-        //printf("pyd---currentMessage :%s\n\r",ui->SatusLbl->text().toUtf8().data());
+        //printf("---currentMessage :%s\n\r",ui->SatusLbl->text().toUtf8().data());
 
     }
     return;
@@ -347,21 +378,35 @@ void QtVsPlayer::on_actionPlein_ecran_triggered()
 void QtVsPlayer::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
+    /*case 0X1000012:
+        VideoCtrls::on_previousButton_released();
+        break;
+    case 0X1000012:
+        VideoCtrls::on_previousButton_released();
+        break;
+    case 0X1000012:
+        VideoCtrls::on_previousButton_released();
+        break;
+    case 0X1000012:
+        VideoCtrls::on_previousButton_released();
+        break;*/
+    case 0X1000004:
     case Qt::Key_F11:
         QtVsPlayer::FullScr();
         break;
     case Qt::Key_F10:
         QtVsPlayer::HideCtrl();
         break;
-    case Qt::Key_Space :
-    case Qt::Key_Shift:
+    case 16777248:
+    case Qt::Key_Space:
         VideoCtrls::pause();
         break;
+    default:
+        int Cod = event->key();
+        QString result = QString::number( Cod, 16 );
+        qDebug() << "currentKeyPressed 0X" + result.toUpper();
+        break;
     }
-    int Cod = event->key();
-    QString result = QString::number( Cod, 16 );
-    qDebug() << "currentKeyPressed 0X" + result.toUpper();
-    //    printf("pyd---currentKeyPressed :%s\n\r",result.toUpper().data());
     return;
 }
 
@@ -381,11 +426,12 @@ void QtVsPlayer::FullScr()
 
 void QtVsPlayer::resizeEvent(QResizeEvent *event)
 {
+    if (!isVisible()) return;
     WinIdWorkarround();
 
-    WVideoCtrls->move(0,this->height() -
+    /*WVideoCtrls->move(WVideoCtrls->x(),this->height() -
                       WVideoCtrls->height() -
-                      this->statusBar()->height());
+                      this->statusBar()->height());*/
 
     //this->ui->FsDisplay->setVisible(false);
     originH = ui->centralwidget->rect();
@@ -397,9 +443,44 @@ void QtVsPlayer::resizeEvent(QResizeEvent *event)
     }
     //surpress warning!
 
+    QSettings settings;
+    settings.beginGroup("QtVsPlayer");
+
+    settings.setValue( "X", pos().x());
+    settings.setValue("Y", pos().y());
+    settings.setValue("Width", width());
+    settings.setValue("Height", height());
+    settings.setValue("State", GetWinState());
+
+    settings.endGroup();
+    settings.sync();
     return ;
 }
 
+
+QString QtVsPlayer::GetWinState()
+{
+    switch (windowState()) {
+
+    default:
+    case Qt::WindowNoState://0x00000000 The window has no state set (in normal state).
+        return "0x00000000";
+        break;
+    case Qt::WindowMinimized://0x00000001 The window is minimized (i.e. iconified).
+        return "0x00000001";
+        break;
+    case Qt::WindowMaximized://0x00000002 The window is maximized with a frame around it.
+        return "0x00000002";
+        break;
+    case Qt::WindowFullScreen://0x00000004 The window fills the entire screen without any frame around it.
+        return "0x00000004";
+        break;
+    case Qt::WindowActive://0x00000008 The window is the active window, i.e. it has keyboard focus.
+        return "0x00000008";
+        break;
+
+    }
+}
 
 void QtVsPlayer::mouseDoubleClickEvent(QMouseEvent *event)
 {
@@ -510,6 +591,7 @@ void QtVsPlayer::on_actionMasquer_les_controles_triggered()
 {
 
     HideCtrl();
+    SaveMenuItemState(ui->menuAffichage);
     return;
 }
 
@@ -655,31 +737,37 @@ void QtVsPlayer::actionSlot(const QString &text)
 void QtVsPlayer::on_actionVCA_toggled(bool arg1)
 {
 VCASwitch("PLAYM4_RENDER_ANA_INTEL_DATA", PLAYM4_RENDER_ANA_INTEL_DATA, arg1);
+SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionMotion_detection_toggled(bool arg1)
 {
 VCASwitch("PLAYM4_RENDER_MD", PLAYM4_RENDER_MD, arg1);
+SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionPOS_Text_Overlay_toggled(bool arg1)
 {
 VCASwitch("PLAYM4_RENDER_ADD_POS", PLAYM4_RENDER_ADD_POS, arg1);
+SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionPicture_Overlay_toggled(bool arg1)
 {
 VCASwitch("PLAYM4_RENDER_ADD_PIC", PLAYM4_RENDER_ADD_PIC, arg1);
+SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionFire_Source_toggled(bool arg1)
 {
 VCASwitch("PLAYM4_RENDER_FIRE_DETCET", PLAYM4_RENDER_FIRE_DETCET, arg1);
+SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionTemperature_toggled(bool arg1)
 {
 VCASwitch("PLAYM4_RENDER_TEM", PLAYM4_RENDER_TEM, arg1);
+SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::VCASwitch(QString Name, int Info, bool IsActive)
@@ -687,17 +775,20 @@ void QtVsPlayer::VCASwitch(QString Name, int Info, bool IsActive)
     if (!PlayM4_RenderPrivateData(playm4interface::m_pblocalportnum, Info, IsActive))
     {
         playm4interface::DisplayError(Name,PlayM4_GetLastError(playm4interface::m_pblocalportnum));
+        SaveMenuItemState(ui->menuAffichage);
     }
 }
 
 void QtVsPlayer::on_actionAll_triggered()
 {
     enumerateMenu(ui->menuVCA_Info_Overlay, true);
+    SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionNone_triggered()
 {
     enumerateMenu(ui->menuVCA_Info_Overlay, false);
+    SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::enumerateMenu(QMenu *menu, bool ChkState)
@@ -720,10 +811,59 @@ void QtVsPlayer::enumerateMenu(QMenu *menu, bool ChkState)
 void QtVsPlayer::on_actionAuto_hide_controls_triggered(bool checked)
 {
     VideoCtrls::AutoHide = checked;
+    SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionOnline_documentation_triggered()
 {
     QString link = "https://github.com/surfzoid/QtVsPlayer/wiki/Doc";
     QDesktopServices::openUrl(QUrl(link));
+}
+
+void QtVsPlayer::SaveMenuItemState(QMenu *menu)
+{
+    QSettings settings;
+    settings.beginGroup("MenuItemState");
+    foreach (QAction *action, menu->actions()) {
+        if (action->isSeparator()) {
+            //qDebug("this action is a separator");
+        } else if (action->menu()) {
+            //qDebug("action: %s", qUtf8Printable(action->text()));
+            //qDebug(">>> this action is associated with a submenu, iterating it recursively...");
+            SaveMenuItemState(action->menu());
+            //qDebug("<<< finished iterating the submenu");
+        } else {
+            //qDebug("action: %s", qUtf8Printable(action->text()));
+            if (action->isCheckable()) {
+                settings.setValue( action->objectName(), action->isChecked());
+            }
+        }
+    }
+
+    settings.endGroup();
+    settings.sync();
+}
+
+void QtVsPlayer::GetMenuItemState(QMenu *menu)
+{
+    QSettings settings;
+    settings.beginGroup("MenuItemState");
+    foreach (QAction *action, menu->actions()) {
+        if (action->isSeparator()) {
+            //qDebug("this action is a separator");
+        } else if (action->menu()) {
+            //qDebug("action: %s", qUtf8Printable(action->text()));
+            //qDebug(">>> this action is associated with a submenu, iterating it recursively...");
+            SaveMenuItemState(action->menu());
+            //qDebug("<<< finished iterating the submenu");
+        } else {
+            //qDebug("action: %s", qUtf8Printable(action->text()));
+            if (action->isCheckable()) {
+                action->setChecked(settings.value(action->objectName(), action->isChecked()).value<bool>());
+            }
+        }
+    }
+
+    settings.endGroup();
+    settings.sync();
 }
