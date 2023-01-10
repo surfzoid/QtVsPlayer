@@ -72,7 +72,7 @@ chmod -R ug+rw %{_srcrpmdir}
 * Mon Dec 12 2022 surfzoid@gmail.com
 + Audio and Video decoder callback work together!
 
-* Mon Dec 8 2022 surfzoid@gmail.com
+* Thu Dec 8 2022 surfzoid@gmail.com
 + Another callback worarround.
 + Audio mute button.
 
