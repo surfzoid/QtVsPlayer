@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.29
+Version:        1.0.30
 Release:        %mkrel 2
 License:        GPLv3
 Group:          Video/Players
@@ -59,7 +59,8 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/libSuperRender.so
 
 %changelog
-* Sun Jan 01 2023 surfzoid@gmail.com
+* Tue Jan 10 2023 surfzoid@gmail.com
++ Pressets are loaded and saved from/to the device.
 + Encrypt password in settings.
 + Save video controls position in settings.
 + Save Main window size and position in settings.

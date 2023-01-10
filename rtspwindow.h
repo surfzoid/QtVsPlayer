@@ -10,6 +10,8 @@
 #include <QVideoProbe>
 #include <QSettings>
 #include <settingsform.h>
+#include <QXmlStreamReader>
+#include <QComboBox>
 
 class QVideoProbe;
 
@@ -112,7 +114,7 @@ private:
     QVideoProbe *m_videoProbe = nullptr;
     QSettings settings;
     SettingsForm SetFrm;
-
+    QStringList PresetList;
 public slots:
     void replyFinished (QNetworkReply *reply);
     void authenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
@@ -124,11 +126,14 @@ protected slots:
     void onPlayError(QMediaPlayer::Error error);
     void onPlayStateChanged(QMediaPlayer::State state);
     void onbufferStatusChanged(int percentFilled);
+
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
+    void keyPressEvent(QKeyEvent *e) override;
 
 };
 

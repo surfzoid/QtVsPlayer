@@ -1,6 +1,5 @@
 #include "rtspwindow.h"
 #include "ui_rtspwindow.h"
-#include <QComboBox>
 #include <QWidgetAction>
 #include <QVBoxLayout>
 #include <QTime>
@@ -56,6 +55,14 @@ RtspWindow::RtspWindow(QWidget *parent) :
 
     setCentralWidget(videoWidget);
 
+    manager = new QNetworkAccessManager(this);
+
+    connect(manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(replyFinished(QNetworkReply*)));
+
+    connect(manager, SIGNAL(authenticationRequired(QNetworkReply*, QAuthenticator*)),
+            this, SLOT(authenticationRequired(QNetworkReply*, QAuthenticator*)));
+
     ui->menubar->setCornerWidget(ui->ComboBxs);
     ui->statusbar->addPermanentWidget(ui->lblLoading);
 
@@ -69,14 +76,6 @@ RtspWindow::RtspWindow(QWidget *parent) :
 
     settings.endGroup();
 
-
-    manager = new QNetworkAccessManager(this);
-
-    connect(manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(replyFinished(QNetworkReply*)));
-
-    connect(manager, SIGNAL(authenticationRequired(QNetworkReply*, QAuthenticator*)),
-            this, SLOT(authenticationRequired(QNetworkReply*, QAuthenticator*)));
 
     m_videoProbe = new QVideoProbe(this);
     connect(m_videoProbe, &QVideoProbe::videoFrameProbed, this, &RtspWindow::processFrame);
@@ -436,8 +435,39 @@ void RtspWindow::replyFinished(QNetworkReply *reply)
                 file.close();
             }
         }else {
-            qDebug() << Response;
+            QXmlStreamReader xml;
+            xml.addData(Response);
+
+            while (!xml.atEnd()) {
+                xml.readNext();
+                if (xml.name().contains("patrolName") == true) {
+                    xml.readNext();
+                    qDebug() << "patrolName" << xml.text();
+                    xml.readNext();
+                }
+                if (xml.name().contains("presetName") == true) {
+                    // do processing
+                    xml.readNext();
+                    //qDebug() << xml.text();
+                    PresetList.append(xml.text().toUtf8());
+                    xml.readNext();
+                }
+                if (xml.hasError()) {
+                    // do error handling
+                }
+            }
+            if (PresetList.length() > 0) {
+                ui->comboBxPresset->clear();
+                ui->comboBxPresset->addItems(PresetList);
+                PresetList.clear();
+            }
+            if (ui->comboBxPresset->count() == 0) {
+                for (int i=1; i<16; i++){
+                    ui->comboBxPresset->addItem("Presset" + QString::number(i));
+                }
+            }
         }
+        qDebug() << Response;
     }
 
     reply->deleteLater();
@@ -550,8 +580,7 @@ void RtspWindow::on_PtzSliderSpeed_valueChanged(int value)
 void RtspWindow::on_actionPreset_triggered()
 {
     settings.beginGroup(ui->ComboBxCam->currentText() + "_Preset");
-
-    for (int i=0; i<15; i++){
+    for (int i=0; i<ui->comboBxPresset->count() - 1; i++){
         settings.setValue( "Presset" + QString::number(i),
                            ui->comboBxPresset->itemText(i));
     }
@@ -586,6 +615,12 @@ void RtspWindow::on_comboBxPatrol_editTextChanged(const QString &arg1)
 
 void RtspWindow::LoadPreset()
 {
+    QString AdPath = ("/ISAPI/PTZCtrl/channels/1/presets");
+    QUrl Adresse("http://" + CamUser + ":" + CamPass +
+                 "@" +  CamIp + ":" + CamPortHttp + AdPath);
+
+    manager->get((QNetworkRequest)Adresse);
+    return;
 
     ui->comboBxPresset->clear();
 
@@ -611,6 +646,12 @@ void RtspWindow::LoadPreset()
 
 void RtspWindow::LoadPatrol()
 {
+    QString AdPath = ("/ISAPI/PTZCtrl/channels/1/patrols");
+    QUrl Adresse("http://" + CamUser + ":" + CamPass +
+                 "@" +  CamIp + ":" + CamPortHttp + AdPath);
+
+    manager->get((QNetworkRequest)Adresse);
+    //return;
     ui->comboBxPatrol->clear();
 
     settings.beginGroup(ui->ComboBxCam->currentText() + "_Patrol");
@@ -898,4 +939,21 @@ void RtspWindow::processFrame(const QVideoFrame &frame)
         //PlayM4_InputData(nPort,(unsigned char*)frame.buffer(), sizeof(frame.buffer()));
         return; //drop frame
 
+}
+
+void RtspWindow::keyPressEvent(QKeyEvent *e)
+{
+    if ( ui->comboBxPresset->hasFocus() && e->key() == Qt::Key_Return) {
+        int IdP = ui->comboBxPresset->currentIndex() + 1;
+        QString PresetName = ui->comboBxPresset->currentText();
+        QString XmlPut = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><PTZPreset xmlns=\"http://www.isapi.org/ver20/XMLSchema\" version=\"2.0\"><id>" + QString::number(IdP) + "</id><presetName>" + PresetName + "</presetName></PTZPreset>";
+        QUrl Adresse("http://" + CamIp + ":" + CamPortHttp +
+                     "/ISAPI/PTZCtrl/channels/1/presets/" + QString::number(IdP));
+
+        manager->put((QNetworkRequest)Adresse,
+                     XmlPut.toUtf8());
+        LoadPreset();
+        ui->comboBxPresset->setCurrentIndex(IdP -1);
+
+    }
 }

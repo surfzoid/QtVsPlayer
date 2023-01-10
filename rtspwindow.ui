@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>974</width>
+    <width>1061</width>
     <height>600</height>
    </rect>
   </property>
@@ -88,11 +88,14 @@
          <property name="currentText">
           <string notr="true"/>
          </property>
-         <property name="maxCount">
-          <number>10</number>
+         <property name="maxVisibleItems">
+          <number>100</number>
          </property>
          <property name="insertPolicy">
           <enum>QComboBox::NoInsert</enum>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
          </property>
          <property name="placeholderText">
           <string notr="true"/>
@@ -101,6 +104,12 @@
        </item>
        <item>
         <widget class="QComboBox" name="comboBxPresset">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="editable">
           <bool>true</bool>
          </property>
@@ -108,13 +117,13 @@
           <string notr="true"/>
          </property>
          <property name="maxVisibleItems">
-          <number>15</number>
-         </property>
-         <property name="maxCount">
-          <number>15</number>
+          <number>50</number>
          </property>
          <property name="insertPolicy">
           <enum>QComboBox::NoInsert</enum>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
          </property>
          <property name="placeholderText">
           <string notr="true"/>
@@ -149,7 +158,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>974</width>
+     <width>1061</width>
      <height>29</height>
     </rect>
    </property>
@@ -271,12 +280,12 @@
   </action>
   <action name="actionPreset">
    <property name="text">
-    <string>Preset</string>
+    <string>All Preset localy</string>
    </property>
   </action>
   <action name="actionPatrol">
    <property name="text">
-    <string>Patrol</string>
+    <string>All Patrol localy</string>
    </property>
   </action>
   <action name="actionReboot">
