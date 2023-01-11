@@ -952,8 +952,19 @@ void RtspWindow::keyPressEvent(QKeyEvent *e)
 
         manager->put((QNetworkRequest)Adresse,
                      XmlPut.toUtf8());
+        Sleep(1500);
         LoadPreset();
+        Sleep(500);
         ui->comboBxPresset->setCurrentIndex(IdP -1);
 
+    }
+}
+
+void RtspWindow::Sleep(int MSecs)
+{
+    QTime dieTime= QTime::currentTime().addMSecs(MSecs);
+    while (QTime::currentTime() < dieTime)
+    {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
     }
 }

@@ -115,6 +115,8 @@ private:
     QSettings settings;
     SettingsForm SetFrm;
     QStringList PresetList;
+    void Sleep(int MSecs);
+
 public slots:
     void replyFinished (QNetworkReply *reply);
     void authenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
