@@ -127,6 +127,7 @@ void RtspWindow::PlayRtsp(QString Camuri)
 void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
 {
 
+    ui->comboBxPresset->clear();
     settings.beginGroup(arg1);
 
     CamIp = settings.value("Ip", "").value<QString>();
@@ -404,6 +405,11 @@ void RtspWindow::replyFinished(QNetworkReply *reply)
         qDebug() << "ERROR!";
         printf("finish : %s\n\r", reply->errorString().toUtf8().data());
         qDebug() << reply->readAll();
+        if (ui->comboBxPresset->count() == 0) {
+            for (int i=1; i<16; i++){
+                ui->comboBxPresset->addItem("Presset" + QString::number(i));
+            }
+        }
     }
     else
     {

@@ -670,7 +670,7 @@ void QtVsPlayer::on_actionSettings_triggered()
 void QtVsPlayer::on_actionRtsp_Play_triggered()
 {
     RtspWindow *RtspView = new RtspWindow (this);
-    RtspView->showMaximized();
+    RtspView->show();
 }
 
 void QtVsPlayer::on_actionBeer_and_Coffee_triggered()
