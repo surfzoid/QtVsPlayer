@@ -706,6 +706,7 @@ void RtspWindow::GetMetaData(QMediaPlayer *player)
 void RtspWindow::on_comboBxPresset_textActivated(const QString &arg1)
 {
     CallPresset(ui->comboBxPresset->currentIndex() + 1);
+    ui->comboBxPresset->setToolTip(arg1);
 }
 
 void RtspWindow::on_comboBxPatrol_textActivated(const QString &arg1)
@@ -954,7 +955,7 @@ void RtspWindow::keyPressEvent(QKeyEvent *e)
                      XmlPut.toUtf8());
         Sleep(1500);
         LoadPreset();
-        Sleep(500);
+        Sleep(1000);
         ui->comboBxPresset->setCurrentIndex(IdP -1);
 
     }
@@ -968,3 +969,4 @@ void RtspWindow::Sleep(int MSecs)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
     }
 }
+
