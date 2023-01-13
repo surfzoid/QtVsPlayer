@@ -23,7 +23,7 @@ jobs:
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
             echo "echo postinst" > .debpkg/DEBIAN/postinst
-            echo "mv -f /usr/lib64/lib* /usr/lib/" >> .debpkg/DEBIAN/postinst
+            #echo "mv -f /usr/lib64/lib* /usr/lib/" >> .debpkg/DEBIAN/postinst
             #echo "rm -fr /usr/lib64" >> .debpkg/DEBIAN/postinst
             chmod +x .debpkg/DEBIAN/postinst
             echo -e "Automatic build from GitHub action, see QtVsPlayer.spec for change log" > CHANGELOG
@@ -112,7 +112,7 @@ jobs:
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
             echo "echo postinst" > .debpkg/DEBIAN/postinst
-            echo "mv -f /usr/lib64/lib* /usr/lib/" >> .debpkg/DEBIAN/postinst
+            #echo "mv -f /usr/lib64/lib* /usr/lib/" >> .debpkg/DEBIAN/postinst
             #echo "rm -fr /usr/lib64" >> .debpkg/DEBIAN/postinst
             chmod +x .debpkg/DEBIAN/postinst
             echo -e "Automatic build from GitHub action, see QtVsPlayer.spec for change log" > CHANGELOG
