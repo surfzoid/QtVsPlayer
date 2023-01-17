@@ -1,4 +1,4 @@
-VERSION = 1.0.30
+VERSION = 1.0.31
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT       += core gui multimedia multimediawidgets
 !android:QT       += dbus
@@ -99,6 +99,7 @@ SOURCES += \
     errormanager.cpp \
     filesliste.cpp \
     main.cpp \
+    pantilcmd.cpp \
     playm4interface.cpp \
     qtvsplayer.cpp \
     rtspwindow.cpp \
@@ -113,6 +114,7 @@ HEADERS += \
     include/LinuxPlayM4.h \
     include/PlayM4.h \
     include/WindowsPlayM4.h \
+    pantilcmd.h \
     playm4interface.h \
     qtvsplayer.h \
     rtspwindow.h \
@@ -122,6 +124,7 @@ HEADERS += \
 
 FORMS += \
     filesliste.ui \
+    pantilcmd.ui \
     qtvsplayer.ui \
     rtspwindow.ui \
     settingsform.ui \

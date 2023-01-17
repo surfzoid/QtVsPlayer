@@ -7,6 +7,7 @@
 #include "videoctrls.h"
 #include <string>
 #include <QtDebug>
+#include <Qt>
 
 using namespace std;
 
@@ -24,7 +25,7 @@ int playm4interface::nModule = 0;
 
 unsigned int  playm4interface::VideoFs(QString fileName)
 {
-
+    QtVsPlayer::LoadCursor(true);
     VideoCtrls::EndRead = false;
     isound = false;
     isIndexed = false;
@@ -62,7 +63,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         }
     }
 
-/*    if (!PlayM4_GetDecodeEngine(m_pblocalportnum))
+    /*    if (!PlayM4_GetDecodeEngine(m_pblocalportnum))
     {
         qDebug()  << "Using SOFT_DECODE_ENGINE";
     }else{
@@ -153,6 +154,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     {
         DisplayError("PlayM4_SyncToAudio",PlayM4_GetLastError(m_pblocalportnum));
     }
+    QtVsPlayer::LoadCursor(false);
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));
     return 0;//PlayM4_GetLastError(m_pblocalportnum);
 }

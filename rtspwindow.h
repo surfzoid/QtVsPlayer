@@ -12,6 +12,7 @@
 #include <settingsform.h>
 #include <QXmlStreamReader>
 #include <QComboBox>
+#include <pantilcmd.h>
 
 class QVideoProbe;
 
@@ -27,11 +28,21 @@ class RtspWindow : public QMainWindow
 public:
     explicit RtspWindow(QWidget *parent = nullptr);
     ~RtspWindow();
+    /*******PANTIL CMD************/
+    static void PanTilTopLeft_pressed();
+    static void PanTilUp_pressed();
+    static void PanTilTopRight_pressed();
+    static void PanTilRight_pressed();
+    static void PanTilBottomRight_pressed();
+    static void PanTilDown_pressed();
+    static void PanTilBottomLeft_pressed();
+    static void PanTilLeft_pressed();
+    /*******PANTIL CMD************/
 
 private slots:
     void on_ComboBxCam_currentIndexChanged(const QString &arg1);
-    void positionChanged(qint64 pos);
 
+    void positionChanged(qint64 pos);
 
     void on_actionIgnoreAspectRatio_triggered();
 
@@ -50,10 +61,6 @@ private slots:
     void on_actionMetadata_triggered();
 
     void on_action_ISAPI_Streaming_channels_101_triggered();
-
-    void on_comboBxPresset_activated(int index);
-
-    void on_comboBxPatrol_activated(int index);
 
     void on_SnapshotBtn_pressed();
 
@@ -77,17 +84,18 @@ private slots:
 
     void on_PauseBtn_released();
 
+    void HideMenu();
+
 private:
     Ui::RtspWindow *ui;
     void PlayRtsp(QString Camuri);
     void blink();
-    void PanTilt(QMouseEvent *event);
     void CallPresset(int Presset);
     static QMediaPlayer *player;
     static QVideoWidget *videoWidget;
 
     static QString RtspUri;
-    QNetworkAccessManager *manager;
+    static QNetworkAccessManager *manager;
 
     static QString CamIp;
     static QString CamPort;
@@ -97,12 +105,10 @@ private:
     static QString Chanel;
     static unsigned int PtzSpeed;
 
-    static bool IsPressed;
-
     void LoadPreset();
     void LoadPatrol();
 
-    QString SetXMLReq(int pan,int tilt,int zoom);
+    static QString SetXMLReq(int pan,int tilt,int zoom);
     void GetMetaData(QMediaPlayer *player);
     void setStatusInfo(const QString &info);
     void displayErrorMessage();
@@ -111,17 +117,28 @@ private:
     static void DisplayError(QString Source, unsigned int  ErrMess);
     static void CALLBACK RemoteDisplayCBFun(int nPort, char *pBuf, int size, int width, int height,int stamp, int type, int reserved);
 
-    QVideoProbe *m_videoProbe = nullptr;
+    //QVideoProbe *m_videoProbe = nullptr;
     QSettings settings;
     SettingsForm SetFrm;
     QStringList PresetList;
     void Sleep(int MSecs);
+    QTimer *ShowHideTimer;
+    bool MenubarHasFocus(QMenuBar *menu);
+    QString GetWinState();
+
+    QRect TopLeft;
+    QRect TopRight;
+    QRect BottomRight;
+    QRect BottomLeft;
+
+    static PanTilCmd *PTCmd;
+    static void SendPTZ(int pan,int tilt,int zoom);
 
 public slots:
     void replyFinished (QNetworkReply *reply);
     void authenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
     //void processFrame(QVideoFrame frame, int levels);
-    void processFrame(const QVideoFrame &frame);
+    //void processFrame(const QVideoFrame &frame);
 
 protected slots:
     void onPlayStatusChanged(QMediaPlayer::MediaStatus status);
@@ -129,14 +146,13 @@ protected slots:
     void onPlayStateChanged(QMediaPlayer::State state);
     void onbufferStatusChanged(int percentFilled);
 
-
 protected:
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
     void keyPressEvent(QKeyEvent *e) override;
-
+    void resizeEvent(QResizeEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 };
 
 #endif // RTSPWINDOW_H

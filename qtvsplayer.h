@@ -25,6 +25,7 @@ class QtVsPlayer : public QMainWindow
 public:
     QtVsPlayer(QWidget *parent = nullptr);
     ~QtVsPlayer();
+    static QWidget *VideoView;
     void KeyPress(QWidget *parent = 0);
     //playm4interface *nPlaym4Interface;
     void FullScr();
@@ -37,7 +38,11 @@ public:
     static void PlayNextFile(bool FromFsList, int idx);
     static void WinIdWorkarround();
     static QStringList fileNames;
+    //void paintEvent(QPaintEvent* event) override;
 
+    void Zoom(qreal Scale);
+    void Rotation(qreal Angle);
+    static void LoadCursor(bool Loading);
 
 private slots:
     void on_actionOuvrir_triggered();
@@ -95,6 +100,7 @@ private:
     Ui::QtVsPlayer *ui;
 
     QStringList Hist;
+    qreal m_scale;
     static QString Lastpath;
     static QString Lastfs;
     static QString GetmimeType( const QString &filePath );
@@ -104,7 +110,7 @@ private:
     //void DisplayError(unsigned int  ErrMess);
 
     static int centralWidgetwinId;
-    static QVideoWidget *videoWidget;
+    //static QVideoWidget *videoWidget;
 
     void test();
 
@@ -117,6 +123,8 @@ private:
 static void  FsChanged();*/
     void VCASwitch(QString Name, int Info, bool IsActive);
     void enumerateMenu(QMenu *menu, bool ChkState);
+    void ScrollBarsView(bool VState);
+    QString GetWinState();
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
@@ -126,8 +134,9 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    QString GetWinState();
+    void showEvent(QShowEvent *event) override;
     void SaveMenuItemState(QMenu *menu);
     void GetMenuItemState(QMenu *menu);
+
 };
 #endif // QTVSPLAYER_H

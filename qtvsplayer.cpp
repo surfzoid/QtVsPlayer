@@ -27,7 +27,8 @@ QString QtVsPlayer::Lastfs = QStandardPaths::writableLocation(QStandardPaths::Mo
 
 FilesListe *QtVsPlayer::filesLs;
 VideoCtrls *QtVsPlayer::WVideoCtrls;
-QVideoWidget *QtVsPlayer::videoWidget;
+//QVideoWidget *QtVsPlayer::videoWidget;
+QWidget *QtVsPlayer::VideoView;
 
 static int eventEnumIndex = QEvent::staticMetaObject
         .indexOfEnumerator("Type");
@@ -41,15 +42,15 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     , ui(new Ui::QtVsPlayer)
 {
 
-    QtVsPlayer::filesLs = new FilesListe (this);
+    QtVsPlayer::filesLs = new FilesListe(this);
 
-    QtVsPlayer::WVideoCtrls = new VideoCtrls (this);
-    QtVsPlayer::videoWidget = new QVideoWidget;
-
+    QtVsPlayer::WVideoCtrls = new VideoCtrls(this);
     ui->setupUi(this);
 
-    //setCentralWidget(videoWidget);
-    videoWidget->setContentsMargins(0,0,0,0);
+    //QtVsPlayer::videoWidget = new QVideoWidget(graphicsView);
+
+    //ui->VideoView->setContentsMargins(0,0,0,0);
+    //ui->VideoView->setAttribute(Qt::WA_TranslucentBackground, true);
 
     ui->statusbar->addPermanentWidget(ui->SatusLbl,1);
 
@@ -71,38 +72,30 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     NewPos.setY(settings.value("Y", y()).value<int>());
     NewSize.setWidth(settings.value("Width", width()).value<int>());
     NewSize.setHeight(settings.value("Height", height()).value<int>());
-    setWindowState(windowState() ^ settings.value("State", height()).value<Qt::WindowStates>());
+    setWindowState(windowState() ^ settings.value("State", Qt::WindowNoState).value<Qt::WindowStates>());
 
     settings.endGroup();
-    move(NewPos);
-    resize(NewSize);
+    this->move(NewPos);
+    this->resize(NewSize);
 
 
     settings.beginGroup("VideoCtrls");
     int ThisY = this->height() - WVideoCtrls->height() -
             this->statusBar()->height();
-    NewPos.setX(settings.value("X", 0).value<int>());
-    NewPos.setY(settings.value("Y", ThisY).value<int>());
+    NewPos.setX(settings.value("X", width()/2).value<int>());
+    if(NewPos.x()<= 0)NewPos.setX(width()/2);
+    NewPos.setY(settings.value("Y", height()/2).value<int>());
+    if(NewPos.y()<= 0)NewPos.setY(height()/2);
     NewSize.setWidth(settings.value("Width", WVideoCtrls->width()).value<int>());
     NewSize.setHeight(settings.value("Height", WVideoCtrls->height()).value<int>());
 
     settings.endGroup();
     WVideoCtrls->move(NewPos);
-    WVideoCtrls->resize(NewSize);
 
     GetMenuItemState(ui->menuAffichage);
     //settings//
 
-    qApp->installEventFilter(this);
-
-    centralWidgetwinId = this->centralWidget()->winId();
-
-    QStringList ArgLS = QApplication::arguments();
-    if (ArgLS.length() > 0)
-    {
-        ArgLS.removeAt(0);
-        ParseArgs(ArgLS);
-    }
+    installEventFilter(this);
 
     WVideoCtrls->raise();
 
@@ -122,6 +115,41 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
     QDBusConnection::sessionBus().connect(QString(), QString(), "local.QtVsPlayer", "message", this, SLOT(messageSlot(QString)));
     connect(iface, SIGNAL(action(QString)), this, SLOT(actionSlot(QString)));
 #endif
+
+    setCentralWidget(ui->scrollArea);
+}
+
+void QtVsPlayer::showEvent(QShowEvent *event)
+{
+    //VideoView = new QDialog(this);
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, Qt::black);
+    VideoView = new QWidget(this);
+    VideoView->setAutoFillBackground(true);
+    VideoView->setPalette(pal);
+    centralWidgetwinId = VideoView->winId();
+    VideoView->setMouseTracking(true);
+    VideoView->setObjectName("VideoView");
+    m_scale = 1.0;
+    ui->scrollArea->setWidget(VideoView);
+    ui->scrollArea->setWidgetResizable(false);
+    ui->scrollArea->setMouseTracking(true);
+    VideoView->resize(ui->scrollArea->size());
+    originH = VideoView->rect();
+    this->ui->scrollArea->setStyleSheet("background-color: black;");
+
+    QStringList ArgLS = QApplication::arguments();
+    //ArgLS.append("/mnt/cams/cam4/NVR/20230117");
+    if (ArgLS.length() > 0)
+    {
+        ArgLS.removeAt(0);
+        ParseArgs(ArgLS);
+    }
+
+    QList<QWidget *> widgets = QtVsPlayer::findChildren<QWidget *>();
+    foreach (QWidget *var, widgets) {
+        var->setMouseTracking(true);
+    }
 }
 
 QtVsPlayer::~QtVsPlayer()
@@ -141,13 +169,11 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
 
     if(event->type() == QEvent::WinIdChange)
     {
-        if(obj->objectName() == "centralwidget")
+        if(obj->objectName() == "VideoView")
         {
-
             printf("---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
-            playm4interface::hwnd = this->centralWidget()->winId();
-
-            playm4interface::RefreshPlay();
+            playm4interface::hwnd = VideoView->winId();
+            centralWidgetwinId = playm4interface::hwnd;
         }
     }
 
@@ -158,10 +184,40 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
             //DisplayFsName(Lastfs);
         }
     }
+    /*if (event->type() == QEvent::Paint && obj->objectName() == "centralwidget")
+    {
+        QPainter painter(graphicsView);
+        painter.begin(graphicsView);
+        painter.scale(m_scale, m_scale);
+        update();
+        painter.end();
+    }
 
 
-    /*printf("---Event type %i :%s\n\r", event->type(), QEvent::staticMetaObject
+    printf("---Event type %i :%s\n\r", event->type(), QEvent::staticMetaObject
        .enumerator(eventEnumIndex).valueToKey(event->type()));*/
+
+    /*if (graphicsView->viewport())
+    {
+        if (event->type() == QEvent::MouseMove)
+        {
+            QtVsPlayer::mouseMoveEvent((QMouseEvent*)event);
+
+        }
+        if (event->type() == QEvent::Wheel)
+        {
+            //QtVsPlayer::wheelEvent((QWheelEvent*)event);
+            QWheelEvent *mQWheelEvent = (QWheelEvent*)event;
+            m_scale += mQWheelEvent->angleDelta().y() / qreal(600);
+            m_scale = qMax(qreal(0.1), qMin(qreal(4), m_scale));
+            QTransform m;
+                m.translate(mQWheelEvent->angleDelta().x(), mQWheelEvent->angleDelta().y());
+                m.translate(-graphicsView->width()/2, -graphicsView->height()/2);
+                m *= QTransform().scale(m_scale, m_scale);
+
+                graphicsView->setTransform(m);
+        }
+    }*/
 
     return QObject::eventFilter(obj, event);
 }
@@ -329,6 +385,7 @@ void QtVsPlayer::PlayNextFile(bool FromFsList, int idx)
 
 
     DisplayFsName(Lastfs);
+    WinIdWorkarround();
     return;
 }
 
@@ -434,7 +491,10 @@ void QtVsPlayer::resizeEvent(QResizeEvent *event)
                       this->statusBar()->height());*/
 
     //this->ui->FsDisplay->setVisible(false);
-    originH = ui->centralwidget->rect();
+
+    VideoView->resize(ui->scrollArea->size());
+    //VideoView->resize(VideoView->width() - 2, VideoView->height());
+    originH = VideoView->rect();
     Zoomed = false;
 
     //surpress warning!
@@ -446,21 +506,21 @@ void QtVsPlayer::resizeEvent(QResizeEvent *event)
     QSettings settings;
     settings.beginGroup("QtVsPlayer");
 
-    settings.setValue( "X", pos().x());
-    settings.setValue("Y", pos().y());
-    settings.setValue("Width", width());
-    settings.setValue("Height", height());
+    settings.setValue( "X", this->pos().x());
+    settings.setValue("Y", this->pos().y());
+    settings.setValue("Width", this->width());
+    settings.setValue("Height", this->height());
     settings.setValue("State", GetWinState());
 
     settings.endGroup();
     settings.sync();
+    //VideoView->resize(ui->graphicsView->size());
     return ;
 }
 
-
 QString QtVsPlayer::GetWinState()
 {
-    switch (windowState()) {
+    switch (this->windowState()) {
 
     default:
     case Qt::WindowNoState://0x00000000 The window has no state set (in normal state).
@@ -509,6 +569,10 @@ void QtVsPlayer::mousePressEvent(QMouseEvent *event)
     return;
 }
 
+/*void QtVsPlayer::paintEvent(QPaintEvent* event)
+{
+    qDebug() << event->Paint;
+}*/
 
 void QtVsPlayer::wheelEvent(QWheelEvent *event)
 {
@@ -517,51 +581,54 @@ void QtVsPlayer::wheelEvent(QWheelEvent *event)
     }
 
     QPoint Scroll = event->angleDelta();
+    WinIdWorkarround();
+
 
     if (Scroll.y() > 0)
     {
-        ui->centralwidget->resize(ui->centralwidget->width() + 50,
-                                  ui->centralwidget->height() + 50);
+        VideoView->resize(VideoView->width() + 50,
+                          VideoView->height() + 50);
         Zoomed = true;
 
     }
 
-    if (Scroll.y() < 0 and originH.height() < ui->centralwidget->height())
+    if (Scroll.y() < 0 and originH.height() < VideoView->height())
     {
-        ui->centralwidget->resize(ui->centralwidget->width() - 50,
-                                  ui->centralwidget->height() - 50);
+        VideoView->resize(VideoView->width() - 50,
+                          VideoView->height() - 50);
+        Zoomed = true;
     }
 
-    if (Scroll.y() < 0 and originH.height() == ui->centralwidget->height())
+    if (Scroll.y() <= 0)
     {
         Zoomed = false;
-        ui->centralwidget->move(originH.x(), originH.y());
+        VideoView->move(originH.x(), originH.y());
     }
-
+    ScrollBarsView(Zoomed);
     WinIdWorkarround();
     return;
 }
 
 void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
 {
-    if (Zoomed == true and event->buttons() == Qt::LeftButton) {
-        ui->centralwidget->move(event->pos().x() - ui->centralwidget->width()/2,
-                                event->pos().y() - ui->centralwidget->height()/2);
-
-        WinIdWorkarround();
-    }
-
+    /*QPoint p = parentWidget()->mapFromGlobal(QCursor::pos());
+    if (ui->scrollArea->horizontalScrollBar()->isVisible()) {
+        ui->scrollArea->horizontalScrollBar()->setValue(p.x());
+        }
+    if (ui->scrollArea->verticalScrollBar()->isVisible()) {
+        ui->scrollArea->verticalScrollBar()->setValue(p.y());
+        }*/
 
     if (!this->ui->actionMasquer_les_controles->isChecked() and
             WVideoCtrls->isHidden() and
             this->ui->actionAuto_hide_controls->isChecked()) {
-
+        if(!Zoomed && !isFullScreen())
+            ui->statusbar->setVisible(true);
         WVideoCtrls->show();
         WVideoCtrls->activateWindow();
         WVideoCtrls->raise();
         this->centralWidget()->lower();
         this->centralWidget()->stackUnder(WVideoCtrls);
-        //WVideoCtrls->setParent(centralWidget());
     }
 
     if (QtVsPlayer::cursor() == Qt::BlankCursor) {
@@ -578,10 +645,16 @@ void QtVsPlayer::ShowHide()
             this->ui->actionAuto_hide_controls->isChecked() and
             !WVideoCtrls->underMouse() ) {
         WVideoCtrls->hide();
+        this->ui->statusbar->setVisible(false);
+
+        if (!Zoomed)
+            resize(width(),height() + this->ui->statusbar->height());
     }
 
-    if (QtVsPlayer::cursor() != Qt::BlankCursor and
-            !WVideoCtrls->underMouse()) {
+    if (!this->ui->actionMasquer_les_controles->isChecked() and
+            QtVsPlayer::cursor() != Qt::BlankCursor and
+            !WVideoCtrls->underMouse() and
+            this->ui->actionAuto_hide_controls->isChecked()) {
         QtVsPlayer::setCursor(Qt::BlankCursor);
     }
     return;
@@ -606,7 +679,8 @@ void QtVsPlayer::HideCtrl()
         WVideoCtrls->raise();
         this->centralWidget()->lower();
         this->centralWidget()->stackUnder(WVideoCtrls);
-        //WVideoCtrls->setParent(centralWidget());
+        if (!isFullScreen())
+            this->ui->statusbar->setVisible(true);
     }
     return;
 }
@@ -624,10 +698,9 @@ void QtVsPlayer::WinIdWorkarround()
 {
     playm4interface::hwnd = 0;
 
-    //playm4interface::RefreshPlay();
-    playm4interface::hwnd = centralWidgetwinId;
+    playm4interface::hwnd = VideoView->winId();
+
     playm4interface::RefreshPlay();
-    return;
 }
 
 void QtVsPlayer::on_actionListe_de_lecture_triggered()
@@ -736,38 +809,38 @@ void QtVsPlayer::actionSlot(const QString &text)
 
 void QtVsPlayer::on_actionVCA_toggled(bool arg1)
 {
-VCASwitch("PLAYM4_RENDER_ANA_INTEL_DATA", PLAYM4_RENDER_ANA_INTEL_DATA, arg1);
-SaveMenuItemState(ui->menuAffichage);
+    VCASwitch("PLAYM4_RENDER_ANA_INTEL_DATA", PLAYM4_RENDER_ANA_INTEL_DATA, arg1);
+    SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionMotion_detection_toggled(bool arg1)
 {
-VCASwitch("PLAYM4_RENDER_MD", PLAYM4_RENDER_MD, arg1);
-SaveMenuItemState(ui->menuAffichage);
+    VCASwitch("PLAYM4_RENDER_MD", PLAYM4_RENDER_MD, arg1);
+    SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionPOS_Text_Overlay_toggled(bool arg1)
 {
-VCASwitch("PLAYM4_RENDER_ADD_POS", PLAYM4_RENDER_ADD_POS, arg1);
-SaveMenuItemState(ui->menuAffichage);
+    VCASwitch("PLAYM4_RENDER_ADD_POS", PLAYM4_RENDER_ADD_POS, arg1);
+    SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionPicture_Overlay_toggled(bool arg1)
 {
-VCASwitch("PLAYM4_RENDER_ADD_PIC", PLAYM4_RENDER_ADD_PIC, arg1);
-SaveMenuItemState(ui->menuAffichage);
+    VCASwitch("PLAYM4_RENDER_ADD_PIC", PLAYM4_RENDER_ADD_PIC, arg1);
+    SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionFire_Source_toggled(bool arg1)
 {
-VCASwitch("PLAYM4_RENDER_FIRE_DETCET", PLAYM4_RENDER_FIRE_DETCET, arg1);
-SaveMenuItemState(ui->menuAffichage);
+    VCASwitch("PLAYM4_RENDER_FIRE_DETCET", PLAYM4_RENDER_FIRE_DETCET, arg1);
+    SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::on_actionTemperature_toggled(bool arg1)
 {
-VCASwitch("PLAYM4_RENDER_TEM", PLAYM4_RENDER_TEM, arg1);
-SaveMenuItemState(ui->menuAffichage);
+    VCASwitch("PLAYM4_RENDER_TEM", PLAYM4_RENDER_TEM, arg1);
+    SaveMenuItemState(ui->menuAffichage);
 }
 
 void QtVsPlayer::VCASwitch(QString Name, int Info, bool IsActive)
@@ -866,4 +939,48 @@ void QtVsPlayer::GetMenuItemState(QMenu *menu)
 
     settings.endGroup();
     settings.sync();
+}
+
+void QtVsPlayer::Zoom(qreal Scale)
+{
+    //graphicsView->scale(ScaleX, ScaleY);
+    //proxy->setScale(Scale);
+}
+
+void QtVsPlayer::Rotation(qreal Angle)
+{
+    //proxy->setRotation(Angle);
+}
+
+void QtVsPlayer::ScrollBarsView(bool VState)
+{
+    if (VState) {
+        ui->scrollArea->horizontalScrollBar()->show();
+        ui->scrollArea->verticalScrollBar()->show();
+        //ui->scrollArea->horizontalScrollBar()->resize(20, 2);
+        //ui->scrollArea->verticalScrollBar()->resize(2, 2);
+        ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        if(!isFullScreen())
+            ui->statusbar->setVisible(false);
+    } else {
+        ui->scrollArea->horizontalScrollBar()->hide();
+        ui->scrollArea->verticalScrollBar()->hide();
+        //ui->scrollArea->horizontalScrollBar()->resize(0, 0);
+        //ui->scrollArea->verticalScrollBar()->resize(0, 0);
+        ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        if(!isFullScreen())
+            ui->statusbar->setVisible(true);
+        VideoView->resize(ui->scrollArea->size());
+    }
+}
+
+void QtVsPlayer::LoadCursor(bool Loading)
+{
+    if (Loading) {
+        QGuiApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    } else {
+        QGuiApplication::restoreOverrideCursor();
+    }
 }

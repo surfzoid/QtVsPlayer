@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.30
+Version:        1.0.31
 Release:        %mkrel 2
 License:        GPLv3
 Group:          Video/Players
@@ -59,6 +59,13 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/libSuperRender.so
 
 %changelog
+* Tue Jan 17 2023 surfzoid@gmail.com
++ ptz command more accurate.
++ Use scrollbars to move zoomed video rather mouse.
++ Prefer Widget rather CentralWidget to play video.
++ RtspPlayer: cosmetic and auto hide menu.
++ Save RtspPlayer windows size and position in settings.
+
 * Tue Jan 10 2023 surfzoid@gmail.com
 + Pressets are loaded and saved from/to the device.
 + Encrypt password in settings.

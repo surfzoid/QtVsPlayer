@@ -43,6 +43,10 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
 
     this->ui->CurSpeed->setText("0X");
 
+    QList<QWidget *> widgets = VideoCtrls::findChildren<QWidget *>();
+    foreach (QWidget *var, widgets) {
+        var->setMouseTracking(true);
+    }
 }
 
 VideoCtrls::~VideoCtrls()
@@ -71,7 +75,10 @@ void VideoCtrls::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::MiddleButton) {
         QPoint Memo = event->pos();
-        move(event->pos() + pos());
+        //move(event->pos() + pos());
+        QPoint p = parentWidget()->mapFromGlobal(QCursor::pos());
+
+        this->move(p.x()-width()/2,p.y()-height()/2);
 
         if (x() > parentWidget()->height() || y() > parentWidget()->width()) {
             move(Memo);

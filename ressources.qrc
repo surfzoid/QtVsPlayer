@@ -11,5 +11,13 @@
         <file>images/control-slow.png</file>
         <file>images/QtVsPlayer.png</file>
         <file>images/control-reverse.png</file>
+        <file>images/left.svg</file>
+        <file>images/down.svg</file>
+        <file>images/up.svg</file>
+        <file>images/right.svg</file>
+        <file>images/bottomleft.svg</file>
+        <file>images/bottomright.svg</file>
+        <file>images/topleft.svg</file>
+        <file>images/topright.svg</file>
     </qresource>
 </RCC>

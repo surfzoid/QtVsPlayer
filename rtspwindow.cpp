@@ -28,7 +28,9 @@ QString RtspWindow::CamPortHttp = "801";
 QString RtspWindow::Chanel = "101";
 unsigned int RtspWindow::PtzSpeed = 3;
 
-bool RtspWindow::IsPressed = false;
+PanTilCmd *RtspWindow::PTCmd;
+
+QNetworkAccessManager *RtspWindow::manager;
 
 RtspWindow::RtspWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,6 +40,8 @@ RtspWindow::RtspWindow(QWidget *parent) :
     QSettings settings;//init settings before combo idx change
     RtspWindow::player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
     RtspWindow::videoWidget = new QVideoWidget(this);
+
+    PTCmd = new PanTilCmd(this);
 
     connect(player, SIGNAL(positionChanged(qint64)),
             this, SLOT(positionChanged(qint64)));
@@ -77,9 +81,40 @@ RtspWindow::RtspWindow(QWidget *parent) :
     settings.endGroup();
 
 
-    m_videoProbe = new QVideoProbe(this);
+    /*m_videoProbe = new QVideoProbe(this);
     connect(m_videoProbe, &QVideoProbe::videoFrameProbed, this, &RtspWindow::processFrame);
-    m_videoProbe->setSource(player);
+    m_videoProbe->setSource(player);*/
+
+    ShowHideTimer = new QTimer(this);
+    ShowHideTimer->setTimerType(Qt::PreciseTimer);
+    ShowHideTimer->start( 10000 );
+    RtspWindow::connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(HideMenu()));
+
+    settings.beginGroup("RtspWindow");
+    QPoint NewPos;
+    QSize NewSize;
+    NewPos.setX(settings.value("X", x()).value<int>());
+    NewPos.setY(settings.value("Y", y()).value<int>());
+    NewSize.setWidth(settings.value("Width", width()).value<int>());
+    NewSize.setHeight(settings.value("Height", height()).value<int>());
+    setWindowState(windowState() ^ settings.value("State", Qt::WindowNoState).value<Qt::WindowStates>());
+
+    settings.endGroup();
+    this->move(NewPos);
+    this->resize(NewSize);
+
+}
+
+void RtspWindow::showEvent(QShowEvent *event)
+{
+    videoWidget->setObjectName("videoWidget");
+    //there is a ghost widget!!!!!!
+    QList<QWidget *> widgets = RtspWindow::findChildren<QWidget *>();
+    foreach (QWidget *var, widgets) {
+        //qDebug() << var->objectName() << var->hasMouseTracking() << var->size();
+        if(var->size() == videoWidget->size())
+            var->setMouseTracking(true);
+    }
 }
 
 RtspWindow::~RtspWindow()
@@ -108,6 +143,8 @@ void RtspWindow::PlayRtsp(QString Camuri)
     player->setVolume(50);
 
     player->setVideoOutput(videoWidget);
+    videoWidget->setObjectName("videoWidget");
+    videoWidget->setMouseTracking(true);
     videoWidget->setAutoFillBackground(true);
     videoWidget->setAspectRatioMode(Qt::KeepAspectRatio);
     videoWidget->setSizePolicy(QSizePolicy::Preferred,
@@ -175,18 +212,17 @@ void RtspWindow::blink()
     if(ui->lblLoading->isHidden())
         ui->lblLoading->show();
     else
+    {
         ui->lblLoading->hide();
+    }
 }
 
 void RtspWindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    //surpress warning!
-    if (event == nullptr) {
-        event = nullptr;
-    }
+
     //surpress warning!
 
-    if (isFullScreen()) {
+    if (isFullScreen() && event) {
         showMaximized();
         menuBar()->setVisible(true);
         statusBar()->setVisible(true);
@@ -337,67 +373,6 @@ void RtspWindow::wheelEvent(QWheelEvent *event)
 
 }
 
-void RtspWindow::mousePressEvent(QMouseEvent *event)
-{
-
-    if ((event->buttons() == Qt::RightButton))
-    {
-        IsPressed = true;
-        PanTilt(event);
-    }
-
-}
-
-void RtspWindow::PanTilt(QMouseEvent *event)
-{
-    QUrl Adresse("http://" + CamUser + ":" + CamPass +
-                 "@" + CamIp + ":" + CamPortHttp +
-                 "/ISAPI/PTZCtrl/channels/1/Momentary");
-    int WheightC = this->height()/2;//h_y
-    int WwidthC = this->width()/2;//l_x
-    int WheightOfS = this->height()/2 - (WheightC/2);//h_y
-    int WwidthCOfS = this->width()/2 - (WwidthC/2);//l_x
-
-    if (event->globalY() > WheightC and event->globalY() < WheightC - WheightOfS)
-        manager->put((QNetworkRequest)Adresse,
-                     SetXMLReq(0,-100,0).toUtf8());
-    if (event->globalY() > WheightC - WheightOfS)
-        manager->put((QNetworkRequest)Adresse,
-                     SetXMLReq(0,-100,0).toUtf8());
-
-    if (event->globalY() < WheightC and event->globalY() > WheightC + WheightOfS)
-        manager->put((QNetworkRequest)Adresse,
-                     SetXMLReq(0,100,0).toUtf8());
-    if (event->globalY() < WheightC + WheightOfS)
-        manager->put((QNetworkRequest)Adresse,
-                     SetXMLReq(0,100,0).toUtf8());
-
-    if (event->globalX() > WwidthC and event->globalX() < WwidthC - WwidthCOfS)
-        manager->put((QNetworkRequest)Adresse,
-                     SetXMLReq(100,0,0).toUtf8());
-    if (event->globalX() > WwidthC - WwidthCOfS)
-        manager->put((QNetworkRequest)Adresse,
-                     SetXMLReq(100,0,0).toUtf8());
-
-    if (event->globalX() < WwidthC and event->globalX() > WwidthC + WwidthCOfS)
-        manager->put((QNetworkRequest)Adresse,
-                     SetXMLReq(-100,0,0).toUtf8());
-    if (event->globalX() < WwidthC + WwidthCOfS)
-        manager->put((QNetworkRequest)Adresse,
-                     SetXMLReq(-100,0,0).toUtf8());
-}
-
-void RtspWindow::mouseReleaseEvent(QMouseEvent *event)
-{
-    //surpress warning!
-    if (event == nullptr) {
-        event = nullptr;
-    }
-    //surpress warning!
-
-    IsPressed = false;
-}
-
 void RtspWindow::replyFinished(QNetworkReply *reply)
 {
     if(reply->error())
@@ -504,36 +479,6 @@ void RtspWindow::authenticationRequired(QNetworkReply *reply, QAuthenticator *au
     reply->deleteLater();
 }
 
-
-/************************************************************************
-    url='PTZCtrl/channels/1/momentary'
-    xml='<PTZData”>
-    <pan>0</pan>              # Rotation de -100 à 100 (gauche ou droite)
-    <tilt>0</tilt>            # Inclinaison de -100 à 100 (haut ou bas)
-    <zoom>0</zoom>            # Zoom -100 à 100 (zoom+ ou zoom-)
-    <Momentary>
-    <duration>1000</duration> # Durée du mouvement en millisecondes
-    </Momentary>
-    </PTZData>'
-************************************************************************/
-QString RtspWindow::SetXMLReq(int pan,int tilt,int zoom)
-{
-    int Duration = PtzSpeed * 100;
-
-    QString XmlData = "<PTZData>\r\n\
-<pan>" + QString::number(pan) + "</pan>\r\n\
-            <tilt>" + QString::number(tilt) + "</tilt>\r\n\
-            <zoom>" + QString::number(zoom) + "</zoom>\r\n\
-            <Momentary>\r\n\
-            <duration>" +
-                      QString::number(Duration) + "</duration>\r\n\
-            </Momentary>\r\n\
-            </PTZData>";
-
-        return XmlData;
-}
-
-
 void RtspWindow::CallPresset(int Presset)
 {
 
@@ -544,23 +489,6 @@ void RtspWindow::CallPresset(int Presset)
                  "@" +  CamIp + ":" + CamPortHttp + AdPath);
 
     manager->get((QNetworkRequest)Adresse);
-}
-
-
-void RtspWindow::on_comboBxPresset_activated(int index)
-{
-    //CallPresset(index + 1);
-}
-
-void RtspWindow::on_comboBxPatrol_activated(int index)
-{
-    /*QString AdPath = ("/ISAPI/PTZCtrl/channels/1/patrols/" +
-                      QString::number(index + 1) + "/start").toUtf8();
-    QUrl Adresse("http://" + CamUser + ":" + CamPass +
-                 "@" + CamIp + ":" + CamPortHttp + AdPath);
-
-    QIODevice * outgoingData = 0;
-    manager->put((QNetworkRequest)Adresse,outgoingData);*/
 }
 
 void RtspWindow::on_SnapshotBtn_pressed()
@@ -761,7 +689,7 @@ void RtspWindow::on_RecordBtn_toggled(bool checked)
         QIODevice * outgoingData = 0;
         manager->put((QNetworkRequest)Adresse,outgoingData);
         this->ui->RecordBtn->setText("Record");
-        this->ui->RecordBtn->setStyleSheet("background-color: grey;");
+        this->ui->RecordBtn->setStyleSheet("background-color: green;");
     }
 
 }
@@ -913,7 +841,7 @@ void RtspWindow::HikRtsp(unsigned char *pBuffer,unsigned int dwBufSize)
     else
     {
 
-        if (!PlayM4_Play(nPort,NULL))
+        if (!PlayM4_Play(nPort,0))
         {
             DisplayError("PlayM4_Play", PlayM4_GetLastError(nPort));
             PlayM4_CloseStream(nPort);
@@ -937,7 +865,7 @@ void CALLBACK RtspWindow::RemoteDisplayCBFun(int nPort, char *pBuf, int size, in
 }
 
 
-void RtspWindow::processFrame(const QVideoFrame &frame)
+/*void RtspWindow::processFrame(const QVideoFrame &frame)
 {
     if (frame.isValid())
         //qDebug() << MediaStream->bytesAvailable();
@@ -946,7 +874,7 @@ void RtspWindow::processFrame(const QVideoFrame &frame)
         //PlayM4_InputData(nPort,(unsigned char*)frame.buffer(), sizeof(frame.buffer()));
         return; //drop frame
 
-}
+}*/
 
 void RtspWindow::keyPressEvent(QKeyEvent *e)
 {
@@ -974,5 +902,164 @@ void RtspWindow::Sleep(int MSecs)
     {
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
     }
+}
+
+void RtspWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    if (event) {
+        if(!isFullScreen())
+        {
+            ui->menubar->show();
+            ui->statusbar->show();
+            PTCmd->setVisible(true);
+            PTCmd->setFocus();
+        }
+    }
+    return;
+}
+
+void RtspWindow::HideMenu()
+{
+    if (!MenubarHasFocus(ui->menubar)) {
+        ui->menubar->hide();
+        ui->statusbar->hide();
+        PTCmd->setVisible(false);
+    }
+}
+
+bool RtspWindow::MenubarHasFocus(QMenuBar *menu)
+{
+    if (menu->underMouse() || ui->menubar->activeAction() || PTCmd->underMouse())
+        return true;
+    foreach (QWidget *Widg,  menu->findChildren<QWidget *>()) {
+        if (Widg->underMouse())
+            return true;
+    }
+    return false;
+}
+
+void RtspWindow::resizeEvent(QResizeEvent *event)
+{
+    //surpress warning!
+    if (event == nullptr) {
+        event = nullptr;
+    }
+    //surpress warning!
+
+    QSettings settings;
+    settings.beginGroup("RtspWindow");
+
+    settings.setValue( "X", this->pos().x());
+    settings.setValue("Y", this->pos().y());
+    settings.setValue("Width", this->width());
+    settings.setValue("Height", this->height());
+    settings.setValue("State", GetWinState());
+
+    settings.endGroup();
+    settings.sync();
+
+    return ;
+}
+
+QString RtspWindow::GetWinState()
+{
+    switch (this->windowState()) {
+
+    default:
+    case Qt::WindowNoState://0x00000000 The window has no state set (in normal state).
+        return "0x00000000";
+        break;
+    case Qt::WindowMinimized://0x00000001 The window is minimized (i.e. iconified).
+        return "0x00000001";
+        break;
+    case Qt::WindowMaximized://0x00000002 The window is maximized with a frame around it.
+        return "0x00000002";
+        break;
+    case Qt::WindowFullScreen://0x00000004 The window fills the entire screen without any frame around it.
+        return "0x00000004";
+        break;
+    case Qt::WindowActive://0x00000008 The window is the active window, i.e. it has keyboard focus.
+        return "0x00000008";
+        break;
+
+    }
+}
+
+void RtspWindow::PanTilTopLeft_pressed()
+{
+    RtspWindow::SendPTZ(-100,100,0);
+}
+
+void RtspWindow::PanTilUp_pressed()
+{
+    RtspWindow::SendPTZ(0,100,0);
+}
+
+void RtspWindow::PanTilTopRight_pressed()
+{
+    RtspWindow::SendPTZ(100,100,0);
+}
+
+void RtspWindow::PanTilRight_pressed()
+{
+    RtspWindow::SendPTZ(100,0,0);
+}
+
+void RtspWindow::PanTilBottomRight_pressed()
+{
+    RtspWindow::SendPTZ(100,-100,0);
+}
+
+void RtspWindow::PanTilDown_pressed()
+{
+    RtspWindow::SendPTZ(0,-100,0);
+}
+
+void RtspWindow::PanTilBottomLeft_pressed()
+{
+    RtspWindow::SendPTZ(-100,-100,0);
+}
+
+void RtspWindow::PanTilLeft_pressed()
+{
+    RtspWindow::SendPTZ(-100,0,0);
+}
+
+void RtspWindow::SendPTZ(int pan, int tilt, int zoom)
+{
+    QUrl PanTilAdresse("http://" + CamUser + ":" + CamPass +
+                 "@" + CamIp + ":" + CamPortHttp +
+                 "/ISAPI/PTZCtrl/channels/1/Momentary");
+    manager->put((QNetworkRequest)PanTilAdresse,
+                 SetXMLReq(pan,tilt,zoom).toUtf8());
+
+}
+
+/**************************************************
+    url='PTZCtrl/channels/1/momentary'
+    xml='<PTZData”>
+    <pan>0</pan>              # Rotation de -100 à 100 (gauche ou droite)
+    <tilt>0</tilt>            # Inclinaison de 100 à -100 (haut ou bas)
+    <zoom>0</zoom>            # Zoom -100 à 100 (zoom+ ou zoom-)
+    <Momentary>
+    <duration>1000</duration> # Durée du mouvement en millisecondes
+    </Momentary>
+    </PTZData>'
+***************************************************/
+QString RtspWindow::SetXMLReq(int pan,int tilt,int zoom)
+{
+    int Duration = PtzSpeed * 100;
+
+    QString XmlData = "<PTZData>\r\n\
+<pan>" + QString::number(pan) + "</pan>\r\n\
+            <tilt>" + QString::number(tilt) + "</tilt>\r\n\
+            <zoom>" + QString::number(zoom) + "</zoom>\r\n\
+            <Momentary>\r\n\
+            <duration>" +
+                      QString::number(Duration) + "</duration>\r\n\
+            </Momentary>\r\n\
+            </PTZData>";
+
+        return XmlData;
 }
 
