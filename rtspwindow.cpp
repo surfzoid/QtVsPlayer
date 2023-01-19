@@ -222,7 +222,7 @@ void RtspWindow::mouseDoubleClickEvent(QMouseEvent *event)
 
     //surpress warning!
 
-    if (isFullScreen() && event) {
+    if (RtspWindow::isFullScreen() && event) {
         showMaximized();
         menuBar()->setVisible(true);
         statusBar()->setVisible(true);
@@ -907,13 +907,13 @@ void RtspWindow::Sleep(int MSecs)
 void RtspWindow::mouseMoveEvent(QMouseEvent *event)
 {
     if (event) {
-        if(!isFullScreen())
+        if(!RtspWindow::isFullScreen())
         {
             ui->menubar->show();
             ui->statusbar->show();
-            PTCmd->setVisible(true);
-            PTCmd->setFocus();
         }
+        PTCmd->setVisible(true);
+        PTCmd->setFocus();
     }
     return;
 }

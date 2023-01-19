@@ -35,7 +35,7 @@ static int eventEnumIndex = QEvent::staticMetaObject
 
 static QRect originH = *new QRect;
 static bool Zoomed = false;
-
+static bool Fullscr = false;//why isFullscreen is not always true in fullscreen?!
 
 QtVsPlayer::QtVsPlayer(QWidget *parent)
     : QMainWindow(parent)
@@ -146,10 +146,10 @@ void QtVsPlayer::showEvent(QShowEvent *event)
         ParseArgs(ArgLS);
     }
 
-    QList<QWidget *> widgets = QtVsPlayer::findChildren<QWidget *>();
+    /*QList<QWidget *> widgets = QtVsPlayer::findChildren<QWidget *>();
     foreach (QWidget *var, widgets) {
         var->setMouseTracking(true);
-    }
+    }*/
 }
 
 QtVsPlayer::~QtVsPlayer()
@@ -184,7 +184,7 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
             //DisplayFsName(Lastfs);
         }
     }
-    /*if (event->type() == QEvent::Paint && obj->objectName() == "centralwidget")
+    /*if (event->type() == QEvent::Paint and obj->objectName() == "centralwidget")
     {
         QPainter painter(graphicsView);
         painter.begin(graphicsView);
@@ -469,14 +469,17 @@ void QtVsPlayer::keyPressEvent(QKeyEvent *event)
 
 void QtVsPlayer::FullScr()
 {
-    if (isFullScreen()) {
-        showMaximized();
-        menuBar()->setVisible(true);
-        statusBar()->setVisible(true);
+    if (QtVsPlayer::isFullScreen()) {
+        Fullscr = false;
+        QtVsPlayer::showNormal();
+        this->ui->menubar->setVisible(true);
+        if (!Zoomed)
+            this->ui->statusbar->setVisible(true);
     } else {
-        showFullScreen();
-        menuBar()->setVisible(false);
-        statusBar()->setVisible(false);
+        QtVsPlayer::showFullScreen();
+        Fullscr = true;
+        this->ui->menubar->setVisible(false);
+        this->ui->statusbar->setVisible(false);
     }
     return;
 }
@@ -619,16 +622,22 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
         ui->scrollArea->verticalScrollBar()->setValue(p.y());
         }*/
 
-    if (!this->ui->actionMasquer_les_controles->isChecked() and
+    foreach (QWidget *Widg,  QtVsPlayer::findChildren<QWidget *>()) {
+        if (Widg->isFullScreen())
+            qDebug() << Widg->objectName() << Widg->isFullScreen();
+    }
+    if (event and
+            !this->ui->actionMasquer_les_controles->isChecked() and
             WVideoCtrls->isHidden() and
             this->ui->actionAuto_hide_controls->isChecked()) {
-        if(!Zoomed && !isFullScreen())
+        qDebug() << "QtVsPlayer::isFullScreen" << QtVsPlayer::isFullScreen();
+        if(!Zoomed and Fullscr == false)
             ui->statusbar->setVisible(true);
         WVideoCtrls->show();
         WVideoCtrls->activateWindow();
         WVideoCtrls->raise();
-        this->centralWidget()->lower();
-        this->centralWidget()->stackUnder(WVideoCtrls);
+        /*this->centralWidget()->lower();
+        this->centralWidget()->stackUnder(WVideoCtrls);*/
     }
 
     if (QtVsPlayer::cursor() == Qt::BlankCursor) {
@@ -647,7 +656,7 @@ void QtVsPlayer::ShowHide()
         WVideoCtrls->hide();
         this->ui->statusbar->setVisible(false);
 
-        if (!Zoomed)
+        if (!Zoomed and !QtVsPlayer::isFullScreen())
             resize(width(),height() + this->ui->statusbar->height());
     }
 
@@ -679,7 +688,7 @@ void QtVsPlayer::HideCtrl()
         WVideoCtrls->raise();
         this->centralWidget()->lower();
         this->centralWidget()->stackUnder(WVideoCtrls);
-        if (!isFullScreen())
+        if (!Zoomed and !QtVsPlayer::isFullScreen())
             this->ui->statusbar->setVisible(true);
     }
     return;
@@ -961,7 +970,7 @@ void QtVsPlayer::ScrollBarsView(bool VState)
         //ui->scrollArea->verticalScrollBar()->resize(2, 2);
         ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        if(!isFullScreen())
+        if(!QtVsPlayer::isFullScreen())
             ui->statusbar->setVisible(false);
     } else {
         ui->scrollArea->horizontalScrollBar()->hide();
@@ -970,8 +979,8 @@ void QtVsPlayer::ScrollBarsView(bool VState)
         //ui->scrollArea->verticalScrollBar()->resize(0, 0);
         ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        if(!isFullScreen())
-            ui->statusbar->setVisible(true);
+        /*if(!Zoomed and !QtVsPlayer::isFullScreen())
+            ui->statusbar->setVisible(true);*/
         VideoView->resize(ui->scrollArea->size());
     }
 }
