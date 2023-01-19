@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>511</width>
-    <height>60</height>
+    <height>80</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -31,11 +31,11 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>16</height>
+     <height>40</height>
     </rect>
    </property>
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -44,12 +44,6 @@
     <size>
      <width>73</width>
      <height>0</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>16777215</width>
-     <height>16</height>
     </size>
    </property>
    <property name="mouseTracking">
@@ -68,8 +62,8 @@
   <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>20</y>
+     <x>1</x>
+     <y>28</y>
      <width>411</width>
      <height>42</height>
     </rect>
@@ -1079,7 +1073,7 @@
      <x>490</x>
      <y>0</y>
      <width>20</width>
-     <height>51</height>
+     <height>80</height>
     </rect>
    </property>
    <property name="mouseTracking">

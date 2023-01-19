@@ -80,8 +80,7 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 
 
     settings.beginGroup("VideoCtrls");
-    int ThisY = this->height() - WVideoCtrls->height() -
-            this->statusBar()->height();
+    //int ThisY = this->height() - WVideoCtrls->height() - this->statusBar()->height();
     NewPos.setX(settings.value("X", width()/2).value<int>());
     if(NewPos.x()<= 0)NewPos.setX(width()/2);
     NewPos.setY(settings.value("Y", height()/2).value<int>());
@@ -133,7 +132,7 @@ void QtVsPlayer::showEvent(QShowEvent *event)
     m_scale = 1.0;
     ui->scrollArea->setWidget(VideoView);
     ui->scrollArea->setWidgetResizable(false);
-    ui->scrollArea->setMouseTracking(true);
+    //ui->scrollArea->setMouseTracking(true);
     VideoView->resize(ui->scrollArea->size());
     originH = VideoView->rect();
     this->ui->scrollArea->setStyleSheet("background-color: black;");
@@ -150,12 +149,14 @@ void QtVsPlayer::showEvent(QShowEvent *event)
     foreach (QWidget *var, widgets) {
         var->setMouseTracking(true);
     }*/
+    WVideoCtrls->activateWindow();
+    WVideoCtrls->raise();
+    this->centralWidget()->lower();
+    this->centralWidget()->stackUnder(WVideoCtrls);
 }
 
 QtVsPlayer::~QtVsPlayer()
 {
-    //playm4interface::FreePort();
-    /*playm4interface::~playm4interface();*/
     if (filesLs != NULL)
     {
         delete filesLs;
@@ -622,22 +623,24 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
         ui->scrollArea->verticalScrollBar()->setValue(p.y());
         }*/
 
-    foreach (QWidget *Widg,  QtVsPlayer::findChildren<QWidget *>()) {
+    /*foreach (QWidget *Widg,  QtVsPlayer::findChildren<QWidget *>()) {
         if (Widg->isFullScreen())
             qDebug() << Widg->objectName() << Widg->isFullScreen();
-    }
+    }*/
     if (event and
             !this->ui->actionMasquer_les_controles->isChecked() and
             WVideoCtrls->isHidden() and
             this->ui->actionAuto_hide_controls->isChecked()) {
-        qDebug() << "QtVsPlayer::isFullScreen" << QtVsPlayer::isFullScreen();
+
         if(!Zoomed and Fullscr == false)
             ui->statusbar->setVisible(true);
-        WVideoCtrls->show();
-        WVideoCtrls->activateWindow();
-        WVideoCtrls->raise();
-        /*this->centralWidget()->lower();
-        this->centralWidget()->stackUnder(WVideoCtrls);*/
+        if (!WVideoCtrls->isVisible()) {
+            WVideoCtrls->setVisible(true);
+            WVideoCtrls->activateWindow();
+            WVideoCtrls->raise();
+            this->centralWidget()->lower();
+            this->centralWidget()->stackUnder(WVideoCtrls);
+        }
     }
 
     if (QtVsPlayer::cursor() == Qt::BlankCursor) {

@@ -14,6 +14,9 @@
   <property name="mouseTracking">
    <bool>true</bool>
   </property>
+  <property name="tabletTracking">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>QtVsPlayer</string>
   </property>
@@ -241,7 +244,13 @@
      <height>34</height>
     </rect>
    </property>
+   <property name="mouseTracking">
+    <bool>false</bool>
+   </property>
    <widget class="QMenu" name="menuFichiers">
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>File</string>
     </property>
@@ -250,6 +259,9 @@
     <addaction name="actionRtsp_Play"/>
    </widget>
    <widget class="QMenu" name="menuAide">
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>Help</string>
     </property>
@@ -258,10 +270,16 @@
     <addaction name="actionOnline_documentation"/>
    </widget>
    <widget class="QMenu" name="menuAffichage">
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>Display</string>
     </property>
     <widget class="QMenu" name="menuVCA_Info_Overlay">
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
      <property name="title">
       <string>VCA Info Overlay</string>
      </property>

@@ -28,6 +28,9 @@
   <property name="windowOpacity">
    <double>0.000000000000000</double>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
+  </property>
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
