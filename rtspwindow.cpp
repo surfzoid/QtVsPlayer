@@ -112,7 +112,7 @@ void RtspWindow::showEvent(QShowEvent *event)
     QList<QWidget *> widgets = RtspWindow::findChildren<QWidget *>();
     foreach (QWidget *var, widgets) {
         //qDebug() << var->objectName() << var->hasMouseTracking() << var->size();
-        if(var->size() == videoWidget->size())
+        if(event and var->size() == videoWidget->size())
             var->setMouseTracking(true);
     }
 }

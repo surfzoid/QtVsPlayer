@@ -9,21 +9,23 @@ PanTilCmd::PanTilCmd(QWidget *parent) :
     ui(new Ui::PanTilCmd)
 {
     ui->setupUi(this);
-    /*setStyleSheet("background-color: rgba(0,0,0,0)");
-//setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-    setPalette(Qt::transparent);
-    setAttribute( Qt::WA_TranslucentBackground, true );
-    setAttribute( Qt::WA_OpaquePaintEvent, true );
-    setAttribute(Qt::WA_NoSystemBackground);
-    setAttribute(Qt::WA_PaintOnScreen);
 
-    setAttribute(Qt::WA_TransparentForMouseEvents);
-    setWindowOpacity(0.1);*/
-    ui->BtnTopLeft->setWindowOpacity(0.1);
-    ui->BtnTopLeft->setAttribute(Qt::WA_TranslucentBackground, true);
-    resize(ui->PanTilLayout->sizeHint());
+    resize(120,120);
+    ui->PanTilLayout->setGeometry(rect());
+    ui->gridLayoutWidget->setSizePolicy(QSizePolicy::Expanding , QSizePolicy::Expanding);
+    ui->gridLayoutWidget->setGeometry(rect());
     setAttribute(Qt::WA_TranslucentBackground, true);
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::SplashScreen | Qt::FramelessWindowHint);
+
+    ui->BtnTopLeft->setStyleSheet("QPushButton{background: transparent;}");
+    ui->BtnUp->setStyleSheet("QPushButton{background: transparent;}");
+    ui->BtnTopRight->setStyleSheet("QPushButton{background: transparent;}");
+    ui->BtnRight->setStyleSheet("QPushButton{background: transparent;}");
+    ui->BtBottomRight->setStyleSheet("QPushButton{background: transparent;}");
+    ui->BtnDown->setStyleSheet("QPushButton{background: transparent;}");
+    ui->BtnBottomLeft->setStyleSheet("QPushButton{background: transparent;}");
+    ui->BtnLeft->setStyleSheet("QPushButton{background: transparent;}");
+    ui->BtnMove->setStyleSheet("QPushButton{background: transparent;}");
 
     //there is a ghost widget!!!!!!
     QList<QWidget *> widgets = PanTilCmd::findChildren<QWidget *>();
@@ -111,9 +113,9 @@ void PanTilCmd::mouseMoveEvent(QMouseEvent *event)
 {
     if (MoveWind && event) {
 
-        QPoint p = parentWidget()->mapFromGlobal(QCursor::pos());
-
-        this->move(p.x()-40,p.y()-40);
+        QPoint p = QCursor::pos();
+        //if (ui->BtnMove->underMouse())
+            this->move(p.x()-60,p.y()-60);
         repaint();
     }
 }

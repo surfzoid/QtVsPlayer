@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>80</width>
-    <height>80</height>
+    <width>418</width>
+    <height>483</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="mouseTracking">
    <bool>true</bool>
@@ -19,16 +25,25 @@
   <property name="windowTitle">
    <string/>
   </property>
+  <property name="windowOpacity">
+   <double>0.000000000000000</double>
+  </property>
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>82</width>
-     <height>82</height>
+     <width>146</width>
+     <height>146</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="PanTilLayout">
+   <layout class="QGridLayout" name="PanTilLayout" rowstretch="40,40,40" columnstretch="40,40,40">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetNoConstraint</enum>
+    </property>
+    <property name="spacing">
+     <number>12</number>
+    </property>
     <item row="2" column="1">
      <widget class="QPushButton" name="BtnDown">
       <property name="sizePolicy">
@@ -39,8 +54,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>22</width>
-        <height>22</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -77,8 +92,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>22</width>
-        <height>22</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -115,8 +130,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>22</width>
-        <height>22</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -153,8 +168,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>22</width>
-        <height>22</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -191,8 +206,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>22</width>
-        <height>22</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -226,8 +241,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>22</width>
-        <height>22</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -264,8 +279,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>22</width>
-        <height>22</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -302,8 +317,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>22</width>
-        <height>22</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -311,6 +326,77 @@
         <width>22</width>
         <height>22</height>
        </size>
+      </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Text">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>85</red>
+            <green>85</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="128">
+            <red>85</red>
+            <green>85</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Text">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>85</red>
+            <green>85</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="128">
+            <red>85</red>
+            <green>85</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Text">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="128">
+            <red>46</red>
+            <green>52</green>
+            <blue>54</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
       </property>
       <property name="mouseTracking">
        <bool>true</bool>
@@ -336,8 +422,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>22</width>
-        <height>22</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
       <property name="maximumSize">

@@ -36,14 +36,20 @@
      inkscape:window-width="1280"
      inkscape:window-height="922"
      id="namedview106"
-     showgrid="false"
+     showgrid="true"
      inkscape:zoom="32.090909"
      inkscape:cx="11"
      inkscape:cy="11"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg104" />
+     inkscape:current-layer="svg104"
+     inkscape:document-rotation="0"
+     inkscape:snap-object-midpoints="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid18" />
+  </sodipodi:namedview>
   <defs
      id="defs3051">
     <style
@@ -54,9 +60,23 @@
       }
       </style>
   </defs>
-  <path
-     style="fill:currentColor;fill-opacity:1;stroke:none"
-     d="m 19,19 v -1 -2 h -1 v 2 h -2 v 1 h 2 z M 6,19 V 18 H 4 V 16 H 3 v 2 1 H 4 Z M 9.714844,14.675781 11.517578,12.875 13.392578,11 11.517578,9.125 9.714844,7.324219 9.007812,8.03125 10.810547,9.832031 11.978516,11 10.810547,12.167969 9.007812,13.96875 Z M 19,6 V 4 3 h -3 v 1 h 2 V 6 Z M 4,6 V 4 H 6 V 3 H 3 v 3 z"
-     class="ColorScheme-Text"
-     id="path102" />
+  <g
+     id="g17"
+     transform="matrix(-1,0,0,1,21.989229,-5e-7)">
+    <path
+       style="fill:#ff0000;stroke-width:0.0697872"
+       d="M 7.20237,15.000064 3,11.000124 7.203406,7.000063 11.406812,3 l 0.785504,0.749911 0.785503,0.74991 -3.415045,3.250191 -1.126111,3.250544 1.12643,3.250672 3.415366,3.251023 -0.78686,0.748876 -0.786859,0.748874 z"
+       id="path8"
+       sodipodi:nodetypes="ccccccccccccc" />
+    <path
+       style="fill:#ff0000;stroke-width:0.0311615"
+       d="M 3.0339944,9.529745 5.0000002,10 4.5141643,8.0339942 H 5.9943342 V 8.5169971 9 H 4.9971672 4.0000001 v 1.012748 1.012748 H 3.5169973 3.0339944 Z"
+       id="path10"
+       sodipodi:nodetypes="ccccccccccccc" />
+    <path
+       style="fill:#ff0000;stroke-width:0.0311615"
+       d="m 3.0339943,12.470255 v -1.495751 h 0.483003 0.483003 V 11.987252 13 h 0.997167 0.997167 v 0.483003 0.483003 h -1.48017 L 5.0000003,12 Z"
+       id="path12"
+       sodipodi:nodetypes="ccccccccccccc" />
+  </g>
 </svg>
