@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.31
+Version:        1.0.32
 Release:        %mkrel 2
 License:        GPLv3
 Group:          Video/Players
@@ -59,6 +59,10 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/libSuperRender.so
 
 %changelog
+* Tue Jan 17 2023 surfzoid@gmail.com
+- Full screen bug.
++ Better pan tilt window command.
+
 * Tue Jan 17 2023 surfzoid@gmail.com
 + ptz command more accurate.
 + Use scrollbars to move zoomed video rather mouse.
