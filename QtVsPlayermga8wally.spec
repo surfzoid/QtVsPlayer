@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.20
+Version:        1.0.32
 Release:        %mkrel 2
 License:        GPLv3
 Group:          Video/Players
@@ -52,6 +52,56 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libSuperRender.so
 
 %changelog
+* Tue Jan 17 2023 surfzoid@gmail.com
+- Full screen bug.
++ Better pan tilt window command.
+
+* Tue Jan 17 2023 surfzoid@gmail.com
++ ptz command more accurate.
++ Use scrollbars to move zoomed video rather mouse.
++ Prefer Widget rather CentralWidget to play video.
++ RtspPlayer: cosmetic and auto hide menu.
++ Save RtspPlayer windows size and position in settings.
+
+* Tue Jan 10 2023 surfzoid@gmail.com
++ Pressets are loaded and saved from/to the device.
++ Encrypt password in settings.
++ Save video controls position in settings.
++ Save Main window size and position in settings.
++ Save display menu items state in settings.
+
+* Thu Dec 15 2022 surfzoid@gmail.com
++ Manage VCA displayed.
+
+* Mon Dec 12 2022 surfzoid@gmail.com
++ Audio and Video decoder callback work together!
+
+* Thu Dec 8 2022 surfzoid@gmail.com
++ Another callback worarround.
++ Audio mute button.
+
+* Mon Dec 5 2022 surfzoid@gmail.com
++ Regession bug in DBus get file instance.
++ Various typo corections.
++ More verbose info in the console.
++ Prevent crash when clickinfo
+
+* Thu Dec 1 2022 surfzoid@gmail.com
++ Always hell of callbacks
+
+* Mon Nov 28 2022 surfzoid@gmail.com
++ Display video infos in the terminal
+
+* Wed Nov 23 2022 surfzoid@gmail.com
++ Regression bug.
++ Don't pause when move slide.
++ Mac support.
+
+* Wed Nov 9 2022 surfzoid@gmail.com
++ RTSP Video resolution info.
++ MS Windows support.
++ Add a github PPA(see README.md).
+
 * Sat Oct 1 2022 surfzoid@gmail.com
 + Use DBus for single instance.
 

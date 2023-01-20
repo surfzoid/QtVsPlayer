@@ -5,7 +5,7 @@ QT       += core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11 shared
+CONFIG += c++11 shared  warn_off
 OUTPUT += Console
 # Specifies name of the binary.
 TARGET = QtVsPlayer
@@ -69,7 +69,7 @@ unix:!macx:!android: {
 CONFIG += force_debug_info
 # INCLUDEPATH += lib
 # DEPENDPATH += lib
-LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=lib/$$QMAKE_HOST.arch:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
+LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=lib/$$QMAKE_HOST.arch:./ -lPlayCtrl -lAudioRender -lSuperRender
 }
 
 macx: {
