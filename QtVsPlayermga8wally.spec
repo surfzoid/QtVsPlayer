@@ -6,7 +6,7 @@ License:        GPLv3
 Group:          Video/Players
 URL:            https://github.com/surfzoid/QtVsPlayer
 Source0:        https://github.com/surfzoid/QtVsPlayer/archive/%{version}/%{name}-%{version}.tar.gz
-Patch1:         QtVsPlayer-fix.patch
+#Patch1:         QtVsPlayer-fix.patch
 # List of additional build dependencies
 BuildRequires:  pkgconfig(Qt5Multimedia)
 BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
@@ -24,7 +24,7 @@ https://www.hikvision.com/content/dam/hikvision/en/support/download/sdk/device-n
 Licences are in the doc dir.
  
 %prep
-%autosetup -p1 -n %{name}-%{version}
+%autosetup -n %{name}-%{version}
  
 %build
 %qmake_qt5

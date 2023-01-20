@@ -5,7 +5,7 @@ QT       += core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11 shared  warn_off
+CONFIG += c++11 shared warn_off
 OUTPUT += Console
 # Specifies name of the binary.
 TARGET = QtVsPlayer
@@ -34,7 +34,7 @@ unix {
     isEmpty(PREFIX) {
         #PREFIX = $$(HOME)/.local/share
         PREFIX = /usr/share
-    }
+        }
 
     shortcutfiles.path = $$(PREFIX)/applications/
     shortcutfiles.files = $$PWD/QtVsPlayer.desktop
@@ -43,8 +43,8 @@ unix {
     #INSTALLS += shortcutfiles
     #INSTALLS += iconfiles
     #For Mageia, adjust
-    libfiles.path = $$(PREFIX)/../lib64
-    libfiles.files += $$PWD/lib/$$QMAKE_HOST.arch/*
+    libfiles.path = $$(PREFIX)/../lib64/QtVsPlayer
+    libfiles.files += $$PWD/lib/$$QMAKE_HOST.arch/*.so
     translationfiles.path = $$(PREFIX)/QtVsPlayer/translations
     translationfiles.files += $$PWD/*.qm
     docfiles.path = $$(PREFIX)/doc/QtVsPlayer
@@ -58,10 +58,10 @@ unix {
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}
-else: unix:!android: target.path = $$(PREFIX)/../bin #/opt/$${TARGET}
+else: unix:!android: target.path = $$(PREFIX)/../bin
 target.files += $${TARGET}
 debugfiles.path = $$(PREFIX)/../lib/debug/usr/bin
-debugfiles.files = $${TARGET}.debug
+#debugfiles.files = $${TARGET}.debug
 !isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles debugfiles docfiles licfiles
 
 unix:!macx:!android: {
@@ -69,7 +69,7 @@ unix:!macx:!android: {
 CONFIG += force_debug_info
 # INCLUDEPATH += lib
 # DEPENDPATH += lib
-LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=lib/$$QMAKE_HOST.arch:./ -lPlayCtrl -lAudioRender -lSuperRender
+LIBS += -Llib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer -lPlayCtrl -lAudioRender -lSuperRender
 }
 
 macx: {
@@ -153,7 +153,9 @@ DISTFILES += \
 
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
+win32: {
+CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
 INCLUDEPATH += $$PWD/lib/w86_64
 DEPENDPATH += $$PWD/lib/w86_64
+}
