@@ -111,6 +111,8 @@ void PanTilCmd::on_BtnMove_pressed()
 
 void PanTilCmd::mouseMoveEvent(QMouseEvent *event)
 {
+    setFocus();
+    raise();
     if (MoveWind && event) {
 
         QPoint p = QCursor::pos();

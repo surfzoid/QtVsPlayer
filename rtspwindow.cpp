@@ -117,11 +117,16 @@ void RtspWindow::showEvent(QShowEvent *event)
     }
 }
 
+void RtspWindow::hideEvent(QHideEvent *event)
+{
+    if(event)
+        PTCmd->hide();
+}
+
 RtspWindow::~RtspWindow()
 {
 
     if (videoWidget != NULL) {
-        //delete videoWidget;
         videoWidget->~QVideoWidget();
     }
 
@@ -1028,8 +1033,8 @@ void RtspWindow::PanTilLeft_pressed()
 void RtspWindow::SendPTZ(int pan, int tilt, int zoom)
 {
     QUrl PanTilAdresse("http://" + CamUser + ":" + CamPass +
-                 "@" + CamIp + ":" + CamPortHttp +
-                 "/ISAPI/PTZCtrl/channels/1/Momentary");
+                       "@" + CamIp + ":" + CamPortHttp +
+                       "/ISAPI/PTZCtrl/channels/1/Momentary");
     manager->put((QNetworkRequest)PanTilAdresse,
                  SetXMLReq(pan,tilt,zoom).toUtf8());
 

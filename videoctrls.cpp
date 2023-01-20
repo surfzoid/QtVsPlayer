@@ -9,7 +9,7 @@ bool VideoCtrls::PLast = false;
 int VideoCtrls::HikNumPort = -1;
 int VideoCtrls::seekSpeed = 0;
 int VideoCtrls::Duration = 0;
-bool VideoCtrls::AutoHide = true;
+bool VideoCtrls::AutoHide = false;
 //QString VideoCtrls::picturepathname = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/PlayBackPictureDir/";
 static QString PicPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/";
 static bool IsSnapShoot = false;
@@ -49,6 +49,16 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
     }
 }
 
+void VideoCtrls::hideEvent(QHideEvent *event)
+{
+    if(event and !AutoHide)
+    {
+        setVisible(true);
+        activateWindow();
+        raise();
+    }
+}
+
 VideoCtrls::~VideoCtrls()
 {
     if (m_pbqtimer != NULL)
@@ -73,6 +83,7 @@ void VideoCtrls::InitTimeSlide()
 
 void VideoCtrls::mouseMoveEvent(QMouseEvent *event)
 {
+    setFocus();
     if (event->buttons() == Qt::MiddleButton) {
         QPoint Memo = event->pos();
         //move(event->pos() + pos());
@@ -382,7 +393,7 @@ void VideoCtrls::on_TimeSlider_sliderReleased()
 }
 void VideoCtrls::focusOutEvent(QFocusEvent *)
 {
-    if (AutoHide)hide();
+    //if (AutoHide)hide();
 }
 
 void VideoCtrls::on_Audio_released()

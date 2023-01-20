@@ -25,7 +25,7 @@ class QtVsPlayer : public QMainWindow
 public:
     QtVsPlayer(QWidget *parent = nullptr);
     ~QtVsPlayer();
-    static QWidget *VideoView;
+    static QVideoWidget *VideoView;
     void KeyPress(QWidget *parent = 0);
     //playm4interface *nPlaym4Interface;
     void FullScr();
@@ -38,10 +38,7 @@ public:
     static void PlayNextFile(bool FromFsList, int idx);
     static void WinIdWorkarround();
     static QStringList fileNames;
-    //void paintEvent(QPaintEvent* event) override;
 
-    void Zoom(qreal Scale);
-    void Rotation(qreal Angle);
     static void LoadCursor(bool Loading);
 
 private slots:
@@ -117,8 +114,7 @@ private:
     static void DisplayFsName(QString Name);
 
     static QWidget  *GetWidgetByName(QString Name);
-    //timer for play-process
-    QTimer *ShowHideTimer;
+
 /*signals:
 static void  FsChanged();*/
     void VCASwitch(QString Name, int Info, bool IsActive);

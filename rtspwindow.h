@@ -153,6 +153,7 @@ protected:
     void keyPressEvent(QKeyEvent *e) override;
     void resizeEvent(QResizeEvent *event) override;
     void showEvent(QShowEvent *event) override;
+    void hideEvent(QHideEvent *event) override;
 };
 
 #endif // RTSPWINDOW_H
