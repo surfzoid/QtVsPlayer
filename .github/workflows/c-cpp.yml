@@ -189,6 +189,8 @@ jobs:
             set -x
             rm -fr /tmp/work
             mkdir /tmp/work
+            mv .debpkg/usr/share/doc/QtVsPlayer .debpkg/usr/share/doc/QtVsPlayer-${{ steps.version.outputs.version }}
+            mv .debpkg/usr/share/licenses/QtVsPlayer .debpkg/usr/share/licenses/QtVsPlayer-${{ steps.version.outputs.version }}
             cp -rp .debpkg /tmp/work/QtVsPlayer-${{ steps.version.outputs.version }}
             mkdir -p ~/rpmbuild/{SRPMS,SOURCES,SPECS,tmp}
             cp -pf QtVsPlayermga8wally.spec ~/rpmbuild/SPECS
