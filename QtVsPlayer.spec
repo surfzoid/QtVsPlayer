@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.32
+Version:        1.0.33
 Release:        %mkrel 2
 License:        GPLv3
 Group:          Video/Players
