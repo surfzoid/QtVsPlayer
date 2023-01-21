@@ -12,6 +12,7 @@ BuildRequires:  pkgconfig(Qt5Multimedia)
 BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
 BuildRequires:  qtbase5-common-devel
 BuildRequires:  pkgconfig(Qt5OpenGL)
+BuildRequires: chrpath
  
 %description
 QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.
@@ -33,6 +34,9 @@ Licences are in the doc dir.
 %install
 %make_install INSTALL_ROOT=%{buildroot}%{_datadir}
 mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
+chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libAudioRender.so
+chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libPlayCtrl.so
+chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
 
 %clean
 rm -rf %buildroot
@@ -51,7 +55,6 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libAudioRender.so
 %{_libdir}/QtVsPlayer/libPlayCtrl.so
 %{_libdir}/QtVsPlayer/libSuperRender.so
-%{_libdir}/QtVsPlayer/libStreamTransClient.so
 
 %changelog
 * Tue Jan 17 2023 surfzoid@gmail.com

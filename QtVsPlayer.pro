@@ -66,7 +66,7 @@ debugfiles.files = $${TARGET}.debug
 
 unix:!macx:!android: {
 # CONFIG += force_debug_info
-LIBS += -Llib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer -lPlayCtrl -lAudioRender -lSuperRender -lStreamTransClient
+LIBS += -Llib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer -lPlayCtrl -lAudioRender -lSuperRender
 }
 
 macx: {
