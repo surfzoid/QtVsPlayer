@@ -14,7 +14,7 @@ BuildRequires:  pkgconfig(Qt5OpenGL)
 BuildRequires: chrpath
  
 %description
-QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.
+QtVsPlayer can read local video files of Hikvision and display blue, green and red vectors.
 This is the end of an full network backup solution in combination with HikNetExtractor.
 https://github.com/surfzoid/HikNetExtractor
  
