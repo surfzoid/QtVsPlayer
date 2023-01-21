@@ -201,7 +201,7 @@ jobs:
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%make_build/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
-            sed -i 's/\(make_install\).*/\1\ncp -fr %{_builddir}\/QtVsPlayer\/* %{buildroot}/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i 's/\(make_install\).*/\1\ncp -fr %{_builddir}\/QtVsPlayer-${{ steps.version.outputs.version }}\/* %{buildroot}/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%make_install/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^rm -rf %{buildroot}%{_datadir}/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             cd /tmp/work
