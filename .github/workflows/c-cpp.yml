@@ -189,7 +189,7 @@ jobs:
             set -x
             rm -fr /tmp/work
             mkdir /tmp/work
-            cp -rp .debpkg /tmp/work/QtVsPlayer
+            cp -rp .debpkg /tmp/work/QtVsPlayer-${{ steps.version.outputs.version }}
             mkdir -p ~/rpmbuild/{SRPMS,SOURCES,SPECS,tmp}
             cp -pf QtVsPlayermga8wally.spec ~/rpmbuild/SPECS
             cp -pf QtVsPlayer-fix.patch ~/rpmbuild/SPECS
@@ -203,7 +203,7 @@ jobs:
             sed -i '/^%make_install/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^rm -rf %{buildroot}%{_datadir}/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             cd /tmp/work
-            tar czf tmp.tar.gz QtVsPlayer/
+            tar czf tmp.tar.gz QtVsPlayer-${{ steps.version.outputs.version }}/
             mv tmp.tar.gz ~/rpmbuild/SOURCES
             rpmbuild -bb ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             cp -f ~/rpmbuild/RPMS/aarch64/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
