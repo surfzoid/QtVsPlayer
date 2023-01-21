@@ -33,8 +33,6 @@ Licences are in the doc dir.
 %install
 %make_install INSTALL_ROOT=%{buildroot}%{_datadir}
 mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
-rm -f %{buildroot}%{_libdir}/*.dylib
-mv %{buildroot}%{_libdir}/*.so %{buildroot}%{_libdir}/QtVsPlayer/
 
 %clean
 rm -rf %buildroot

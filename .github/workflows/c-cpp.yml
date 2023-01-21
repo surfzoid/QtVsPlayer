@@ -142,9 +142,7 @@ jobs:
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
             echo "echo postinst" > .debpkg/DEBIAN/postinst
-            echo "ln /usr/lib64/libAudioRender.so /usr/lib/" >> .debpkg/DEBIAN/postinst
-            echo "ln /usr/lib64/libPlayCtrl.so /usr/lib/" >> .debpkg/DEBIAN/postinst
-            echo "ln /usr/lib64/libSuperRender.so /usr/lib/" >> .debpkg/DEBIAN/postinst
+            echo "ln -s /usr/lib64/QtVsPlayer /usr/lib/" >> .debpkg/DEBIAN/postinst
             chmod +x .debpkg/DEBIAN/postinst
             echo -e "Automatic build from GitHub action, see QtVsPlayermga8wally.spec for change log" > CHANGELOG
             #perl -i -pe 's/licenses\/QtVsPlayer/licenses\/QtVsPlayer-\$\$VERSION/g;' QtVsPlayer.pro
