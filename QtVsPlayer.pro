@@ -34,7 +34,7 @@ unix {
     isEmpty(PREFIX) {
         #PREFIX = $$(HOME)/.local/share
         PREFIX = /usr/share
-        }
+    }
 
     shortcutfiles.path = $$(PREFIX)/applications/
     shortcutfiles.files = $$PWD/QtVsPlayer.desktop
@@ -58,17 +58,14 @@ unix {
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}
-else: unix:!android: target.path = $$(PREFIX)/../bin
+else: unix:!android: target.path = $$(PREFIX)/../bin #/opt/$${TARGET}
 target.files += $${TARGET}
 debugfiles.path = $$(PREFIX)/../lib/debug/usr/bin
-#debugfiles.files = $${TARGET}.debug
+debugfiles.files = $${TARGET}.debug
 !isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles debugfiles docfiles licfiles
 
 unix:!macx:!android: {
-#CONFIG += separate_debug_info
-CONFIG += force_debug_info
-# INCLUDEPATH += lib
-# DEPENDPATH += lib
+# CONFIG += force_debug_info
 LIBS += -Llib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer -lPlayCtrl -lAudioRender -lSuperRender
 }
 

@@ -32,6 +32,9 @@ Licences are in the doc dir.
  
 %install
 %make_install INSTALL_ROOT=%{buildroot}%{_datadir}
+mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
+rm -f %{buildroot}%{_libdir}/*.dylib
+mv %{buildroot}%{_libdir}/*.so %{buildroot}%{_libdir}/QtVsPlayer/
 
 %clean
 rm -rf %buildroot
@@ -50,6 +53,7 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libAudioRender.so
 %{_libdir}/QtVsPlayer/libPlayCtrl.so
 %{_libdir}/QtVsPlayer/libSuperRender.so
+%{_libdir}/QtVsPlayer/libStreamTransClient.so
 
 %changelog
 * Tue Jan 17 2023 surfzoid@gmail.com
