@@ -41,7 +41,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         FsOpened = false;
         m_pblocalportnum = -1;
     }
-    ENGINESUPPORT *pstEngineSupport;
+    //ENGINESUPPORT *pstEngineSupport;
     if (m_pblocalportnum == -1) {
 
         SetPort();
