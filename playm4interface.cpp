@@ -41,9 +41,16 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         FsOpened = false;
         m_pblocalportnum = -1;
     }
+    ENGINESUPPORT *pstEngineSupport;
     if (m_pblocalportnum == -1) {
 
         SetPort();
+        qDebug() << PlayM4_GetEngineSupport(m_pblocalportnum,pstEngineSupport);
+
+        qDebug() <<  PlayM4_GetDecodeEngine(m_pblocalportnum);
+        qDebug() << PlayM4_SetDecodeEngine(m_pblocalportnum, 1);
+
+        qDebug() <<  PlayM4_GetDecodeEngine(m_pblocalportnum);
     }
 
 
@@ -156,6 +163,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     }
     QtVsPlayer::LoadCursor(false);
     //emit DisplayError(PlayM4_GetLastError(m_pblocalportnum));
+
     return 0;//PlayM4_GetLastError(m_pblocalportnum);
 }
 

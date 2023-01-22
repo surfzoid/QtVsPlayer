@@ -101,9 +101,6 @@
    <property name="mouseTracking">
     <bool>true</bool>
    </property>
-   <property name="autoFillBackground">
-    <bool>true</bool>
-   </property>
    <widget class="QLabel" name="SatusLbl">
     <property name="geometry">
      <rect>
@@ -194,9 +191,6 @@
      <bool>true</bool>
     </property>
     <property name="tabletTracking">
-     <bool>true</bool>
-    </property>
-    <property name="autoFillBackground">
      <bool>true</bool>
     </property>
     <property name="frameShape">

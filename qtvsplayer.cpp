@@ -115,7 +115,6 @@ void QtVsPlayer::showEvent(QShowEvent *event)
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::black);
     VideoView = new QVideoWidget(this);
-    VideoView->setAutoFillBackground(true);
     VideoView->setPalette(pal);
     centralWidgetwinId = VideoView->winId();
     VideoView->setMouseTracking(true);
@@ -139,6 +138,7 @@ void QtVsPlayer::showEvent(QShowEvent *event)
     /*QList<QWidget *> widgets = QtVsPlayer::findChildren<QWidget *>();
     foreach (QWidget *var, widgets) {
         var->setMouseTracking(true);
+        var->setAutoFillBackground(true);
     }*/
 
     GetMenuItemState(ui->menuAffichage);
