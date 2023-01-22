@@ -566,19 +566,21 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
 {
     if (event and
             !this->ui->actionMasquer_les_controles->isChecked() and
-            WVideoCtrls->isHidden() and
             this->ui->actionAuto_hide_controls->isChecked()) {
+        QRect WVideoCtrlsRect(WVideoCtrls->mapToGlobal(WVideoCtrls->rect().topLeft()),WVideoCtrls->size());
+        QPoint Mp = mapFromGlobal(QCursor::pos());
+        if (WVideoCtrlsRect.contains(Mp)) {
 
-        if(!Zoomed and Fullscr == false)
-            ui->statusbar->setVisible(true);
-
-        WVideoCtrls->setVisible(true);
-        WVideoCtrls->activateWindow();
-        WVideoCtrls->raise();
-
+            if(!Zoomed and !Fullscr )
+                ui->statusbar->setVisible(true);
+            WVideoCtrls->setVisible(true);
+            WVideoCtrls->activateWindow();
+            WVideoCtrls->raise();
+        }else
+        {
+            WVideoCtrls->setVisible(false);
+        }
     }
-    if(!WVideoCtrls->underMouse() and
-            this->ui->actionAuto_hide_controls->isChecked())WVideoCtrls->setVisible(false);
 
     if (QtVsPlayer::cursor() == Qt::BlankCursor) {
         QtVsPlayer::unsetCursor();

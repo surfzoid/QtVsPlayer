@@ -38,6 +38,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;
     void focusOutEvent(QFocusEvent *) override;
     void hideEvent(QHideEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 
 private slots:
     void on_pauseButton_released();

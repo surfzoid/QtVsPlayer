@@ -47,16 +47,20 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
     foreach (QWidget *var, widgets) {
         var->setMouseTracking(true);
     }
+    setAttribute(Qt::WA_TranslucentBackground, true);
+    setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
 }
 
 void VideoCtrls::hideEvent(QHideEvent *event)
 {
-    if(event and !AutoHide)
-    {
-        setVisible(true);
-        activateWindow();
-        raise();
-    }
+    if(event)
+        return;
+}
+
+void VideoCtrls::showEvent(QShowEvent *event)
+{
+    if(event)
+        return;
 }
 
 VideoCtrls::~VideoCtrls()
@@ -83,7 +87,7 @@ void VideoCtrls::InitTimeSlide()
 
 void VideoCtrls::mouseMoveEvent(QMouseEvent *event)
 {
-    setFocus();
+    //setFocus();
     if (event->buttons() == Qt::MiddleButton) {
         QPoint Memo = event->pos();
         //move(event->pos() + pos());

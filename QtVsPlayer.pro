@@ -65,8 +65,9 @@ debugfiles.files = $${TARGET}.debug
 !isEmpty(target.path): INSTALLS += target shortcutfiles iconfiles libfiles translationfiles debugfiles docfiles licfiles
 
 unix:!macx:!android: {
-# CONFIG += force_debug_info
-LIBS += -Llib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer -lPlayCtrl -lAudioRender -lSuperRender
+INCLUDEPATH += $$PWD/lib/$$QMAKE_HOST.arch/
+DEPENDPATH += $$PWD/lib/$$QMAKE_HOST.arch/
+LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer -lPlayCtrl -lAudioRender -lSuperRender
 }
 
 macx: {
