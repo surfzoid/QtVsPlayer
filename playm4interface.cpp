@@ -47,10 +47,10 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         SetPort();
         qDebug() << PlayM4_GetEngineSupport(m_pblocalportnum,pstEngineSupport);
 
-        qDebug() <<  PlayM4_GetDecodeEngine(m_pblocalportnum);
+        /*qDebug() <<  PlayM4_GetDecodeEngine(m_pblocalportnum);
         qDebug() << PlayM4_SetDecodeEngine(m_pblocalportnum, 1);
 
-        qDebug() <<  PlayM4_GetDecodeEngine(m_pblocalportnum);
+        qDebug() <<  PlayM4_GetDecodeEngine(m_pblocalportnum);*/
     }
 
 
