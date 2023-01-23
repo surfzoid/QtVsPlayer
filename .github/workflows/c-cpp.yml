@@ -24,7 +24,7 @@ jobs:
             mkdir -p .debpkg/DEBIAN
             echo "echo postinst" > .debpkg/DEBIAN/postinst
             echo "ln -s /usr/lib64/QtVsPlayer /usr/lib/" >> .debpkg/DEBIAN/postinst
-            echo "ln -s $(whereis "libopenal.so.1"| cut -d ' ' -f 2-) /usr/lib64/QtVsPlayer/" >> .debpkg/DEBIAN/postinst
+            echo "ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer/" >> .debpkg/DEBIAN/postinst
             chmod +x .debpkg/DEBIAN/postinst
             echo -e "Automatic build from GitHub action, see QtVsPlayermga8wally.spec for change log" > CHANGELOG
 
@@ -57,7 +57,9 @@ jobs:
           depends: 'libqt5multimedia5, libqt5multimediawidgets5' #libc6 (>= 2.2.1),
           desc: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
       - name: del DEBIAN
-        run: sudo rm -fr .debpkg/DEBIAN
+        run: |
+          sudo rm -fr .debpkg/DEBIAN
+          ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") .debpkg//usr/lib64/QtVsPlayer/
 
       - uses: jiro4989/build-rpm-action@v2
         with:
@@ -142,7 +144,7 @@ jobs:
             mkdir -p .debpkg/DEBIAN
             echo "echo postinst" > .debpkg/DEBIAN/postinst
             echo "ln -s /usr/lib64/QtVsPlayer /usr/lib/" >> .debpkg/DEBIAN/postinst
-            echo "ln -s $(whereis "libopenal.so.1"| cut -d ' ' -f 2-) /usr/lib64/QtVsPlayer/" >> .debpkg/DEBIAN/postinst
+            echo "ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer/" >> .debpkg/DEBIAN/postinst
             chmod +x .debpkg/DEBIAN/postinst
             echo -e "Automatic build from GitHub action, see QtVsPlayermga8wally.spec for change log" > CHANGELOG
             #perl -i -pe 's/licenses\/QtVsPlayer/licenses\/QtVsPlayer-\$\$VERSION/g;' QtVsPlayer.pro
