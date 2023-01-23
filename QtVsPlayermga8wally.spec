@@ -36,7 +36,8 @@ mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libAudioRender.so
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libPlayCtrl.so
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
-
+ln -s /usr/lib64/libopenal.so.1 /usr/lib64/QtVsPlayer/
+ 
 %clean
 rm -rf %buildroot
 chmod -R ug+rw %{_rpmdir}
