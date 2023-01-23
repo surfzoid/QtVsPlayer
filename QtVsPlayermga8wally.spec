@@ -55,6 +55,7 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libAudioRender.so
 %{_libdir}/QtVsPlayer/libPlayCtrl.so
 %{_libdir}/QtVsPlayer/libSuperRender.so
+%{_libdir}/QtVsPlayer/libopenal.so.1
 
 %changelog
 * Tue Jan 17 2023 surfzoid@gmail.com

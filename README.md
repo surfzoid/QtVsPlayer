@@ -1,3 +1,5 @@
+[![CI](https://github.com/surfzoid/QtVsPlayer/actions/workflows/c-cpp.yml/badge.svg?event=release)](https://github.com/surfzoid/QtVsPlayer/actions/workflows/c-cpp.yml)
+
 # HELP WANTED, i'm alone and pretty old, QtVsPlayer need almost feedback, translator, and so on, i wrote QTVsPlayer because after years of search i didn't find anything for Linux, normaly with Windows dll, QtVsPlayer should be able to compile under Windows.  
 
 # QtVsPlayer for Hikvision.
