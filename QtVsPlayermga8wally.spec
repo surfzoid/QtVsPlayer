@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.33
+Version:        1.0.34
 Release:        %mkrel 2
 License:        GPLv3
 Group:          Video/Players
@@ -59,6 +59,9 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libSuperRender.so
 
 %changelog
+* Mon Jan 23 2023 surfzoid@gmail.com
++ Make links to libopenal and provide sound.
+
 * Tue Jan 17 2023 surfzoid@gmail.com
 - Full screen bug.
 + Better pan tilt window command.
