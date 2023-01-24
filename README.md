@@ -1,7 +1,6 @@
-[![CI](https://github.com/surfzoid/QtVsPlayer/actions/workflows/c-cpp.yml/badge.svg?event=release)](https://github.com/surfzoid/QtVsPlayer/actions/workflows/c-cpp.yml)
 [![CI](https://github.com/surfzoid/QtVsPlayer/workflows/CI/badge.svg)](https://github.com/surfzoid/QtVsPlayer/actions/workflows/c-cpp.yml)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/surfzoid/QtVsPlayer?logo=github&sort=semver)](https://github.com/surfzoid/QtVsPlayer/releases)
-![Download Releases](https://img.shields.io/github/downloads/surfzoid/QtVsPlayer/latest/total.svg?style=plastic)
+[![Download Releases](https://img.shields.io/github/downloads/surfzoid/QtVsPlayer/latest/total.svg?style=plastic)](https://github.com/surfzoid/QtVsPlayer/releases)
 
 
 # HELP WANTED, i'm alone and pretty old, QtVsPlayer need almost feedback, translator, and so on, i wrote QTVsPlayer because after years of search i didn't find anything for Linux, normaly with Windows dll, QtVsPlayer should be able to compile under Windows.  
