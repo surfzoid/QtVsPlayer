@@ -44,6 +44,18 @@ if [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
 fi
 ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer/
 
+%preun
+if [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
+ then
+    rm -fr /usr/lib64/QtVsPlayer/libopenal.so.1
+fi
+
+%postun
+if [ -d "/usr/lib64/QtVsPlayer" ];
+then
+    rm -fr /usr/lib64/QtVsPlayer
+fi
+
 %clean
 rm -rf %buildroot
 chmod -R ug+rw %{_rpmdir}
