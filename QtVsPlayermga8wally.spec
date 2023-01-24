@@ -38,6 +38,10 @@ chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libPlayCtrl.so
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
 
 %post
+if [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
+ then
+    rm -fr /usr/lib64/QtVsPlayer/libopenal.so.1
+fi
 ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer/
 
 %clean

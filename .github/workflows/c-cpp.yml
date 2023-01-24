@@ -22,9 +22,12 @@ jobs:
             mkdir -p .debpkg
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
-            echo "echo postinst" > .debpkg/DEBIAN/postinst
-            echo "ln -s /usr/lib64/QtVsPlayer /usr/lib/" >> .debpkg/DEBIAN/postinst
             cat <<'EOF' > .debpkg/DEBIAN/postinst
+            if [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
+            then
+                rm -fr /usr/lib64/QtVsPlayer/libopenal.so.1
+            fi
+            ln -s /usr/lib64/QtVsPlayer /usr/lib/
             ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer
             EOF
             chmod +x .debpkg/DEBIAN/postinst
@@ -143,9 +146,12 @@ jobs:
             mkdir -p .debpkg
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
-            echo "echo postinst" > .debpkg/DEBIAN/postinst
-            echo "ln -s /usr/lib64/QtVsPlayer /usr/lib/" >> .debpkg/DEBIAN/postinst
             cat <<'EOF' > .debpkg/DEBIAN/postinst
+            if [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
+            then
+                rm -fr /usr/lib64/QtVsPlayer/libopenal.so.1
+            fi
+            ln -s /usr/lib64/QtVsPlayer /usr/lib/
             ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer
             EOF
             chmod +x .debpkg/DEBIAN/postinst
