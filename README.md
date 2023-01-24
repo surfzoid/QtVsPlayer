@@ -1,9 +1,9 @@
 [![CI](https://github.com/surfzoid/QtVsPlayer/actions/workflows/c-cpp.yml/badge.svg?event=release)](https://github.com/surfzoid/QtVsPlayer/actions/workflows/c-cpp.yml)
-[![Test](https://github.com/surfzoid/QtVsPlayer/workflows/Test/badge.svg)](https://github.com/surfzoid/QtVsPlayer/actions?query=workflow%3ATest)
-[![reviewdog](https://github.com/surfzoid/QtVsPlayer/workflows/reviewdog/badge.svg)](https://github.com/surfzoid/QtVsPlayer/actions?query=workflow%3Areviewdog)
-[![release](https://github.com/surfzoid/QtVsPlayer/workflows/release/badge.svg)](https://github.com/surfzoid/QtVsPlayer/actions?query=workflow%3Arelease)
+
+[![CI](https://github.com/surfzoid/QtVsPlayer/workflows/CI/badge.svg)](https://github.com/surfzoid/QtVsPlayer/actions/workflows/c-cpp.yml)
+
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/surfzoid/QtVsPlayer?logo=github&sort=semver)](https://github.com/surfzoid/QtVsPlayer/releases)
-[![action-bumpr supported](https://img.shields.io/badge/bumpr-supported-ff69b4?logo=github&link=https://github.com/haya14busa/action-bumpr)](https://github.com/haya14busa/action-bumpr)
+
 
 # HELP WANTED, i'm alone and pretty old, QtVsPlayer need almost feedback, translator, and so on, i wrote QTVsPlayer because after years of search i didn't find anything for Linux, normaly with Windows dll, QtVsPlayer should be able to compile under Windows.  
 
