@@ -75,7 +75,7 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libSuperRender.so
 
 %changelog
-* Mon Jan 25 2023 surfzoid@gmail.com
+* Wed Jan 25 2023 surfzoid@gmail.com
 + Finish missing translations.
 + Tool tip on sound volume slider.
 - bug in show/hide video controls.
