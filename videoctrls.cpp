@@ -371,6 +371,7 @@ void VideoCtrls::on_SnapshotButton_released()
 
 void VideoCtrls::on_SoudVolume_valueChanged(int value)
 {
+    ui->SoudVolume->setToolTip(tr("Sound ") + QString::number(value * 100/32768).toUtf8() + "%");
     playm4interface::SetVolume((unsigned short)value);
 }
 

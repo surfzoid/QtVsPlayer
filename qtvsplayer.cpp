@@ -568,8 +568,7 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
             !this->ui->actionMasquer_les_controles->isChecked() and
             this->ui->actionAuto_hide_controls->isChecked()) {
         QRect WVideoCtrlsRect(WVideoCtrls->mapToGlobal(WVideoCtrls->rect().topLeft()),WVideoCtrls->size());
-        QPoint Mp = mapFromGlobal(QCursor::pos());
-        if (WVideoCtrlsRect.contains(Mp)) {
+        if (WVideoCtrlsRect.contains(event->pos())) {
 
             if(!Zoomed and !Fullscr )
                 ui->statusbar->setVisible(true);

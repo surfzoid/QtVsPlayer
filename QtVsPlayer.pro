@@ -1,4 +1,4 @@
-VERSION = 1.0.34
+VERSION = 1.0.35
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT       += core gui multimedia multimediawidgets
 !android:QT       += dbus

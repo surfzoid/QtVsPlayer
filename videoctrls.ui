@@ -1082,6 +1082,9 @@
    <property name="tabletTracking">
     <bool>true</bool>
    </property>
+   <property name="toolTip">
+    <string>Sound 100%</string>
+   </property>
    <property name="maximum">
     <number>32768</number>
    </property>
