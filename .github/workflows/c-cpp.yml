@@ -75,7 +75,7 @@ jobs:
           desc: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
 
       - name: Publish PPA
-        uses: yuezk/publish-ppa-package@main
+        uses: yuezk/publish-ppa-package@v1.0.0
         with:
             repository: 'ppa:surfzoid/QtVsPlayer'
             gpg_private_key: ${{ secrets.PPA_GPG_PRIVATE_KEY }}
@@ -242,7 +242,7 @@ jobs:
             dpkg-deb -b .debpkg QtVsPlayer_${{ steps.version.outputs.version }}_`lsb_release -cs`-arm64.deb
 
       - name: Publish PPA
-        uses: yuezk/publish-ppa-package@main
+        uses: yuezk/publish-ppa-package@v1.0.0
         with:
             repository: 'ppa:surfzoid/QtVsPlayer'
             gpg_private_key: ${{ secrets.PPA_GPG_PRIVATE_KEY }}
