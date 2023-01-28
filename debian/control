@@ -1,0 +1,6 @@
+Package: qtvsplayer
+Version: 1.0.36
+Architecture: amd64
+Maintainer: surfzoid
+Description: QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.
+Source: qtvsplayer
