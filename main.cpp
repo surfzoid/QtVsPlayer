@@ -55,23 +55,29 @@ int main(int argc, char *argv[])
     bsuc = qtTranslator.load( QLocale(), QLatin1String("qt"), QLatin1String("_"),
                               QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 
+    //surpress warning!
+    if (bsuc == false ) {
+        //I'm happy for yu
+    }
+    //surpress warning!
+
     a.installTranslator(&qtTranslator);
 
     QTranslator myappTranslator;
     bsuc = myappTranslator.load(QLocale(), QLatin1String("QtVsPlayer"), QLatin1String("_"),
                                 "/usr/share/QtVsPlayer/translations");
-#if (defined(_WIN32))
-    bsuc = myappTranslator.load(QLocale(), QLatin1String("QtVsPlayer"), QLatin1String("_"),
-                                QCoreApplication::applicationDirPath());
-#endif
-
-    a.installTranslator(&myappTranslator);
 
     //surpress warning!
     if (bsuc == false ) {
         //I'm happy for yu
     }
     //surpress warning!
+#if (defined(_WIN32))
+    bsuc = myappTranslator.load(QLocale(), QLatin1String("QtVsPlayer"), QLatin1String("_"),
+                                QCoreApplication::applicationDirPath());
+#endif
+
+    a.installTranslator(&myappTranslator);
 
 
     //End Translation

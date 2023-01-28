@@ -111,6 +111,7 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 
 void QtVsPlayer::showEvent(QShowEvent *event)
 {
+    ui->actionQuit->setShortcut(Qt::ALT + Qt::Key_F4);
     //VideoView = new QDialog(this);
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::black);
@@ -938,4 +939,9 @@ void QtVsPlayer::LoadCursor(bool Loading)
     } else {
         QGuiApplication::restoreOverrideCursor();
     }
+}
+
+void QtVsPlayer::on_actionQuit_triggered()
+{
+    qApp->quit();
 }

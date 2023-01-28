@@ -19,6 +19,8 @@ jobs:
 
       - name: Prepare install dir
         run: |
+            sudo apt install -y rpm-common rpm 
+            rpmbuild --help
             mkdir -p .debpkg
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
@@ -85,6 +87,14 @@ jobs:
           version: ${{ steps.version.outputs.version }}
           arch: 'x86_64'
           desc: 'QtVsPlayer Hikvision .'
+          post: |
+            cat <<'EOF'
+            if [ -f "%{_libdir}/QtVsPlayer/libopenal.so.1" ];
+              then
+                rm -fr %{_libdir}/QtVsPlayer/libopenal.so.1
+            fi
+            ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") %{_libdir}/QtVsPlayer/``````````
+            EOF
 
       - name: Rename package with te good arch/distro
         run: |

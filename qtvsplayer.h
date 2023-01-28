@@ -87,6 +87,8 @@ private slots:
 
     void on_actionOnline_documentation_triggered();
 
+    void on_actionQuit_triggered();
+
 public slots:
 
 signals:

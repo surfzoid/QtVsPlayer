@@ -251,6 +251,8 @@
     <addaction name="actionOuvrir"/>
     <addaction name="actionDossier"/>
     <addaction name="actionRtsp_Play"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuAide">
     <property name="mouseTracking">
@@ -306,6 +308,9 @@
    <property name="text">
     <string>Open</string>
    </property>
+   <property name="shortcut">
+    <string>F3</string>
+   </property>
   </action>
   <action name="actionA_propos">
    <property name="text">
@@ -338,15 +343,24 @@
    <property name="text">
     <string>Playliste</string>
    </property>
+   <property name="shortcut">
+    <string>F8</string>
+   </property>
   </action>
   <action name="actionDossier">
    <property name="text">
     <string>Folder</string>
    </property>
+   <property name="shortcut">
+    <string>F4</string>
+   </property>
   </action>
   <action name="actionSettings">
    <property name="text">
     <string>Settings</string>
+   </property>
+   <property name="shortcut">
+    <string>F7</string>
    </property>
    <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>
@@ -355,6 +369,9 @@
   <action name="actionRtsp_Play">
    <property name="text">
     <string>Rtsp Play</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
    </property>
   </action>
   <action name="actionBeer_and_Coffee">
@@ -369,6 +386,9 @@
    <property name="text">
     <string>Infos</string>
    </property>
+   <property name="shortcut">
+    <string>F6</string>
+   </property>
   </action>
   <action name="actionAuto_hide_controls">
    <property name="checkable">
@@ -380,6 +400,9 @@
    <property name="text">
     <string>Auto hide controls</string>
    </property>
+   <property name="shortcut">
+    <string>F9</string>
+   </property>
   </action>
   <action name="actionVCA">
    <property name="checkable">
@@ -390,6 +413,9 @@
    </property>
    <property name="text">
     <string>VCA</string>
+   </property>
+   <property name="shortcut">
+    <string>F12</string>
    </property>
   </action>
   <action name="actionMotion_detection">
@@ -488,6 +514,17 @@
   <action name="actionOnline_documentation">
    <property name="text">
     <string>Online documentation</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
  </widget>

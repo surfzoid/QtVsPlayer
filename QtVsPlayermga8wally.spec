@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.35
+Version:        1.0.36
 Release:        %mkrel 2
 License:        GPLv3
 Group:          Video/Players
@@ -38,22 +38,16 @@ chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libPlayCtrl.so
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
 
 %post
-if [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
+if [ -f "%{_libdir}/QtVsPlayer/libopenal.so.1" ];
  then
-    rm -fr /usr/lib64/QtVsPlayer/libopenal.so.1
+    rm -fr %{_libdir}/QtVsPlayer/libopenal.so.1
 fi
-ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer/
+ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") %{_libdir}/QtVsPlayer/
 
 %preun
-if [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
+if [ -f "%{_libdir}/QtVsPlayer/libopenal.so.1" ];
  then
-    rm -fr /usr/lib64/QtVsPlayer/libopenal.so.1
-fi
-
-%postun
-if [ -d "/usr/lib64/QtVsPlayer" ];
-then
-    rm -fr /usr/lib64/QtVsPlayer
+    rm -fr %{_libdir}/QtVsPlayer/libopenal.so.1
 fi
 
 %clean
@@ -75,6 +69,13 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libSuperRender.so
 
 %changelog
+* Sat Jan 28 2023 surfzoid@gmail.com
++ Buil-Rpm-action have now a post section.
++ "quit" in file menu.
++ More shortcuts.
++ "%post" and "%preun" sections in spec file.
+
+
 * Wed Jan 25 2023 surfzoid@gmail.com
 + Finish missing translations.
 + Tool tip on sound volume slider.

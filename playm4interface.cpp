@@ -347,8 +347,8 @@ int playm4interface::OneByOneBack()
 
 int playm4interface::SetVolume(unsigned short Volume)
 {
-    unsigned short GetVolume = PlayM4_GetVolume(m_pblocalportnum);
-    qDebug() <<  GetVolume;
+    /*unsigned short GetVolume = PlayM4_GetVolume(m_pblocalportnum);
+    qDebug() <<  GetVolume;*/
     return PlayM4_SetVolume(m_pblocalportnum, Volume);
 }
 

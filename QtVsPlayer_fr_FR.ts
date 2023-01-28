@@ -261,173 +261,223 @@
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="260"/>
+        <location filename="qtvsplayer.ui" line="262"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="362"/>
+        <location filename="qtvsplayer.ui" line="379"/>
         <source>Beer and Coffee</source>
         <translation>Bière et café</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="271"/>
+        <location filename="qtvsplayer.ui" line="273"/>
         <source>Display</source>
         <translation>Affichage</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="278"/>
+        <location filename="qtvsplayer.ui" line="280"/>
         <source>VCA Info Overlay</source>
         <translation>VCA Info Overlay</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="307"/>
+        <location filename="qtvsplayer.ui" line="309"/>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
     <message>
         <location filename="qtvsplayer.ui" line="312"/>
+        <source>F3</source>
+        <translation>F3</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.ui" line="317"/>
         <source>About</source>
         <translation>A propos</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="320"/>
+        <location filename="qtvsplayer.ui" line="325"/>
         <source>Full screen</source>
         <translation>Plein écran</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="323"/>
+        <location filename="qtvsplayer.ui" line="328"/>
         <source>F11</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="331"/>
+        <location filename="qtvsplayer.ui" line="336"/>
         <source>Hide control</source>
         <oldsource>Masquer les controles</oldsource>
         <translation>Masquer les contrôles</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="334"/>
+        <location filename="qtvsplayer.ui" line="339"/>
         <source>F10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="339"/>
+        <location filename="qtvsplayer.ui" line="344"/>
         <source>Playliste</source>
         <translation>Liste de lecture</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="344"/>
+        <location filename="qtvsplayer.ui" line="347"/>
+        <source>F8</source>
+        <translation>F8</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.ui" line="352"/>
         <source>Folder</source>
         <translation>Répertoire</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="349"/>
+        <location filename="qtvsplayer.ui" line="355"/>
+        <source>F4</source>
+        <translation>F4</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.ui" line="360"/>
         <source>Settings</source>
         <translation>Parametres</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="357"/>
+        <location filename="qtvsplayer.ui" line="363"/>
+        <source>F7</source>
+        <translation>F7</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.ui" line="371"/>
         <source>Rtsp Play</source>
         <translation>Lecteur RTSP</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="370"/>
+        <location filename="qtvsplayer.ui" line="374"/>
+        <source>F5</source>
+        <translation>F5</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.ui" line="387"/>
         <source>Infos</source>
         <translation>Infos</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="381"/>
+        <location filename="qtvsplayer.ui" line="390"/>
+        <source>F6</source>
+        <translation>F6</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.ui" line="401"/>
         <source>Auto hide controls</source>
         <translation>Masque les contrôles auto</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="392"/>
+        <location filename="qtvsplayer.ui" line="404"/>
+        <source>F9</source>
+        <translation>F9</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.ui" line="415"/>
         <source>VCA</source>
         <translation>VCA</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="403"/>
+        <location filename="qtvsplayer.ui" line="418"/>
+        <source>F12</source>
+        <translation>F12</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.ui" line="429"/>
         <source>Motion Detection</source>
         <translation>Détection de mouvements.</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="414"/>
+        <location filename="qtvsplayer.ui" line="440"/>
         <source>POS Text Overlay</source>
         <translation>POS Text Overlay</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="425"/>
+        <location filename="qtvsplayer.ui" line="451"/>
         <source>Temperature</source>
         <translation>Température</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="436"/>
+        <location filename="qtvsplayer.ui" line="462"/>
         <source>Picture Overlay</source>
         <translation>Image Overlay</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="447"/>
+        <location filename="qtvsplayer.ui" line="473"/>
         <source>Fire Source</source>
         <translation>Source de feu</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="461"/>
+        <location filename="qtvsplayer.ui" line="487"/>
         <source>Track</source>
         <translation>Piste</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="475"/>
+        <location filename="qtvsplayer.ui" line="501"/>
         <source>Display Schield Area</source>
         <translation>Affichage zone bouclier</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="480"/>
+        <location filename="qtvsplayer.ui" line="506"/>
         <source>All</source>
         <translation>Tous</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="485"/>
+        <location filename="qtvsplayer.ui" line="511"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="490"/>
+        <location filename="qtvsplayer.ui" line="516"/>
         <source>Online documentation</source>
         <translation>Documentation en ligne</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="256"/>
+        <location filename="qtvsplayer.ui" line="519"/>
+        <source>F1</source>
+        <translation>F1</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.ui" line="524"/>
+        <source>Quit</source>
+        <translation>Quitter</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.cpp" line="257"/>
         <source>Open video</source>
         <translation>Ouvrir une vidéo</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="257"/>
+        <location filename="qtvsplayer.cpp" line="258"/>
         <source>video Files (*.mp4 *.avi *.mkv)</source>
         <translation>Fichiers vidéos (*.mp4 *.avi *.mkv)</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="375"/>
+        <location filename="qtvsplayer.cpp" line="376"/>
         <source>QvSPlayer for Hikvision local records.</source>
         <translation>QvSPlayer pour les enregistrements locaux Hikvision.</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="375"/>
+        <location filename="qtvsplayer.cpp" line="376"/>
         <source>QvSPlayer can read local video files of Hikvision and display blue, green an red vector.</source>
         <translation>QtVsPlayer peut lire les vidéos enregistrées localement et afficher les rectangles bleue, vert et rouge.</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="671"/>
+        <location filename="qtvsplayer.cpp" line="672"/>
         <source>Select Folder to read</source>
         <translation>Sélectionner un répertoire à lire</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="706"/>
+        <location filename="qtvsplayer.cpp" line="707"/>
         <source>Enjoy!</source>
         <translation>Apreciez!</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="710"/>
+        <location filename="qtvsplayer.cpp" line="711"/>
         <source>If you like my job and be happy to buy me a beer or a coffee, you can do it here.</source>
         <translation>Si vous aimez mon travail et souhaitez m&apos;offrir une biére ou un café, cela se passe ici avec l&apos;un des deux liens.Je vous remercie.</translation>
     </message>
@@ -906,7 +956,8 @@
     <message>
         <location filename="videoctrls.cpp" line="374"/>
         <source>Sound </source>
-        <translation type="unfinished">Son </translation>
+        <translatorcomment>Son </translatorcomment>
+        <translation>Son </translation>
     </message>
 </context>
 </TS>
