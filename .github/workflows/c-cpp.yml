@@ -18,8 +18,7 @@ jobs:
         uses: jurplel/install-qt-action@v2.14.0
 
       - name: Prepare install dir
-        run: |
-            sudo apt install -y rpm-common rpm 
+        run: | 
             rpmbuild --help
             mkdir -p .debpkg
             # create DEBIAN directory if you want to add other pre/post scripts
@@ -78,23 +77,32 @@ jobs:
         run: |
           sudo rm -fr .debpkg/DEBIAN
 
-      - uses: jiro4989/build-rpm-action@v2
-        with:
-          summary: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
-          package: QtVsPlayer
-          package_root: .debpkg
-          maintainer: surfzoid
-          version: ${{ steps.version.outputs.version }}
-          arch: 'x86_64'
-          desc: 'QtVsPlayer Hikvision .'
-          post: |
-            cat <<'EOF'
-            if [ -f "%{_libdir}/QtVsPlayer/libopenal.so.1" ];
-              then
-                rm -fr %{_libdir}/QtVsPlayer/libopenal.so.1
-            fi
-            ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") %{_libdir}/QtVsPlayer/``````````
-            EOF
+      - name: Build RPM package
+        run: |
+            set -x
+            rm -fr /tmp/work
+            mkdir /tmp/work
+            mv .debpkg/usr/share/doc/QtVsPlayer .debpkg/usr/share/doc/QtVsPlayer-${{ steps.version.outputs.version }}
+            mv .debpkg/usr/share/licenses/QtVsPlayer .debpkg/usr/share/licenses/QtVsPlayer-${{ steps.version.outputs.version }}
+            cp -rp .debpkg /tmp/work/QtVsPlayer-${{ steps.version.outputs.version }}
+            mkdir -p ~/rpmbuild/{SRPMS,SOURCES,SPECS,tmp}
+            cp -pf QtVsPlayermga8wally.spec ~/rpmbuild/SPECS
+            cp -pf QtVsPlayer-fix.patch ~/rpmbuild/SPECS
+            sed -i 's/\(Source0:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i '/^%make_build/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i 's/\(make_install\).*/\1\ncp -fr %{_builddir}\/QtVsPlayer-${{ steps.version.outputs.version }}\/* %{buildroot}/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i '/^%make_install/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i '/^rm -rf %{buildroot}%{_datadir}/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            cd /tmp/work
+            tar czf tmp.tar.gz QtVsPlayer-${{ steps.version.outputs.version }}/
+            mv tmp.tar.gz ~/rpmbuild/SOURCES
+            rpmbuild -bb ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            cp -f ~/rpmbuild/RPMS/x86_64/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
+            cp -f ~/rpmbuild/SRPMS/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
 
       - name: Rename package with te good arch/distro
         run: |
@@ -252,6 +260,7 @@ jobs:
             mv tmp.tar.gz ~/rpmbuild/SOURCES
             rpmbuild -bb ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             cp -f ~/rpmbuild/RPMS/aarch64/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
+            cp -f ~/rpmbuild/SRPMS/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
 
       - name: Create Github Release
         uses: ncipollo/release-action@v1.11.1
