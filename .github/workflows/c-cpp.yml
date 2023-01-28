@@ -73,6 +73,15 @@ jobs:
           arch: 'amd64'
           depends: 'libqt5multimedia5, libqt5multimediawidgets5' #libc6 (>= 2.2.1),
           desc: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
+
+      - name: Publish PPA
+        uses: yuezk/publish-ppa-package@main
+        with:
+            repository: 'ppa:surfzoid/QtVsPlayer'
+            gpg_private_key: ${{ secrets.PPA_GPG_PRIVATE_KEY }}
+            gpg_passphrase: ${{ secrets.PPA_GPG_PASSPHRASE }}
+            pkgdir: '.debpkg'
+      
       - name: del DEBIAN
         run: |
           sudo rm -fr .debpkg/DEBIAN
@@ -231,6 +240,14 @@ jobs:
       - name: Build debian package
         run: |
             dpkg-deb -b .debpkg QtVsPlayer_${{ steps.version.outputs.version }}_`lsb_release -cs`-arm64.deb
+
+      - name: Publish PPA
+        uses: yuezk/publish-ppa-package@main
+        with:
+            repository: 'ppa:surfzoid/QtVsPlayer'
+            gpg_private_key: ${{ secrets.PPA_GPG_PRIVATE_KEY }}
+            gpg_passphrase: ${{ secrets.PPA_GPG_PASSPHRASE }}
+            pkgdir: '.debpkg'
       
       - name: del DEBIAN
         run: sudo rm -fr .debpkg/DEBIAN
