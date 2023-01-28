@@ -19,7 +19,7 @@ jobs:
 
       - name: Prepare install dir
         run: | 
-            rpmbuild --help
+            sudo apt install -y chrpath
             mkdir -p .debpkg
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
@@ -100,7 +100,7 @@ jobs:
             cd /tmp/work
             tar czf tmp.tar.gz QtVsPlayer-${{ steps.version.outputs.version }}/
             mv tmp.tar.gz ~/rpmbuild/SOURCES
-            rpmbuild -bb ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            rpmbuild -ba ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             cp -f ~/rpmbuild/RPMS/x86_64/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
             cp -f ~/rpmbuild/SRPMS/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
 
@@ -258,7 +258,7 @@ jobs:
             cd /tmp/work
             tar czf tmp.tar.gz QtVsPlayer-${{ steps.version.outputs.version }}/
             mv tmp.tar.gz ~/rpmbuild/SOURCES
-            rpmbuild -bb ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            rpmbuild -ba ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             cp -f ~/rpmbuild/RPMS/aarch64/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
             cp -f ~/rpmbuild/SRPMS/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
 
