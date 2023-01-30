@@ -729,27 +729,28 @@ void QtVsPlayer::on_actionInfos_triggered()
 
 void QtVsPlayer::messageSlot(const QString &text)
 {
-    QString msg( QLatin1String("<%1> %2") );
-    //msg = msg.arg(nickname, text);
-    //m_messages.append(text);
+    if (text != "Raiseit") {
     qDebug() << "New file catched  : " << text <<"\n";
-    QFileInfo fi(text.toUtf8());
-    if (fi.isDir()) {
+        QFileInfo fi(text.toUtf8());
+        if (fi.isDir()) {
 
-        Scandir(fi.filePath().toUtf8());
-        if (fileNames.length() > 0) {
+            Scandir(fi.filePath().toUtf8());
+            if (fileNames.length() > 0) {
+                Play (fileNames);
+            }
+
+        }
+        if (fi.isFile()) {
+            fileNames.append(text.toUtf8());
             Play (fileNames);
         }
 
-    }
-    if (fi.isFile()) {
-        fileNames.append(text.toUtf8());
-        Play (fileNames);
+        fileNames.removeDuplicates();
+        filesLs->Populate(fileNames,true);
+
     }
 
-    fileNames.removeDuplicates();
-    filesLs->Populate(fileNames,true);
-
+    raise();
 }
 
 void QtVsPlayer::actionSlot(const QString &text)

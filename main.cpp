@@ -35,15 +35,20 @@ int main(int argc, char *argv[])
 
     if (!sharedMemory.create(1))
     {
-        if (argc > 1) {
 #if (defined(__linux__) | defined(__APPLE__))
-            new QtVsPlayerAdaptor(&a);
-            QDBusConnection::sessionBus().registerObject("/", &a);
-            QDBusMessage msg = QDBusMessage::createSignal("/", "local.QtVsPlayer", "message");
+        new QtVsPlayerAdaptor(&a);
+        QDBusConnection::sessionBus().registerObject("/", &a);
+        QDBusMessage msg = QDBusMessage::createSignal("/", "local.QtVsPlayer", "message");
+        if (argc > 1) {
             msg << QString(argv[1]);
             QDBusConnection::sessionBus().send(msg);
-#endif
+        }else
+        {
+            msg << "Raiseit";
+            QDBusConnection::sessionBus().send(msg);
+
         }
+#endif
 
 
         exit(0); // Exit already a process running

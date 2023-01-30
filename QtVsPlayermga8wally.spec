@@ -71,6 +71,7 @@ chmod -R ug+rw %{_srcrpmdir}
 %changelog
 * xxx Jan 28 2023 surfzoid@gmail.com
 + Clean shared memory when chrash.
++ Single instance Raise QtVsPlayer.
 
 * Sat Jan 28 2023 surfzoid@gmail.com
 + Buil-Rpm-action have now a post section.
