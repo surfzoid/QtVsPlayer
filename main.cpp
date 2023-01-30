@@ -28,22 +28,22 @@ int main(int argc, char *argv[])
     QSharedMemory sharedMemory;
     sharedMemory.setKey("QtVsPlayerUniqueInstance");
 
+    //QtVsplayer crashed we free sharedMemory
+    if (sharedMemory.attach()){
+        sharedMemory.detach();
+    }
+
     if (!sharedMemory.create(1))
     {
         if (argc > 1) {
 #if (defined(__linux__) | defined(__APPLE__))
             new QtVsPlayerAdaptor(&a);
             QDBusConnection::sessionBus().registerObject("/", &a);
-            //emit message(m_nickname, messageLineEdit->text());
             QDBusMessage msg = QDBusMessage::createSignal("/", "local.QtVsPlayer", "message");
             msg << QString(argv[1]);
             QDBusConnection::sessionBus().send(msg);
 #endif
         }
-
-        //check if QtVsplayer crashed and free sharedMemory
-        sharedMemory.attach();
-        sharedMemory.detach();
 
 
         exit(0); // Exit already a process running
