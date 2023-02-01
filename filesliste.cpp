@@ -197,6 +197,20 @@ void FilesListe::Populate(QStringList fileNames, bool ClearBefore)
 
     if (!ClearBefore) QtVsPlayer::PlayNextFile(true,ui->tableWidget_2_localfilist->currentRow());;
 
+    if (!FromDTPicker) {
+        QString DayStr = ui->tableWidget_2_localfilist->item(0,3)->text();
+        QString TimeStr = ui->tableWidget_2_localfilist->item(0,1)->text();
+        QDateTime DateFilter = QDateTime::fromString(DayStr + TimeStr, "yyyy/MM/ddhh:mm:ss");
+        ui->dateTimeEdit_2_start->setDateTime(DateFilter);
+
+        int RwCnt = ui->tableWidget_2_localfilist->rowCount() -1;
+        DayStr = ui->tableWidget_2_localfilist->item(RwCnt,3)->text();
+        TimeStr = ui->tableWidget_2_localfilist->item(RwCnt,1)->text();
+        DateFilter = QDateTime::fromString(DayStr + TimeStr, "yyyy/MM/ddhh:mm:ss");
+        ui->dateTimeEdit_2_stop->setDateTime(DateFilter);
+    }
+
+    FromDTPicker = false;
     return;
 
 }
@@ -230,4 +244,46 @@ void FilesListe::on_tableWidget_2_localfilist_itemSelectionChanged()
     QTableWidgetItem *item=new QTableWidgetItem(windowIcon(),QString::number(CurRow + 1),0);//set Icon a and string 1
 
     ui->tableWidget_2_localfilist->setVerticalHeaderItem(CurRow,item);
+}
+
+void FilesListe::on_dateTimeEdit_2_start_dateTimeChanged(const QDateTime &dateTime)
+{
+    FilterList(dateTime);
+}
+
+void FilesListe::on_dateTimeEdit_2_stop_dateTimeChanged(const QDateTime &dateTime)
+{
+    FilterList(dateTime);
+}
+
+void FilesListe::FilterList(QDateTime dateTime)
+{
+    FromDTPicker = true;
+    if (dateTime.isValid() and ui->centralwidget->isVisible()) {
+        ShowAll();
+        QDateTime DateTimeStart = ui->dateTimeEdit_2_start->dateTime();
+
+        QDateTime DateTimeEnd = ui->dateTimeEdit_2_stop->dateTime();
+
+        //remove row change index, need to use a foreach, or make a new list to add after a clean, or change remove by hide.
+        for (int i=0; i< ui->tableWidget_2_localfilist->rowCount(); i++) {
+
+            QString DayCurentStr = ui->tableWidget_2_localfilist->item(i,3)->text();
+            QString TimeCurentStr = ui->tableWidget_2_localfilist->item(i,1)->text();
+            QDateTime DateTimeCurent = QDateTime::fromString(DayCurentStr + TimeCurentStr, "yyyy/MM/ddhh:mm:ss");
+            if (DateTimeCurent<DateTimeStart or DateTimeCurent>DateTimeEnd) {
+                for (int j=0; j< ui->tableWidget_2_localfilist->columnCount(); j++ )
+                {
+                    delete ui->tableWidget_2_localfilist->takeItem(i, j);
+                }
+                ui->tableWidget_2_localfilist->hideRow(i);
+                //ui->tableWidget_2_localfilist->setRowCount(0);
+            }
+        }
+    }
+}
+
+void FilesListe::ShowAll()
+{
+    Populate(QtVsPlayer::fileNames,true);
 }

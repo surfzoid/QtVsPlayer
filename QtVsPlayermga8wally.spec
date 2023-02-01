@@ -70,6 +70,7 @@ chmod -R ug+rw %{_srcrpmdir}
 
 %changelog
 * xxx Jan 28 2023 surfzoid@gmail.com
++ Playlist can be filtered by DateTime.
 + Clean shared memory when chrash.
 + Single instance Raise QtVsPlayer.
 

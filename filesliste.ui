@@ -39,10 +39,16 @@
       </item>
       <item>
        <widget class="QWidget" name="horizontalWidget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="maximumSize">
          <size>
-          <width>515</width>
-          <height>48</height>
+          <width>706</width>
+          <height>16777215</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -58,8 +64,17 @@
          </item>
          <item>
           <widget class="QDateTimeEdit" name="dateTimeEdit_2_start">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="showGroupSeparator" stdset="0">
             <bool>true</bool>
+           </property>
+           <property name="displayFormat">
+            <string>dd/MM/yyyy HH:mm:ss</string>
            </property>
            <property name="calendarPopup">
             <bool>true</bool>
@@ -101,6 +116,9 @@
          </item>
          <item>
           <widget class="QDateTimeEdit" name="dateTimeEdit_2_stop">
+           <property name="displayFormat">
+            <string>dd/MM/yyyy HH:mm:ss</string>
+           </property>
            <property name="calendarPopup">
             <bool>true</bool>
            </property>
