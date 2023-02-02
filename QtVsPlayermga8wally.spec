@@ -38,6 +38,7 @@ chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libPlayCtrl.so
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
 
 %post
+echo $1 "  check post UPGRADE value"
 if [ -f "%{_libdir}/QtVsPlayer/libopenal.so.1" ];
  then
     rm -fr %{_libdir}/QtVsPlayer/libopenal.so.1
@@ -46,6 +47,7 @@ ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") %{_lib
 /sbin/ldconfig
 
 %preun
+echo $1 "  check preun UPGRADE value"
 if [ $1 == 0 ];then
     if [ -f "%{_libdir}/QtVsPlayer/libopenal.so.1" ];then
         rm -fr %{_libdir}/QtVsPlayer/libopenal.so.1
