@@ -10,8 +10,13 @@ Source0:        https://github.com/surfzoid/QtVsPlayer/archive/%{version}/%{name
 BuildRequires:  pkgconfig(Qt5Multimedia)
 BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
 BuildRequires:  qtbase5-common-devel
-BuildRequires:  pkgconfig(Qt5OpenGL)
+BuildRequires:  pkgconfig(openal)
 BuildRequires: chrpath
+BuildRequires: lib64openal-devel
+Requires: lib64qt5multimedia5
+Requires: lib64qt5multimediawidgets5
+Requires: qtbase5-common
+Requires: lib64openal1
  
 %description
 QtVsPlayer can read local video files of Hikvision and display blue, green and red vectors.
@@ -36,23 +41,10 @@ mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libAudioRender.so
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libPlayCtrl.so
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
+ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
 
 %post
-echo $1 "  check post UPGRADE value"
-if [ -f "%{_libdir}/QtVsPlayer/libopenal.so.1" ];
- then
-    rm -fr %{_libdir}/QtVsPlayer/libopenal.so.1
-fi
-ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") %{_libdir}/QtVsPlayer/
 /sbin/ldconfig
-
-%preun
-echo $1 "  check preun UPGRADE value"
-if [ $1 == 0 ];then
-    if [ -f "%{_libdir}/QtVsPlayer/libopenal.so.1" ];then
-        rm -fr %{_libdir}/QtVsPlayer/libopenal.so.1
-    fi
-fi
 
 %postun -p /sbin/ldconfig
 
@@ -73,6 +65,7 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libAudioRender.so
 %{_libdir}/QtVsPlayer/libPlayCtrl.so
 %{_libdir}/QtVsPlayer/libSuperRender.so
+%{_libdir}/QtVsPlayer/libopenal.so.1
 
 %changelog
 * Thu Feb 02 2023 surfzoid@gmail.com
