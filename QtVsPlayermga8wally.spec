@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.36
+Version:        1.0.37
 Release:        %mkrel 2
 License:        GPLv3
 Group:          Video/Players
@@ -43,12 +43,16 @@ if [ -f "%{_libdir}/QtVsPlayer/libopenal.so.1" ];
     rm -fr %{_libdir}/QtVsPlayer/libopenal.so.1
 fi
 ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") %{_libdir}/QtVsPlayer/
+/sbin/ldconfig
 
 %preun
-if [ -f "%{_libdir}/QtVsPlayer/libopenal.so.1" ];
- then
-    rm -fr %{_libdir}/QtVsPlayer/libopenal.so.1
+if [ $1 == 0 ];then
+    if [ -f "%{_libdir}/QtVsPlayer/libopenal.so.1" ];then
+        rm -fr %{_libdir}/QtVsPlayer/libopenal.so.1
+    fi
 fi
+
+%postun -p /sbin/ldconfig
 
 %clean
 rm -rf %buildroot
@@ -69,7 +73,8 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libSuperRender.so
 
 %changelog
-* xxx Jan 28 2023 surfzoid@gmail.com
+* Thu Feb 02 2023 surfzoid@gmail.com
++ don't rm libopenal.so.1 when upgrade.
 + Playlist can be filtered by DateTime.
 + Clean shared memory when chrash.
 + Single instance Raise QtVsPlayer.
