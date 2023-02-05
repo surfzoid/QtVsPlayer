@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.37
+Version:        1.0.38
 Release:        %mkrel 2
 License:        GPLv3
 Group:          Video/Players
@@ -12,7 +12,6 @@ BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
 BuildRequires:  qtbase5-common-devel
 BuildRequires:  pkgconfig(openal)
 BuildRequires: chrpath
-BuildRequires: lib64openal-devel
 Requires: lib64qt5multimedia5
 Requires: lib64qt5multimediawidgets5
 Requires: qtbase5-common
@@ -44,9 +43,9 @@ chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
 ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
 
 %post
-/sbin/ldconfig
+/sbin/ldconfig /usr/lib64/QtVsPlayer/
 
-%postun -p /sbin/ldconfig
+%postun -p /sbin/ldconfig /usr/lib64/QtVsPlayer/
 
 %clean
 rm -rf %buildroot
@@ -68,6 +67,9 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libopenal.so.1
 
 %changelog
+* Thu Feb xx 2023 surfzoid@gmail.com
++ Click + move scroll zoomed video.
+
 * Thu Feb 02 2023 surfzoid@gmail.com
 + don't rm libopenal.so.1 when upgrade.
 + Playlist can be filtered by DateTime.

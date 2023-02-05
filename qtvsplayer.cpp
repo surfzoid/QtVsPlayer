@@ -586,6 +586,20 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
         QtVsPlayer::unsetCursor();
     }
 
+    if (event->buttons() == Qt::LeftButton and Zoomed) {
+        QPoint p = event->pos();
+        QRect R = rect();
+        qDebug() << "max scroll" << ui->scrollArea->horizontalScrollBar()->maximum();
+        qDebug() << "scroll val" << ui->scrollArea->horizontalScrollBar()->value();
+        qDebug() << "mouse x" << p.x();
+        int Xvalue = p.x() * 100 / R.width();
+        int Yvalue = p.y() * 100 / R.height();
+        qDebug() << "mouse x%" << Xvalue;
+        qDebug() << "scroll value want" << ui->scrollArea->horizontalScrollBar()->maximum() / 100 * Xvalue;
+
+        ui->scrollArea->horizontalScrollBar()->setValue(ui->scrollArea->horizontalScrollBar()->maximum() / 100 * Xvalue);
+        ui->scrollArea->verticalScrollBar()->setValue(ui->scrollArea->verticalScrollBar()->maximum() / 100 * Yvalue);
+    }
     return;
 }
 
@@ -730,7 +744,7 @@ void QtVsPlayer::on_actionInfos_triggered()
 void QtVsPlayer::messageSlot(const QString &text)
 {
     if (text != "Raiseit") {
-    qDebug() << "New file catched  : " << text <<"\n";
+        qDebug() << "New file catched  : " << text <<"\n";
         QFileInfo fi(text.toUtf8());
         if (fi.isDir()) {
 
