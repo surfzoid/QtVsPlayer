@@ -45,7 +45,6 @@ ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
 %post
 /sbin/ldconfig /usr/lib64/QtVsPlayer/
 
-%postun -p /sbin/ldconfig /usr/lib64/QtVsPlayer/
 
 %clean
 rm -rf %buildroot
