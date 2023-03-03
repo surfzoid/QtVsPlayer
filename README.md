@@ -1,7 +1,5 @@
 [![CI workflow](https://github.com/surfzoid/QtVsPlayer/workflows/CI/badge.svg)](https://github.com/surfzoid/QtVsPlayer/actions/workflows/c-cpp.yml)
-
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/surfzoid/QtVsPlayer?logo=github&sort=semver)](https://github.com/surfzoid/QtVsPlayer/releases)
-
 [![Download Releases](https://img.shields.io/github/downloads/surfzoid/QtVsPlayer/latest/total.svg?style=plastic)](https://github.com/surfzoid/QtVsPlayer/releases)
 
 
