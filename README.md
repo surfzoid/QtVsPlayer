@@ -1,6 +1,6 @@
 [![CI workflow](https://github.com/surfzoid/QtVsPlayer/workflows/CI/badge.svg)](https://github.com/surfzoid/QtVsPlayer/actions/workflows/c-cpp.yml)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/surfzoid/QtVsPlayer?logo=github&sort=semver)](https://github.com/surfzoid/QtVsPlayer/releases)
-![Download Releases](https://img.shields.io/github/downloads/surfzoid/QtVsPlayer/latest/total.svg?style=plastic)
+![Download Releases](https://img.shields.io/github/downloads/surfzoid/QtVsPlayer/latest/total.svg?style=plastic)(https://github.com/surfzoid/QtVsPlayer/releases)
 
 
 # HELP WANTED, i'm alone and pretty old, QtVsPlayer need almost feedback, translator, and so on, i wrote QTVsPlayer because after years of search i didn't find anything for Linux, normaly with Windows dll, QtVsPlayer should be able to compile under Windows.  
@@ -35,7 +35,7 @@ QtVsPlayer
 # Depandancys  
 If once installed QtVsPlayer doesn't start, go in the install dir from an terminal : 
 ``` 
-cd /op/QtVsPlayer  
+cd /usr/bin  
 ```
 and then check depandancies like that  
 ```
@@ -67,7 +67,7 @@ git clone https://github.com/surfzoid/QtVsPlayer.git
 cd ./QtVsPlayer  
 qmake  
 make  #-all -release or -debug  
- #some distro ask for root access  
+   
 sudo make install  #all-install release-install or debug-install  
 QtVsPlayer  
 ```

@@ -1,7 +1,7 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.38
-Release:        %mkrel 2
+Version:        1.0.39
+Release:        %mkrel 1
 License:        GPLv3
 Group:          Video/Players
 URL:            https://github.com/surfzoid/QtVsPlayer
@@ -66,7 +66,7 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libopenal.so.1
 
 %changelog
-* Thu Feb xx 2023 surfzoid@gmail.com
+* Mon Feb 06 2023 surfzoid@gmail.com
 + Click + move scroll zoomed video.
 
 * Thu Feb 02 2023 surfzoid@gmail.com

@@ -579,6 +579,7 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
         }else
         {
             WVideoCtrls->setVisible(false);
+            QtVsPlayer::cursor() = Qt::BlankCursor;
         }
     }
 
@@ -589,13 +590,13 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
     if (event->buttons() == Qt::LeftButton and Zoomed) {
         QPoint p = event->pos();
         QRect R = rect();
-        qDebug() << "max scroll" << ui->scrollArea->horizontalScrollBar()->maximum();
-        qDebug() << "scroll val" << ui->scrollArea->horizontalScrollBar()->value();
-        qDebug() << "mouse x" << p.x();
+//        qDebug() << "max scroll" << ui->scrollArea->horizontalScrollBar()->maximum();
+//        qDebug() << "scroll val" << ui->scrollArea->horizontalScrollBar()->value();
+//        qDebug() << "mouse x" << p.x();
         int Xvalue = p.x() * 100 / R.width();
         int Yvalue = p.y() * 100 / R.height();
-        qDebug() << "mouse x%" << Xvalue;
-        qDebug() << "scroll value want" << ui->scrollArea->horizontalScrollBar()->maximum() / 100 * Xvalue;
+//        qDebug() << "mouse x%" << Xvalue;
+//        qDebug() << "scroll value want" << ui->scrollArea->horizontalScrollBar()->maximum() / 100 * Xvalue;
 
         ui->scrollArea->horizontalScrollBar()->setValue(ui->scrollArea->horizontalScrollBar()->maximum() / 100 * Xvalue);
         ui->scrollArea->verticalScrollBar()->setValue(ui->scrollArea->verticalScrollBar()->maximum() / 100 * Yvalue);
