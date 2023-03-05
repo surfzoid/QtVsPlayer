@@ -681,7 +681,7 @@ void RtspWindow::on_RecordBtn_toggled(bool checked)
 
         QIODevice * outgoingData = 0;
         manager->put((QNetworkRequest)Adresse,outgoingData);
-        this->ui->RecordBtn->setText("Stop");
+        this->ui->RecordBtn->setText(tr("Stop"));
         this->ui->RecordBtn->setStyleSheet("background-color: red;");
 
     } else
@@ -693,7 +693,7 @@ void RtspWindow::on_RecordBtn_toggled(bool checked)
 
         QIODevice * outgoingData = 0;
         manager->put((QNetworkRequest)Adresse,outgoingData);
-        this->ui->RecordBtn->setText("Record");
+        this->ui->RecordBtn->setText(tr("Record"));
         this->ui->RecordBtn->setStyleSheet("background-color: green;");
     }
 

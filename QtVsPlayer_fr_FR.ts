@@ -10,42 +10,48 @@
         <translation>Liste de lecture</translation>
     </message>
     <message>
-        <location filename="filesliste.ui" line="55"/>
+        <location filename="filesliste.ui" line="61"/>
         <source>start</source>
         <translation>Départ</translation>
     </message>
     <message>
-        <location filename="filesliste.ui" line="98"/>
+        <location filename="filesliste.ui" line="77"/>
+        <location filename="filesliste.ui" line="120"/>
+        <source>dd/MM/yyyy HH:mm:ss</source>
+        <translation>dd/MM/yyyy HH:mm:ss</translation>
+    </message>
+    <message>
+        <location filename="filesliste.ui" line="113"/>
         <source>end</source>
         <translation>Fin</translation>
     </message>
     <message>
-        <location filename="filesliste.ui" line="131"/>
+        <location filename="filesliste.ui" line="149"/>
         <source>file name</source>
         <translation>Nom fichier</translation>
     </message>
     <message>
-        <location filename="filesliste.ui" line="139"/>
+        <location filename="filesliste.ui" line="157"/>
         <source>start time</source>
         <translation>Heure début</translation>
     </message>
     <message>
-        <location filename="filesliste.ui" line="144"/>
+        <location filename="filesliste.ui" line="162"/>
         <source>end time</source>
         <translation>Heure fin</translation>
     </message>
     <message>
-        <location filename="filesliste.ui" line="149"/>
+        <location filename="filesliste.ui" line="167"/>
         <source>Day</source>
         <translation>Jour</translation>
     </message>
     <message>
-        <location filename="filesliste.ui" line="154"/>
+        <location filename="filesliste.ui" line="172"/>
         <source>size(M)</source>
         <translation>Taille(M)</translation>
     </message>
     <message>
-        <location filename="filesliste.ui" line="162"/>
+        <location filename="filesliste.ui" line="180"/>
         <source>directory</source>
         <translation>Répertoire</translation>
     </message>
@@ -467,17 +473,17 @@
         <translation>QtVsPlayer peut lire les vidéos enregistrées localement et afficher les rectangles bleue, vert et rouge.</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="672"/>
+        <location filename="qtvsplayer.cpp" line="687"/>
         <source>Select Folder to read</source>
         <translation>Sélectionner un répertoire à lire</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="707"/>
+        <location filename="qtvsplayer.cpp" line="722"/>
         <source>Enjoy!</source>
         <translation>Apreciez!</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.cpp" line="711"/>
+        <location filename="qtvsplayer.cpp" line="726"/>
         <source>If you like my job and be happy to buy me a beer or a coffee, you can do it here.</source>
         <translation>Si vous aimez mon travail et souhaitez m&apos;offrir une biére ou un café, cela se passe ici avec l&apos;un des deux liens.Je vous remercie.</translation>
     </message>
@@ -527,6 +533,7 @@
     </message>
     <message>
         <location filename="rtspwindow.ui" line="202"/>
+        <location filename="rtspwindow.cpp" line="696"/>
         <source>Record</source>
         <translation>Enregistre</translation>
     </message>
@@ -670,6 +677,11 @@
         <location filename="rtspwindow.cpp" line="413"/>
         <source>Pictures Files (*.jpg *.jpeg)</source>
         <translation>Fichiers images (*.jpg *.jpeg)</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.cpp" line="684"/>
+        <source>Stop</source>
+        <translation>Stop</translation>
     </message>
     <message>
         <location filename="rtspwindow.cpp" line="716"/>
