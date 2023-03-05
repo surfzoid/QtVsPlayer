@@ -532,10 +532,15 @@
         <translation>Lance ou arrete l&apos;enregistrement manuel.</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="202"/>
         <location filename="rtspwindow.cpp" line="696"/>
         <source>Record</source>
-        <translation>Enregistre</translation>
+        <translation>Enregistrer</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.ui" line="202"/>
+        <source>Rec</source>
+        <comment>Record</comment>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <location filename="rtspwindow.ui" line="218"/>

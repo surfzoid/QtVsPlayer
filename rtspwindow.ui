@@ -199,7 +199,7 @@
         <string>Start or stop manual record in the device.</string>
        </property>
        <property name="text">
-        <string>Record</string>
+        <string comment="Record">Rec</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
