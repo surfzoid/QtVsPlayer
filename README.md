@@ -80,12 +80,12 @@ Add French translation.
 Add RTSP Player.  
 Add PTZ, right click, weel to zoom  
 Add presset and patrol  
-Now update are in MLO repo : https://mageialinux-online.org/repository/8/x86_64/media/core 
+Now update are in MLO repo : https://www.mageialinux-online.org/wiki/depots-supplementaires-pour-mageia-mlo-repository 
 To add the 64 bit MLO repo:  
 ```
 su -
 password :
-urpmi.addmedia --distrib https://mageialinux-online.org/repository/8/x86_64  
+urpmi.addmedia --distrib https://repository.mageialinux-online.org/8/x86_64/media/core  
 ```
 
 I broken git repo and so rename main to master, to update do on your local copy :  
