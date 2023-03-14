@@ -18,7 +18,7 @@ BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
 %if 0%{?mageia}
 BuildRequires:  qtbase5-common-devel
 %else
-%if 0%{?suse_version} >= 0
+%if 0%{?suse_version}
 BuildRequires:  libqt5-qtbase
 %else
 BuildRequires:  pkgconfig(Qt5)
