@@ -15,7 +15,11 @@ Source0:        https://github.com/surfzoid/QtVsPlayer/archive/%{version}/%{name
 # List of additional build dependencies
 BuildRequires:  pkgconfig(Qt5Multimedia)
 BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
+%if 0%{?mageia}
 BuildRequires:  qtbase5-common-devel
+%else
+BuildRequires:  pkgconfig(Qt5)
+%endif
 BuildRequires:  pkgconfig(openal)
 BuildRequires: chrpath
 Requires: lib64qt5multimedia5
