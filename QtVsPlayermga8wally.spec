@@ -19,7 +19,7 @@ BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
 BuildRequires:  qtbase5-common-devel
 %else
 %if 0%{?suse_version}
-BuildRequires:  qt5-qtbase-common-devel
+BuildRequires:  libqt5-devel
 %else
 BuildRequires:  pkgconfig(Qt5)
 %endif
