@@ -23,7 +23,7 @@ BuildRequires:  libqt5-qtbase
 BuildRequires:  pkgconfig(Qt5)
 %endif
 %if 0%{?el7} || 0%{?ol7}
-BuildRequires:  libopenal-devel
+BuildRequires:  openal-soft-devel
 %else
 BuildRequires:  pkgconfig(openal)
 %endif
