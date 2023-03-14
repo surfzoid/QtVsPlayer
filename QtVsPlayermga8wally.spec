@@ -22,7 +22,12 @@ BuildRequires:  libqt5-qtbase
 %else
 BuildRequires:  pkgconfig(Qt5)
 %endif
+%if 0%{?rhel-7} || 0%{?oraclelinux-7}
+BuildRequires:  libopenal-devel
+%else
 BuildRequires:  pkgconfig(openal)
+%endif
+
 BuildRequires: chrpath
 Requires: lib64qt5multimedia5
 Requires: lib64qt5multimediawidgets5
