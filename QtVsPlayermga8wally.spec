@@ -17,10 +17,12 @@ BuildRequires:  pkgconfig(Qt5Multimedia)
 BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
 %if 0%{?mageia}
 BuildRequires:  qtbase5-common-devel
-%elif 0%{?is_opensuse}
+%else
+%if 0%{?is_opensuse}
 BuildRequires:  libqt5-qtbase
 %else
 BuildRequires:  pkgconfig(Qt5)
+%endif
 %endif
 %if 0%{?el7} || 0%{?ol7}
 BuildRequires:  openal-soft-devel
