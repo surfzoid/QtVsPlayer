@@ -51,7 +51,8 @@ Licences are in the doc dir.
  
 %build
 %if 0%{?suse_version}
-find /|grep -i qmake
+#find /|grep -i qmake
+/usr/bin/qmake-qt5
 %else
 %qmake_qt5
 %endif
