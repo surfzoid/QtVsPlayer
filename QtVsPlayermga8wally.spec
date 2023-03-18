@@ -50,7 +50,11 @@ Licences are in the doc dir.
 %autosetup -n %{name}-%{version}
  
 %build
+%if 0%{?suse_version}
+find /|grep -i qmake
+%else
 %qmake_qt5
+%endif
 %make_build
  
 %install
