@@ -107,7 +107,10 @@ curl -s --compressed "https://surfzoid.github.io/ppa/KEY.gpg" | gpg --dearmor | 
 sudo curl -s --compressed -o /etc/apt/sources.list.d/surfzoid_list_file.list "https://surfzoid.github.io/ppa/surfzoid_list_file.list"  
 sudo apt update  
 sudo apt install qtvsplayer  
-```
+```  
+
+2023/03/18 Add a Fedora COPR repository, provide RPMS for Centos, Epel, Fedora, Openeluer, OpenSuse, OracleLinux, Rhel :  
+https://copr.fedorainfracloud.org/coprs/surfzoid/QtVsPlayer/  
 
 # Funding  
 If you like my job and be happy to buy me a beer or a coffee: 
