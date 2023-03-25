@@ -363,8 +363,9 @@ void VideoCtrls::on_SnapshotButton_released()
     QString picturepathname(tr("Capture Picture succes to "));
     picturepathname.append(picturepath);
 
-    QMessageBox::information(this,tr("Capture Picture succes "),
-                             picturepath.toUtf8().data());
+    int ret = QMessageBox::information(this,tr("Capture Picture succes "),picturepath.toUtf8().data(),QMessageBox::Open | QMessageBox::Cancel);
+    if (ret == 8192)
+        QDesktopServices::openUrl((QUrl)picturepath.toUtf8().data());
     return;
 
 }
