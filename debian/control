@@ -10,7 +10,7 @@ Homepage: https://github.com/surfzoid/QtVsPlayer
 Rules-Requires-Root: no
 
 Package: qtvsplayer
-Architecture: amd64
+Architecture: arm64
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description:QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.
  Read local video files of Hikvision devices and display blue, green and red vectors. This is the end of an full network backup solution in combination with HikNetExtractor.
