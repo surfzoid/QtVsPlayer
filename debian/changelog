@@ -1,6 +1,6 @@
-qtvsplayer (1.0.36) unstable; urgency=medium
+qtvsplayer (1.0.39-1) unstable; urgency=medium
 
   [ surfzoid ]
   * Various bugfixes
 
- -- Eric Petit <surfzoid@gmail.com>  Thu, 10 Jun 2021 10:53:34 +0200
+ -- Eric Petit <surfzoid@gmail.com>  Sun, 26 Mar 2023 17:49:20 +0200
