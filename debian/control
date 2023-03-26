@@ -1,7 +1,7 @@
 Source: qtvsplayer
 Section: video
 Priority: optional
-Maintainer: Eric Lafable <surfzoid@gmail.com>
+Maintainer: Eric Petit <surfzoid@gmail.com>
 Build-Depends: debhelper-compat (= 13)
 Standards-Version: 1.0.39
 Homepage: https://github.com/surfzoid/QtVsPlayer
