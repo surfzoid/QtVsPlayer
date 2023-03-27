@@ -7,34 +7,34 @@ DESTDIR=$(CURDIR)/debian/project
 TR_DIR=$(CURDIR)/debian/project/usr/share/QtVsPlayer/translations/
 
 configure:
-        qmake QtVsPlayer.pro
+	qmake QtVsPlayer.pro
 
 clean:
-        dh_testdir
-        dh_testroot
-        dh_clean
+	dh_testdir
+	dh_testroot
+	dh_clean
 
 build:  configure
-        dh_testdir
-        lrelease QtVsPlayer_fr_FR.ts
-        $(MAKE)
+	dh_testdir
+	lrelease QtVsPlayer_fr_FR.ts
+	$(MAKE)
 
 install: build
-        mkdir -p $(TR_DIR)
-        cp QtVsPlayer_fr_FR.qm $(TR_DIR)
-        $(MAKE) INSTALL_ROOT=$(CURDIR)/debian/project/usr/share install
-        dh_installdirs
+	mkdir -p $(TR_DIR)
+	cp QtVsPlayer_fr_FR.qm $(TR_DIR)
+	$(MAKE) INSTALL_ROOT=$(CURDIR)/debian/project/usr/share install
+	dh_installdirs
 
 binary-arch: build install
-         dh_testdir
-         dh_testroot
-         dh_installmenu
-         dh_link
-         dh_strip
-         dh_compress
-         dh_fixperms
-         dh_installdeb
-         dh_shlibdeps
-         dh_gencontrol
-         dh_md5sums
-         dh_builddeb
+	 dh_testdir
+	 dh_testroot
+	 dh_installmenu
+	 dh_link
+	 dh_strip
+	 dh_compress
+	 dh_fixperms
+	 dh_installdeb
+	 dh_shlibdeps
+	 dh_gencontrol
+	 dh_md5sums
+	 dh_builddeb
