@@ -6,7 +6,8 @@ Build-Depends: dh-make,
                debhelper-compat (= 13),
                qtbase5-dev (>= 5.6),
                qtmultimedia5-dev,
-               qttools5-dev-tools
+               qttools5-dev-tools,
+               qt5-qmake
 Standards-Version: 1.0.39-1
 Homepage: https://github.com/surfzoid/QtVsPlayer
 #Vcs-Browser: https://salsa.debian.org/debian/qtvsplayer
@@ -26,7 +27,12 @@ Description: Opensource player library from Hikvision.
 
 Package: qtvsplayer
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libqtvsplayer (= ${binary:Version})
+Depends: ${shlibs:Depends},
+               ${misc:Depends},
+               libqtvsplayer (= ${binary:Version}),
+               libqt5gui5,
+               libqt5widgets5,
+               libqt5core5
 Description:QtVsPlayer for Hikvision.
  Read local video files of Hikvision devices and display blue, green and red vectors. This is the end of an full network backup solution in combination with HikNetExtractor.
 
