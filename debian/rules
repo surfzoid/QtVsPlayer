@@ -45,4 +45,4 @@ binary: build install
 	 dh_md5sums
 	 dh_builddeb
 
-override_dh_shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(DEB_HOST_ARCH)
+override_dh_shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(DEB_HOST_MULTIARCH)
