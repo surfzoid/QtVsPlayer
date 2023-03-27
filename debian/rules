@@ -7,7 +7,7 @@ export DH_VERBOSE=1
 DESTDIR=$(CURDIR)/debian/project
 TR_DIR=$(CURDIR)/debian/project/usr/share/QtVsPlayer/translations/
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-DEB_HOST_ARCH ?= $(shell uname -m)
+HOST_ARCH=$(shell uname -m)
 CONFIGURE_EXTRA_FLAGS += --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH)
 BUILDDIR=$(CURDIR)
 PKGBUILDDIR=$(CURDIR)
@@ -15,9 +15,9 @@ PKGBUILDDIR=$(CURDIR)
 configure:
 	#dh_auto_configure -- $(CONFIGURE_EXTRA_FLAGS)
 	qmake QtVsPlayer.pro
-	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(DEB_HOST_ARCH)/libPlayCtrl.so -o lib/$(DEB_HOST_ARCH)/libPlayCtrl.so
-	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(DEB_HOST_ARCH)/libSuperRender.so -o lib/$(DEB_HOST_ARCH)/libSuperRender.so
-	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(DEB_HOST_ARCH)/libAudioRender.so -o lib/$(DEB_HOST_ARCH)/libAudioRender.so
+	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libPlayCtrl.so -o lib/$(HOST_ARCH)/libPlayCtrl.so
+	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libSuperRender.so -o lib/$(HOST_ARCH)/libSuperRender.so
+	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libAudioRender.so -o lib/$(HOST_ARCH)/libAudioRender.so
 
 clean:
 	dh_testdir
@@ -49,4 +49,4 @@ binary: build install
 	 dh_md5sums
 	 dh_builddeb
 
-shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(DEB_HOST_ARCH)
+shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(HOST_ARCH)
