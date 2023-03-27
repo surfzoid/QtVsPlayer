@@ -5,24 +5,29 @@
 #export DH_COMPAT=3
 DESTDIR=$(CURDIR)/debian/project
 TR_DIR=$(CURDIR)/debian/project/usr/share/QtVsPlayer/translations/
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+CONFIGURE_EXTRA_FLAGS += --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH)
+BUILDDIR=$(CURDIR)
+PKGBUILDDIR=$(CURDIR)
 
-configure:
+override_dh_auto_configure:
 	qmake QtVsPlayer.pro
+	dh_auto_configure -- $(CONFIGURE_EXTRA_FLAGS)
 
-clean:
+override_dh_clean:
 	dh_testdir
 	dh_testroot
 	dh_clean
 
-build:  configure
+override_dh_auto_build:  configure
 	dh_testdir
 	lrelease QtVsPlayer_fr_FR.ts
 	$(MAKE)
 
-install: build
+override_dh_auto_install: build
 	mkdir -p $(TR_DIR)
 	cp QtVsPlayer_fr_FR.qm $(TR_DIR)
-	$(MAKE) INSTALL_ROOT=$(CURDIR)/debian/project/usr/share install
+	$(MAKE) INSTALL_ROOT=usr/share install
 	dh_installdirs
 
 binary: build install
