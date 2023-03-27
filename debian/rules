@@ -1,49 +1,12 @@
 #!/usr/bin/make -f
 export QT_SELECT := qt5
-export DH_VERBOSE=1
+#export DH_VERBOSE=1
 # This is the debhelper compatability version to use.
 
 #export DH_COMPAT=3
-DESTDIR=$(CURDIR)/debian/project
-TR_DIR=$(CURDIR)/debian/project/usr/share/QtVsPlayer/translations/
-DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
-CONFIGURE_EXTRA_FLAGS += --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH)
-BUILDDIR=$(CURDIR)
-PKGBUILDDIR=$(CURDIR)
 
-configure:
-	#dh_auto_configure -- $(CONFIGURE_EXTRA_FLAGS)
-	qmake QtVsPlayer.pro
-
-clean:
-	dh_testdir
-	dh_testroot
-	dh_clean
-
-build:  configure
-	dh_testdir
-	lrelease QtVsPlayer_fr_FR.ts
-	$(MAKE)
-
-install: build
-	mkdir -p $(TR_DIR)
-	cp QtVsPlayer_fr_FR.qm $(TR_DIR)
-	$(MAKE) INSTALL_ROOT=usr/share install
-	dh_installdirs
-
-binary: build install
-	 dh_testdir
-	 dh_testroot
-	 dh_installmenu
-	 dh_link
-	 dh_strip
-	 dh_compress
-	 dh_fixperms
-	 dh_installdeb
-	 dh_shlibdeps
-	 dh_gencontrol
-	 dh_md5sums
-	 dh_builddeb
+%:
+	dh $@
 
 override_dh_shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(DEB_HOST_ARCH)
