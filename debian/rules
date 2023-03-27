@@ -12,7 +12,7 @@ BUILDDIR=$(CURDIR)
 PKGBUILDDIR=$(CURDIR)
 
 configure:
-	dh_auto_configure -- $(CONFIGURE_EXTRA_FLAGS)
+	#dh_auto_configure -- $(CONFIGURE_EXTRA_FLAGS)
 	qmake QtVsPlayer.pro
 
 clean:
@@ -45,4 +45,4 @@ binary: build install
 	 dh_md5sums
 	 dh_builddeb
 
-override_dh_shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(DEB_HOST_MULTIARCH)
+override_dh_shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(DEB_HOST_ARCH)
