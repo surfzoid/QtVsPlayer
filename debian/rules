@@ -1,4 +1,5 @@
 #!/usr/bin/make -f
+export QT_SELECT := qt5
 export DH_VERBOSE=1
 # This is the debhelper compatability version to use.
 
@@ -10,7 +11,7 @@ CONFIGURE_EXTRA_FLAGS += --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH)
 BUILDDIR=$(CURDIR)
 PKGBUILDDIR=$(CURDIR)
 
-override_dh_auto_configure:
+configure:
 	dh_auto_configure -- $(CONFIGURE_EXTRA_FLAGS)
 	qmake QtVsPlayer.pro
 
@@ -19,12 +20,12 @@ clean:
 	dh_testroot
 	dh_clean
 
-override_dh_auto_build:  configure
+build:  configure
 	dh_testdir
 	lrelease QtVsPlayer_fr_FR.ts
 	$(MAKE)
 
-override_dh_auto_install: build
+install: build
 	mkdir -p $(TR_DIR)
 	cp QtVsPlayer_fr_FR.qm $(TR_DIR)
 	$(MAKE) INSTALL_ROOT=usr/share install
@@ -43,3 +44,5 @@ binary: build install
 	 dh_gencontrol
 	 dh_md5sums
 	 dh_builddeb
+
+override_dh_shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(DEB_HOST_ARCH)
