@@ -1,0 +1,3 @@
+%{_libdir}/libAudioRender.so
+%{_libdir}/libPlayCtrl.so
+%{_libdir}/libSuperRender.so
