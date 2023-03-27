@@ -27,6 +27,6 @@ Description: Opensource player library from Hikvision.
 Package: qtvsplayer
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libqtvsplayer (= ${binary:Version})
-Description:QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.
+Description:QtVsPlayer for Hikvision.
  Read local video files of Hikvision devices and display blue, green and red vectors. This is the end of an full network backup solution in combination with HikNetExtractor.
 
