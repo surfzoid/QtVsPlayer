@@ -12,6 +12,7 @@ configure:
 clean:
 	dh_testdir
 	dh_testroot
+	dh_clean
 
 build:  configure
 	dh_testdir
@@ -24,7 +25,7 @@ install: build
 	$(MAKE) INSTALL_ROOT=$(CURDIR)/debian/project/usr/share install
 	dh_installdirs
 
-binary-arch: build install
+binary: build install
 	 dh_testdir
 	 dh_testroot
 	 dh_installmenu
