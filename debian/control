@@ -20,8 +20,7 @@ Multi-Arch: same
 Depends: ${misc:Depends},
          ${shlibs:Depends}
 Recommends: qtvsplayer (= ${binary:Version})
-Description: Opensource player library from Hikvision
- .
+Description: Opensource player library from Hikvision.
  This package contains the shared library required by applications using qtvsplayer
  features.
 
