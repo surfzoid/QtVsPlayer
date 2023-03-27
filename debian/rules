@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-#export DH_VERBOSE=1
+export DH_VERBOSE=1
 # This is the debhelper compatability version to use.
 
 #export DH_COMPAT=3
@@ -12,7 +12,7 @@ PKGBUILDDIR=$(CURDIR)
 
 override_dh_auto_configure:
 	qmake QtVsPlayer.pro
-	dh_auto_configure -- $(CONFIGURE_EXTRA_FLAGS)
+	#dh_auto_configure -- $(CONFIGURE_EXTRA_FLAGS)
 
 override_dh_clean:
 	dh_testdir
