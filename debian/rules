@@ -12,7 +12,6 @@ configure:
 clean:
 	dh_testdir
 	dh_testroot
-	dh_clean
 
 build:  configure
 	dh_testdir
