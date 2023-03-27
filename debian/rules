@@ -9,4 +9,4 @@ DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 %:
 	dh $@
 
-override_dh_shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(DEB_HOST_ARCH)
+shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(DEB_HOST_ARCH)
