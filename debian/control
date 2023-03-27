@@ -5,7 +5,8 @@ Maintainer: Eric Petit <surfzoid@gmail.com>
 Build-Depends: dh-make,
                debhelper-compat (= 13),
                qtbase5-dev (>= 5.6),
-               qtmultimedia5-dev
+               qtmultimedia5-dev,
+               qttools5-dev-tools
 Standards-Version: 1.0.39
 Homepage: https://github.com/surfzoid/QtVsPlayer
 #Vcs-Browser: https://salsa.debian.org/debian/qtvsplayer
