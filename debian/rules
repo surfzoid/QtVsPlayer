@@ -4,13 +4,8 @@ export DH_VERBOSE=1
 # This is the debhelper compatability version to use.
 
 #export DH_COMPAT=3
-DESTDIR=$(CURDIR)/debian/project
-TR_DIR=$(CURDIR)/debian/project/usr/share/QtVsPlayer/translations/
-DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+TR_DIR=usr/share/QtVsPlayer/translations/
 HOST_ARCH=$(shell uname -m)
-CONFIGURE_EXTRA_FLAGS += --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH)
-BUILDDIR=$(CURDIR)
-PKGBUILDDIR=$(CURDIR)
 
 configure:
 	#dh_auto_configure -- $(CONFIGURE_EXTRA_FLAGS)
@@ -31,7 +26,8 @@ build:  configure
 install: build
 	mkdir -p $(TR_DIR)
 	cp QtVsPlayer_fr_FR.qm $(TR_DIR)
-	$(MAKE) INSTALL_ROOT=usr/share install
+	#$(MAKE) INSTALL_ROOT=usr/share install
+	dh_auto_install --destdir=usr/share
 	dh_installdirs
 
 binary: build install
