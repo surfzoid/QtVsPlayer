@@ -48,4 +48,4 @@ binary: build install
 	 dh_md5sums
 	 dh_builddeb
 
-shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(HOST_ARCH)
+#shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(HOST_ARCH)
