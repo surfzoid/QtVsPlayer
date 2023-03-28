@@ -22,7 +22,9 @@ HOST_ARCH=$(shell uname -m)
 # dh_make generated override targets
 # This is example for Cmake (See https://bugs.debian.org/641051 )
 override_dh_auto_configure:
-	dh_auto_configure -- PREFIX=/usr/share
+	dh_auto_configure -- QMAKE_STRIP=: PREFIX=/usr/share
 	tar -xf ./lib/$(HOST_ARCH).tar.xz
 	mv $(HOST_ARCH)/*.so ./lib/$(HOST_ARCH)/
 #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
+override_dh_auto_install:
+	dh_auto_install -- DESTDIR=usr/share
