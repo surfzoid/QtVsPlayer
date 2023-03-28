@@ -1,6 +1,6 @@
-usr/share/licenses/%{name}/LICENSE
-usr/share/licenses/%{name}/Licenses_playctrl_linux.txt
-usr/share/doc/%{name}/README.md
+debian/qtvsplayer/usr/share/licenses/QtVsPlayer/LICENSE
+usr/share/licenses/QtVsPlayer/Licenses_playctrl_linux.txt
+usr/share/doc/QtVsPlayer/README.md
 usr/bin/QtVsPlayer
 usr/share/applications/QtVsPlayer.desktop
 usr/share/icons/QtVsPlayer.png
