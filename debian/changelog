@@ -1,6 +1,6 @@
 qtvsplayer (1.0.39-1) unstable; urgency=medium
 
   [ surfzoid ]
-  * Various bugfixes
+  * First release.
 
  -- Eric Petit <surfzoid@gmail.com>  Sun, 26 Mar 2023 17:49:20 +0200
