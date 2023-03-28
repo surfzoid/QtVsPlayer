@@ -21,14 +21,13 @@ clean:
 	dh_testroot
 	dh_clean
 
-build:  configure
+build:
+	configure
 	dh_testdir
 	lrelease QtVsPlayer_fr_FR.ts
 	cd lib/
-	if [ "$(HOST_ARCH)" == "x86_64" ]; then
-		tar -xf ./x86_64V7.3.9.40.tar.xz
-	fi
-	
+	if [ "$(HOST_ARCH)" == "x86_64" ]; then tar -xf ./x86_64V7.3.9.40.tar.xz; fi
+	cd ../
 	$(MAKE)
 
 install: build
