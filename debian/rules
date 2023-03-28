@@ -15,9 +15,6 @@ PKGBUILDDIR=$(CURDIR)
 configure:
 	#dh_auto_configure -- $(CONFIGURE_EXTRA_FLAGS)
 	qmake QtVsPlayer.pro
-	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libPlayCtrl.so -o lib/$(HOST_ARCH)/libPlayCtrl.so
-	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libSuperRender.so -o lib/$(HOST_ARCH)/libSuperRender.so
-	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libAudioRender.so -o lib/$(HOST_ARCH)/libAudioRender.so
 
 clean:
 	dh_testdir
@@ -27,6 +24,9 @@ clean:
 build:  configure
 	dh_testdir
 	lrelease QtVsPlayer_fr_FR.ts
+	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libPlayCtrl.so -o lib/$(HOST_ARCH)/libPlayCtrl.so
+	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libSuperRender.so -o lib/$(HOST_ARCH)/libSuperRender.so
+	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libAudioRender.so -o lib/$(HOST_ARCH)/libAudioRender.so
 	$(MAKE)
 
 install: build
