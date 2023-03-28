@@ -25,7 +25,7 @@ build:  configure
 	dh_testdir
 	lrelease QtVsPlayer_fr_FR.ts
 	tar -xf ./lib/$(HOST_ARCH).tar.xz
-	mv *.so ./lib/$(HOST_ARCH)/
+	mv $(HOST_ARCH)/*.so ./lib/$(HOST_ARCH)/
 	$(MAKE)
 
 install: build
