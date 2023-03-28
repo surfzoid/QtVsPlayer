@@ -5,3 +5,6 @@ usr/bin/QtVsPlayer
 usr/share/applications/QtVsPlayer.desktop
 usr/share/icons/QtVsPlayer.png
 usr/share/QtVsPlayer/
+usr/lib64/QtVsPlayer/libAudioRender.so
+usr/lib64/QtVsPlayer/libPlayCtrl.so
+usr/lib64/QtVsPlayer/libSuperRender.so

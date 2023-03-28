@@ -24,8 +24,8 @@ HOST_ARCH=$(shell uname -m)
 override_dh_auto_configure:
 	dh_auto_configure -- PREFIX=usr/share
 	tar -xf ./lib/$(HOST_ARCH).tar.xz
-	mkdir -p usr/lib$(HOST_ARCH)/QtVsPlayer
-	cp $(HOST_ARCH)/*.so  usr/lib$(HOST_ARCH)/QtVsPlayer
+	mkdir -p usr/lib64/QtVsPlayer
+	cp $(HOST_ARCH)/*.so  usr/lib64/QtVsPlayer
 	mv $(HOST_ARCH)/*.so ./lib/$(HOST_ARCH)/
 #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
 override_dh_auto_install:

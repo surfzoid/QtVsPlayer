@@ -14,22 +14,10 @@ Homepage: https://github.com/surfzoid/QtVsPlayer
 #Vcs-Git: https://salsa.debian.org/debian/qtvsplayer.git
 Rules-Requires-Root: no
 
-Package: libqtvsplayer
-Section: libs
-Architecture: any
-Multi-Arch: same
-Depends: ${misc:Depends},
-         ${shlibs:Depends}
-Recommends: qtvsplayer (= ${binary:Version})
-Description: Opensource player library from Hikvision.
- This package contains the shared library required by applications using qtvsplayer
- features.
-
 Package: qtvsplayer
 Architecture: any
 Depends: ${shlibs:Depends},
                ${misc:Depends},
-               libqtvsplayer (= ${binary:Version}),
                libqt5gui5,
                libqt5widgets5,
                libqt5core5
