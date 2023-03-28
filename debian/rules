@@ -24,6 +24,7 @@ clean:
 build:  configure
 	dh_testdir
 	lrelease QtVsPlayer_fr_FR.ts
+	ls -lahR
 	cd lib/
 	tar -xf ./$(HOST_ARCH).tar.xz
 	$(MAKE)
