@@ -1,3 +1,3 @@
-usr/lib64/QtVsPlayer/libAudioRender.so
-usr/lib64/QtVsPlayer/libPlayCtrl.so
-usr/lib64/QtVsPlayer/libSuperRender.so
+usr/lib*/QtVsPlayer/libAudioRender.so
+usr/lib*/QtVsPlayer/libPlayCtrl.so
+usr/lib*/QtVsPlayer/libSuperRender.so
