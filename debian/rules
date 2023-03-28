@@ -24,8 +24,11 @@ clean:
 build:  configure
 	dh_testdir
 	lrelease QtVsPlayer_fr_FR.ts
-	cd lib/$(HOST_ARCH)/
-	tar -xf ./x86_64V7.3.9.40.tar.xz
+	cd lib/
+	if [ "$(HOST_ARCH)" == "x86_64" ]; then
+		tar -xf ./x86_64V7.3.9.40.tar.xz
+	fi
+	
 	$(MAKE)
 
 install: build
