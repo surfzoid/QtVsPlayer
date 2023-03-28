@@ -24,9 +24,8 @@ clean:
 build:  configure
 	dh_testdir
 	lrelease QtVsPlayer_fr_FR.ts
-	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libPlayCtrl.so
-	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libSuperRender.so -o lib/$(HOST_ARCH)/libSuperRender.so
-	wget https://github.com/surfzoid/QtVsPlayer/raw/main/lib/$(HOST_ARCH)/libAudioRender.so -o lib/$(HOST_ARCH)/libAudioRender.so
+	cd lib/$(HOST_ARCH)/
+	tar -xf ./x86_64V7.3.9.40.tar.xz
 	$(MAKE)
 
 install: build
