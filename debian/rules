@@ -28,5 +28,8 @@ override_dh_auto_configure:
 	cp $(HOST_ARCH)/*.so  usr/lib64/QtVsPlayer
 	mv $(HOST_ARCH)/*.so ./lib/$(HOST_ARCH)/
 #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
+
 override_dh_auto_install:
 	dh_auto_install --destdir=usr/share
+
+override_dh_shlibdeps:dh_shlibdeps -l$(shell pwd)/lib/$(HOST_ARCH)
