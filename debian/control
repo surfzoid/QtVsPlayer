@@ -3,7 +3,7 @@ Section: video
 Priority: optional
 Maintainer: Eric Petit <surfzoid@gmail.com>
 Build-Depends: dh-make,
-               debhelper-compat (= 13),
+               debhelper-compat (= 9),
                qtbase5-dev (>= 5.6),
                qtmultimedia5-dev,
                qttools5-dev-tools,
