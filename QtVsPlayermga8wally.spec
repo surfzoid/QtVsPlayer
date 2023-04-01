@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.39
+Version:        1.0.40
 
 %if 0%{?mageia}
 Release:        %mkrel 1
@@ -93,6 +93,9 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/libopenal.so.1
 
 %changelog
+* Sat Apr 01 2023 surfzoid@gmail.com
++ Add debian files for launchpad construction.
+
 * Mon Feb 06 2023 surfzoid@gmail.com
 + Click + move scroll zoomed video.
 
