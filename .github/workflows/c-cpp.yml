@@ -344,7 +344,7 @@ jobs:
             cp Licenses_playctrl_linux.txt application/
             rm application/PlayCtrl.lib
             qtenv2.bat
-            windeployqt application/QtVsPlayer.exe --debug --libdir application/
+            windeployqt application/QtVsPlayer.exe --debug --compiler-runtime --libdir application/
             Compress-Archive -Path application\* -DestinationPath QtVsPlayer-win64-${{ steps.version.outputs.version }}.zip
 
       - name: Create Github Release
