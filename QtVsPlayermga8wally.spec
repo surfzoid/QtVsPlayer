@@ -40,6 +40,8 @@ Requires: lib64openal1
 QtVsPlayer can read local video files of Hikvision and display blue, green and red vectors.
 This is the end of an full network backup solution in combination with HikNetExtractor.
 https://github.com/surfzoid/HikNetExtractor
+It read real time live stream.
+Join us on IRC https://matrix.to/#/#QtVsPlayer:libera.chat or https://matrix.to/#/#QtVsPlayer:matrix.org
  
 This software use the PlayCtrl SDK libraries from HikVision, those librarys are under GPL-2 license.
 You will find it in /usr/share/licenses/QtVsPlayer/Licenses_playctrl_linux.txt or in SDK archive from HikVision website :

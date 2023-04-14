@@ -5,6 +5,9 @@
  
 [![Launchpad logo](http://media.launchpad.net/lp-badge-kit/launchpad-badge-w160px.png)](https://launchpad.net/~surfzoid)  
 
+[![Matrix community channel](https://img.shields.io/matrix/QtVsPlayer:matrix.org?label=Community%20channel)](https://app.element.io/#/room/#QtVsPlayer:mozilla.org)  
+
+
 # HELP WANTED, i'm alone and pretty old, QtVsPlayer need almost feedback, translator, and so on, i wrote QTVsPlayer because after years of search i didn't find anything for Linux, normaly with Windows dll, QtVsPlayer should be able to compile under Windows.  
 
 # QtVsPlayer for Hikvision.
