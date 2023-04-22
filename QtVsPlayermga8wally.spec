@@ -5,7 +5,7 @@ Version:        1.0.40
 %if 0%{?mageia}
 Release:        %mkrel 1
 %else
-Release:        1
+Release:        .surf.mlo
 %endif
 
 License:        GPLv3

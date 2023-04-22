@@ -324,7 +324,7 @@ jobs:
             #setx QMAKESPEC="%QTDIR%\mkspecs\/win64-g++" /M
             qmake -Wnone
 
-      - name: make
+      - name: make & install
         run: |
             #remove double return
             #sed -i ':a;N;$!ba;s/\n\n/\n/g' Makefile.Release
@@ -339,7 +339,6 @@ jobs:
             cp install-win.md application/README.TXT
             cp README.md application/
             cp QtVsPlayer_fr_FR.qm application/
-            cp LICENSE application/LICENSE.txt
             cp LICENSE application/LICENSE.txt
             cp Licenses_playctrl_linux.txt application/
             rm application/PlayCtrl.lib
