@@ -1,3 +1,5 @@
+I don't have Windows to test QtVsPlayer, i use GitHub to build releases and don't know if it work.  
+
 To run QtVsPlayer under Windows 10 you need:  
 First, a QT runtime >= 5.15.2, for that you can use the official QT installer from QT website, this one need a QT account and seem "heavy" or my prefered solution, use aqtinstall : https://github.com/miurahr/aqtinstall  
 
