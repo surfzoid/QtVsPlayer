@@ -24,7 +24,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # install  
 ## For Windows and Mac users.  
-Manualy download and install from [![Release page](Release page)](https://github.com/surfzoid/QtVsPlayer/releases/latest)  
+Manualy download and install from [Release page](https://github.com/surfzoid/QtVsPlayer/releases/latest)  
 
 ## For Linux RPM users.  
 If Mageia, add MLO repo:  
@@ -32,11 +32,13 @@ If Mageia, add MLO repo:
 ```
 su -
 password :
+#replace 8 by your Mageia version 
+#Replace x86_64 by your arch
 urpmi.addmedia --distrib https://repository.mageialinux-online.org/8/x86_64/media/core  
 urpmi --auto-update
 urpmi QtVsPlayer
 ```
-Else add a dnf repo fron [![COPR](COPR)](https://copr.fedorainfracloud.org/coprs/surfzoid/ )
+Else add a dnf repo fron [COPR](https://copr.fedorainfracloud.org/coprs/surfzoid/)
 
 then
 
