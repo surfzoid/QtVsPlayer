@@ -24,6 +24,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # install  
 ## For Windows and Mac users.  
+Don't forgot to read Mac or Win Read.me  
 Manualy download and install from [Release page](https://github.com/surfzoid/QtVsPlayer/releases/latest)  
 
 ## For Linux RPM users.  
