@@ -39,7 +39,7 @@ urpmi.addmedia --distrib https://repository.mageialinux-online.org/8/x86_64/medi
 urpmi --auto-update
 urpmi QtVsPlayer
 ```
-Else add a dnf repo fron [COPR](https://copr.fedorainfracloud.org/coprs/surfzoid/)
+Else add a dnf repo from [COPR](https://copr.fedorainfracloud.org/coprs/surfzoid/)
 
 then
 
