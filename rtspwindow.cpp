@@ -1,5 +1,6 @@
 #include "rtspwindow.h"
 #include "ui_rtspwindow.h"
+#include "infos.h"
 #include <QWidgetAction>
 #include <QVBoxLayout>
 #include <QTime>
@@ -315,11 +316,14 @@ void RtspWindow::on_action_Streaming_Channels_3_triggered()
 
 void RtspWindow::on_actionMetadata_triggered()
 {
+    Infos *InfDialog = new Infos(this);
+    InfDialog->InfoData = "";
     GetMetaData(player);
     QSize Vreso = videoWidget->sizeHint();
-    printf("Video resolution: %dX%d\n\r",Vreso.width(),Vreso.height());
+//    printf("Video resolution: %dX%d\n\r",Vreso.width(),Vreso.height());
     qDebug() << "Video resolution: " << Vreso.width() <<"X" << Vreso.height();
-    return;
+    InfDialog->InfoData.append("\nVideo resolution:  : "  + QString::number(Vreso.width()) + "x" + QString::number(Vreso.height()));
+//    return;
 
     bool IsMeta ;
     IsMeta = player->isMetaDataAvailable();
@@ -329,12 +333,15 @@ void RtspWindow::on_actionMetadata_triggered()
         foreach (QString nData, nMeta)
         {
             printf("%s\n\r",nData.toUtf8().data());
+            InfDialog->InfoData.append("\n"  + nData);
             QVariant KeyVal = player->metaData(nData);
             printf("%s\n\r",KeyVal.toString().toUtf8().data());
+            InfDialog->InfoData.append(" : "  + KeyVal.toString());
         }
 
 
     }
+    InfDialog->show();
 }
 
 void RtspWindow::on_action_ISAPI_Streaming_channels_101_triggered()

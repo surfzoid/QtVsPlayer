@@ -2,6 +2,7 @@
 #include "errormanager.h"
 #include "qtvsplayer.h"
 #include "ui_qtvsplayer.h"
+#include "infos.h"
 //#include <include/PlayM4.h>
 #include "filesliste.h"
 #include "videoctrls.h"
@@ -506,6 +507,8 @@ void CALLBACK playm4interface::SetVerifyCallBack(int nPort, FRAME_POS* pFilePos,
 
 void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2)
 {
+    Infos *InfDialog = new Infos();
+    InfDialog->InfoData = "";
     //printf("SetDecCallBack---%l:%l\n\r",nPort, nSize);
     //qDebug() <<  pFrameInfo;
     pFRAME_INFO = pFrameInfo;
@@ -516,11 +519,23 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
 
     if (pFRAME_INFO) {
         qDebug() << "FrameNum : " <<playm4interface::pFRAME_INFO->dwFrameNum;
+        InfDialog->InfoData.append("\nFrameNum : " + QString::number(pFRAME_INFO->dwFrameNum));
+
         qDebug() << "FrameRate : " <<playm4interface::pFRAME_INFO->nFrameRate;
-        qDebug() << "Width : " <<playm4interface::pFRAME_INFO->nWidth;
+        InfDialog->InfoData.append("\nFrameRate : " + QString::number(pFRAME_INFO->nFrameRate));
+
+        qDebug() << "\nWidth : " <<playm4interface::pFRAME_INFO->nWidth;
+        InfDialog->InfoData.append("\nWidth : " + QString::number(pFRAME_INFO->nWidth));
+
         qDebug() << "Height : " <<playm4interface::pFRAME_INFO->nHeight;
+        InfDialog->InfoData.append("\nHeight : " + QString::number(pFRAME_INFO->nHeight));
+
         qDebug() << "Stamp : " <<playm4interface::pFRAME_INFO->nStamp;
+        InfDialog->InfoData.append("\nStamp : " + QString::number(pFRAME_INFO->nStamp));
+
         qDebug() << "Type : " <<playm4interface::pFRAME_INFO->nType;
+        InfDialog->InfoData.append("\nType : " + QString::number(pFRAME_INFO->nType));
+
 
     }
     else
@@ -528,6 +543,7 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
         int width = 0, height = 0;
         PlayM4_GetPictureSize(playm4interface::m_pblocalportnum,&width,&height);
         qDebug()  << width << "x" << height << " <- PlayM4_GetPictureSize()" ;
+        InfDialog->InfoData.append("\nVideo resolution:  : " + QString::number(width) + "x" + QString::number(height));
     }
 
 #if (defined(_WIN32))
@@ -535,6 +551,7 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
 #elif defined(__linux__)
     PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))NULL);
 #endif
+    InfDialog->show();
 }
 
 void CALLBACK playm4interface::SetRunTimeInfoCBFun(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser)

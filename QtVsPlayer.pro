@@ -1,4 +1,4 @@
-VERSION = 1.0.40
+VERSION = 1.0.41
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT       += core gui multimedia multimediawidgets
 !android:QT       += dbus
@@ -96,6 +96,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 SOURCES += \
     errormanager.cpp \
     filesliste.cpp \
+    infos.cpp \
     main.cpp \
     pantilcmd.cpp \
     playm4interface.cpp \
@@ -112,6 +113,7 @@ HEADERS += \
     include/LinuxPlayM4.h \
     include/PlayM4.h \
     include/WindowsPlayM4.h \
+    infos.h \
     pantilcmd.h \
     playm4interface.h \
     qtvsplayer.h \
@@ -122,6 +124,7 @@ HEADERS += \
 
 FORMS += \
     filesliste.ui \
+    infos.ui \
     pantilcmd.ui \
     qtvsplayer.ui \
     rtspwindow.ui \
