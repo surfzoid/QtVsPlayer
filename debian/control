@@ -8,7 +8,8 @@ Build-Depends: dh-make,
                qtmultimedia5-dev,
                qttools5-dev-tools,
                qt5-qmake,
-               qt5-default
+               qtchooser,
+               qtbase5-dev-tools
 Standards-Version: 1.0.41-1
 Homepage: https://github.com/surfzoid/QtVsPlayer
 #Vcs-Browser: https://salsa.debian.org/debian/qtvsplayer
