@@ -26,10 +26,10 @@ VideoCtrls::VideoCtrls(QWidget *parent) :
     //Multimedia keys shortcut
     this->ui->previousButton->setShortcut(Qt::Key_MediaPrevious);
     this->ui->nextButton->setShortcut(Qt::Key_MediaNext);
-    this->ui->playButton->setShortcut(Qt::Key_MediaPlay);
+    this->ui->playButton->setShortcut(0x100001F);
     this->ui->pauseButton->setShortcut(0x1000020);
     this->ui->stopButton->setShortcut(Qt::Key_MediaStop);
-    this->ui->SeekLessButton->setShortcut(Qt::Key_AudioRewind);
+    this->ui->SeekLessButton->setShortcut(Qt::Key_Forward);
     this->ui->SeekMoreButton->setShortcut(Qt::Key_BackForward);
 
 

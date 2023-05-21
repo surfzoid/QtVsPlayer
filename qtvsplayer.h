@@ -89,6 +89,8 @@ private slots:
 
     void on_actionQuit_triggered();
 
+    void on_actionQT_Infos_triggered();
+
 public slots:
 
 signals:

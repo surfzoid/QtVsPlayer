@@ -264,6 +264,7 @@
     <addaction name="actionBeer_and_Coffee"/>
     <addaction name="actionA_propos"/>
     <addaction name="actionOnline_documentation"/>
+    <addaction name="actionQT_Infos"/>
    </widget>
    <widget class="QMenu" name="menuAffichage">
     <property name="mouseTracking">
@@ -525,6 +526,11 @@
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionQT_Infos">
+   <property name="text">
+    <string>QT Infos</string>
    </property>
   </action>
  </widget>

@@ -961,3 +961,8 @@ void QtVsPlayer::on_actionQuit_triggered()
 {
     qApp->quit();
 }
+
+void QtVsPlayer::on_actionQT_Infos_triggered()
+{
+    QApplication::aboutQt();
+}
