@@ -21,7 +21,7 @@ Depends: ${shlibs:Depends},
                ${misc:Depends},
                libqt5gui5,
                libqt5widgets5,
-               libqt5core5
+               libqt5core5 | libqt5core5a
 Description:QtVsPlayer for Hikvision.
  Read local video files of Hikvision devices and display blue, green and red vectors. This is the end of an full network backup solution in combination with HikNetExtractor.
 
