@@ -14,11 +14,8 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QMessageBox>
-#include <QMediaMetaData>
 #include "errormanager.h"
 
-QMediaPlayer *RtspWindow::player;
-QVideoWidget *RtspWindow::videoWidget;
 QString RtspWindow::RtspUri;
 
 QString RtspWindow::CamIp = "192.168.";
@@ -27,11 +24,17 @@ QString RtspWindow::CamUser = "admin";
 QString RtspWindow::CamPass = "hik12345";
 QString RtspWindow::CamPortHttp = "801";
 QString RtspWindow::Chanel = "101";
+qint16 RtspWindow::CamPortSdk = 8000;
 unsigned int RtspWindow::PtzSpeed = 3;
 
 PanTilCmd *RtspWindow::PTCmd;
 
 QNetworkAccessManager *RtspWindow::manager;
+
+/****HIKNETSDK****/
+LONG RtspWindow::lPort; //Global Player port NO.
+HWND RtspWindow::hWnd;
+/****HIKNETSDK****/
 
 RtspWindow::RtspWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -39,26 +42,23 @@ RtspWindow::RtspWindow(QWidget *parent) :
 {
 
     QSettings settings;//init settings before combo idx change
-    RtspWindow::player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
-    RtspWindow::videoWidget = new QVideoWidget(this);
 
     PTCmd = new PanTilCmd(this);
 
-    connect(player, SIGNAL(positionChanged(qint64)),
-            this, SLOT(positionChanged(qint64)));
+    //    connect(player, SIGNAL(positionChanged(qint64)),
+    //            this, SLOT(positionChanged(qint64)));
 
 
-    connect(player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
-            this, SLOT(onPlayStatusChanged(QMediaPlayer::MediaStatus)));
-    connect(player, SIGNAL(error(QMediaPlayer::Error)),
-            this, SLOT(onPlayError(QMediaPlayer::Error)));
-    connect(player, SIGNAL(stateChanged(QMediaPlayer::State)),
-            this, SLOT(onPlayStateChanged(QMediaPlayer::State)));
-    //connect(player, SIGNAL(bufferStatusChanged(int)),this, SLOT(onbufferStatusChanged(int)));
-    connect(player, &QMediaPlayer::bufferStatusChanged, this, &RtspWindow::onbufferStatusChanged);
+    //    connect(player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
+    //            this, SLOT(onPlayStatusChanged(QMediaPlayer::MediaStatus)));
+    //    connect(player, SIGNAL(error(QMediaPlayer::Error)),
+    //            this, SLOT(onPlayError(QMediaPlayer::Error)));
+    //    connect(player, SIGNAL(stateChanged(QMediaPlayer::State)),
+    //            this, SLOT(onPlayStateChanged(QMediaPlayer::State)));
+    //    //connect(player, SIGNAL(bufferStatusChanged(int)),this, SLOT(onbufferStatusChanged(int)));
+    //    connect(player, &QMediaPlayer::bufferStatusChanged, this, &RtspWindow::onbufferStatusChanged);
     ui->setupUi(this);
 
-    setCentralWidget(videoWidget);
 
     manager = new QNetworkAccessManager(this);
 
@@ -103,19 +103,18 @@ RtspWindow::RtspWindow(QWidget *parent) :
     settings.endGroup();
     this->move(NewPos);
     this->resize(NewSize);
-
 }
 
 void RtspWindow::showEvent(QShowEvent *event)
 {
-    videoWidget->setObjectName("videoWidget");
-    //there is a ghost widget!!!!!!
+//    there is a ghost widget!!!!!!
     QList<QWidget *> widgets = RtspWindow::findChildren<QWidget *>();
     foreach (QWidget *var, widgets) {
-        //qDebug() << var->objectName() << var->hasMouseTracking() << var->size();
-        if(event and var->size() == videoWidget->size())
+        qDebug() << var->objectName() << var->hasMouseTracking() << var->size();
+        if(event and var->size() == centralWidget()->size())
             var->setMouseTracking(true);
     }
+    IsShown = true;
 }
 
 void RtspWindow::hideEvent(QHideEvent *event)
@@ -127,45 +126,19 @@ void RtspWindow::hideEvent(QHideEvent *event)
 RtspWindow::~RtspWindow()
 {
 
-    if (videoWidget != NULL) {
-        videoWidget->~QVideoWidget();
-    }
+    //---------------------------------------
+    // Close preview
+    NET_DVR_StopRealPlay(lRealPlayHandle);
+    // Logout
+    NET_DVR_Logout(lUserID);
+    NET_DVR_Logout_V30(lUserID);
+    // Release SDK resource
+    NET_DVR_Cleanup();
 
-    if (player != NULL) {
-        player->~QMediaPlayer();
-        //delete  player;
-    }
     delete ui;
 }
 
 
-void RtspWindow::PlayRtsp(QString Camuri)
-{
-
-    if (player->isVideoAvailable() == true) {
-        player->stop();
-    }
-
-    player->setVolume(50);
-
-    player->setVideoOutput(videoWidget);
-    videoWidget->setObjectName("videoWidget");
-    videoWidget->setMouseTracking(true);
-    videoWidget->setAutoFillBackground(true);
-    videoWidget->setAspectRatioMode(Qt::KeepAspectRatio);
-    videoWidget->setSizePolicy(QSizePolicy::Preferred,
-                               QSizePolicy::Maximum);
-
-    player->setMedia(QUrl(Camuri));
-    //player->setPlaybackRate(0);
-    player->play();
-    videoWidget->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
-    //videoWidget->hide();
-
-
-
-
-}
 
 void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
 {
@@ -176,6 +149,7 @@ void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
     CamIp = settings.value("Ip", "").value<QString>();
     CamPort = settings.value("Port", "554").value<QString>();
     CamPortHttp = settings.value("PortHttp", "800").value<QString>();
+    CamPortSdk = settings.value("PortSdk", "8000").value<qint16>();
     CamUser = settings.value("User", "admin").value<QString>();
     CamPass = SetFrm.crypto.decryptToString(settings.value("Password", "hik12345").value<QString>());
     settings.endGroup();
@@ -191,6 +165,9 @@ void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
         }
     }
 
+    /****HIKNETSDK****/
+    LoginInfo(CamPortSdk,CamIp,CamUser,CamPass,!ui->actionsub_stream->isEnabled());
+    /****HIKNETSDK****/
     LoadPreset();
     LoadPatrol();
 }
@@ -240,30 +217,12 @@ void RtspWindow::mouseDoubleClickEvent(QMouseEvent *event)
     return;
 }
 
-void RtspWindow::on_actionIgnoreAspectRatio_triggered()
-{
-    videoWidget->setAspectRatioMode(Qt::IgnoreAspectRatio);
-}
-
-void RtspWindow::on_actionDefault_triggered()
-{
-    videoWidget->setAspectRatioMode( (Qt::AspectRatioMode) -1);
-}
-
-void RtspWindow::on_actionKeepAspectRatio_triggered()
-{
-    videoWidget->setAspectRatioMode(Qt::KeepAspectRatio);
-}
-
-void RtspWindow::on_actionKeepAspectRatioByExpanding_triggered()
-{
-    videoWidget->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
-}
 
 void RtspWindow::on_action_Streaming_Channels_1_triggered()
 {
 
     RtspWindow::Chanel = "101";
+    ClientInfo.lChannel = 0;
     RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + RtspWindow::Chanel;
 
     ui->action_Streaming_Channels_1->setDisabled(true);
@@ -275,13 +234,14 @@ void RtspWindow::on_action_Streaming_Channels_1_triggered()
     ui->action_Streaming_Channels_2->setDisabled(false);
     ui->action_Streaming_Channels_3->setDisabled(false);
 
-    PlayRtsp(RtspUri);
+    //    PlayRtsp(RtspUri);
 }
 
 void RtspWindow::on_action_Streaming_Channels_2_triggered()
 {
 
     RtspWindow::Chanel = "102";
+    ClientInfo.lChannel = 1;
     RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + RtspWindow::Chanel;
 
     ui->action_Streaming_Channels_2->setDisabled(true);
@@ -293,13 +253,14 @@ void RtspWindow::on_action_Streaming_Channels_2_triggered()
     ui->action_Streaming_Channels_1->setDisabled(false);
     ui->action_Streaming_Channels_3->setDisabled(false);
 
-    PlayRtsp(RtspUri);
+    //PlayRtsp(RtspUri);
 }
 
 void RtspWindow::on_action_Streaming_Channels_3_triggered()
 {
 
     RtspWindow::Chanel = "103";
+    ClientInfo.lChannel = 2;
     RtspUri = RtspUri.remove(RtspUri.length() - 3,3) + RtspWindow::Chanel;
 
     ui->action_Streaming_Channels_3->setDisabled(true);
@@ -311,36 +272,18 @@ void RtspWindow::on_action_Streaming_Channels_3_triggered()
     ui->action_Streaming_Channels_2->setDisabled(false);
     ui->action_Streaming_Channels_1->setDisabled(false);
 
-    PlayRtsp(RtspUri);
+    //PlayRtsp(RtspUri);
 }
 
 void RtspWindow::on_actionMetadata_triggered()
 {
     Infos *InfDialog = new Infos(this);
     InfDialog->InfoData = "";
-    GetMetaData(player);
-    QSize Vreso = videoWidget->sizeHint();
-//    printf("Video resolution: %dX%d\n\r",Vreso.width(),Vreso.height());
+    QSize Vreso = centralWidget()->sizeHint();
+    //    printf("Video resolution: %dX%d\n\r",Vreso.width(),Vreso.height());
     qDebug() << "Video resolution: " << Vreso.width() <<"X" << Vreso.height();
     InfDialog->InfoData.append("\nVideo resolution:  : "  + QString::number(Vreso.width()) + "x" + QString::number(Vreso.height()));
-//    return;
 
-    bool IsMeta ;
-    IsMeta = player->isMetaDataAvailable();
-
-    if (IsMeta == true) {
-        QStringList nMeta = player->availableMetaData();
-        foreach (QString nData, nMeta)
-        {
-            printf("%s\n\r",nData.toUtf8().data());
-            InfDialog->InfoData.append("\n"  + nData);
-            QVariant KeyVal = player->metaData(nData);
-            printf("%s\n\r",KeyVal.toString().toUtf8().data());
-            InfDialog->InfoData.append(" : "  + KeyVal.toString());
-        }
-
-
-    }
     InfDialog->show();
 }
 
@@ -353,12 +296,22 @@ auxiliaire
 /doc/index.html#/preview
 */
     RtspWindow::Chanel = "104";
+    struPlayInfo.dwStreamType = 3;
     QString AdPath = "/ISAPI/Streaming/Channels/" + RtspWindow::Chanel;
     QUrl Adresse("rtsp://" + CamUser + ":" + CamPass +
                  "@" +  CamIp + ":" + CamPort + AdPath);
     ui->action_Streaming_Channels_1->setChecked(false);
     ui->action_Streaming_Channels_3->setChecked(false);
-    PlayRtsp(Adresse.url());
+    //    PlayRtsp(Adresse.url());
+    //---------------------------------------
+    // Close preview
+    NET_DVR_StopRealPlay(lRealPlayHandle);
+    // Logout
+    NET_DVR_Logout(lUserID);
+    NET_DVR_Logout_V30(lUserID);
+    // Release SDK resource
+    NET_DVR_Cleanup();
+    //    Play();
 }
 
 void RtspWindow::wheelEvent(QWheelEvent *event)
@@ -619,32 +572,9 @@ void RtspWindow::LoadPatrol()
 
 }
 
-void RtspWindow::GetMetaData(QMediaPlayer *player)
+void RtspWindow::GetMetaData()
 {
-    // Get the list of keys there is metadata available for
-    QStringList metadatalist = player->availableMetaData();
 
-    // Get the size of the list
-    int list_size = metadatalist.size();
-
-    qDebug() << player->isMetaDataAvailable() << list_size;
-
-    // Define variables to store metadata key and value
-    QString metadata_key;
-    QVariant var_data;
-
-    for (int indx = 0; indx < list_size; indx++)
-    {
-        // Get the key from the list
-        metadata_key = metadatalist.at(indx);
-
-        // Get the value for the key
-        var_data = player->metaData(metadata_key);
-
-        qDebug() << metadata_key << var_data.toString();
-        printf("%s : %s\n\r",metadata_key.toUtf8().data(),var_data.toString().toUtf8().data());
-    }
-    qDebug() <<  player->metaData(QMediaMetaData::Resolution).toString();
 }
 
 
@@ -707,186 +637,17 @@ void RtspWindow::on_RecordBtn_toggled(bool checked)
 }
 
 
-void RtspWindow::onPlayError(QMediaPlayer::Error error)
-{
-    qDebug() << "play error - " << error;
-    ui->lblLoading->setText(player->errorString().toUtf8().data());
-}
-
-void RtspWindow::onPlayStateChanged(QMediaPlayer::State state)
-{
-    qDebug() << "play State - " << state;
-    QNetworkRequest PStream;
-    // handle state message
-    switch (state) {
-    case QMediaPlayer::State::PausedState:
-        setStatusInfo(tr("Paused"));
-        break;
-    case QMediaPlayer::State::PlayingState:
-        setStatusInfo(tr("Playing"));
-        break;
-    case QMediaPlayer::State::StoppedState:
-        setStatusInfo(tr("Stopped"));
-        break;
-    }
-
-}
-void RtspWindow::onbufferStatusChanged(int percentFilled)
-{
-    qDebug() << "bufferStatusChanged - " << percentFilled;
-}
-
-void RtspWindow::onPlayStatusChanged(QMediaPlayer::MediaStatus status)
-{
-    qDebug() << "play Status - " << status;
-    //ui->lblLoading->setText(QString(status).toUtf8().data());
-    QNetworkRequest PStream;
-
-    // handle status message
-    switch (status) {
-    case QMediaPlayer::UnknownMediaStatus:
-    case QMediaPlayer::NoMedia:
-    case QMediaPlayer::LoadedMedia:
-        setStatusInfo(QString());
-        break;
-    case QMediaPlayer::LoadingMedia:
-        setStatusInfo(tr("Loading..."));
-        break;
-    case QMediaPlayer::BufferingMedia:
-    case QMediaPlayer::BufferedMedia:
-        //setStatusInfo(tr("Buffering %1%").arg(player->bufferStatus()));
-        setStatusInfo(tr("Loading video stream ........"));
-        break;
-    case QMediaPlayer::StalledMedia:
-        setStatusInfo(tr("Stalled %1%").arg(player->bufferStatus()));
-        break;
-    case QMediaPlayer::EndOfMedia:
-        QApplication::alert(this);
-        break;
-    case QMediaPlayer::InvalidMedia:
-        displayErrorMessage();
-        break;
-    }
-}
-
 void RtspWindow::setStatusInfo(const QString &info)
 {
     ui->lblLoading->show();
     ui->lblLoading->setText(info.toUtf8().data());
 }
 
-void RtspWindow::displayErrorMessage()
+void RtspWindow::displayErrorMessage(QString Err)
 {
     ui->lblLoading->show();
-    ui->lblLoading->setText(player->errorString());
+    ui->lblLoading->setText(Err);
 }
-
-void RtspWindow::on_PauseBtn_released()
-{
-    player->pause();
-}
-
-void RtspWindow::DisplayError(QString Source, unsigned int  ErrMess)
-{
-
-    QString QerrMess=ErrorManager::error_codes(Source, ErrMess);
-
-    //printf("---Hik Sdk error response :from %s : %s\n\r", Source.toUtf8().data(), QerrMess.toUtf8().data());
-
-    return;
-
-}
-
-int nPort = -1 ;
-void RtspWindow::HikRtsp(unsigned char *pBuffer,unsigned int dwBufSize)
-{
-
-    qDebug() << "pBuffer  : " << pBuffer <<"\n";
-    if (!PlayM4_GetPort(&nPort))
-    {
-        DisplayError("PlayM4_GetPort", PlayM4_GetLastError(nPort));
-    }
-
-    if (!PlayM4_SetStreamOpenMode(nPort, STREAME_REALTIME))
-    {
-        DisplayError("PlayM4_SetStreamOpenMode", PlayM4_GetLastError(nPort));
-        PlayM4_FreePort(nPort);
-        DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
-    }
-
-    if (dwBufSize > 0)
-    {
-        if (!PlayM4_OpenStream(nPort, pBuffer, dwBufSize, 1920*1080*3))
-        {
-            DisplayError("PlayM4_OpenStream", PlayM4_GetLastError(nPort));
-            PlayM4_FreePort(nPort);
-            DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
-        }
-
-        if (!PlayM4_SetDisplayCallBack(nPort, RemoteDisplayCBFun))
-        {
-            DisplayError("PlayM4_SetDisplayCallBack", PlayM4_GetLastError(nPort));
-            PlayM4_CloseStream(nPort);
-            DisplayError("PlayM4_CloseStream", PlayM4_GetLastError(nPort));
-            PlayM4_FreePort(nPort);
-            DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
-        }
-
-        PLAYM4_HWND pWnd= centralWidget()->winId();
-        if (!pWnd)
-        {
-            PlayM4_CloseStream(nPort);
-            DisplayError("PlayM4_CloseStream", PlayM4_GetLastError(nPort));
-            PlayM4_FreePort(nPort);
-            DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
-            return;
-        }
-        if (!PlayM4_Play(nPort, pWnd))
-        {
-            DisplayError("PlayM4_Play", PlayM4_GetLastError(nPort));
-            PlayM4_CloseStream(nPort);
-            DisplayError("PlayM4_CloseStream", PlayM4_GetLastError(nPort));
-            PlayM4_FreePort(nPort);
-            DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
-        }
-    }
-    else
-    {
-
-        if (!PlayM4_Play(nPort,0))
-        {
-            DisplayError("PlayM4_Play", PlayM4_GetLastError(nPort));
-            PlayM4_CloseStream(nPort);
-            DisplayError("PlayM4_CloseStream", PlayM4_GetLastError(nPort));
-            PlayM4_FreePort(nPort);
-            DisplayError("PlayM4_FreePort", PlayM4_GetLastError(nPort));
-        }
-    }
-}
-
-/*********************************************************
-  Function:	DisplayCBFun
-  Desc:		the call back function to snatch the bmp pictrue
-  Input:	nPort,port;pBuf,pic buffer;nSize,pic size;nWidth,pic width;nHeight,pic height;nType,type;
-  Output:	none
-  Return:	none
-**********************************************************/
-void CALLBACK RtspWindow::RemoteDisplayCBFun(int nPort, char *pBuf, int size, int width, int height,int stamp, int type, int reserved)
-{
-    DisplayError("RemoteDisplayCBFun", PlayM4_GetLastError(nPort));
-}
-
-
-/*void RtspWindow::processFrame(const QVideoFrame &frame)
-{
-    if (frame.isValid())
-        //qDebug() << MediaStream->bytesAvailable();
-
-        //HikRtsp((unsigned char*)frame.buffer(), sizeof(frame.buffer()));
-        //PlayM4_InputData(nPort,(unsigned char*)frame.buffer(), sizeof(frame.buffer()));
-        return; //drop frame
-
-}*/
 
 void RtspWindow::keyPressEvent(QKeyEvent *e)
 {
@@ -950,6 +711,7 @@ bool RtspWindow::MenubarHasFocus(QMenuBar *menu)
     return false;
 }
 
+PLAYRECT Adjust;
 void RtspWindow::resizeEvent(QResizeEvent *event)
 {
     //surpress warning!
@@ -970,6 +732,31 @@ void RtspWindow::resizeEvent(QResizeEvent *event)
     settings.endGroup();
     settings.sync();
 
+    /****HikNetSdk****/
+    Adjust.uHeight = centralWidget()->height();
+    Adjust.uWidth  = centralWidget()->width();
+    Adjust.x = centralWidget()->x();
+    Adjust.y  = centralWidget()->y();
+
+    hWnd = centralWidget()->winId();// centralWidget()->winId();
+    //    return;
+
+    //    //struPlayInfo.hPlayWnd = videoWidget->winId();// centralWidget()->winId();
+    //    if (!NET_DVR_RealPlayRestart(lRealPlayHandle,centralWidget()->winId())) {
+    //        int err = NET_DVR_GetLastError();
+    //        qDebug()<< NET_DVR_GetErrorMsg(&err);
+    //    }
+
+
+    //    if (!PlayM4_WndResolutionChange(lRealPlayHandle))
+    //    {
+    //        qDebug()<< PlayM4_GetLastError(lRealPlayHandle);
+    //    }
+    //    if (!PlayM4_RefreshPlay(lRealPlayHandle))
+    //    {
+    //        qDebug()<< PlayM4_GetLastError(lRealPlayHandle);
+    //    }
+    /****HikNetSdk****/
     return ;
 }
 
@@ -1075,3 +862,224 @@ QString RtspWindow::SetXMLReq(int pan,int tilt,int zoom)
         return XmlData;
 }
 
+/****HIKNETSDK****/
+
+void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName, QString sPassword,bool StreamChoice)
+{
+
+    // Close preview
+    NET_DVR_StopRealPlay(lRealPlayHandle);
+    // Logout
+    NET_DVR_Logout(lUserID);
+    NET_DVR_Logout_V30(lUserID);
+    // Release SDK resource
+    NET_DVR_Cleanup();
+    hWnd =centralWidget()->winId();// centralWidget()->winId();
+
+    //AT last need init SDK
+    if (!NET_DVR_Init())
+    {
+        int err = NET_DVR_GetLastError();
+        qDebug()<< NET_DVR_GetErrorMsg(&err);
+        return;
+    }
+    //---------------------------------------
+    //Set connection time and reconnection time
+    NET_DVR_SetConnectTime(2000, 1);
+    NET_DVR_SetReconnect(10000, true);
+    //---------------------------------------
+    // Login
+    NET_DVR_DEVICEINFO_V30 struDeviceInfo;
+    lUserID = NET_DVR_Login_V30(sDeviceAddress.toUtf8().data(), Port, sUserName.toUtf8().data(), sPassword.toUtf8().data(), &struDeviceInfo);
+    if (lUserID < 0)
+    {
+        printf("Login error, %d\n", NET_DVR_GetLastError());
+        qDebug() << "Login error"<< NET_DVR_GetLastError();
+        NET_DVR_Cleanup();
+        return;
+    }
+    //---------------------------------------
+    //Set exception callback function
+    NET_DVR_SetExceptionCallBack_V30(0, NULL,g_ExceptionCallBack, NULL);
+    //---------------------------------------
+    //Start preview and set to callback stream data
+    LONG lRealPlayHandle;
+    ClientInfo.hPlayWnd = hWnd;
+    //If need to decode, please set it valid. If want to get stream data only, it can be set to NULL
+    ClientInfo.lChannel = 1; // Preview channel NO.
+    if (StreamChoice) {
+        ClientInfo.lLinkMode |= (1u << 31);
+    }else {
+        ClientInfo.lLinkMode = 0;
+    }/* The high bit (31) 0 means the main stream, while 1 means the sub
+    stream. Bit 0~bit 30 are used for link mode: 0- TCP mode, 1- UDP mode, 2- Multi-play mode, 3- RTP mode, 4- RTP
+    over RTSP, 5- RTSP over HTTP */
+    ClientInfo.sMultiCastIP = NULL;
+    // Multicast IP. Please set when require to preview in multicast mode.
+    //    BOOL bPreviewBlock = false;
+    //Whether blocked when requiring a stream connection, 0 means unblocked, 1 means blocked
+    lRealPlayHandle = NET_DVR_RealPlay_V30(lUserID, &ClientInfo, NULL, NULL, 0);
+    if (lRealPlayHandle < 0)
+    {
+        printf("NET_DVR_RealPlay_V30 error\n");
+        NET_DVR_Logout(lUserID);
+        NET_DVR_Cleanup();
+        return;
+    }
+    return;
+}
+
+//void RtspWindow::Play()
+//{
+
+//    struPlayInfo.lChannel     = StreamType;  //channel NO
+//    struPlayInfo.dwLinkMode   = 0;
+//    struPlayInfo.dwStreamType   = StreamType;// Stream type 0-main stream,1-sub stream,2-third stream,3-forth
+//    struPlayInfo.byRecvMetaData = 1;
+//    struPlayInfo.hPlayWnd = videoWidget->winId();// centralWidget()->winId();
+//    struPlayInfo.bBlocked = 1;
+//    struPlayInfo.dwDisplayBufNum = 1;
+//    lRealPlayHandle = NET_DVR_RealPlay_V40(0, &struPlayInfo, RealDataCallBack, NULL);
+//    qDebug() << "realhandle" << lRealPlayHandle;
+//    if (!PlayM4_SetDecCallBack(0,DecCBFun))
+//    {
+//        qDebug() << PlayM4_GetLastError(0);
+//    }
+//    if (!PlayM4_RenderPrivateData(0, PLAYM4_RENDER_ANA_INTEL_DATA, true))
+//    {
+//        qDebug() << PlayM4_GetLastError(0);
+//    }
+
+//}
+
+
+/**  @fn  void __stdcall  RealDataCallBack(LONG lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser)
+ *   @brief data callback funtion
+ *   @param (OUT) LONG lRealHandle
+ *   @param (OUT) int dwDataType
+ *   @param (OUT) BYTE *pBuffer
+ *   @param (OUT) int  dwBufSize
+ *   @param (OUT) void* dwUser
+ *   @return none
+ */
+void __stdcall  RtspWindow::RealDataCallBack(LONG lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser)
+{
+    //qDebug() << "pBuffer" << pBuffer;
+    if (dwUser != NULL)
+    {
+        qDebug() << "init error..." << NET_DVR_GetLastError();
+        qDebug("Demmo lRealHandle[%d]: Get StreamData! Type[%d], BufSize[%d], pBuffer:%p\n", lRealHandle, dwDataType, dwBufSize, pBuffer);
+        int err = NET_DVR_GetLastError();
+        qDebug()<< NET_DVR_GetErrorMsg(&err);
+    }
+}
+
+void __stdcall RtspWindow::g_ExceptionCallBack(int dwType, LONG lUserID, LONG lHandle, void *pUser)
+{
+    switch(dwType)
+    {
+    case EXCEPTION_RECONNECT:
+        qDebug() << "init error..." << NET_DVR_GetLastError();
+        qDebug() <<"reconnect--------" << QDateTime::currentDateTime().toString();
+        break;
+    default:
+        int err = NET_DVR_GetLastError();
+        qDebug()<< NET_DVR_GetErrorMsg(&err);
+        break;
+    }
+}
+
+void __stdcall RtspWindow::DecCBFun(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2)
+{
+    //    qDebug("TYPE:%d-[%d*%d]",pFrameInfo->nType,pFrameInfo->nWidth,pFrameInfo->nHeight);
+    switch (pFrameInfo->nType) {
+    case T_YV12:
+    {
+
+    }
+        break;
+    case T_AUDIO8:
+    case T_AUDIO16:
+
+        break;
+    default:
+        break;
+    }
+}
+
+/*Mode 2 Users theirselves deal with stream data which called back by g_RealDataCallBack_V30.
+Here takes software decoding as an example.*/
+//void CALLBACK RtspWindow::g_RealDataCallBack_V30(LONG lRealHandle, int dwDataType, BYTE *pBuffer, int dwBufSize, void* dwUser)
+//{
+//    QString str;
+//    QByteArray TmpB((char*)pBuffer);
+//    qDebug() << "dwDataType" << dwDataType;
+//    switch (dwDataType)
+//    {
+//    case 1: //NET_DVR_SYSHEAD System head
+//        str = QString::fromUtf8((char*)pBuffer);
+//        qDebug() << str << dwBufSize;
+//        if (!PlayM4_GetPort(&lPort))//Get unused port
+//        {
+//            break;
+//        }
+//        //m_iPort = lPort;
+//        /*The data called back at the first time is system header. Please
+//assign this port to global port, and it will be used to play in next callback */
+//        if (dwBufSize > 0)
+//        {
+//            if (!PlayM4_SetStreamOpenMode(lPort, STREAME_REALTIME))
+//                //Set real-time stream playing mode
+//            {
+//                break;
+//            }
+//            if (!PlayM4_OpenStream(lPort, pBuffer, dwBufSize, 1024*1024))
+//                //Open stream
+//            {
+//                break;
+//            }
+//            if (!PlayM4_Play(lPort, hWnd))//Start play
+//            {
+//                break;
+//            }
+//            /*if (!PlayM4_SetDecCallBack(lPort,DecCBFun))
+//            {
+//                qDebug() << PlayM4_GetLastError(lPort);
+//            }*/
+//            if (!PlayM4_RenderPrivateData(lPort, PLAYM4_RENDER_ANA_INTEL_DATA, true))
+//            {
+//                qDebug() << PlayM4_GetLastError(0);
+//            }
+//        }
+//        break;
+//    case 2://NET_DVR_STREAMDATA Stream data
+//        if (dwBufSize > 0 && lPort != -1)
+//        {
+//            if (!PlayM4_InputData(lPort, pBuffer, dwBufSize))
+//            {
+//                break;
+//            }
+//            str = QString::fromUtf8((char*)pBuffer);
+//            qDebug() << str << dwBufSize;
+//        }
+//    }
+//}
+/****HIKNETSDK****/
+
+void RtspWindow::on_actionmain_stream_triggered()
+{
+    if (IsShown) {
+        ui->actionsub_stream->setEnabled(true);
+        ui->actionmain_stream->setEnabled(false);
+        LoginInfo(CamPortSdk,CamIp,CamUser,CamPass,false);
+    }
+}
+
+void RtspWindow::on_actionsub_stream_triggered()
+{
+    if (IsShown) {
+        ui->actionmain_stream->setEnabled(true);
+        ui->actionsub_stream->setEnabled(false);
+        LoginInfo(CamPortSdk,CamIp,CamUser,CamPass,true);
+    }
+}

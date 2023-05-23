@@ -11,7 +11,6 @@
 #include <QFileDialog>
 #include <QtCore>
 #include <QLabel>
-#include <QVideoWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class QtVsPlayer; }
@@ -25,7 +24,7 @@ class QtVsPlayer : public QMainWindow
 public:
     QtVsPlayer(QWidget *parent = nullptr);
     ~QtVsPlayer();
-    static QVideoWidget *VideoView;
+    static QWidget *VideoView;
     void KeyPress(QWidget *parent = 0);
     //playm4interface *nPlaym4Interface;
     void FullScr();

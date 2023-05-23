@@ -2,17 +2,22 @@
 #define RTSPWINDOW_H
 
 #include <QMainWindow>
-#include <QMediaPlayer>
-#include <QVideoWidget>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <include/PlayM4.h>
-#include <QVideoProbe>
 #include <QSettings>
 #include <settingsform.h>
 #include <QXmlStreamReader>
 #include <QComboBox>
 #include <pantilcmd.h>
+
+#if defined(_WIN32)
+#include <Windows.h>
+#pragma warning( disable : 4996)
+#else
+#endif
+
+#include "include/HCNetSDK.h"
+#include "include/PlayM4.h"
 
 class QVideoProbe;
 
@@ -38,19 +43,15 @@ public:
     static void PanTilBottomLeft_pressed();
     static void PanTilLeft_pressed();
     /*******PANTIL CMD************/
+    /*******HCNetSDK**************/
+    void LoginInfo(qint16 Port, QString sDeviceAddress, QString sUserName, QString sPassword, bool StreamChoice);
+    void Play();
+    /*******HCNetSDK**************/
 
 private slots:
     void on_ComboBxCam_currentIndexChanged(const QString &arg1);
 
     void positionChanged(qint64 pos);
-
-    void on_actionIgnoreAspectRatio_triggered();
-
-    void on_actionDefault_triggered();
-
-    void on_actionKeepAspectRatio_triggered();
-
-    void on_actionKeepAspectRatioByExpanding_triggered();
 
     void on_action_Streaming_Channels_1_triggered();
 
@@ -82,17 +83,18 @@ private slots:
 
     void on_RecordBtn_toggled(bool checked);
 
-    void on_PauseBtn_released();
-
     void HideMenu();
+
+    void on_actionmain_stream_triggered();
+
+    void on_actionsub_stream_triggered();
 
 private:
     Ui::RtspWindow *ui;
+    bool IsShown = false;
     void PlayRtsp(QString Camuri);
     void blink();
     void CallPresset(int Presset);
-    static QMediaPlayer *player;
-    static QVideoWidget *videoWidget;
 
     static QString RtspUri;
     static QNetworkAccessManager *manager;
@@ -102,6 +104,9 @@ private:
     static QString CamUser;
     static QString CamPass;
     static QString CamPortHttp;
+    /*******HCNetSDK**************/
+    static qint16 CamPortSdk;
+    /*******HCNetSDK**************/
     static QString Chanel;
     static unsigned int PtzSpeed;
 
@@ -109,9 +114,9 @@ private:
     void LoadPatrol();
 
     static QString SetXMLReq(int pan,int tilt,int zoom);
-    void GetMetaData(QMediaPlayer *player);
+    void GetMetaData();
     void setStatusInfo(const QString &info);
-    void displayErrorMessage();
+    void displayErrorMessage(QString Err);
     void SetmediaRecorder();
     void HikRtsp(unsigned char *pBuffer,unsigned int dwBufSize);
     static void DisplayError(QString Source, unsigned int  ErrMess);
@@ -134,6 +139,48 @@ private:
     static PanTilCmd *PTCmd;
     static void SendPTZ(int pan,int tilt,int zoom);
 
+
+    /*******HCNetSDK**************/
+
+    NET_DVR_CLIENTINFO ClientInfo = {0};
+    NET_DVR_PREVIEWINFO struPlayInfo = {0};
+    NET_DVR_DEVICEINFO_V30 struDeviceInfo;
+    LONG lRealPlayHandle;
+    LONG lUserID;
+    static LONG lPort; //Global Player port NO.
+    static HWND hWnd;
+
+    //device data
+
+    // Stream type 0-main stream,1-sub stream,2-third stream,3-forth
+    int     StreamType = 0;
+    //µÇÂ½Éè±¸ºó·µ»ØµÄÓÃ»§ID£»²»´æÈëÎÄ¼þ
+    int     m_iuserid;
+    //µÇÂ½Éè±¸ºó·µ»ØÉè±¸ÐÅÏ¢£»²»´æÈëÎÄ¼þ
+    NET_DVR_DEVICEINFO_V30 m_deviceinfo;
+    //Éè±¸Ãû³Æ£¬´æÈëÎÄ¼þ
+    QString m_qdevicename;
+    //Éè±¸IP£¬´æÈëÎÄ¼þ
+    QString m_qip;
+    //Éè±¸¶Ë¿Ú,´æÈëÎÄ¼þ
+    int     m_qiport;
+    //ÓÃ»§Ãû£¬´æÈëÎÄ¼þ
+    QString m_qusername;
+    //ÓÃ»§ÃÜÂë£¬´æÈëÎÄ¼þ
+    QString m_qpassword;
+    //²¼·ÀÖÐ >=0  ·ñÔò -1
+    int m_ideployed;
+    //¶à²¥ipµØÖ·
+    QString m_multiCast;
+    //×ÓÊôÐÔÍ¨µÀ½ÚµãÁÐ±í£¬ÆäÄÚÈÝÒ²Òª´æÈëÎÄ¼þ£»
+    //QList<ChannelData> m_qlistchanneldata;
+
+    static void __stdcall  RealDataCallBack(LONG lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser);
+    static void __stdcall g_ExceptionCallBack(int dwType, LONG lUserID, LONG lHandle, void *pUser);
+    static void __stdcall DecCBFun(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2);
+    static void CALLBACK g_RealDataCallBack_V30(LONG lRealHandle, int dwDataType, BYTE *pBuffer,int dwBufSize,void* dwUser);
+    /*******HCNetSDK**************/
+
 public slots:
     void replyFinished (QNetworkReply *reply);
     void authenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
@@ -141,10 +188,6 @@ public slots:
     //void processFrame(const QVideoFrame &frame);
 
 protected slots:
-    void onPlayStatusChanged(QMediaPlayer::MediaStatus status);
-    void onPlayError(QMediaPlayer::Error error);
-    void onPlayStateChanged(QMediaPlayer::State state);
-    void onbufferStatusChanged(int percentFilled);
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;

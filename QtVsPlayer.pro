@@ -1,6 +1,6 @@
 VERSION = 1.0.42
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
-QT       += core gui multimedia multimediawidgets
+QT       += core gui network
 !android:QT       += dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -44,7 +44,7 @@ unix {
     #INSTALLS += iconfiles
     #For Mageia, adjust
     libfiles.path = $$(PREFIX)/../lib64/QtVsPlayer
-    libfiles.files += $$PWD/lib/$$QMAKE_HOST.arch/*.so
+    libfiles.files += $$PWD/lib/$$QMAKE_HOST.arch/*.so $$PWD/lib/$$QMAKE_HOST.arch/HCNetSDKCom
     translationfiles.path = $$(PREFIX)/QtVsPlayer/translations
     translationfiles.files += $$PWD/*.qm
     docfiles.path = $$(PREFIX)/doc/QtVsPlayer
@@ -67,14 +67,14 @@ debugfiles.files = $${TARGET}.debug
 unix:!macx:!android: {
 INCLUDEPATH += $$PWD/lib/$$QMAKE_HOST.arch/
 DEPENDPATH += $$PWD/lib/$$QMAKE_HOST.arch/
-LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer -lPlayCtrl -lAudioRender -lSuperRender
+LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer:/HCNetSDKCom:./ -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
 }
 
 macx: {
-LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -lPlayCtrl -lSuperRender
+LIBS += -L$$PWD/lib/macX86_64/:/HCNetSDKCom:./ -lhcnetsdk -lPlayCtrl -lSuperRender
 
-INCLUDEPATH += $$PWD/lib/$$QMAKE_HOST.arch/
-DEPENDPATH += $$PWD/lib/$$QMAKE_HOST.arch/
+INCLUDEPATH += $$PWD/lib/macX86_64/
+DEPENDPATH += $$PWD/lib/macX86_64/
 ICON = $$PWD/images/QtVsPlayer.icns
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
 }
@@ -110,6 +110,7 @@ HEADERS += \
     errormanager.h \
     filesliste.h \
     include/ApplePlayM4.h \
+    include/HCNetSDK.h \
     include/LinuxPlayM4.h \
     include/PlayM4.h \
     include/WindowsPlayM4.h \
@@ -156,7 +157,7 @@ DISTFILES += \
 
 win32: {
 CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
-else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
 INCLUDEPATH += $$PWD/lib/w86_64
 DEPENDPATH += $$PWD/lib/w86_64
 }

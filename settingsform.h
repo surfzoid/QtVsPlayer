@@ -23,6 +23,9 @@ public:
     QString CamPortHttp = "800";
     QString CamUser = "admin";
     QString CamPass = "hik12345";
+    /*******HCNetSDK**************/
+    qint16 CamPortSdk;
+    /*******HCNetSDK**************/
 
     static SimpleCrypt crypto;
 

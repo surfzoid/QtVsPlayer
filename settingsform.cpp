@@ -48,12 +48,24 @@ void SettingsForm::on_BtnSave_released()
     settings.setValue( "Ip", ui->IpEd->text());
     settings.setValue("Port", ui->PortEd->text());
     settings.setValue("PortHttp", ui->PortHttpEd->text());
+    /*******HCNetSDK**************/
+    settings.setValue("PortSdk", ui->PortSdkEd->text());
+    /*******HCNetSDK**************/
     settings.setValue("User", ui->UserEd->text());
     settings.setValue("Password",crypto.encryptToString(ui->PassEd->text()) );
 
     settings.endGroup();
     settings.sync();
     close();
+
+    CamIp = ui->IpEd->text();
+    CamPort = ui->PortEd->text();
+    CamPortHttp = ui->PortHttpEd->text();
+    /*******HCNetSDK**************/
+    CamPortSdk = ui->PortSdkEd->text().toShort();
+    /*******HCNetSDK**************/
+    CamUser = ui->UserEd->text();
+    CamPass = ui->PassEd->text();
 }
 
 void SettingsForm::on_CamNameEd_currentIndexChanged(const QString &arg1)
@@ -64,6 +76,9 @@ void SettingsForm::on_CamNameEd_currentIndexChanged(const QString &arg1)
     CamIp = settings.value("Ip", "").value<QString>();
     CamPort = settings.value("Port", "554").value<QString>();
     CamPortHttp = settings.value("PortHttp", "800").value<QString>();
+    /*******HCNetSDK**************/
+    CamPortSdk = settings.value("PortSdk", "8000").value<qint16>();
+    /*******HCNetSDK**************/
     CamUser = settings.value("User", "admin").value<QString>();
     CamPass = crypto.decryptToString(settings.value("Password", "hik12345").value<QString>());
     settings.endGroup();
@@ -71,6 +86,9 @@ void SettingsForm::on_CamNameEd_currentIndexChanged(const QString &arg1)
     ui->IpEd->setText(CamIp);
     ui->PortEd->setText(CamPort);
     ui->PortHttpEd->setText(CamPortHttp);
+    /*******HCNetSDK**************/
+    ui->PortSdkEd->setText(QString::number(CamPortSdk));
+    /*******HCNetSDK**************/
     ui->UserEd->setText(CamUser);
     ui->PassEd->setText(CamPass);
 

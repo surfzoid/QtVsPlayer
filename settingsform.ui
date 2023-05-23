@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>337</width>
-    <height>233</height>
+    <width>534</width>
+    <height>309</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,208 +23,12 @@
   <property name="locale">
    <locale language="English" country="UnitedKingdom"/>
   </property>
-  <widget class="QLineEdit" name="IpEd">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>50</y>
-     <width>151</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>the ip or domain name of the device</string>
-   </property>
-   <property name="text">
-    <string>192.168.</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>130</y>
-     <width>41</width>
-     <height>19</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Pass</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="UserEd">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>90</y>
-     <width>151</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Enter the user name</string>
-   </property>
-   <property name="text">
-    <string>admin</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="BtnCancel">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>170</y>
-     <width>100</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Close without saving</string>
-   </property>
-   <property name="text">
-    <string>Cancel</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="PassEd">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>130</y>
-     <width>151</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Enter the user password</string>
-   </property>
-   <property name="text">
-    <string>pass</string>
-   </property>
-   <property name="echoMode">
-    <enum>QLineEdit::PasswordEchoOnEdit</enum>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>50</y>
-     <width>41</width>
-     <height>19</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Ip</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>90</y>
-     <width>41</width>
-     <height>19</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>User</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="BtnSave">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>170</y>
-     <width>100</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Save and lose</string>
-   </property>
-   <property name="text">
-    <string>Save</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>30</y>
-     <width>31</width>
-     <height>19</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Port</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="PortEd">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>50</y>
-     <width>51</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Enter the port number for rtsp conection</string>
-   </property>
-   <property name="text">
-    <string>554</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="CamNameEd">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>10</y>
-     <width>151</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>The name of the device</string>
-   </property>
-   <property name="editable">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>51</width>
-     <height>19</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Name</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="BtnDel">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>10</y>
-     <width>21</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Delete imediatly this device</string>
-   </property>
-   <property name="text">
-    <string>X</string>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="ConfFsPath">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>200</y>
-     <width>461</width>
+     <x>10</x>
+     <y>260</y>
+     <width>511</width>
      <height>27</height>
     </rect>
    </property>
@@ -244,8 +48,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>269</x>
-     <y>130</y>
+     <x>570</x>
+     <y>10</y>
      <width>51</width>
      <height>27</height>
     </rect>
@@ -254,47 +58,206 @@
     <string>Play</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="PortHttpEd">
+  <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>80</y>
-     <width>51</width>
-     <height>27</height>
+     <x>0</x>
+     <y>0</y>
+     <width>301</width>
+     <height>181</height>
     </rect>
    </property>
-   <property name="toolTip">
-    <string>Enter the http port for ISAPI</string>
-   </property>
-   <property name="text">
-    <string>800</string>
-   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Name</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="CamNameEd">
+      <property name="toolTip">
+       <string>The name of the device</string>
+      </property>
+      <property name="editable">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="IpEd">
+      <property name="toolTip">
+       <string>the ip or domain name of the device</string>
+      </property>
+      <property name="text">
+       <string>192.168.</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Ip</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>User</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="UserEd">
+      <property name="toolTip">
+       <string>Enter the user name</string>
+      </property>
+      <property name="text">
+       <string>admin</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="PassEd">
+      <property name="toolTip">
+       <string>Enter the user password</string>
+      </property>
+      <property name="text">
+       <string>pass</string>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::PasswordEchoOnEdit</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Pass</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QWidget" name="formLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>80</y>
-     <width>41</width>
-     <height>19</height>
+     <x>300</x>
+     <y>0</y>
+     <width>221</width>
+     <height>181</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Http</string>
-   </property>
+   <layout class="QFormLayout" name="formLayout_2">
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Rtsp</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>Http</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="PortEd">
+      <property name="toolTip">
+       <string>Enter the port number for rtsp conection</string>
+      </property>
+      <property name="text">
+       <string>554</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="PortHttpEd">
+      <property name="toolTip">
+       <string>Enter the http port for ISAPI</string>
+      </property>
+      <property name="text">
+       <string>800</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Port</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="BtnDel">
+      <property name="toolTip">
+       <string>Delete imediatly this device</string>
+      </property>
+      <property name="text">
+       <string>X</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>Sdk</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="PortSdkEd">
+      <property name="toolTip">
+       <string>Enter the http port for ISAPI</string>
+      </property>
+      <property name="text">
+       <string>8001</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QWidget" name="formLayoutWidget_3">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>50</y>
-     <width>41</width>
-     <height>19</height>
+     <x>0</x>
+     <y>180</y>
+     <width>521</width>
+     <height>51</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Rtsp</string>
-   </property>
+   <layout class="QFormLayout" name="formLayout_3">
+    <item row="0" column="0">
+     <widget class="QPushButton" name="BtnSave">
+      <property name="toolTip">
+       <string>Save and lose</string>
+      </property>
+      <property name="text">
+       <string>Save</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QPushButton" name="BtnCancel">
+      <property name="toolTip">
+       <string>Close without saving</string>
+      </property>
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources>

@@ -28,7 +28,7 @@ QString QtVsPlayer::Lastfs = QStandardPaths::writableLocation(QStandardPaths::Mo
 FilesListe *QtVsPlayer::filesLs;
 VideoCtrls *QtVsPlayer::WVideoCtrls;
 //QVideoWidget *QtVsPlayer::videoWidget;
-QVideoWidget *QtVsPlayer::VideoView;
+QWidget *QtVsPlayer::VideoView;
 
 static int eventEnumIndex = QEvent::staticMetaObject
         .indexOfEnumerator("Type");
@@ -115,7 +115,7 @@ void QtVsPlayer::showEvent(QShowEvent *event)
     //VideoView = new QDialog(this);
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::black);
-    VideoView = new QVideoWidget(this);
+    VideoView = new QWidget(this);
     VideoView->setPalette(pal);
     centralWidgetwinId = VideoView->winId();
     VideoView->setMouseTracking(true);

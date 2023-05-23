@@ -350,9 +350,12 @@
      <property name="title">
       <string>channel</string>
      </property>
+     <property name="separatorsCollapsible">
+      <bool>true</bool>
+     </property>
      <widget class="QMenu" name="menuNVR">
       <property name="enabled">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <property name="tabletTracking">
        <bool>true</bool>
@@ -366,6 +369,8 @@
      <addaction name="action_Streaming_Channels_2"/>
      <addaction name="action_Streaming_Channels_3"/>
      <addaction name="menuNVR"/>
+     <addaction name="actionmain_stream"/>
+     <addaction name="actionsub_stream"/>
     </widget>
     <addaction name="menuProportions"/>
     <addaction name="menuchannel"/>
@@ -427,10 +432,13 @@
     <bool>true</bool>
    </property>
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>/Streaming/Channels/101</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="action_Streaming_Channels_2">
@@ -440,16 +448,28 @@
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>/Streaming/Channels/102</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="action_Streaming_Channels_3">
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>/Streaming/Channels/103</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionMetadata">
@@ -478,6 +498,37 @@
   <action name="actionReboot">
    <property name="text">
     <string>Reboot</string>
+   </property>
+  </action>
+  <action name="actionmain_stream">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>main stream</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionsub_stream">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>sub stream</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>false</bool>
    </property>
   </action>
  </widget>
