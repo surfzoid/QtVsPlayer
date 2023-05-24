@@ -89,12 +89,12 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_datadir}/icons/QtVsPlayer.png
 %{_datadir}/QtVsPlayer/
 %dir %{_libdir}/QtVsPlayer/
-%{_libdir}/QtVsPlayer/*.so
-%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so
+%{_libdir}/QtVsPlayer/*.so.*
+%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so.*
 
 %changelog
 * Wed May 24 2023 surfzoid@gmail.com
-+ Live view use Hikvision network SDK, no mor Qtmultimedia.
++ Live view use Hikvision network SDK, no more Qtmultimedia.
 
 * Tue May 09 2023 surfzoid@gmail.com
 + Add infos/metadata widget.
