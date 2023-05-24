@@ -1,11 +1,11 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.42
+Version:        1.0.43
 
 %if 0%{?mageia}
-Release:        %mkrel 2
+Release:        %mkrel 1
 %else
-Release:        2.surf.mlo
+Release:        1.surf.mlo
 %endif
 
 License:        GPLv3
@@ -13,8 +13,8 @@ Group:          Video/Players
 URL:            https://github.com/surfzoid/QtVsPlayer
 Source0:        https://github.com/surfzoid/QtVsPlayer/archive/%{version}/%{name}-%{version}.tar.gz
 # List of additional build dependencies
-BuildRequires:  pkgconfig(Qt5Multimedia)
-BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
+BuildRequires:  pkgconfig(Qt5Network)
+BuildRequires:  pkgconfig(Qt5NetworkAuth)
 %if 0%{?mageia}
 BuildRequires:  qtbase5-common-devel
 %else
@@ -31,8 +31,8 @@ BuildRequires:  pkgconfig(openal)
 %endif
 
 BuildRequires: chrpath
-Requires: lib64qt5multimedia5
-Requires: lib64qt5multimediawidgets5
+Requires: lib64qt5network5
+Requires: lib64qt5networkauth5
 Requires: qtbase5-common
 Requires: lib64openal1
  
@@ -63,10 +63,10 @@ Licences are in the doc dir.
 %install
 %make_install INSTALL_ROOT=%{buildroot}%{_datadir}
 mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
-chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libAudioRender.so
-chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libPlayCtrl.so
-chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
-ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
+chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so
+chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so
+#chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
+#ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
 
 %post
 /sbin/ldconfig /usr/lib64/QtVsPlayer/
@@ -89,12 +89,13 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_datadir}/icons/QtVsPlayer.png
 %{_datadir}/QtVsPlayer/
 %dir %{_libdir}/QtVsPlayer/
-%{_libdir}/QtVsPlayer/libAudioRender.so
-%{_libdir}/QtVsPlayer/libPlayCtrl.so
-%{_libdir}/QtVsPlayer/libSuperRender.so
-%{_libdir}/QtVsPlayer/libopenal.so.1
+%{_libdir}/QtVsPlayer/*.so
+%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so
 
 %changelog
+* Wed May 24 2023 surfzoid@gmail.com
++ Live view use Hikvision network SDK, no mor Qtmultimedia.
+
 * Tue May 09 2023 surfzoid@gmail.com
 + Add infos/metadata widget.
 

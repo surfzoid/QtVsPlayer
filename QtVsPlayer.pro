@@ -1,4 +1,4 @@
-VERSION = 1.0.42
+VERSION = 1.0.43
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 QT       += core gui network
 !android:QT       += dbus
