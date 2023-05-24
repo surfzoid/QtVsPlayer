@@ -67,11 +67,11 @@ debugfiles.files = $${TARGET}.debug
 unix:!macx:!android: {
 INCLUDEPATH += $$PWD/lib/$$QMAKE_HOST.arch/
 DEPENDPATH += $$PWD/lib/$$QMAKE_HOST.arch/
-LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer:/HCNetSDKCom:./ -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
+LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
 }
 
 macx: {
-LIBS += -L$$PWD/lib/macX86_64/:/HCNetSDKCom:./ -lhcnetsdk -lPlayCtrl -lSuperRender
+LIBS += -L$$PWD/lib/macX86_64/ -lhcnetsdk -lPlayCtrl -lSuperRender
 
 INCLUDEPATH += $$PWD/lib/macX86_64/
 DEPENDPATH += $$PWD/lib/macX86_64/
@@ -156,8 +156,8 @@ DISTFILES += \
 
 
 win32: {
-CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
-else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
+CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64 -lPlayCtrl -lAudioRender -lSuperRender
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64 -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
 INCLUDEPATH += $$PWD/lib/w86_64
 DEPENDPATH += $$PWD/lib/w86_64
 }
