@@ -89,8 +89,7 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_datadir}/icons/QtVsPlayer.png
 %{_datadir}/QtVsPlayer/
 %dir %{_libdir}/QtVsPlayer/
-%{_libdir}/QtVsPlayer/*.so*
-%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
+%{_libdir}/QtVsPlayer/*
 
 %changelog
 * Wed May 24 2023 surfzoid@gmail.com
