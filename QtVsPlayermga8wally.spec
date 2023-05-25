@@ -3,9 +3,9 @@ Summary:        QtVsPlayer for Hikvision
 Version:        1.0.43
 
 %if 0%{?mageia}
-Release:        %mkrel 2
+Release:        %mkrel 3
 %else
-Release:        2.surf.mlo
+Release:        3.surf.mlo
 %endif
 
 License:        GPLv3
@@ -63,10 +63,10 @@ Licences are in the doc dir.
 %install
 %make_install INSTALL_ROOT=%{buildroot}%{_datadir}
 mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
-chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so
-chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so
+chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so*
+chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
 #chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
-#ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
+ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
 
 %post
 /sbin/ldconfig /usr/lib64/QtVsPlayer/
