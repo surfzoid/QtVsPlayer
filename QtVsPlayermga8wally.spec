@@ -3,7 +3,7 @@ Summary:        QtVsPlayer for Hikvision
 Version:        1.0.43
 
 %if 0%{?mageia}
-Release:        %mkrel 34
+Release:        %mkrel 4
 %else
 Release:        4.surf.mlo
 %endif
