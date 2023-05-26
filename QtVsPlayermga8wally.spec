@@ -74,6 +74,7 @@ cat << 'EOF' > /etc/ld.so.conf.d/QtVsPlayer.conf
             /usr/lib64/QtVsPlayer/HCNetSDKCom/
 
             EOF
+
 %post -p /sbin/ldconfig
 
 
@@ -95,6 +96,7 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_datadir}/QtVsPlayer/
 %dir %{_libdir}/QtVsPlayer/
 %{_libdir}/QtVsPlayer/*
+/etc/ld.so.conf.d/QtVsPlayer.conf
 
 %changelog
 * Wed May 24 2023 surfzoid@gmail.com
