@@ -69,9 +69,12 @@ chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
 ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
 ln -s %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
 ln -s %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
+cat << 'EOF' > /etc/ld.so.conf.d/QtVsPlayer.conf
+            /usr/lib64/QtVsPlayer/
+            /usr/lib64/QtVsPlayer/HCNetSDKCom/
 
-%post
-/sbin/ldconfig -- /usr/lib64/QtVsPlayer/ /usr/lib64/QtVsPlayer/HCNetSDKCom/
+            EOF
+%post -p /sbin/ldconfig
 
 
 %clean

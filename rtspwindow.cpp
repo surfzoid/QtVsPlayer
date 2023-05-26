@@ -917,7 +917,11 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     ClientInfo.hPlayWnd = NULL;
     //If need to decode, please set it valid. If want to get stream data only, we can set to NULL
     ClientInfo.lChannel = 1; //Preview channel NO.cam=1,nvr=33
-    ClientInfo.lLinkMode  |= (1u << 31); /*If 31st bit is 0, it means connect main stream, is 1 means sub stream.
+    if (StreamChoice) {
+        ClientInfo.lLinkMode |= (1u << 31);
+    }else {
+        ClientInfo.lLinkMode = 0;
+    }/*If 31st bit is 0, it means connect main stream, is 1 means sub stream.
     Bit 0~bit 30 are used for link mode: 0- TCP mode, 1- UDP mode, 2- Multi-play mode, 3- RTP mode, 4- RTP over
     RTSP, 5- RTP over HTTP */
     ClientInfo.sMultiCastIP = NULL;

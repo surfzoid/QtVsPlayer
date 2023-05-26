@@ -34,6 +34,7 @@ typedef struct __PLAYRECT
 typedef  unsigned __int64   UINT64;
 typedef  signed   __int64   INT64;
 #elif defined(__linux__) || defined(__APPLE__) //linux
+typedef  unsigned int*      *LPINT;
 #define  BOOL  int
 typedef  unsigned int       DWORD;
 typedef  unsigned short     WORD;
