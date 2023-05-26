@@ -331,18 +331,6 @@
     <property name="title">
      <string>Video</string>
     </property>
-    <widget class="QMenu" name="menuProportions">
-     <property name="tabletTracking">
-      <bool>true</bool>
-     </property>
-     <property name="title">
-      <string>Proportions</string>
-     </property>
-     <addaction name="actionDefault"/>
-     <addaction name="actionIgnoreAspectRatio"/>
-     <addaction name="actionKeepAspectRatio"/>
-     <addaction name="actionKeepAspectRatioByExpanding"/>
-    </widget>
     <widget class="QMenu" name="menuchannel">
      <property name="tabletTracking">
       <bool>true</bool>
@@ -372,7 +360,6 @@
      <addaction name="actionmain_stream"/>
      <addaction name="actionsub_stream"/>
     </widget>
-    <addaction name="menuProportions"/>
     <addaction name="menuchannel"/>
     <addaction name="actionMetadata"/>
    </widget>

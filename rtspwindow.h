@@ -51,8 +51,6 @@ public:
 private slots:
     void on_ComboBxCam_currentIndexChanged(const QString &arg1);
 
-    void positionChanged(qint64 pos);
-
     void on_action_Streaming_Channels_1_triggered();
 
     void on_action_Streaming_Channels_2_triggered();
@@ -175,9 +173,9 @@ private:
     //×ÓÊôÐÔÍ¨µÀ½ÚµãÁÐ±í£¬ÆäÄÚÈÝÒ²Òª´æÈëÎÄ¼þ£»
     //QList<ChannelData> m_qlistchanneldata;
 
-    static void __stdcall  RealDataCallBack(LONG lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser);
+    void __stdcall  RealDataCallBack(LONG lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser);
     static void __stdcall g_ExceptionCallBack(int dwType, LONG lUserID, LONG lHandle, void *pUser);
-    static void __stdcall DecCBFun(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2);
+    static void CALLBACK SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2);
     static void CALLBACK g_RealDataCallBack_V30(LONG lRealHandle, int dwDataType, BYTE *pBuffer,int dwBufSize,void* dwUser);
     /*******HCNetSDK**************/
 

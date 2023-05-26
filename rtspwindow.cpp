@@ -172,24 +172,6 @@ void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
     LoadPatrol();
 }
 
-void RtspWindow::positionChanged(qint64 pos)
-{
-    //printf("%lli", pos);
-    QTime time(0,0,0,0);
-    time = time.addMSecs(pos);
-
-    if(pos != 0) this->ui->statusbar-> showMessage("Elapsed time: " + time.toString());
-
-    if (pos == 0) {
-        blink();
-    }else {
-        ui->lblLoading->setVisible(true);//mis a true pour les tests
-    }
-
-    if (pos > 0) ui->lblLoading->setVisible(false);
-
-}
-
 void RtspWindow::blink()
 {
     if(ui->lblLoading->isHidden())
@@ -277,14 +259,11 @@ void RtspWindow::on_action_Streaming_Channels_3_triggered()
 
 void RtspWindow::on_actionMetadata_triggered()
 {
-    Infos *InfDialog = new Infos(this);
-    InfDialog->InfoData = "";
-    QSize Vreso = centralWidget()->sizeHint();
-    //    printf("Video resolution: %dX%d\n\r",Vreso.width(),Vreso.height());
-    qDebug() << "Video resolution: " << Vreso.width() <<"X" << Vreso.height();
-    InfDialog->InfoData.append("\nVideo resolution:  : "  + QString::number(Vreso.width()) + "x" + QString::number(Vreso.height()));
-
-    InfDialog->show();
+#if (defined(_WIN32))
+    //CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,long,int,FRAME_INFO*, void*, void*))SetDecCallBack);
+#elif defined(__linux__)
+  PlayM4_SetDecCallBack(lPort, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
+#endif
 }
 
 void RtspWindow::on_action_ISAPI_Streaming_channels_101_triggered()
@@ -684,6 +663,12 @@ void RtspWindow::mouseMoveEvent(QMouseEvent *event)
         {
             ui->menubar->show();
             ui->statusbar->show();
+#if (defined(__linux__))
+            if (!PlayM4_WndResolutionChange(lPort))
+            {
+                qDebug()<< "PlayM4_WndResolutionChange error " << PlayM4_GetLastError(lPort);
+            }
+#endif
         }
         PTCmd->setVisible(true);
         PTCmd->setFocus();
@@ -697,6 +682,12 @@ void RtspWindow::HideMenu()
         ui->menubar->hide();
         ui->statusbar->hide();
         PTCmd->setVisible(false);
+#if (defined(__linux__))
+        if (!PlayM4_WndResolutionChange(lPort))
+        {
+            qDebug()<< "PlayM4_WndResolutionChange error " << PlayM4_GetLastError(lPort);
+        }
+#endif
     }
 }
 
@@ -737,11 +728,6 @@ void RtspWindow::resizeEvent(QResizeEvent *event)
     Adjust.uWidth  = centralWidget()->width();
     Adjust.x = centralWidget()->x();
     Adjust.y  = centralWidget()->y();
-
-
-    hWnd = 0;
-
-    hWnd = centralWidget()->winId();
 
 #if (defined(__linux__))
     if (!PlayM4_WndResolutionChange(lPort))
@@ -892,6 +878,7 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     {
         int err = NET_DVR_GetLastError();
         qDebug()<< NET_DVR_GetErrorMsg(&err);
+        displayErrorMessage(NET_DVR_GetErrorMsg(&err));
         return;
     }
     //---------------------------------------
@@ -905,6 +892,8 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     if (lUserID < 0)
     {
         printf("Login error, %d\n", NET_DVR_GetLastError());
+        int err = NET_DVR_GetLastError();
+        displayErrorMessage(NET_DVR_GetErrorMsg(&err));
         NET_DVR_Cleanup();
         return;
     }
@@ -933,37 +922,13 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     {
         printf("NET_DVR_RealPlay_V30 error\n");
         int err = NET_DVR_GetLastError();
-        qDebug()<< NET_DVR_GetErrorMsg(&err);
+        displayErrorMessage(NET_DVR_GetErrorMsg(&err));
         NET_DVR_Logout(lUserID);
         NET_DVR_Cleanup();
         return;
     }
     return;
 }
-
-//void RtspWindow::Play()
-//{
-
-//    struPlayInfo.lChannel     = StreamType;  //channel NO
-//    struPlayInfo.dwLinkMode   = 0;
-//    struPlayInfo.dwStreamType   = StreamType;// Stream type 0-main stream,1-sub stream,2-third stream,3-forth
-//    struPlayInfo.byRecvMetaData = 1;
-//    struPlayInfo.hPlayWnd = videoWidget->winId();// centralWidget()->winId();
-//    struPlayInfo.bBlocked = 1;
-//    struPlayInfo.dwDisplayBufNum = 1;
-//    lRealPlayHandle = NET_DVR_RealPlay_V40(0, &struPlayInfo, RealDataCallBack, NULL);
-//    qDebug() << "realhandle" << lRealPlayHandle;
-//    if (!PlayM4_SetDecCallBack(0,DecCBFun))
-//    {
-//        qDebug() << PlayM4_GetLastError(0);
-//    }
-//    if (!PlayM4_RenderPrivateData(0, PLAYM4_RENDER_ANA_INTEL_DATA, true))
-//    {
-//        qDebug() << PlayM4_GetLastError(0);
-//    }
-
-//}
-
 
 /**  @fn  void __stdcall  RealDataCallBack(LONG lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser)
  *   @brief data callback funtion
@@ -983,6 +948,7 @@ void __stdcall  RtspWindow::RealDataCallBack(LONG lRealHandle,int dwDataType,BYT
         qDebug("Demmo lRealHandle[%d]: Get StreamData! Type[%d], BufSize[%d], pBuffer:%p\n", lRealHandle, dwDataType, dwBufSize, pBuffer);
         int err = NET_DVR_GetLastError();
         qDebug()<< NET_DVR_GetErrorMsg(&err);
+        ui->lblLoading->setText(NET_DVR_GetErrorMsg(&err));
     }
 }
 
@@ -1001,22 +967,53 @@ void __stdcall RtspWindow::g_ExceptionCallBack(int dwType, LONG lUserID, LONG lH
     }
 }
 
-void __stdcall RtspWindow::DecCBFun(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nReserved1,int nReserved2)
+void CALLBACK RtspWindow::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2)
 {
-    //    qDebug("TYPE:%d-[%d*%d]",pFrameInfo->nType,pFrameInfo->nWidth,pFrameInfo->nHeight);
-    switch (pFrameInfo->nType) {
-    case T_YV12:
+    Infos *InfDialog = new Infos();
+    InfDialog->InfoData = "";
+    //printf("SetDecCallBack---%l:%l\n\r",nPort, nSize);
+    //qDebug() <<  pFrameInfo;
+//    pFRAME_INFO = pFrameInfo;
+
+//    if ((pFrameInfo->nType == T_AUDIO16 | pFrameInfo->nType == T_AUDIO8) && !isound) {
+//        PlaySound();
+//    }
+
+    if (pFrameInfo) {
+        qDebug() << "FrameNum : " <<pFrameInfo->dwFrameNum;
+        InfDialog->InfoData.append("\nFrameNum : " + QString::number(pFrameInfo->dwFrameNum));
+
+        qDebug() << "FrameRate : " <<pFrameInfo->nFrameRate;
+        InfDialog->InfoData.append("\nFrameRate : " + QString::number(pFrameInfo->nFrameRate));
+
+        qDebug() << "\nWidth : " <<pFrameInfo->nWidth;
+        InfDialog->InfoData.append("\nWidth : " + QString::number(pFrameInfo->nWidth));
+
+        qDebug() << "Height : " <<pFrameInfo->nHeight;
+        InfDialog->InfoData.append("\nHeight : " + QString::number(pFrameInfo->nHeight));
+
+        qDebug() << "Stamp : " <<pFrameInfo->nStamp;
+        InfDialog->InfoData.append("\nStamp : " + QString::number(pFrameInfo->nStamp));
+
+        qDebug() << "Type : " <<pFrameInfo->nType;
+        InfDialog->InfoData.append("\nType : " + QString::number(pFrameInfo->nType));
+
+
+    }
+    else
     {
-
+        int width = 0, height = 0;
+        PlayM4_GetPictureSize(lPort,&width,&height);
+        qDebug()  << width << "x" << height << " <- PlayM4_GetPictureSize()" ;
+        InfDialog->InfoData.append("\nVideo resolution:  : " + QString::number(width) + "x" + QString::number(height));
     }
-        break;
-    case T_AUDIO8:
-    case T_AUDIO16:
 
-        break;
-    default:
-        break;
-    }
+#if (defined(_WIN32))
+    //PlayM4_SetDecCallBack(lPort, (void (CALLBACK *)(int,char *,long,int,FRAME_INFO*, void*, void*))NULL);
+#elif defined(__linux__)
+    PlayM4_SetDecCallBack(lPort, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))NULL);
+#endif
+    InfDialog->show();
 }
 
 /*Mode 2 Users theirselves deal with stream data which called back by g_RealDataCallBack_V30.
