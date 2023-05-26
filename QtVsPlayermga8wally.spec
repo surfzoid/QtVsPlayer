@@ -36,6 +36,8 @@ Requires: lib64qt5networkauth5
 Requires: qtbase5-common
 Requires: lib64openal1
  
+%global debug_package %{nil}
+
 %description
 QtVsPlayer can read local video files of Hikvision and display blue, green and red vectors.
 This is the end of an full network backup solution in combination with HikNetExtractor.
@@ -65,7 +67,6 @@ Licences are in the doc dir.
 mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so*
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
-#chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
 ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
 ln -s %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
 ln -s %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
