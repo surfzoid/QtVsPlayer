@@ -12,10 +12,6 @@
     #define OS_WINDOWS64    1
 #endif
 
-#if defined(__LP64__)
-    #define OS_POSIX64    1 
-#endif
-
 
 #ifndef __PLAYRECT_defined
 #define __PLAYRECT_defined
@@ -50,37 +46,21 @@ typedef  signed   __int64   INT64;
 typedef unsigned int   COLORKEY;
 typedef unsigned int   COLORREF;
 
-#ifndef __HWND_defined
-#define __HWND_defined
-#if defined(__APPLE__) || defined(ANDROID)
-typedef void* HWND;
-#elif defined(__linux__)
-typedef unsigned int HWND;
-#else
+
 typedef unsigned int  HWND;//was "void*" and break compil
-#endif
+
 #endif
 
 #ifndef __HDC_defined
 #define __HDC_defined
-#if defined(__linux__)
-typedef struct __DC
-{
-    void*   surface;        //SDL Surface
-    HWND    hWnd;           //HDC window handle
-}DC;
-typedef DC* HDC;
-#else
 typedef void* HDC;
-#endif
 #endif
 
 typedef struct tagInitInfo
 {
     int uWidth; 
     int uHeight; 
-}INITINFO; 
-#endif
+}INITINFO;
 
 //Macro definition 
 #define MAX_NAMELEN                 16      //DVR's local Username
