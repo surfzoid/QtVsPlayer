@@ -874,8 +874,9 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     NET_DVR_Logout_V30(lUserID);
     // Release SDK resource
     NET_DVR_Cleanup();
-    hWnd =centralWidget()->winId();// centralWidget()->winId();
 
+    hWnd = centralWidget()->winId();
+    //qDebug() << sDeviceAddress << Port << sUserName << sPassword;
     //AT last need init SDK
     if (!NET_DVR_Init())
     {
@@ -894,7 +895,6 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     if (lUserID < 0)
     {
         printf("Login error, %d\n", NET_DVR_GetLastError());
-        qDebug() << "Login error"<< NET_DVR_GetLastError();
         NET_DVR_Cleanup();
         return;
     }
@@ -903,22 +903,18 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     NET_DVR_SetExceptionCallBack_V30(0, NULL,g_ExceptionCallBack, NULL);
     //---------------------------------------
     //Start preview and set to callback stream data
-    LONG lRealPlayHandle;
-    ClientInfo.hPlayWnd = hWnd;
-    //If need to decode, please set it valid. If want to get stream data only, it can be set to NULL
-    ClientInfo.lChannel = 1; // Preview channel NO.
-    if (StreamChoice) {
-        ClientInfo.lLinkMode |= (1u << 31);
-    }else {
-        ClientInfo.lLinkMode = 0;
-    }/* The high bit (31) 0 means the main stream, while 1 means the sub
-    stream. Bit 0~bit 30 are used for link mode: 0- TCP mode, 1- UDP mode, 2- Multi-play mode, 3- RTP mode, 4- RTP
-    over RTSP, 5- RTSP over HTTP */
+    NET_DVR_CLIENTINFO ClientInfo = {0};
+    ClientInfo.hPlayWnd = NULL;
+    //If need to decode, please set it valid. If want to get stream data only, we can set to NULL
+    ClientInfo.lChannel = 1; //Preview channel NO.cam=1,nvr=33
+    ClientInfo.lLinkMode  |= (1u << 31); /*If 31st bit is 0, it means connect main stream, is 1 means sub stream.
+    Bit 0~bit 30 are used for link mode: 0- TCP mode, 1- UDP mode, 2- Multi-play mode, 3- RTP mode, 4- RTP over
+    RTSP, 5- RTP over HTTP */
     ClientInfo.sMultiCastIP = NULL;
-    // Multicast IP. Please set when require to preview in multicast mode.
-    //    BOOL bPreviewBlock = false;
-    //Whether blocked when requiring a stream connection, 0 means unblocked, 1 means blocked
-    lRealPlayHandle = NET_DVR_RealPlay_V30(lUserID, &ClientInfo, NULL, NULL, 0);
+    //Multicast IP. Please set when require to preview in multicast mode.
+    BOOL bPreviewBlock = false;
+    //whether blocked when requiring a stream connection, 0 means unblocked, 1 means blocked
+    lRealPlayHandle = NET_DVR_RealPlay_V30(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL, 0);
     if (lRealPlayHandle < 0)
     {
         printf("NET_DVR_RealPlay_V30 error\n");
@@ -1009,61 +1005,61 @@ void __stdcall RtspWindow::DecCBFun(int nPort,char * pBuf,int nSize,FRAME_INFO *
 
 /*Mode 2 Users theirselves deal with stream data which called back by g_RealDataCallBack_V30.
 Here takes software decoding as an example.*/
-//void CALLBACK RtspWindow::g_RealDataCallBack_V30(LONG lRealHandle, int dwDataType, BYTE *pBuffer, int dwBufSize, void* dwUser)
-//{
+void CALLBACK RtspWindow::g_RealDataCallBack_V30(LONG lRealHandle, int dwDataType, BYTE *pBuffer, int dwBufSize, void* dwUser)
+{
 //    QString str;
 //    QByteArray TmpB((char*)pBuffer);
 //    qDebug() << "dwDataType" << dwDataType;
-//    switch (dwDataType)
-//    {
-//    case 1: //NET_DVR_SYSHEAD System head
+    switch (dwDataType)
+    {
+    case 1: //NET_DVR_SYSHEAD System head
 //        str = QString::fromUtf8((char*)pBuffer);
 //        qDebug() << str << dwBufSize;
-//        if (!PlayM4_GetPort(&lPort))//Get unused port
-//        {
-//            break;
-//        }
-//        //m_iPort = lPort;
-//        /*The data called back at the first time is system header. Please
-//assign this port to global port, and it will be used to play in next callback */
-//        if (dwBufSize > 0)
-//        {
-//            if (!PlayM4_SetStreamOpenMode(lPort, STREAME_REALTIME))
-//                //Set real-time stream playing mode
-//            {
-//                break;
-//            }
-//            if (!PlayM4_OpenStream(lPort, pBuffer, dwBufSize, 1024*1024))
-//                //Open stream
-//            {
-//                break;
-//            }
-//            if (!PlayM4_Play(lPort, hWnd))//Start play
-//            {
-//                break;
-//            }
-//            /*if (!PlayM4_SetDecCallBack(lPort,DecCBFun))
-//            {
-//                qDebug() << PlayM4_GetLastError(lPort);
-//            }*/
-//            if (!PlayM4_RenderPrivateData(lPort, PLAYM4_RENDER_ANA_INTEL_DATA, true))
-//            {
-//                qDebug() << PlayM4_GetLastError(0);
-//            }
-//        }
-//        break;
-//    case 2://NET_DVR_STREAMDATA Stream data
-//        if (dwBufSize > 0 && lPort != -1)
-//        {
-//            if (!PlayM4_InputData(lPort, pBuffer, dwBufSize))
-//            {
-//                break;
-//            }
+        if (!PlayM4_GetPort(&lPort))//Get unused port
+        {
+            break;
+        }
+        //m_iPort = lPort;
+        /*The data called back at the first time is system header. Please
+assign this port to global port, and it will be used to play in next callback */
+        if (dwBufSize > 0)
+        {
+            if (!PlayM4_SetStreamOpenMode(lPort, STREAME_REALTIME))
+                //Set real-time stream playing mode
+            {
+                break;
+            }
+            if (!PlayM4_OpenStream(lPort, pBuffer, dwBufSize, 1024*1024))
+                //Open stream
+            {
+                break;
+            }
+            if (!PlayM4_Play(lPort, hWnd))//Start play
+            {
+                break;
+            }
+            /*if (!PlayM4_SetDecCallBack(lPort,DecCBFun))
+            {
+                qDebug() << PlayM4_GetLastError(lPort);
+            }*/
+            if (!PlayM4_RenderPrivateData(lPort, PLAYM4_RENDER_ANA_INTEL_DATA, true))
+            {
+                qDebug() << PlayM4_GetLastError(0);
+            }
+        }
+        break;
+    case 2://NET_DVR_STREAMDATA Stream data
+        if (dwBufSize > 0 && lPort != -1)
+        {
+            if (!PlayM4_InputData(lPort, pBuffer, dwBufSize))
+            {
+                break;
+            }
 //            str = QString::fromUtf8((char*)pBuffer);
 //            qDebug() << str << dwBufSize;
-//        }
-//    }
-//}
+        }
+    }
+}
 /****HIKNETSDK****/
 
 void RtspWindow::on_actionmain_stream_triggered()
