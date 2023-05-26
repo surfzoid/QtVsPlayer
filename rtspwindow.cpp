@@ -107,7 +107,7 @@ RtspWindow::RtspWindow(QWidget *parent) :
 
 void RtspWindow::showEvent(QShowEvent *event)
 {
-//    there is a ghost widget!!!!!!
+    //    there is a ghost widget!!!!!!
     QList<QWidget *> widgets = RtspWindow::findChildren<QWidget *>();
     foreach (QWidget *var, widgets) {
         qDebug() << var->objectName() << var->hasMouseTracking() << var->size();
@@ -744,10 +744,10 @@ void RtspWindow::resizeEvent(QResizeEvent *event)
     hWnd = centralWidget()->winId();
 
 #if (defined(__linux__))
-        if (!PlayM4_WndResolutionChange(lPort))
-        {
-            qDebug()<< "PlayM4_WndResolutionChange error " << PlayM4_GetLastError(lPort);
-        }
+    if (!PlayM4_WndResolutionChange(lPort))
+    {
+        qDebug()<< "PlayM4_WndResolutionChange error " << PlayM4_GetLastError(lPort);
+    }
 #endif
     //    return;
 
@@ -932,6 +932,8 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     if (lRealPlayHandle < 0)
     {
         printf("NET_DVR_RealPlay_V30 error\n");
+        int err = NET_DVR_GetLastError();
+        qDebug()<< NET_DVR_GetErrorMsg(&err);
         NET_DVR_Logout(lUserID);
         NET_DVR_Cleanup();
         return;
@@ -1021,14 +1023,14 @@ void __stdcall RtspWindow::DecCBFun(int nPort,char * pBuf,int nSize,FRAME_INFO *
 Here takes software decoding as an example.*/
 void CALLBACK RtspWindow::g_RealDataCallBack_V30(LONG lRealHandle, int dwDataType, BYTE *pBuffer, int dwBufSize, void* dwUser)
 {
-//    QString str;
-//    QByteArray TmpB((char*)pBuffer);
-//    qDebug() << "dwDataType" << dwDataType;
+    //    QString str;
+    //    QByteArray TmpB((char*)pBuffer);
+    //    qDebug() << "dwDataType" << dwDataType;
     switch (dwDataType)
     {
     case 1: //NET_DVR_SYSHEAD System head
-//        str = QString::fromUtf8((char*)pBuffer);
-//        qDebug() << str << dwBufSize;
+        //        str = QString::fromUtf8((char*)pBuffer);
+        //        qDebug() << str << dwBufSize;
         if (!PlayM4_GetPort(&lPort))//Get unused port
         {
             break;
@@ -1069,8 +1071,8 @@ assign this port to global port, and it will be used to play in next callback */
             {
                 break;
             }
-//            str = QString::fromUtf8((char*)pBuffer);
-//            qDebug() << str << dwBufSize;
+            //            str = QString::fromUtf8((char*)pBuffer);
+            //            qDebug() << str << dwBufSize;
         }
     }
 }
