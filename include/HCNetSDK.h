@@ -5,7 +5,6 @@
     #if (defined(_WIN32) || defined(_WIN64))
         #include <winsock2.h>
         #include <windows.h>
-        typedef int *LPINT;
     #endif
 #endif
 
@@ -34,7 +33,6 @@ typedef struct __PLAYRECT
 typedef  unsigned __int64   UINT64;
 typedef  signed   __int64   INT64;
 #elif defined(__linux__) || defined(__APPLE__) //linux
-typedef  unsigned int*      *LPINT;
 #define  BOOL  int
 typedef  unsigned int       DWORD;
 typedef  unsigned short     WORD;
@@ -51342,3 +51340,4 @@ NET_DVR_API BOOL __stdcall NET_DVR_DeleteOpenEzvizUser(LONG iUserID);
 NET_DVR_API BOOL __stdcall NET_DVR_LoadAdditionalLib(ADDITIONAL_LIB libType, char const *sDllName);
 
 #endif //
+
