@@ -82,12 +82,12 @@ typedef struct tagMotionData{
 #define _OSD_MONTH3            (_OSD_BASE+2)        /*show month time in English, for example: Jan*/
 #define _OSD_MONTH2            (_OSD_BASE+3)        /*show month time by two Arabic numerals, for example: 07*/
 #define _OSD_DAY            (_OSD_BASE+4)        /*show day time by two Arabic numerals, for example: 31*/
-#define _OSD_WEEK3            (_OSD_BASE+5)        /*show week time in English: MON¡«SUN*/
+#define _OSD_WEEK3            (_OSD_BASE+5)        /*show week time in English: MONÂ¡Â«SUN*/
 #define    _OSD_CWEEK1            (_OSD_BASE+6)        /*show week time in Chinese GB code*/
-#define    _OSD_HOUR24            (_OSD_BASE+7)        /*show 24 hours clock: 00¡«23    */
-#define    _OSD_HOUR12            (_OSD_BASE+8)        /*show 12 hours clock: 00¡«12*/
-#define    _OSD_MINUTE            (_OSD_BASE+9)        /*show minute time by length of 2: 00¡«59*/
-#define _OSD_SECOND            (_OSD_BASE+10)        /*show second time by length of 2: 00¡«59*/
+#define    _OSD_HOUR24            (_OSD_BASE+7)        /*show 24 hours clock: 00Â¡Â«23    */
+#define    _OSD_HOUR12            (_OSD_BASE+8)        /*show 12 hours clock: 00Â¡Â«12*/
+#define    _OSD_MINUTE            (_OSD_BASE+9)        /*show minute time by length of 2: 00Â¡Â«59*/
+#define _OSD_SECOND            (_OSD_BASE+10)        /*show second time by length of 2: 00Â¡Â«59*/
 #define _OSD_MILISECOND        (_OSD_BASE+11)        /*show millisecond time by length of 3: 000~999*/
 #define _OSD_APM            (_OSD_BASE+14)        /*show a.m. or p.m. by length of 2 bit, AM or PM*/
 

@@ -525,8 +525,8 @@ typedef enum tagFECPlaceType
 typedef enum tagFECCorrectType
 {
     FEC_CORRECT_PTZ = 0x100,        // PTZ viewing mode
-    FEC_CORRECT_180 = 0x200,        //180¡ã viewing mode (2-screen-split mode)
-    FEC_CORRECT_360 = 0x300,        // 360¡ã panoramic mode 
+    FEC_CORRECT_180 = 0x200,        //180Â¡Ã£ viewing mode (2-screen-split mode)
+    FEC_CORRECT_360 = 0x300,        // 360Â¡Ã£ panoramic mode 
 
 }FECCORRECTTYPE;
 
@@ -569,7 +569,7 @@ typedef struct tagFECParam
     
     unsigned int     nUpDateType;            // Update type
 
-    unsigned int    nPlaceAndCorrect;        // Sum of installation and correction mode   (read ¨Conly, invalid under SetParam mode)
+    unsigned int    nPlaceAndCorrect;        // Sum of installation and correction mode   (read Â¨Conly, invalid under SetParam mode)
 
     PTZPARAM        stPTZParam;                // Parameter for PTZ correction
 
@@ -577,7 +577,7 @@ typedef struct tagFECParam
 
     float            fZoom;                    //PTZ display range
 
-    float            fWideScanOffset;        // Offset angle for 180¡ã or 360¡ã correction
+    float            fWideScanOffset;        // Offset angle for 180Â¡Ã£ or 360Â¡Ã£ correction
 
     int                nResver[16];            // Reserved
 
@@ -656,93 +656,4 @@ typedef enum _PLAYM4_VIE_MODULES
     PLAYM4_VIE_MODU_EHAN     = 0x00000002, //part enhancement module
     PLAYM4_VIE_MODU_DEHAZE   = 0x00000004, //dehaze module
     PLAYM4_VIE_MODU_DENOISE  = 0x00000008, //denoise module
-    PLAYM4_VIE_MODU_SHARPEN  = 0x00000010, //sharpen module
-    PLAYM4_VIE_MODU_DEBLOCK  = 0x00000020, //deblock module
-    PLAYM4_VIE_MODU_CRB      = 0x00000040, //color balance module
-    PLAYM4_VIE_MODU_LENS     = 0x00000080, //Lens warp correction
-}PLAYM4_VIE_MODULES;
-#endif
-
-//Set Enable or disable the mode APIs
-PLAYM4_API BOOL __stdcall PlayM4_VIE_SetModuConfig(LONG lPort,int nModuFlag,BOOL bEnable);
-
-
-//Set image region of image enhancement 
-PLAYM4_API BOOL __stdcall PlayM4_VIE_SetRegion(LONG lPort,LONG lRegNum,RECT* pRect);
-
-//Get the enable module of image enhancement
-PLAYM4_API BOOL __stdcall PlayM4_VIE_GetModuConfig(LONG lPort,int* pdwModuFlag);
-
-//Set the parameter of the enable module of image enhancement
-PLAYM4_API BOOL __stdcall PlayM4_VIE_SetParaConfig(LONG lPort,PLAYM4_VIE_PARACONFIG* pParaConfig);
-
-//Get the parameter of the enable module of image enhancement
-PLAYM4_API BOOL __stdcall PlayM4_VIE_GetParaConfig(LONG lPort,PLAYM4_VIE_PARACONFIG* pParaConfig);
-
-//synchronization audio and video 
-PLAYM4_API BOOL __stdcall PlayM4_SyncToAudio(LONG nPort, BOOL bSyncToAudio);
-
-// PLAYM4_API BOOL __stdcall PlayM4_EnableIVS(LONG nPort, BOOL bTrue);
- 
-typedef enum _PLAYM4_PRIDATA_RENDER
-{    
-    PLAYM4_RENDER_ANA_INTEL_DATA   = 0x00000001, 
-    PLAYM4_RENDER_MD               = 0x00000002, 
-    PLAYM4_RENDER_ADD_POS          = 0x00000004, 
-    PLAYM4_RENDER_ADD_PIC          = 0x00000008,
-    PLAYM4_RENDER_FIRE_DETCET      = 0x00000010,
-    PLAYM4_RENDER_TEM              = 0x00000020,
-    PLAYM4_RENDER_TRACK_TEM        = 0x00000040,
-    PLAYM4_RENDER_THERMAL          = 0x00000080
-}PLAYM4_PRIDATA_RENDER;
-
-typedef enum _PLAYM4_THERMAL_FLAG
-{
-    PLAYM4_THERMAL_FIREMASK = 0x00000001,
-    PLAYM4_THERMAL_RULEGAS = 0x00000002,
-    PLAYM4_THERMAL_TARGETGAS = 0x00000004
-}PLAYM4_THERMAL_FLAG;
-
-typedef enum _PLAYM4_FIRE_ALARM{
-    PLAYM4_FIRE_FRAME_DIS = 0x00000001, 
-    PLAYM4_FIRE_MAX_TEMP = 0x00000002, 
-    PLAYM4_FIRE_MAX_TEMP_POSITION = 0x00000004, 
-    PLAYM4_FIRE_DISTANCE = 0x00000008
-}PLAYM4_FIRE_ALARM;
-
-typedef enum _PLAYM4_TEM_FLAG{
-    PLAYM4_TEM_REGION_BOX = 0x00000001, 
-    PLAYM4_TEM_REGION_LINE = 0x00000002, 
-    PLAYM4_TEM_REGION_POINT = 0x00000004
-}PLAYM4_TEM_FLAG;
-
-typedef enum _PLAYM4_TRACK_FLAG
-{
-    PLAYM4_TRACK_PEOPLE = 0x00000001,
-    PLAYM4_TRACK_VEHICLE = 0x00000002
-}PLAYM4_TRACK_FLAG;
-
-typedef struct TI_PTZ_INFO_
-{
-    unsigned short dwDefVer;     
-    unsigned short dwLength;     
-    DWORD          dwP;    //P(0~3600)
-    DWORD          dwT;         //T(0~3600)
-    DWORD          dwZ;         //Z(0~3600)
-    BYTE        chFSMState;  
-    BYTE           bClearFocusState;  
-    BYTE        reserved[6];  
-}PTZ_INFO;
-
-
-
-PLAYM4_API BOOL __stdcall PlayM4_RenderPrivateData(LONG nPort, int nIntelType, BOOL bTrue);
-
-PLAYM4_API BOOL __stdcall PlayM4_RenderPrivateDataEx(LONG nPort, int nIntelType, int nSubType, BOOL bTrue);
-
-PLAYM4_API BOOL __stdcall PlayM4_SetEncryptTypeCallBack(LONG nPort, 
-                                                        void (CALLBACK* EncryptTypeCBFun)(long nPort, ENCRYPT_INFO* pEncryptInfo, long nReserved));
-
-PLAYM4_API BOOL __stdcall PlayM4_GetStreamAdditionalInfo(LONG nPort, LONG lType, BYTE* pInfo, LONG* plLen);
-
-#endif //_PLAYM4_H_
+    PLAYM4_VIE

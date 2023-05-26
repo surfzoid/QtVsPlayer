@@ -16,7 +16,7 @@
 #else
 #endif
 
-#include "include/HCNetSDK.h"
+#include "include/NetSdk.h"
 #include "include/PlayM4.h"
 
 class QVideoProbe;

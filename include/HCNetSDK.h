@@ -51342,4 +51342,3 @@ NET_DVR_API BOOL __stdcall NET_DVR_DeleteOpenEzvizUser(LONG iUserID);
 NET_DVR_API BOOL __stdcall NET_DVR_LoadAdditionalLib(ADDITIONAL_LIB libType, char const *sDllName);
 
 #endif //
-
