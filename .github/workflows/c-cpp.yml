@@ -35,7 +35,7 @@ jobs:
                 rm -fr /usr/lib64/QtVsPlayer/libopenal.so.1
             fi
             ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer
-            
+
             /sbin/ldconfig /usr/lib64/QtVsPlayer/
             /sbin/ldconfig /usr/lib64/QtVsPlayer/HCNetSDKCom/
             EOF
@@ -422,7 +422,7 @@ jobs:
 
       - name: make install
         run: |
-            cp lib/x86_64/*.dylib qtvsplayer.app/Contents/MacOS/
+            cp lib/macX86_64/*.dylib qtvsplayer.app/Contents/MacOS/
             #mkdir macbuild
             #mv qtvsplayer.app macbuild/
             #cd macbuild/
