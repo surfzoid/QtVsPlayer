@@ -75,7 +75,8 @@ cat << 'EOF' > /etc/ld.so.conf.d/QtVsPlayer.conf
 
             EOF
 
-%post -p /sbin/ldconfig
+%post
+/sbin/ldconfig
 
 
 %clean
