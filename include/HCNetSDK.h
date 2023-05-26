@@ -5,6 +5,7 @@
     #if (defined(_WIN32) || defined(_WIN64))
         #include <winsock2.h>
         #include <windows.h>
+        #include <WinDef.h>
     #endif
 #endif
 

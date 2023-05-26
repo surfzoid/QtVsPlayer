@@ -19,6 +19,7 @@ jobs:
 
       - name: Prepare install dir
         run: | 
+            sudo apt update
             sudo apt install -y chrpath
             mkdir -p .debpkg
             # create DEBIAN directory if you want to add other pre/post scripts

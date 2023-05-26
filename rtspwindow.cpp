@@ -738,7 +738,17 @@ void RtspWindow::resizeEvent(QResizeEvent *event)
     Adjust.x = centralWidget()->x();
     Adjust.y  = centralWidget()->y();
 
-    hWnd = centralWidget()->winId();// centralWidget()->winId();
+
+    hWnd = 0;
+
+    hWnd = centralWidget()->winId();
+
+#if (defined(__linux__))
+        if (!PlayM4_WndResolutionChange(lPort))
+        {
+            qDebug()<< "PlayM4_WndResolutionChange error " << PlayM4_GetLastError(lPort);
+        }
+#endif
     //    return;
 
     //    //struPlayInfo.hPlayWnd = videoWidget->winId();// centralWidget()->winId();
