@@ -63,8 +63,8 @@ Licences are in the doc dir.
 %install
 %make_install INSTALL_ROOT=%{buildroot}%{_datadir}
 mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
-#chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so*
-#chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
+chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so*
+chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
 #chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/libSuperRender.so
 ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
 ln -s %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
@@ -98,8 +98,8 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_datadir}/icons/QtVsPlayer.png
 %{_datadir}/QtVsPlayer/
 %dir %{_libdir}/QtVsPlayer/
+%{_sysconfdir}/ld.so.conf.d/QtVsPlayer.conf
 %{_libdir}/QtVsPlayer/*
-/etc/ld.so.conf.d/QtVsPlayer.conf
 
 %changelog
 * Wed May 24 2023 surfzoid@gmail.com
