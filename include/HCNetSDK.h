@@ -5,7 +5,7 @@
     #if (defined(_WIN32) || defined(_WIN64))
         #include <winsock2.h>
         #include <windows.h>
-        #include <WinDef.h>
+        typedef  unsigned int*      LPint;
     #endif
 #endif
 
@@ -68,7 +68,7 @@ typedef unsigned int   COLORREF;
 #ifndef __HWND_defined
 #define __HWND_defined
 #if defined(__APPLE__) || defined(ANDROID)
-typedef void* HWND;
+typedef unsigned int  HWND;//was "void*" and break compil
 #elif defined(__linux__)
 typedef unsigned int HWND;
 #else
