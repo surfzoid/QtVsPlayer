@@ -49,7 +49,6 @@ typedef unsigned int   COLORREF;
 
 typedef unsigned int  HWND;//was "void*" and break compil
 
-#endif
 
 #ifndef __HDC_defined
 #define __HDC_defined
