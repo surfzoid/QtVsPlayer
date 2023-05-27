@@ -1,5 +1,5 @@
-#ifndef _HC_NET_SDK_H_
-#define _HC_NET_SDK_H_
+#ifndef _HC_NET_SDKwin_H_
+#define _HC_NET_SDKwin_H_
 
 #ifndef _WINDOWS_
     #if (defined(_WIN32) || defined(_WIN64))

@@ -11,7 +11,6 @@
 #include <pantilcmd.h>
 
 #if defined(_WIN32)
-#include <Windows.h>
 #pragma warning( disable : 4996)
 #else
 #endif
