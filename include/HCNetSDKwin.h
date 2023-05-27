@@ -44,7 +44,7 @@ typedef  signed   __int64   INT64;
 
 #define NET_DVR_API extern "C"
 typedef unsigned int   COLORKEY;
-typedef unsigned int   COLORREF;
+//typedef unsigned int   COLORREF;
 
 
 typedef unsigned int  HWND;//was "void*" and break compil
