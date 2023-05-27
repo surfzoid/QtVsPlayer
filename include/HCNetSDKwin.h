@@ -1,5 +1,5 @@
-#ifndef _HC_NET_SDKwin_H_
-#define _HC_NET_SDKwin_H_
+#ifndef _HC_NET_SDK_H_
+#define _HC_NET_SDK_H_
 
 #ifndef _WINDOWS_
     #if (defined(_WIN32) || defined(_WIN64))
@@ -10,6 +10,10 @@
 
 #if defined(_WIN64)
     #define OS_WINDOWS64    1
+#endif
+
+#if defined(__LP64__)
+    #define OS_POSIX64    1 
 #endif
 
 
@@ -24,10 +28,24 @@ typedef struct __PLAYRECT
 }PLAYRECT;
 #endif
 
-
+#if (defined(_WIN32)) //windows
 #define NET_DVR_API  extern "C" __declspec(dllimport)
 typedef  unsigned __int64   UINT64;
 typedef  signed   __int64   INT64;
+#elif defined(__linux__) || defined(__APPLE__) //linux
+#define  BOOL  int
+typedef  unsigned int       DWORD;
+typedef  unsigned short     WORD;
+typedef  unsigned short     USHORT;
+typedef  short              SHORT;
+typedef  int                LONG;
+typedef  unsigned char      BYTE;
+typedef  unsigned int       UINT;
+typedef  void*              LPVOID;
+typedef  void*              HANDLE;
+typedef  unsigned int*      LPDWORD; 
+typedef  unsigned long long UINT64;
+typedef  signed long long   INT64;
 
 #ifndef TRUE
 #define TRUE  1
@@ -44,35 +62,50 @@ typedef  signed   __int64   INT64;
 
 #define NET_DVR_API extern "C"
 typedef unsigned int   COLORKEY;
-//typedef unsigned int   COLORREF;
+typedef unsigned int   COLORREF;
 
+#ifndef __HWND_defined
+#define __HWND_defined
+#if defined(__linux__)
+typedef unsigned int HWND;
+#else
+typedef void* HWND;
+#endif
+#endif
 
-/*typedef unsigned int  HWND;*///was "void*" and break compil
-
-
-//#ifndef __HDC_defined
-//#define __HDC_defined
-//typedef void* HDC;
-//#endif
+#ifndef __HDC_defined
+#define __HDC_defined
+#if defined(__linux__)
+typedef struct __DC
+{
+    void*   surface;        //SDL Surface
+    HWND    hWnd;           //HDC window handle
+}DC;
+typedef DC* HDC;
+#else
+typedef void* HDC;
+#endif
+#endif
 
 typedef struct tagInitInfo
 {
     int uWidth; 
     int uHeight; 
-}INITINFO;
+}INITINFO; 
+#endif
 
 //Macro definition 
-#define MAX_NAMELEN                 16      //DVR's local Username
-#define MAX_RIGHT                   32      //Authority permitted by Device (1- 12 for local authority,  13- 32 for remote authority) 
+#define MAX_NAMELEN                    16        //DVR's local Username
+#define MAX_RIGHT                    32        //Authority permitted by Device (1- 12 for local authority,  13- 32 for remote authority) 
 #define NAME_LEN                    32      //Username length
 #define MIN_PASSWD_LEN              8       //min password length
-#define PASSWD_LEN                  16      //Password length
-#define STREAM_PASSWD_LEN           12      //stream password length
-#define MAX_PASSWD_LEN_EX           64      //Password length 64 bit
+#define PASSWD_LEN                    16      //Password length
+#define STREAM_PASSWD_LEN             12     //stream password length
+#define MAX_PASSWD_LEN_EX            64      //Password length 64 bit
 #define GUID_LEN                    16      //GUID length
-#define DEV_TYPE_NAME_LEN           24      //Device name length
+#define DEV_TYPE_NAME_LEN            24      //Device name length
 #define SERIALNO_LEN                48      //SN length
-#define MACADDR_LEN                 6       //Length of MAC address
+#define MACADDR_LEN                    6       //Length of MAC address
 #define MAC_ADDRESS_NUM             48      //MAC Address num
 #define MAX_SENCE_NUM               16      //scene Num
 #define RULE_REGION_MAX             128     //Rule Region num
@@ -87,39 +120,39 @@ typedef struct tagInitInfo
 #define MAX_INDEX_LED               8       //LED Index 2013-11-19
 #define    MAX_CUSTOM_DIR           64      //Custom Dir Max Length
 #define URL_LEN_V40                 256     //max URL Length
+#define ISO_8601_LEN                32      //ISO 8601 time Length
+
+
 #define CLOUD_NAME_LEN              48      //Cloud storage server username length
 #define CLOUD_PASSWD_LEN            48      //Cloud storage server Password length
+
 #define MAX_SENSORNAME_LEN          64      //Sensor Name Len
 #define MAX_SENSORCHAN_LEN          32      //Sensor Channel Len
 #define MAX_DESCRIPTION_LEN         32      //Description Len
 #define MAX_DEVNAME_LEN_EX          64      //Device Name Len
 #define NET_SDK_MAX_FILE_PATH       256     //File path len 
 #define MAX_TMEVOICE_LEN            64      //TME Voice Len
-#define ISO_8601_LEN                32      //ISO 8601 time Length
-#define MODULE_INFO_LEN             32 
-#define VERSION_INFO_LEN            32
+
+#define NET_SDK_MAX_FDID_LEN 256//face lib id length
+#define NET_SDK_MAX_PICID_LEN 256 //face picture id len
+#define NET_SDK_FDPIC_CUSTOM_INFO_LEN 96 //face lib custom info len
+#define NET_DVR_MAX_FACE_ANALYSIS_NUM      32   //max face analysis num
+#define NET_DVR_MAX_FACE_SEARCH_NUM      5   //manx face search number
+#define NET_SDK_CUSTOM_LEN                  512 //Maximum length of custom information
+#define NET_SDK_CHECK_CODE_LEN              128//Check length
+#define RELATIVE_CHANNEL_LEN           2//num of relative channels associated with alarm
 
 #define MAX_NUM_INPUT_BOARD         512     //the maximum number of input board
-#define  MAX_SHIPSDETE_REGION_NUM    8      // Ship detection area maximum number list
+#define  MAX_SHIPSDETE_REGION_NUM    8       // Ship detection area maximum number list 
 
-#define MAX_RES_NUM_ONE_VS_INPUT_CHAN 8
-#define MAX_VS_INPUT_CHAN_NUM        16
-
-#define NET_SDK_MAX_FDID_LEN         256    //face lib id length
-#define NET_SDK_MAX_PICID_LEN        256    //face picture id len
-#define NET_SDK_FDPIC_CUSTOM_INFO_LEN 96    //face lib custom info len
-#define NET_DVR_MAX_FACE_ANALYSIS_NUM 32    //max face analysis num
-#define NET_DVR_MAX_FACE_SEARCH_NUM   5     //manx face search number
-#define NET_SDK_SECRETKEY_LEN        128    //config file secret key len
-#define NET_SDK_CUSTOM_LEN           512    //Maximum length of custom information
-#define NET_SDK_CHECK_CODE_LEN       128    //Check length
-#define RELATIVE_CHANNEL_LEN          2     //num of relative channels associated with alarm
-#define NET_SDK_MAX_CALLEDTARGET_NAME 32    //called target name
-#define NET_SDK_MAX_HBDID_LEN        256    //human lib id length
+#define NET_SDK_SECRETKEY_LEN      128   //config file secret key len 
 //led controler
-#define  MAX_LEN_TEXT_CONTENT        128
+#define  MAX_LEN_TEXT_CONTENT    128
 #define  MAX_NUM_INPUT_SOURCE_TEXT    32
-#define  MAX_NUM_OUTPUT_CHANNEL      512
+#define  MAX_NUM_OUTPUT_CHANNEL  512
+
+#define MAX_RES_NUM_ONE_VS_INPUT_CHAN  8
+#define MAX_VS_INPUT_CHAN_NUM  16
 
 #define MAX_LEN_OSD_CONTENT  256
 #define MAX_NUM_OSD_ONE_SUBWND  8
@@ -127,19 +160,19 @@ typedef struct tagInitInfo
 #define MAX_NUM_OSD 8
 
 //2013-11-19
-#define MAX_DEVNAME_LEN               32     //Device Name
-#define MAX_LED_INFO                 256     //The screen font display information
-#define MAX_TIME_LEN                  32     //Time Max Len
-#define MAX_CARD_LEN                  24     //Card Max Len
-#define MAX_OPERATORNAME_LEN          32     //OperatorName Max Len
+#define MAX_DEVNAME_LEN             32      //Device Name
+#define MAX_LED_INFO                256     //The screen font display information
+#define MAX_TIME_LEN                32      //Time Max Len
+#define MAX_CARD_LEN                24      //Card Max Len
+#define MAX_OPERATORNAME_LEN        32      //OperatorName Max Len
+#define MODULE_INFO_LEN            32    
+#define VERSION_INFO_LEN        32  
 
-#define THERMOMETRY_ALARMRULE_NUM   40      //Thermometry Alarm rule Number
+#define THERMOMETRY_ALARMRULE_NUM   40       //Thermometry Alarm rule Number
 #define MAX_THERMOMETRY_REGION_NUM  40      //Thermometry Region Num
 #define MAX_THERMOMETRY_DIFFCOMPARISON_NUM  40 //Thermometry Temperature difference Num
 #define MAX_SHIPS_NUM               20      //Ships Num
-#define MAX_SHIPIMAGE_NUM           6       //Ships capture images num
-#define KEY_WORD_NUM                3       //key word number
-#define KEY_WORD_LEN               128      //key word length
+
 #define ASYN_LOGIN_SUCC                1        
 #define ASYN_LOGIN_FAILED            0    
 
@@ -163,13 +196,12 @@ typedef struct tagInitInfo
 
 #define MAX_DISKNUM_V30                33        //Maximum disk number in 9000 DVR,  including 16 internal SATA disks,  1 eSTAT disk and 16 NFS disks
 
-#define NET_SDK_MAX_NET_USER_NUM        64    //net user
-
 #define NET_SDK_DISK_LOCATION_LEN  16      //Hard disk location length 
 #define NET_SDK_SUPPLIER_NAME_LEN  32      //Supplier name length 
 #define NET_SDK_DISK_MODEL_LEN     64      //Drive model length 
 #define NET_SDK_MAX_DISK_VOLUME    33      //The largest hard disk volume number 
 #define NET_SDK_DISK_VOLUME_LEN    36      //Hard disk volume name length
+#define NET_SDK_MAX_CALLEDTARGET_NAME   32  //called target name
 
 #define MAX_DISKNUM                    16      //Maximum disk number in 8000 DVR
 #define MAX_DISKNUM_V10                8       //used in 1.2 or earlier version
@@ -459,7 +491,8 @@ typedef struct tagInitInfo
 #define TERMINAL_NAME_LEN               64
 #define MAX_URL_LEN                     512
 #define REGISTER_NAME_LEN               64 
-
+#define KEY_WORD_NUM             3 //key word number
+#define KEY_WORD_LEN            128  //key word length
 //optical fiber
 #define MAX_PORT_NUM            64  //maximum port number
 #define MAX_SINGLE_CARD_PORT_NO 4   //maximum port number of single card
@@ -685,8 +718,6 @@ typedef struct tagInitInfo
 #define NET_DVR_NONBLOCKING_CAPTURE_NOTSUPPORT   185 //nonblocking capture picture not support
 #define NET_SDK_ERR_FUNCTION_INVALID   186  //already open asyncronous function,this function has been invalid
 #define NET_SDK_ERR_MAX_PORT_MULTIPLEX     187   //alread reach to the max num of port-multiplexing
-#define NET_DVR_INVALID_LINK                   188  //invalid link or link has not been created
-#define NET_DVR_ISAPI_NOT_SUPPORT              189  //interface not support ISAPI
 // RAID error code
 #define RAID_ERROR_INDEX                    200
 #define NET_DVR_NAME_NOT_ONLY               (RAID_ERROR_INDEX + 0)  // Existing name
@@ -1129,7 +1160,7 @@ typedef struct tagInitInfo
 #define  NET_ERR_JOINT_SCALE_OVERLIMIT              947  //joint scale overlimit
 #define  NET_ERR_INPUTSTREAM_ALREADY_DECODE            948  //input signal is already decoding
 #define  NET_ERR_INPUTSTREAM_NOTSUPPORT_CAPTURE     949  //input signal does not support picture capture
-#define  NET_ERR_JOINT_NOTSUPPORT_SPLITWIN            950  //the signal can not show in multi split window
+#define  NET_ERR_JOINT_NOTSUPPORT_SPLITWIN            950  //joint signal can not show in multi split window
 
 #define NET_ERR_MAX_WIN_OVERLAP                     951    //reach max allowed window overlap number
 #define NET_ERR_STREAMID_CHAN_BOTH_VALID            952 //stream ID and channel cannot be valid both
@@ -1204,7 +1235,7 @@ typedef struct tagInitInfo
 #define NET_ERR_ONE_BACKUP_HD                      1064 //at least one normal hd
 #define NET_ERR_CONNECT_SUB_SYSTEM_ABNORMAL     1065  //connect sub system abnormal
 #define NET_ERR_SERIAL_PORT_VEST             1066     //serial port vest error
-#define NET_ERR_BLOCKLIST_FULL        1067           //allow list full
+#define NET_ERR_WHITE_LIST_FULL        1067           //white list full
 #define NET_ERR_NOT_MATCH_SOURCE    1068         //source signal type not match
 #define NET_ERR_CLOCK_VIRTUAL_LED_FULL    1069        //the virtual LED of clock full
 #define NET_ERR_MAX_WIN_SIGNAL_LOOP_NUM   1070      //the window loop signals full
@@ -1306,9 +1337,6 @@ typedef struct tagInitInfo
 #define NET_DVR_ERR_WIRELESS_DEV_OFFLINE              1228  //Wireless device is offline
 #define NET_DVR_ERR_WIRELESS_DEV_TAMPER_STATUS         1229  //Wireless device is in temper status
 #define NET_DVR_ERR_GPRS_PHONE_CONFLICT    1230   
-#define NET_ERR_INIT_PASSWORD_NOT_MODIFY           1231    //the initial password has not been modified, other operations cannot be performed
-#define NET_ERR_USER_DISABLED           1232    //user disabled
-#define NET_ERR_DEVICE_DEBUGGING           1233    //the device is debugging
 #define NET_ERR_GET_ALL_RETURN_OVER                    1300  //get all the returns number overrun 
 #define NET_ERR_RESOURCE_USING                      1301  //information resources are in use and cannot be modified
 #define NET_ERR_FILE_SIZE_OVERLIMIT                    1302  //the size of file is overlimit
@@ -1333,7 +1361,6 @@ typedef struct tagInitInfo
 #define NET_ERR_SIGNAL_SOURCE_UNSUPPORT_CUSTOM_RESOLUTION  1320  //Signal source does not support this custom resolution
 #define NET_ERR_DVI_UNSUPPORT_FOURK_OUTPUT_RESOLUTION      1321   //DVI does not support 4K output resolution
 #define NET_ERR_BNC_UNSUPPORT_SOURCE_CROPPING              1322   //BNC does not support source cropping 
-#define NET_ERR_OUTPUT_NOT_SUPPORT_VIDEOWALL_RESOLUTION      1323    //Output does not support videowall resolution
 
 //screen interactive error code 
 #define    NET_ERR_MAX_SCREEN_CTRL_NUM                    1351  //the number of control connections to screen is limited
@@ -1720,9 +1747,6 @@ typedef struct tagInitInfo
 #define NET_DVR_INSUFFICIENT_SSD__FOR_FPD                   2267  //Insufficient SSD capacity for FPD
 #define NET_DVR_ASSOCIATED_FACELIB_OVER_LIMIT               2268  //The number of associated faceLib reaches the upper limit
 #define NET_DVR_NEED_DELETE_DIGITAL_CHANNEL                 2269  //The digital channel needs to be deleted
-#define NET_DVR_ERR_FALL_DOWN_RULENUM_LIMIT                 2270  //Fall down rule num limit
-#define NET_DVR_ERR_VIOLENT_MOTION_RULENUM_LIMIT            2271  //Violent motion rule num limit
-#define NET_DVR_UPGRADE_ENGINE_VERSION_MISMATCH             2272  //upgrade package engine version mismatch
 
 //Thermal error codes(3001 - 3500)
 #define NET_DVR_ERR_NOTSUPPORT_DEICING              3001    //Notsupport Deicing
@@ -1738,30 +1762,23 @@ typedef struct tagInitInfo
 #define NET_DVR_CERTIFICATE_VALIDATION_ERROR 3011 //Certificate validation failed
 #define NET_DVR_CERTIFICATES_NUM_EXCEED_ERROR 3012 //The number of certificates exceeded the upper limit
 #define NET_DVR_RULE_SHIELDMASK_CONFLICT_ERROR 3013  //Regular zone conflicts with masked zone
-#define NET_DVR_MOTOR_PREHEATING_ERROR 3014  //Motor preheating 
-#define NET_DVR_PT_DEICING_ERROR 3015  //PT deicing
 
 //IPC error codes(3501-4000)
 #define NET_DVR_ERR_NO_SAFETY_HELMET_REGION            3501  //no safety helmet region
 #define NET_DVR_ERR_UNCLOSED_SAFETY_HELMET             3502  //unclosed safety helmet
-#define NET_DVR_ERR_MUX_RECV_STATE                     3503  // mux recv state error
-#define NET_DVR_UPLOAD_HBDLIBID_ERROR                  3504  // HBDID or customHBDID Error
-#define NET_DVR_NOTSUPPORT_SMALLER_RATIOS              3505  // This function cannot be set when the zoom ratio is smaller than 1 x
 
 #define NET_ERR_NPQ_BASE_INDEX    8000    //NPQ base index
-#define NET_ERR_NPQ_PARAM       (NET_ERR_NPQ_BASE_INDEX + 1)             //NPQ parameter error
-#define NET_ERR_NPQ_SYSTEM      (NET_ERR_NPQ_BASE_INDEX + 2)             //NPQ system error
-#define NET_ERR_NPQ_GENRAL      (NET_ERR_NPQ_BASE_INDEX + 3)             //NPQ gereral error
-#define NET_ERR_NPQ_PRECONDITION    (NET_ERR_NPQ_BASE_INDEX + 4)         //NPQ precondition error
-#define NET_ERR_NPQ_NOTSUPPORT        (NET_ERR_NPQ_BASE_INDEX + 5)       //NPQ not support
+#define NET_ERR_NPQ_PARAM       (NET_ERR_NPQ_BASE_INDEX + 1)        //NPQ parameter error
+#define NET_ERR_NPQ_SYSTEM      (NET_ERR_NPQ_BASE_INDEX + 2)        //NPQ system error
+#define NET_ERR_NPQ_GENRAL      (NET_ERR_NPQ_BASE_INDEX + 3)        //NPQ gereral error
+#define NET_ERR_NPQ_PRECONDITION    (NET_ERR_NPQ_BASE_INDEX + 4)    //NPQ precondition error
+#define NET_ERR_NPQ_NOTSUPPORT        (NET_ERR_NPQ_BASE_INDEX + 5)  //NPQ not support
 
-#define NET_ERR_NPQ_NOTCALLBACK    (NET_ERR_NPQ_BASE_INDEX + 100)        //NPQ NO callback
-#define NET_ERR_NPQ_LOADLIB (NET_ERR_NPQ_BASE_INDEX + 101)               //NPQ library error
-#define NET_ERR_NPQ_STEAM_CLOSE (NET_ERR_NPQ_BASE_INDEX + 104)           //NPQ stream close
-#define NET_ERR_NPQ_MAX_LINK (NET_ERR_NPQ_BASE_INDEX + 110)              //NPQ max link
-#define NET_ERR_NPQ_STREAM_CFG (NET_ERR_NPQ_BASE_INDEX + 111)            //NPQ stream config error
-#define NET_ERR_NPQ_PLAYBACK_OVERSPEED (NET_ERR_NPQ_BASE_INDEX + 112)    //NPQ playbcak max speed
-#define NET_ERR_NPQ_PLAYBACK_BELOWSPEED (NET_ERR_NPQ_BASE_INDEX + 113)   //NPQ playback min speed
+#define NET_ERR_NPQ_NOTCALLBACK    (NET_ERR_NPQ_BASE_INDEX + 100)   //NPQ NO callback
+#define NET_ERR_NPQ_LOADLIB (NET_ERR_NPQ_BASE_INDEX + 101)          //NPQ library error
+#define NET_ERR_NPQ_STEAM_CLOSE (NET_ERR_NPQ_BASE_INDEX + 104)      //NPQ stream close
+#define NET_ERR_NPQ_MAX_LINK (NET_ERR_NPQ_BASE_INDEX + 110)         //NPQ max link
+#define NET_ERR_NPQ_STREAM_CFG (NET_ERR_NPQ_BASE_INDEX + 111)       //NPQ stream config error
 
 //transdisp error codes 8501~9500
 #define NET_ERR_UPGRADE_PROG_ERR                  8501                      //program execute error
@@ -1785,13 +1802,7 @@ typedef struct tagInitInfo
 #define NET_ERR_NO_WIRELESS_NETCARD               8519                      //no wireless netcard
 #define NET_ERR_LOAD_FS_FAIL                      8520                      //load from screen fail
 #define NET_ERR_FLASH_UNSTORAGE_RECCARD           8521                      //Flash unstore receive card
-#define NET_ERR_NOT_SUPPORT_SINGLE_NETWORKCARD_AGGREGA          8522        //not support single network card aggregation
-#define NET_ERR_DISPLAYRESOLUTION_LESSTHAN_SMALLESTRESOLUTION     8523         //Display resolution is less than smallest resolution
-#define NET_ERR_NOT_SUPPORT_LOCAL_SOURCE_DRAG_MORE              8524         //not support local sources drag more
-#define NET_ERR_CANCEL_CURRENT_LED_AREA                   8525               //cancel the current led area first
-#define NET_ERR_LED_OUT_ASSOCIATED_AREA                   8526               //led not in associated area
-#define NET_ERR_MAX_VIRTUAL_LED_PICTURE_SIZE              8527              //virtual led picture size over limit
-#define NET_ERR_DEVICE_CTRLED_BY_REMOTER                  8528              //device controlled by remoter
+
 /*******************Global Error Code end**********************/
 
 /*************************************************
@@ -1845,10 +1856,6 @@ the definition of bit 1 to bit 9 is below and TRUE means support
 #define RUN_SEQ            37    // Start Sequence 
 #define STOP_SEQ        38    // Stop Sequence 
 #define GOTO_PRESET        39    // Go to preset 
-
-#define SET_SEQ_START 41     //start cruise
-#define SET_SEQ_END  42     //end cruise
-
 #define DEL_SEQ         43  // delete cruise path
 #define STOP_CRUISE            44    // stop cruise
 #define DELETE_CRUISE        45    // delete cruise
@@ -1880,7 +1887,7 @@ the definition of bit 1 to bit 9 is below and TRUE means support
 #define TILT_UP_ZOOM_IN        72    /* PTZ tilt up & Zoom in */
 #define TILT_UP_ZOOM_OUT    73    /* PTZ tilt up & Zoom out */
 
-#define DVR_VEHICLE_CONTROL_LIST   0x1 //Vehicle block and allow list data type (data type) 2013-11-04
+#define DVR_VEHICLE_CONTROL_LIST   0x1 //Vehicle black and white list data type (data type) 2013-11-04
 /**********************PTZ Commands end*************************/
 
 /*************************************************
@@ -2460,8 +2467,8 @@ NET_DVR_DecPlayBackCtrl
 //video alarm host V1.3
 #define NET_DVR_SET_SUBSYSTEM_ALARM             1210        //Set system alarm
 #define NET_DVR_GET_SUBSYSTEM_ALARM             1211        //get system alarm
-#define NET_DVR_GET_ALLOWLIST_ALARM             1215        //set allowlist alarm
-#define NET_DVR_SET_ALLOWLIST_ALARM             1216        //get allowlist alarm
+#define NET_DVR_GET_WHITELIST_ALARM             1215        //set whitelist alarm
+#define NET_DVR_SET_WHITELIST_ALARM             1216        //get whitelist alarm
 #define    NET_DVR_GET_ALARMHOST_MODULE_LIST     1222        //get All module
 #define NET_DVR_SET_PRIOR_ALARM                 1223        //set prior alarm
 #define NET_DVR_GET_PRIOR_ALARM                 1224        //set prior alarm
@@ -2960,8 +2967,8 @@ NET_DVR_DecPlayBackCtrl
 #define NET_DVR_SET_EVENT_CARD_LINKAGE_CFG_V51      2519    //Set up the event card number linkage configuration parameters (V51)
 
 /*************************************Embedded intelligent terminal 1.0 begin**************************************/
-#define NET_DVR_BULK_UPLOAD_BLOCKLIST_PICTURE          2520       //Bulk upload blocklist image 
-#define NET_DVR_BULK_UPLOAD_ID_BLOCKLIST        2521        //Bulk upload blocklist
+#define NET_DVR_BULK_UPLOAD_BLACK_LIST_PICTURE          2520       //Bulk upload blacklist image 
+#define NET_DVR_BULK_UPLOAD_ID_BLACK_LIST        2521        //Bulk upload blacklist
 #define NET_DVR_GET_FAILED_FACE_INFO             2522        //when upgrade device,get the failed face info
 #define NET_DVR_GET_FACE_AND_TEMPLATE          2523       //get face and template data
 #define NET_DVR_SET_FACE_AND_TEMPLATE          2524       //set face and template data
@@ -2976,8 +2983,6 @@ NET_DVR_DecPlayBackCtrl
 #define NET_DVR_FACE_DATA_SEARCH                    2552    //face data search
 #define NET_DVR_FACE_DATA_MODIFY                    2553    //face data modify
 #define NET_DVR_CAPTURE_DATA_SEARCH                 2554    //search
-#define NET_DVR_SET_FORM_DATA                       2555    //set form data
-#define NET_DVR_GET_FORM_DATA                       2556    //get form data
 
 #define NET_DVR_GET_CARD                 2560
 #define NET_DVR_SET_CARD                 2561
@@ -3022,15 +3027,15 @@ NET_DVR_DecPlayBackCtrl
 #define    NET_DVR_SET_TEST_SPOT                 3103       //Set SPOT port the test total number of steps and the first steps
 #define NET_DVR_GET_CABINETCFG                 3104       //Get CabinetCfg Param
 #define NET_DVR_SET_CABINETCFG                 3105       //Set CabinetCfg Param
-#define NET_DVR_VEHICLE_CHECK_START             3106       //block list check data pass back
+#define NET_DVR_VEHICLE_CHECK_START             3106       //black list check data pass back
 #define NET_DVR_SET_CAPTUREPIC_CFG             3107        //set capture picture param
 #define NET_DVR_GET_CAPTUREPIC_CFG             3108        //get capture picture param
 #define NET_DVR_SET_MOBILEPLATE_RECOG_CFG     3109        //set plate recognize parm
 #define NET_DVR_GET_MOBILEPLATE_RECOG_CFG     3110        //get plate recognize parm
 #define NET_DVR_SET_MOBILE_RADAR_CFG         3111        //set radar configure parm
 #define NET_DVR_GET_MOBILE_RADAR_CFG         3112        //get radar configure parm
-#define NET_DVR_SET_MOBILE_LOCALPLATECHK_CFG 3113        //set block list compare configure parm
-#define NET_DVR_GET_MOBILE_LOCALPLATECHK_CFG 3114        //get block list compare configure parm
+#define NET_DVR_SET_MOBILE_LOCALPLATECHK_CFG 3113        //set black list compare configure parm
+#define NET_DVR_GET_MOBILE_LOCALPLATECHK_CFG 3114        //get black list compare configure parm
 
 #define  NET_ITC_GET_ICRCFG                        3115   //Get ICR Param Cfg
 #define  NET_ITC_SET_ICRCFG                        3116   //Set ICR Param Cfg
@@ -3667,16 +3672,16 @@ NET_DVR_DecPlayBackCtrl
 #define NET_DVR_SET_SECURITY_QUESTION_CFG       4366    //set device security question
 #define NET_DVR_GET_ONLINEUSERLIST_SC           4367  //remote get user login inf (short connect)
 
-#define    NET_DVR_GET_BLOCKLIST_FACECONTRAST_TRIGGER   4368   //GET BLOCKLIST FACECONTRAST TRIGGER
-#define    NET_DVR_SET_BLOCKLIST_FACECONTRAST_TRIGGER   4369   //SET BLOCKLIST FACECONTRAST TRIGGER
-#define    NET_DVR_GET_ALLOWLIST_FACECONTRAST_TRIGGER   4370   //GET ALLOWLIST FACECONTRAST TRIGGER
-#define    NET_DVR_SET_ALLOWLIST_FACECONTRAST_TRIGGER   4371   //SET ALLOWLIST FACECONTRAST TRIGGER
-#define    NET_DVR_GET_BLOCKLIST_FACECONTRAST_SCHEDULE_CAPABILITIES 4372 //GET BLOCKLIST FACECONTRAST SCHEDULE CAPABILITIES
-#define NET_DVR_GET_BLOCKLIST_FACECONTRAST_SCHEDULE  4373   //GET_BLOCKLIST FACECONTRAST SCHEDULE
-#define NET_DVR_SET_BLOCKLIST_FACECONTRAST_SCHEDULE  4374   //SET_BLOCKLIST FACECONTRAST SCHEDULE
-#define NET_DVR_GET_ALLOWLIST_FACECONTRAST_SCHEDULE_CAPABILITIES 4375 //GET ALLOWLIST FACECONTRAST SCHEDULE CAPABILITIES
-#define NET_DVR_GET_ALLOWLIST_FACECONTRAST_SCHEDULE  4376 //GET ALLOWLIST  FACECONTRAST SCHEDULE
-#define NET_DVR_SET_ALLOWLIST_FACECONTRAST_SCHEDULE  4377 //SET ALLOWLIST FACECONTRAST SCHEDULE
+#define    NET_DVR_GET_BLACKLIST_FACECONTRAST_TRIGGER   4368   //GET BLACKLIST FACECONTRAST TRIGGER
+#define    NET_DVR_SET_BLACKLIST_FACECONTRAST_TRIGGER   4369   //SET BLACKLIST FACECONTRAST TRIGGER
+#define    NET_DVR_GET_WHITELIST_FACECONTRAST_TRIGGER   4370   //GET WHITELIST FACECONTRAST TRIGGER
+#define    NET_DVR_SET_WHITELIST_FACECONTRAST_TRIGGER   4371   //SET WHITELIST FACECONTRAST TRIGGER
+#define    NET_DVR_GET_BLACKLIST_FACECONTRAST_SCHEDULE_CAPABILITIES 4372 //GET BLACKLIST FACECONTRAST SCHEDULE CAPABILITIES
+#define NET_DVR_GET_BLACKLIST_FACECONTRAST_SCHEDULE  4373   //GET_BLACKLIST FACECONTRAST SCHEDULE
+#define NET_DVR_SET_BLACKLIST_FACECONTRAST_SCHEDULE  4374   //SET_BLACKLIST FACECONTRAST SCHEDULE
+#define NET_DVR_GET_WHITELIST_FACECONTRAST_SCHEDULE_CAPABILITIES 4375 //GET WHITELIST FACECONTRAST SCHEDULE CAPABILITIES
+#define NET_DVR_GET_WHITELIST_FACECONTRAST_SCHEDULE  4376 //GET WHITELIST  FACECONTRAST SCHEDULE
+#define NET_DVR_SET_WHITELIST_FACECONTRAST_SCHEDULE  4377 //SET WHITELIST FACECONTRAST SCHEDULE
 
 #define NET_DVR_GET_HUMAN_RECOGNITION_SCHEDULE_CAPABILITIES 4378 //GET HUMAN RECOGNITION SCHEDULE CAPABILITIES
 #define NET_DVR_GET_HUMAN_RECOGNITION_SCHEDULE 4379 //GET HUMAN RECOGNITION SCHEDULE
@@ -3713,7 +3718,6 @@ NET_DVR_DecPlayBackCtrl
 #define	NET_DVR_GET_PERSONQUEUE_SCHEDULE_CAPABILITIES	4408 //GET PERSONQUEUE SCHEDULE CAPABILITIES
 #define	NET_DVR_GET_PERSONQUEUE_SCHEDULE	4409	//GET PERSONQUEUE SCHEDULE
 #define	NET_DVR_SET_PERSONQUEUE_SCHEDULE	4410	//SET PERSONQUEUE SCHEDULE
-#define	NET_DVR_SET_START_VIDEOAUDIO    	4411	//Set NVR to enable audio and video function (for device self-test only)
 
 #define NET_DVR_GET_FACESNAPCFG              5001       //Get face snap configuration
 #define NET_DVR_SET_FACESNAPCFG              5002       //Set face snap configuration
@@ -3855,16 +3859,16 @@ NET_DVR_DecPlayBackCtrl
 
 #define NET_DVR_GET_ALARM_PROCESS_CFG           5220
 #define NET_DVR_SET_ALARM_PROCESS_CFG           5221
-#define NET_DVR_GET_BLOCKLIST_ALARM_INFO        5222
+#define NET_DVR_GET_BLACKLIST_ALARM_INFO        5222
 #define NET_DVR_GET_STORAGE_RESOURCE_CFG        5225
 #define NET_DVR_SET_STORAGE_RESOURCE_CFG        5226
-#define NET_DVR_DEL_BLOCKLIST_ALARM_RECORD        5227
-#define NET_DVR_SET_BLOCKLIST_GROUP_INFO        5229
-#define NET_DVR_DEL_BLOCKLIST_GROUP_INFO        5230
-#define NET_DVR_GET_BLOCKLIST_GROUP_INFO        5231
-#define NET_DVR_SET_BLOCKLIST_GROUP_RECORD_CFG    5232
-#define NET_DVR_GET_BLOCKLIST_GROUP_RECORD_CFG    5234
-#define NET_DVR_DEL_BLOCKLIST_GROUP_RECORD_CFG    5235
+#define NET_DVR_DEL_BLACKLIST_ALARM_RECORD        5227
+#define NET_DVR_SET_BLACKLIST_GROUP_INFO        5229
+#define NET_DVR_DEL_BLACKLIST_GROUP_INFO        5230
+#define NET_DVR_GET_BLACKLIST_GROUP_INFO        5231
+#define NET_DVR_SET_BLACKLIST_GROUP_RECORD_CFG    5232
+#define NET_DVR_GET_BLACKLIST_GROUP_RECORD_CFG    5234
+#define NET_DVR_DEL_BLACKLIST_GROUP_RECORD_CFG    5235
 #define    NET_DVR_GET_AREA_MONITOR_CFG            5236
 #define    NET_DVR_SET_AREA_MONITOR_CFG            5237
 #define    NET_DVR_DEL_AREA_MONITOR_CFG            5238
@@ -3880,8 +3884,8 @@ NET_DVR_DecPlayBackCtrl
 #define NET_DVR_SET_FACE_DATABASE                5249
 #define NET_DVR_DEL_FACE_DATABASE                5250
 #define NET_DVR_RETRIEVAL_FACE_DATABASE            5251
-#define NET_DVR_SET_BLOCKLIST_REL_DEV_CFG        5252
-#define NET_DVR_DEL_BLOCKLIST_REL_DEV            5253
+#define NET_DVR_SET_BLACKLIST_REL_DEV_CFG        5252
+#define NET_DVR_DEL_BLACKLIST_REL_DEV            5253
 
 //NVR which has 64 IPC: Get the information of disk raid.
 #define NET_DVR_GET_DISK_RAID_INFO             6001       //Get the information of disk raid
@@ -4278,16 +4282,16 @@ NET_DVR_DecPlayBackCtrl
 #define NET_DVR_GET_FIGURE                    6610        //Get Figure picture
 
 #define    NET_DVR_SYNC_IPC_PASSWD                  6621    //Sync IPC PASSWORD
-#define    NET_DVR_GET_VEHICLE_BLOCKLIST_SCHEDULE 6622    //Get Blocklist schedule
-#define    NET_DVR_SET_VEHICLE_BLOCKLIST_SCHEDULE 6623    //Set Blocklist schedule
-#define    NET_DVR_GET_VEHICLE_ALLOWLIST_SCHEDULE 6624    //Get Allowlist schedule
-#define    NET_DVR_SET_VEHICLE_ALLOWLIST_SCHEDULE 6625    //Set Allowlist schedule
+#define    NET_DVR_GET_VEHICLE_BLACKLST_SCHEDULE 6622    //Get Blacklist schedule
+#define    NET_DVR_SET_VEHICLE_BLACKLST_SCHEDULE 6623    //Set Blacklist schedule
+#define    NET_DVR_GET_VEHICLE_WHITELST_SCHEDULE 6624    //Get Whitelist schedule
+#define    NET_DVR_SET_VEHICLE_WHITELST_SCHEDULE 6625    //Set Whitelist schedule
 
-#define    NET_DVR_GET_VEHICLE_BLOCKLIST_EVENT_TRIGGER     6626    //Get block list event
-#define    NET_DVR_SET_VEHICLE_BLOCKLIST_EVENT_TRIGGER     6627    //Set block list event
+#define    NET_DVR_GET_VEHICLE_BLACKLIST_EVENT_TRIGGER     6626    //Get black list event
+#define    NET_DVR_SET_VEHICLE_BLACKLIST_EVENT_TRIGGER     6627    //Set black list event
 
-#define    NET_DVR_GET_VEHICLE_ALLOWLIST_EVENT_TRIGGER     6628    //Get allow list event
-#define    NET_DVR_SET_VEHICLE_ALLOWLIST_EVENT_TRIGGER     6629    //Set allow list event
+#define    NET_DVR_GET_VEHICLE_WHITELIST_EVENT_TRIGGER     6628    //Get white list event
+#define    NET_DVR_SET_VEHICLE_WHITELIST_EVENT_TRIGGER     6629    //Set white list event
 
 
 #define    NET_DVR_GET_TRAFFIC_CAP                         6630    //Get traffic cap
@@ -4874,7 +4878,6 @@ NET_DVR_DecPlayBackCtrl
 #define NET_DVR_ISFINDING                1002    //On searching
 #define    NET_DVR_NOMOREFILE                1003    //No more files
 #define    NET_DVR_FILE_EXCEPTION            1004    //Error on log query
-#define NET_DVR_FIND_TIMEOUT        1005   //query timeout
 
 //alarm of plate: NET_DVR_PLATE_RESULT
 
@@ -4907,7 +4910,7 @@ NET_DVR_DecPlayBackCtrl
 #define EXCEPTION_PASSIVETRANSRECONNECT 0x8024  //Passive trans code reconnect
 #define PASSIVETRANS_RECONNECTSUCCESS   0x8025  //Passive trans code reconnect success
 #define EXCEPTION_PASSIVETRANS          0x8026  //Passive trans code exception
-#define SUCCESS_PUSHDEVLOGON            0x8030
+
 #define EXCEPTION_RELOGIN                0x8040    //User Relogin 
 #define RELOGIN_SUCCESS                    0x8041    //User Relogin Success
 #define EXCEPTION_PASSIVEDECODE_RECONNNECT  0x8042  //Passive decode reconnect
@@ -4933,9 +4936,6 @@ NET_DVR_DecPlayBackCtrl
 #define NET_DVR_PLAYBACK_ALLFILEEND      12  //Play back All File End
 #define NET_DVR_VOD_DRAW_FRAME              13  //vod draw Frame
 #define NET_DVR_VOD_DRAW_DATA               14  //vod drawing
-#define NET_DVR_HLS_INDEX_DATA              15  //HLS data
-#define NET_DVR_PLAYBACK_NEW_POS            16  //new pos
-#define NET_DVR_METADATA_DATA              107  //Metadata
 #define NET_DVR_PRIVATE_DATA            112 //Private data
 
 /******************************Abilities Set*********************************/
@@ -4968,7 +4968,6 @@ NET_DVR_DecPlayBackCtrl
 #define WALL_ABILITY                  0x212  //ability set of video wall
 #define MATRIX_ABILITY                0x213  //ability set of SDI matrix 
 #define VIDEOPLATFORM_ABILITY_V40     0x230  //ability set of Multi-function Video Center
-#define MATRIXMANAGEDEVICE_ABILITY    0x240
 #define MATRIXDECODER_ABILITY_V41     0x260  //decoder ability
 #define DECODER_ABILITY               0x261  //decoder ability
 #define CODECARD_ABILITY              0x271  //coder card server ability
@@ -5068,7 +5067,6 @@ NET_DVR_DecPlayBackCtrl
 #define COMM_SENSOR_ALARM                0x1121  //Analog alarm upload
 #define COMM_SWITCH_ALARM              0x1122    
 #define COMM_ALARMHOST_EXCEPTION      0x1123  //Alarm host exception alarm
-#define COMM_ALARMHOST_OPERATEEVENT_ALARM    0x1124
 #define COMM_ALARMHOST_SAFETYCABINSTATE 0x1125//SafetyCabin State
 #define COMM_ALARMHOST_ALARMOUTSTATUS 0x1126  //Alarm Out Status
 #define COMM_ALARMHOST_CID_ALARM       0x1127  // CID ALARM
@@ -5083,15 +5081,13 @@ NET_DVR_DecPlayBackCtrl
 #define COMM_UPLOAD_NOTICE_DATA                 0x1134  //upload notice data
 #define COMM_ALARM_AUDIOEXCEPTION     0x1150  //Aduio alarm info
 #define COMM_ALARM_DEFOCUS            0x1151  //Defous alarm info
-#define COMM_ALARM_BUTTON_DOWN_EXCEPTION     0x1152
 #define COMM_ALARM_ALARMGPS                  0x1202  //GPS alarm info upload
 #define    COMM_TRADEINFO                  0x1500  //ATM DVR transaction information
 //NET_DVR_PLATE_RESULT
 #define COMM_UPLOAD_PLATE_RESULT      0x2800  //Uploaded License info
 #define COMM_ITC_STATUS_DETECT_RESULT 0x2810  //status detect
 #define COMM_IPC_AUXALARM_RESULT      0x2820  //PIR alarm\wireless alarm\callhelp alarm
-#define COMM_UPLOAD_PICTUREINFO       0x2900    
-#define COMM_SNAP_MATCH_ALARM         0x2902  //blocklist comparison result upload
+#define COMM_SNAP_MATCH_ALARM         0x2902  //blacklist comparison result upload
 #define COMM_ITS_PLATE_RESULT            0x3050  //ITS plate result upload
 #define    COMM_ITS_TRAFFIC_COLLECT      0x3051  //ITS traffic collect upload
 #define COMM_ITS_GATE_VEHICLE          0x3052  //Gate vehicle snapshot data upload
@@ -5099,7 +5095,7 @@ NET_DVR_DecPlayBackCtrl
 #define COMM_ITS_GATE_COSTITEM          0x3054  //Gate Costitem 2013-11-19
 #define COMM_ITS_GATE_HANDOVER          0x3055  //Gate Handover  2013-11-19
 #define COMM_ITS_PARK_VEHICLE         0x3056  //Parking data upload
-#define COMM_ITS_BLOCKLIST_ALARM      0x3057  //BlockList data upload
+#define COMM_ITS_BLACKLIST_ALARM      0x3057  //BlackList data upload
 #define COMM_VEHICLE_CONTROL_LIST_DSALARM    0x3058  //Vehicle Control List Alarm 2013-11-04
 #define COMM_VEHICLE_CONTROL_ALARM           0x3059  //Vehicle Alarm 2013-11-04
 #define COMM_FIRE_ALARM                      0x3060  //Fire Alarm 2013-11-04
@@ -5146,8 +5142,6 @@ NET_DVR_DecPlayBackCtrl
 #define COMM_UPLOAD_AIOP_PICTURE      0x4022 //AIOP Picture
 #define COMM_UPLOAD_AIOP_POLLING_SNAP        0x4023 //polling snap
 #define COMM_UPLOAD_AIOP_POLLING_VIDEO       0x4024 //polling video
-#define COMM_UPLOAD_AIOP_HISTORY_VIDEO			0x4025 //AIOP history video
-
 #define    COMM_ITS_ROAD_EXCEPTION          0x4500  //ITS road exception upload
 #define    COMM_ITS_EXTERNAL_CONTROL_ALARM        0x4520 //External control Alarm
 #define COMM_ALARM_SHIPSDETECTION      0x4521  //Ships Detection
@@ -5208,7 +5202,6 @@ NET_DVR_DecPlayBackCtrl
 
 #define  COMM_DEV_STATUS_CHANGED             0x7000  //Device status change alarm upload
 
-#define  COMM_ALARM_EXCEPTION                0x7fff  //Alarm exception type
 /* Device model*/
 #define DVR                            1                //Undefined DVR
 #define ATMDVR                        2                //ATM DVR
@@ -5345,7 +5338,6 @@ NET_DVR_DecPlayBackCtrl
 #define DS_19DXX_S                  152
 #define DS_PWAXX                    153                 /* Axiom Hub */
 #define DS_PHAXX                    154                 /* Axiom Hybrid */
-#define DS_PHAProXX                 155                 /* Axiom Hybrid Pro*/
 
 //2011-11-30
 #define    DS_C10H                        161                /*CVCS*/
@@ -5524,7 +5516,6 @@ NET_DVR_DecPlayBackCtrl
 #define  DS_6904UD_B20H_CLASS       439     //Ultra HD decoder
 #define  DS_B21_MCU_NP_CLASS        440     //DS_B21_MCU_NP_CLASS
 #define  DS_C10S                    501     //C10S Video Wall Controller
-#define  DS_C3X                     502     //Centralized splicing controller
 #define  DS_C10N_SDI                551        //SDI processor
 #define  DS_C10N_BIW                552        //8 channels BNC processor
 #define  DS_C10N_DON                553        //display processor
@@ -5539,11 +5530,6 @@ NET_DVR_DecPlayBackCtrl
 #define  DS_C20N_DVI                572     //C20N DVI input device 
 #define  DS_C20N_DP                 573     //C20N DP input device
 #define  DS_C20N_OUT                574     //output device
-
-//Centralized splicing controller
-#define DS_C30                      5301    //C30 centralized splicing controller
-#define DS_C31                      5302    //C31 centralized splicing controller
-#define DS_M0804                    5303    //M0804 economical splicing controller
 
 //Hard server version of the distributed screen controller 
 #define DS_C20N_VWMS                5351    //Server
@@ -5563,18 +5549,8 @@ NET_DVR_DecPlayBackCtrl
 #define DS_C20N_S24G            5363 //C20N-KMB-switch(24 line)
 #define DS_C20N_S24X            5364 //C20N-GB-switch(24 line)
 #define DS_C12A_0104H           5365 
-#define DS_C20N_DO2_V2          5366 //Two channels DVI output device V2
-#define DS_C20N_HO2_V2          5367 //Two channels HDMI output device V2
-#define DS_C21N                 5368 //C21N controller
-#define DS_C21K                 5369 //KVM system C21
-#define DS_68TS_A               5370 //Touch  integrated machine
-
 //Holographic display device
 #define DS_D1HXX                    5591    //holographic display device
-#define DS_60SDL_X                  5592    //Windows double side terminal
-#define DS_6043DL_B                 5593    //android double side 43 terminal
-#define DS_6049DL_B                 5594    //android double side 49 terminal
-#define DS_6055DL_B                 5595    //android double side 55 terminal
 
 #define ELEVATO_BRIDGE  5751  //wireless elevator bridge
 #define DS_3WF01S_5NG_M  5752  //5.8G wireless construction site bridge(1 kilometer outside)
@@ -5583,18 +5559,11 @@ NET_DVR_DecPlayBackCtrl
 #define DS_3WF03S_5AC    5755   //5.8G 3 kilometer wireless elevator bridge
 #define DS_3WF0ES_5AC_H  5756    //5.8G outdoor 500m high penetration bridge
 #define DS_3WF05S_5AC_H  5765    //5.8G 5KM Gigabit Ethernet port dialing bridge
-#define DS_3WSXXX      5766     //gateway router series (including AC controller)
-#define DS_3WAXXX      5767     //ceiling, outdoor AP series
-#define DS_3WAXXXP     5768     //panel AP series
-#define DS_3WRXXX      5769     //common wireless router series
-#define DS_3WMRXXX     5770     //MESH router series
-#define DS_3WAX18      5881     //outdoor AP
-
-//net management
-#define DS_3CXXXX        5891    //net management platform
-
+#define DS_3WSXXX      5766     //Gateway router series (including AC controller)
+#define DS_3WAXXX      5767     //AP Series
+#define DS_3WRXXX      5768     //Common wireless router series
+#define DS_3WMRXXX     5769     //MESH router series
 #define DS_19M00_MN                    601        //network module
-#define DS_KDXXX                       608    //interactive
 
 #define DS64XXHD_T                    701        //64-T Decoder
 
@@ -5608,7 +5577,7 @@ NET_DVR_DecPlayBackCtrl
 #define DS_65XXUD                   711     //65XXUD Decoder
 #define DS_65XXUD_L                 712     //65XXUD_L Decoder
 #define DS_65XXUD_T                 713     //65XXUD_T Decoder
-
+#define DS_69XXHD                   5001    //69XXHD Decoder
 
 #define DS_D20XX                    750     //LCD Screen
 //SDI matrix
@@ -5621,7 +5590,17 @@ NET_DVR_DecPlayBackCtrl
 #define DS_65VTA                    772     //conference system Integrated terminal
 #define DS_65VT_RX                  773     //Interactive teaching terminal
 #define DS_65VM_MCU_NP              774     //multiple MCU
-
+#define DS_65VT0010                 5571    //unit type terminal
+#define DS_65VM_MCU                 5572    //High density MCU main bord
+#define DS_65VM_MPC                 5573    //High density MCU resoure bord
+#define DS_65VT2XXYR_SF             5574    //Judicial interrogate terminal
+#define DS_65VT0XXY                 5575    //Video conference big terminal
+#define DS_65VT0010Z                5576    //smart unit type terminal
+#define DS_65VT0050Z                5577    //smart video conference big terminal
+#define DS_65VS0XXXS                5878    //opensips sip server
+#define DS_65VS0XXXM                5579    //video conference control platform
+#define DS_65VM00XX_X               5580    //MCU for x86 system
+#define DS_65VA800_BOX              5581    //Video conference Box
 
 #define DS_CS_SERVER                800     //Virtual screen server
 #define DS_68GAP_MCU                831     //video gap
@@ -5672,7 +5651,6 @@ NET_DVR_DecPlayBackCtrl
 #define DS_3K0X_NM                    951        //Fiber Converter
 #define DS_3E2328                    952     //100M Switches
 #define DS_3E1528                    953     //1000M Switches
-#define SCREEN_LINK_SERVER          971     //Screen link server
 #define DS_D51OPSXX                 972     //OPS computer box
 #define IP_PTSYS_MEGA200            1001    //IP_PTSYS_MEGA200
 #define IPCAM_FISHEYE               1002    //Fisheye IP Camera
@@ -5788,9 +5766,6 @@ NET_DVR_DecPlayBackCtrl
 
 #define DS_90XXHXH_XT               2238    //DS_90XXHXH_XT(DS-9016HQH-XT)
 
-#define DS_NVR_ALL                2239    //NVR device unified type code, and DS NVR all is used for all subsequent NVR products (including defined Series)
-#define DS_DVR_ALL                2240    //DVR equipment unified type code is used by all subsequent DVR products (including defined Series)
-
 //PCNVR
 #define PCNVR_IVMS_4200             2301    //PCNVR_IVMS_4200
 
@@ -5836,33 +5811,8 @@ NET_DVR_DecPlayBackCtrl
 //Centralized trainer
 #define DS_C12L_0204H               4060   //economical small size controller
 
-//Decoder 5001-5050
-#define DS_69XXHD                   5001    //69XXHD Decoder
-#define DS_69UD_V2                  5002    //69UD Decoder V2
-#define DS_69UD_T                   5003    //6UD Decoder T
-
-//TRANSCODE    5401 - 5450  Â£Â¨50Â£Â©
+//TRANSCODE    5401 - 5450  £¨50£©
 #define DS_68VTG          5401 //integrated transcoding gateway
-
-//vedio Conference device  5571 - 5590 (20)
-#define DS_65VT0010                 5571    //unit type terminal
-#define DS_65VM_MCU                 5572    //High density MCU main bord
-#define DS_65VM_MPC                 5573    //High density MCU resoure bord
-#define DS_65VT2XXYR_SF             5574    //Judicial interrogate terminal
-#define DS_65VT0XXY                 5575    //Video conference big terminal
-#define DS_65VT0010Z                5576    //smart unit type terminal
-#define DS_65VT0050Z                5577    //smart video conference big terminal
-#define DS_65VS0XXXS                5878    //opensips sip server
-#define DS_65VS0XXXM                5579    //video conference control platform
-#define DS_65VM00XX_X               5580    //MCU for x86 system
-#define DS_65VA800_BOX              5581    //Video conference Box
-#define DS_65VT0020S                5582    //Integrated monocular intelligent conference terminal
-#define DS_65VT0020D                5583    //Integrated binocular intelligent conference terminal
-#define DS_65VM00XX_G               5584    //Video conference MCU server
-#define DS_65VM0000_GPU             5585    //Video conference media processing card
-#define DS_65VTA011                 5586    //High integrated monocular terminal
-#define DS_65VCP1100M_S             5587    //4K monocular tracking camera(intelligent conference terminal)
-#define Z_MINISMC_01                5588    //4K USB camera
 
 //Y10 series
 //video cloud magic cube
@@ -5887,16 +5837,6 @@ NET_DVR_DecPlayBackCtrl
 #define DS_B80_SDI08               5828//HD encoding board
 #define DS_B80_VP                  5829//Transcoding board/Plywood board
 #define DS_B80_VO02                5830//Video output board
-#define DS_B81_MCU                 5831//B81 main bord
-#define DS_B81_AI                  5832//B81 smart analyze board
-#define DS_B81_TVI                 5833//B81 Analog video input moduleÂ£Â¨TVI/BNCÂ£Â©
-#define DS_B81_APL                 5834//B81service module X86
-#define DS_B81_D08T                5835//B81 data collection service board
-#define DS_B85                     5836//B85 small IoT host
-#define DS_B86                     5837//B86 IoT central control host
-#define AX_GW100_V16A00M           5838//B81 host(non isolated), OEM device
-#define DS_B81_AT_M                5839//B81 host(non isolated)
-
 //Gateway
 #define DS_3LGCX                   5841 //general IOT gateway
 #define DS_3LGRX                   5842//LoRa gateway
@@ -5951,28 +5891,6 @@ NET_DVR_DecPlayBackCtrl
 #define DS_K1T331W_D                10516   //DS-K1T331W(D)
 #define DS_K1T671WX_D               10517   //DS-K1T671M(D) DS-K1T671MW(D) DS-K1T671MG(D)
 #define DS_K1T680X                  10518   //DS-K1T680M DS-K1T680D
-#define DS_K1T640A                  10519   //DS-K1T640AM DS-K1T640AMW
-#define DS_K1F600U_D6E_X            10520   //DS-K1F600U-D6E DS-K1F600U-D6E-F DS-K1F600U-D6E-IF
-#define DS_K1T671AMX                10521   //DS-K1T671AM DS-K1T671AMW DS-K1T671AM-5G
-#define DS_VISITORXX                10530
-#define DS_FACE_PAYMENT_TERMINALXX  10531
-#define DS_K1T341B_T                10532   //DS-K1T341BMWI-T  DS-K1T341BMI-T
-#define DS_K1T343                   10533   //DS-K1T343M/MX/MW/MWX/MF/MFX/MFW/MFWX/EX/EWX/EFX/EFWX,D10,D10W/F/FW
-#define DS_K1T673                   10534   //DS_K1T673M/MG/MW/TMW/TMG/DX/DWX/TDX/TDWX/TDGX
-#define DS_K1T981                   10535   //
-#define DS_K5680X                   10536   //DS_K5680X
-#define DS_K5022A_X                 10537   //DS_K5022A_X
-#define DS_K1T342                   10538   //DS-K1T342M/MX/MW/MWX/MF/MFX/MFW/MFWX/EX/EWX/EFWX/DX/DWX,D11,D11S/Pro/Plus
-#define DS_K1T690                   10539   //DS_K1T690
-#define DS_K1T340                   10540   //DS_K1T340
-#define DS_K1T6QT_F72               10541   //F72
-#define DS_K1T641A                  10542   
-#define DS_K1TACS                   10543   //ACS
-
-#define DS_KBS6XXX_WX               11001   //DS-KBS6100-WV/DS-KBS6101-W/DS-KBS6100-W/DS-KBS6101-W/DS-KBS6200-W/DS-KBS6201-W
-#define DS_KBC6XXX_X                11002   //DS-KBC6300/DS-KBC6600
-#define DS_KBI6000_P                11003   //DS-KBI6000-P
-#define DS_KBA6XXX                  11004   //DS-KBA6120/DS-KBA6240/DS-KBA6360/DS-KBA6650/DS-KBA6400-2/DS-KBA6800-2
 
 #define DS_IEXX_E_J                 11501    //DS_IEXX_E_J(DS-IE6316-E/J)
 
@@ -5999,11 +5917,6 @@ NET_DVR_DecPlayBackCtrl
 #define NP_FDC240                   14004
 #define DS_N1107                    14005
 #define NP_FAXXX                    14006
-#define NP_FVY100                   14007
-#define NP_FVW100                   14008
-#define NP_FVG100                   14009
-#define NP_FVY300                   14010
-#define NP_FVR212_P                 14011
 
 // security check 14501-15000
 #define NP_ST204_X                  14501
@@ -6026,8 +5939,8 @@ NET_DVR_DecPlayBackCtrl
 #define DS_3D01T_NM     5692    //fiber receive card
 #define DS_3K02_RNM     5693    //fiber manage card
 
-//simulate and audio 15001-15500
-#define IPA                         15001
+
+
 /**********************Device model end***********************/
 
 /**********************Device Class begin**********************/
@@ -6088,8 +6001,6 @@ NET_DVR_DecPlayBackCtrl
 #define DEV_CLASS_Y10_SERIES      275    //Y10 series
 #define DEV_CLASS_SAFETY_MAVHINE  276    //safety mavhine
 #define DEV_CLASS_IOTGATEWAY 277    //IOT gateway
-#define DEV_CLASS_NET_MANAGEMENT_EQUIPMENT  278     //net management equipment
-#define DEV_CLASS_PUBLISH_SIGNAGE  279   //publish signage
 /* ALARM 301 - 350*/
 #define DEV_CLASS_VIDEO_ALARM_HOST 301          //video alarm host
 #define DEV_CLASS_NET_ALARM_HOST 302          //net alarm host
@@ -6101,8 +6012,7 @@ NET_DVR_DecPlayBackCtrl
 
 /* access control 351 - 400*/
 #define DEV_CLASS_ACCESS_CONTROL 351          //access control
-#define DEV_CLASS_VISITOR        352          //visitor
-#define DEV_CLASS_FACE_PAYMENT_TERMINALXX     353  //face payment terminal
+
 /* video intercom 401 - 450*/
 #define DEV_CLASS_VIDEO_INTERCOM 401          //video intercom
 
@@ -6149,10 +6059,6 @@ NET_DVR_DecPlayBackCtrl
 /* security check 1001 - 1050*/
 #define DEV_CLASS_SECURITY_CHECK 1001
 
-#define DEV_CLASS_CONFERENCE_TABLET  1051  //conference tablet
-
-#define DEV_CLASS_JUDICIAL_TABLET  1101  //judicial tablet
-
 /*panorama detail camera:8451-8470*/
 #define iDS_PT              8451  //panorama detail camera
 
@@ -6178,7 +6084,6 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_ITS_ALARM_STOP            0x0A  //Traffic event alarm stop
 #define MINOR_NETALARM_START            0x0b  //Net alarm start
 #define MINOR_NETALARM_STOP             0x0c  //Net alarm stop
-#define MINOR_NETALARM_RESUME           0x0d
 //2012-4-5 IPC PIR\wireless\callhelp
 #define MINOR_WIRELESS_ALARM_START        0x0e  /* wireless alarm start */
 #define MINOR_WIRELESS_ALARM_STOP          0x0f /* wireless alarm stop */
@@ -6246,8 +6151,8 @@ NET_DVR_DecPlayBackCtrl
 
 #define MINOR_FACESNAP_MATCH_ALARM_START                0x55  /*Face snap match alarm start*/
 #define MINOR_FACESNAP_MATCH_ALARM_STOP                 0x56  /*Face snap match alarm stop*/
-#define MINOR_ALLOWLIST_FACESNAP_MATCH_ALARM_START      0x57  /*Allow list facecontrast alarm start*/
-#define MINOR_ALLOWLIST_FACESNAP_MATCH_ALARM_STOP       0x58  /*Allow list facecontrast alarm end*/
+#define MINOR_WHITELIST_FACESNAP_MATCH_ALARM_START      0x57  /*White list facecontrast alarm start*/
+#define MINOR_WHITELIST_FACESNAP_MATCH_ALARM_STOP       0x58  /*White list facecontrast alarm end*/
 
 #define MINOR_THERMAL_SHIPSDETECTION                    0x5a   //Thermal Ship Detection
 #define MINOR_THERMAL_THERMOMETRY_EARLYWARNING_BEGIN    0x5b   //Thermal Thermometry Early Warning Begin
@@ -6341,10 +6246,6 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_GREYSCALE_ALARM                        0x131// grey scale
 #define MINOR_VIBRATION_DETECTION_ALARM_BEGIN          0x132  //vibration Detection begin
 #define MINOR_VIBRATION_DETECTION_ALARM_END            0x133  //vibration Detection Stop
-#define MINOR_SMOKE_DETECT_ALARM_BEGIN                 0x134  //smoking detection alarm begin
-#define MINOR_SMOKE_DETECT_ALARM_END                   0x135  //Smoking detection alarm end
-#define MINOR_METHANE_CONCENTRATION_ALARM              0x136  //Methane concentration exception
-#define MINOR_METHANE_LIGHTINTENSITY_ALARM             0x137  //Methane light intensity exception
 
 //0x400-0x1000 access card alarm 
 #define MINOR_ALARMIN_SHORT_CIRCUIT                 0x400  //region short circuit 
@@ -6413,8 +6314,7 @@ NET_DVR_DecPlayBackCtrl
 
 #define MINOR_PRINTER_OUT_OF_PAPER               0x440   //printer no paper
 #define MINOR_LEGAL_EVENT_NEARLY_FULL            0x442   //Offline legal event nearly full
-#define MINOR_FIRE_IMPORT_ALARM                  0x443   //Fire in alarm
-#define MINOR_TRANSACTION_RECORD_NEARLY_FULL        0x444
+
 #define MINOR_ALARM_CUSTOM1                         0x900  //alarm custom 1
 #define MINOR_ALARM_CUSTOM2                         0x901  //alarm custom 2
 #define MINOR_ALARM_CUSTOM3                         0x902  //alarm custom 3
@@ -6484,7 +6384,7 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_LOCK_PRY_DOOR_ALARM               0x952       
 #define MINOR_LOCK_LOCKED_ALARM                 0x953       
 #define MINOR_LOCK_BATTERLOW_ALARM              0x954      
-#define MINOR_LOCK_BLOCKLIST_DOOR_ALARM         0x955       
+#define MINOR_LOCK_BLACKLIST_DOOR_ALARM         0x955       
 #define MINOR_LOCK_OFFLINE_ALARM                0x956       
 #define MINOR_LOCK_UNCLOSED_ALARM               0x957       
 #define MINOR_LOCK_NO_HOME_ALARM                0x958       
@@ -6586,7 +6486,6 @@ NET_DVR_DecPlayBackCtrl
 #define  MINOR_FLOW_SENSOR_ALARM                0x1080    // flow sensor alarm
 #define  MINOR_SENSOR_LINKAGE_ALARM                0x1081    //sensor linkage alarm
 #define  MINOR_SENSOR_LINKAGE_ALARM_RESTORE        0x1082    //sensor linkage alarm restore
-#define  MINOR_SHELF_ABNORMAL_ALARM        0x1083    //Shelf abnormal alarm
 
 //LED alarm Hypo Type 0x1201 ~ 0x1300
 #define  MINOR_SYSTEM_CHECK_ALARM                  0x1201    //system check alarm
@@ -6757,23 +6656,7 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_IDCARD_SECURITY_MOUDLE_RESUME    0x43f
 #define MINOR_FP_PERIPHERAL_EXCEPTION          0x440
 #define MINOR_FP_PERIPHERAL_RESUME             0x441
-#define MINOR_REPLAY_ATTACK                    0x442  
-#define MINOR_TLS_ABNORMAL                     0x443 
-#define MINOR_SMART_PLATE_OFFLINE           0x444 
-#define MINOR_SMART_PLATE_ONLINE            0x445 
-#define MINOR_REFUND_LOCKED                 0x446
-#define MINOR_CODER_ONLINE                 0x447 
-#define MINOR_CODER_OFFLINE                 0x448 
-#define MINOR_KEYBOARD_OFFLINE             0x449
-#define MINOR_KEYBOARD_ONLINE              0x44a 
-#define MINOR_5G_MOUDLE_ONLINE          0x44b
-#define MINOR_5G_MOUDLE_OFFLINE         0x44c
-#define MINOR_EXTEND_MODULE_ONLINE         0x44d
-#define MINOR_EXTEND_MODULE_OFFLINE        0x44e
-#define MINOR_INTERLOCK_SERVER_DISCONNECTED 0x44f
-#define MINOR_INTERLOCK_SERVER_CONNECTED    0x450
-#define MINOR_QRCODE_READER_OFFLINE             0x451
-#define MINOR_QRCODE_READER_ONLINE              0x452
+
 
 #define MINOR_EXCEPTION_CUSTOM1                 0x900  //exception custom 1
 #define MINOR_EXCEPTION_CUSTOM2                 0x901  //exception custom 2
@@ -6931,11 +6814,7 @@ NET_DVR_DecPlayBackCtrl
 #define  MINOR_TX1_REBOOT_EXCEPTION       0x1051   /*TX1 system reboot exception*/
 #define  MINOR_TX1_SUB_SYSTEM_LOSS      0x1052   /*TX1 sub system loss*/
 #define  MINOR_TX1_SUB_SYSTEM_RESTORE     0x1053   /*TX1 sub system restore*/
-#define  MINOR_WIRELESS_SPEED_EXCEPTION   0x1054   //wireless transmit speed exception
-#define  MINOR_SUB_BOARD_HEARTBEAT_EXCEPTION   0x1055 //sub board heartbeat exception
-#define  MINOR_HOTSTANDBY__EXCEPTION    0x1056     //hot-standby exception
-#define  MINOR_PRODUCTIONDATA_EXCEPTION 0x1057     //producting data exception
-
+#define MINOR_WIRELESS_SPEED_EXCEPTION   0x1054   //wireless transmit speed exception
 
 //LED except Hypo Type 0x1201~0x1300
 #define MINOR_LED_SYSTEM_EXCEPTION   0x1201   //LED system except
@@ -6946,8 +6825,6 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_EZVIZ_UPGRADE_EXCEPTION     0x401e     //ezviz upgrade exception
 
 #define MINOR_EZVIZ_OPERATION_ABNORMAL   0x4020  //ezviz operation exception
-
-#define MINOR_IFRAME_IS_TOO_LARGE   0x4030  //I frame is too large
 
 /* Operation */
 //Main Type
@@ -7008,8 +6885,8 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_START_VT                    0x7c    /* Start voice talk */
 #define MINOR_STOP_VT                    0x7d    /* Stop voice talk */
 #define MINOR_REMOTE_UPGRADE            0x7e    /* upgrade  (remote)  */
-#define MINOR_REMOTE_PLAYBYFILE         0x7f    /* Playback or download by file name  (remote)  */
-#define MINOR_REMOTE_PLAYBYTIME         0x80    /* Playback or download by time  (remote)  */
+#define MINOR_REMOTE_PLAYBYFILE         0x7f    /* Playback by file name  (remote)  */
+#define MINOR_REMOTE_PLAYBYTIME         0x80    /* Playback by time  (remote)  */
 #define MINOR_REMOTE_PTZCTRL            0x81    /* PTZ control  (remote)  */
 #define MINOR_REMOTE_FORMAT_HDD         0x82    /* Format hard disk (remote)  */
 #define MINOR_REMOTE_STOP               0x83    /* Shut Down  (remote)  */
@@ -7103,12 +6980,7 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_CALL_ONLINE                0xcc    /* call control on line*/    
 #define MINOR_REMOTE_PIN                0xcd    /* remote PIN operation*/
 
-#define MINOR_REMOTE_BYPASS             0xd0    
-#define MINOR_REMOTE_UNBYPASS           0xd1    
-#define MINOR_REMOTE_SET_ALARMIN_CFG    0xd2    
-#define MINOR_REMOTE_GET_ALARMIN_CFG    0xd3    
-#define MINOR_REMOTE_SET_ALARMOUT_CFG   0xd4    
-#define MINOR_REMOTE_GET_ALARMOUT_CFG   0xd5    
+
 #define MINOR_REMOTE_ALARMOUT_OPEN_MAN  0xd6    /* remote mamual open alarmout */
 #define MINOR_REMOTE_ALARMOUT_CLOSE_MAN 0xd7    /* remote mamual close alarmout*/
 #define MINOR_DELETE_LOGO               0xdd    /* delete logo */
@@ -7311,8 +7183,8 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_REMOTE_SMS_READ           0x357   /*Remote read SMS*/
 #define MINOR_REMOTE_DIAL_CONNECT       0x358   /*Remote Dial */
 #define MINOR_REMOTE_DIAL_DISCONN       0x359   /*Remote Disconnect Dial*/
-#define MINOR_LOCAL_ALLOWLIST_SET       0x35A   /*local Allow list CFG*/
-#define MINOR_REMOTE_ALLOWLIST_SET      0x35B   /*Remote Allow list CFG*/
+#define MINOR_LOCAL_WHITELIST_SET       0x35A   /*local white list CFG*/
+#define MINOR_REMOTE_WHITELIST_SET      0x35B   /*Remote white list CFG*/
 #define MINOR_LOCAL_DIAL_PARA_SET       0x35C   /*local Dial Alarm CFG*/
 #define MINOR_REMOTE_DIAL_PARA_SET      0x35D   /*Remote Dial Alarm CFG*/
 #define MINOR_LOCAL_DIAL_SCHEDULE_SET   0x35E   /*local dial schedule CFG*/
@@ -7322,8 +7194,8 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_LOCAL_CFG_POE_WORK_MODE   0x362   //Local poe work mode cfg
 #define MINOR_REMOTE_CFG_FACE_CONTRAST  0x363   //Remote face contrast cfg
 #define MINOR_LOCAL_CFG_FACE_CONTRAST   0x364   //Local face contrast cfg
-#define MINOR_REMOTE_CFG_ALLOWLIST_FACE_CONTRAST   0x365//Remote Allow list face contrast cfg
-#define MINOR_LOCAL_CFG_ALLOWLIST_FACE_CONTRAST    0x366//Local Allow list face contrast cfg
+#define MINOR_REMOTE_CFG_WHITELIST_FACE_CONTRAST   0x365//Remote white list face contrast cfg
+#define MINOR_LOCAL_CFG_WHITELIST_FACE_CONTRAST    0x366//Local white list face contrast cfg
 #define MINOR_LOCAL_CHECK_TIME          0x367   //Local manual timing
 #define MINOR_VCA_ONEKEY_EXPORT_PICTURE 0x368 //One key export picture
 #define MINOR_VCA_ONEKEY_DELETE_PICTURE 0x369 //One key delete picture
@@ -7378,13 +7250,6 @@ NET_DVR_DecPlayBackCtrl
 //
 #define MINOR_CREATE_SSH_LINK                         0x42d     //ssh connected
 #define MINOR_CLOSE_SSH_LINK                          0x42e     //ssh closed
-#define MINOR_LOCAL_IMPORT_USERINFO         0x42f     
-#define MINOR_LOCAL_EXPORT_USERINFO    0x430      
-#define MINOR_CREATE_CERTIFICATE     0x431     
-#define MINOR_UPLOAD_CERTIFICATE      0x432     
-#define MINOR_DELETE_CERTIFICATE     0x433    
-#define MINOR_COMSUME_ARM                          0x434    
-#define MINOR_COMSUME_DISARM                       0x435      
 
 #define MINOR_OPERATION_CUSTOM1        0x900  //operation custom 1
 #define MINOR_OPERATION_CUSTOM2        0x901  //operation custom 2
@@ -7450,9 +7315,6 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_OPERATION_CUSTOM62       0x93d  //operation custom 62
 #define MINOR_OPERATION_CUSTOM63       0x93e  //operation custom 63
 #define MINOR_OPERATION_CUSTOM64       0x93f  //operation custom 64
-#define MINOR_OPERATION_REALTIMEBROADCAST   0x940 
-#define MINOR_OPERATION_PLANBROADCAST       0x941 
-
 #define MINOR_SET_WIFI_PARAMETER               0x950
 #define MINOR_EZVIZ_LOGIN                      0x951
 #define MINOR_EZVIZ_LOGINOUT                   0x952
@@ -7666,7 +7528,7 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_PHONE_QUICK_ARM   0x1065 //phone quick arm
 #define MINOR_PHONE_DISARM     0x1066 //phone disarm
 #define MINOR_PHONE_CLEAR_ALARM     0x1067 //phone clear alarm
-#define MINOR_ALLOWLIST_CFG     0x1068 //Allow list config
+#define MINOR_WHITELIST_CFG     0x1068 //white list config
 #define MINOR_TIME_TRIGGER_CFG    0x1069 //turn on/off trigger config
 #define MINOR_CAPTRUE_CFG     0x106a //capture config
 #define MINOR_TAMPER_CFG    0x106b //tamper config
@@ -7781,9 +7643,6 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_JOINT_CFG                     0x113c    //joint cfg
 #define MINOR_SHOW_MODE_CFG                 0x113d    //show mode cfg
 #define MINOR_ADVANCED_IMAGE_CFG            0x113e    //advanced image
-#define MINOR_SHELF_SIZE_CALIBRATION        0x1140    //shelf size calibration
-#define MINOR_CARGO_SENSOR_CALIBRATION      0x1141    //cargo sensor calibration
-#define MINOR_CARGO_PRODUCT_BIND_CFG        0x1142    //cargo product binding configuration
 
 //2013-04-19 ITS
 #define MINOR_LOCAL_ADD_CAR_INFO            0x2001  /*Local add car info*/
@@ -7878,10 +7737,10 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_LOCAL_SET_GB28181_SERVICE_PARAM     0x212a  //local Set GB28181 Cfg
 #define MINOR_REMOTE_SET_SIP_SERVER               0x212b  //Remote Set SIP SERVER Cfg
 #define MINOR_LOCAL_SET_SIP_SERVER                0x212c  //Local Set SIP SERVER Cfg
-#define MINOR_LOCAL_BLOCKALLOWFILE_OUTPUT         0x212d  //Local output block allow file
-#define MINOR_LOCAL_BLOCKALLOWFILE_INPUT          0x212e  //Local input block allow file
-#define MINOR_REMOTE_BLOCKALLOWCFGFILE_OUTPUT     0x212f  //Remote output block allow file
-#define MINOR_REMOTE_BLOCKALLOWCFGFILE_INPUT      0x2130  //Remote input block allow file
+#define MINOR_LOCAL_BLACKWHITEFILE_OUTPUT         0x212d  //Local output black white file
+#define MINOR_LOCAL_BLACKWHITEFILE_INPUT          0x212e  //Local input black white file
+#define MINOR_REMOTE_BALCKWHITECFGFILE_OUTPUT     0x212f  //Remote output black white file
+#define MINOR_REMOTE_BALCKWHITECFGFILE_INPUT      0x2130  //Remote input black white file
 
 
 #define MINOR_REMOTE_CREATE_MOD_VIEWLIB_SPACE        0x2200    //Remote create or mod view lib space
@@ -7894,20 +7753,6 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_REMOTE_SET_DEVICE_ACTIVE  0x3001  //remote activate device
 #define MINOR_LOCAL_PARA_FACTORY_DEFAULT    0x3002  //local parameter factory default
 #define MINOR_REMOTE_PARA_FACTORY_DEFAULT   0x3003  //remote parameter factory default
-#define MIMOR_REMOTE_DELETE_ALL_VERIFYORCAP_PICS  0x3004
-#define MIMOR_LOCAL_DELETE_ALL_VERIFYORCAP_PICS   0x3005
-#define MIMOR_REMOTE_DELETE_EVENTS_AT_SPECTIME    0x3006
-#define MIMOR_LOCAL_DELETE_EVENTS_AT_SPECTIME     0x3007
-#define MIMOR_REMOTE_OPEN_SUMMER_TIME             0x3008
-#define MIMOR_LOCAL_OPEN_SUMMER_TIME              0x3009
-#define MIMOR_REMOTE_CLOSE_SUMMER_TIME            0x3010
-#define MIMOR_LOCAL_CLOSE_SUMMER_TIME             0x3011
-#define MIMOR_REMOTE_EZVIZ_UNBIND                 0x3012
-#define MIMOR_LOCAL_EZVIZ_UNBIND                  0x3013
-#define MIMOR_ENTER_LOCALUI_BACKGROUND            0x3014
-#define MIMOR_REMOTE_DELETE_FACEBASEMAP           0x3015
-#define MIMOR_LOCAL_DELETE_FACEBASEMAP            0x3016
-
 
 /*info publish server operation log*/
 //minor type:
@@ -7957,12 +7802,6 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_REMOTE_GROUP_CONFIG                  0x2503  //MCU group config
 #define MINOR_REMOTE_CONFERENCE_CTRL               0x2504  //MCU conference config
 #define MINOR_REMOTE_TERMINAL_CTRL                 0x2505  //MCU terminal control
-#define MINOR_ADD_VIDEOWALLSCENE        0x2506        //add videowall scene
-#define MINOR_DEL_VIDEOWALLSCENE        0x2507        //delete videowall scene
-#define MINOR_SAVE_VIDEOWALLSCENE       0x2508        //save videowall scene
-#define MINOR_UPLOAD_SCENECFGFILE       0x2509        //upload scene config file
-#define MINOR_DOWNLOAD_SCENECFGFILE     0x250a        //download scene config file
-
 
 //NVR
 #define MINOR_LOCAL_RESET_LOGIN_PASSWORD           0x2600    /* local reset login password*/ 
@@ -8190,34 +8029,6 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_MOD_FINGER_BY_CARD               0x420
 #define MINOR_MOD_FINGER_BY_EMPLOYEE_NO        0x421
 #define MINOR_IMPORT_USER_LIST                 0x422
-#define MINOR_USB_LOGIN                        0x423
-#define MINOR_USB_LOGOUT                       0x424
-#define MINOR_ISAPI_HTTP_LOGIN                 0x425
-#define MINOR_ISAPI_HTTP_LOGOUT                0x426
-#define MINOR_ISAPI_HTTPS_LOGIN                0x427
-#define MINOR_ISAPI_HTTPS_LOGOUT               0x428
-#define MINOR_ISUP_ONLINE                      0x429
-#define MINOR_ISUP_OFFLINE                     0x42a
-#define MINOR_FP_ISSUE_REC                     0x42b
-#define MINOR_FACE_ISSUE_REC                   0x42c
-#define MINOR_ADD_IRIS                             0x42d  
-#define MINOR_MODIFY_IRIS                          0x42e  
-#define MINOR_DELETE_EMPLOYEE_IRIS                 0x42f   
-#define MINOR_DELETE_WHOLE_IRIS                    0x430   
-#define MINOR_MODIFY_IRIS_CFG                      0x431  
-#define MINOR_ADD_USER_INFO                    0x432
-#define MINOR_MODIFY_USER_INFO                 0x433
-#define MINOR_CLR_USER_INFO                    0x434
-#define MINOR_CLR_CARD_BY_CARD_OR_EMPLOYEE     0x435 
-#define MINOR_CLR_ALL_CARD                     0x436
-#define MINOR_SIM_CARD_INSERT                  0x437
-#define MINOR_SIM_CARD_PULLOUT                 0x438
-#define MINOR_FINGERPRINT_RECOGNITION_OPEN     0x439
-#define MINOR_FINGERPRINT_RECOGNITION_CLOSE    0x43a
-#define MINOR_FACE_RECOGNITION_OPEN            0x43b
-#define MINOR_FACE_RECOGNITION_CLOSE           0x43c
-#define MINOR_RESET_ONLINE_READER              0x43d
-#define MINOR_CLEAR_IRIS_PICTURE               0x43e
 
 /*event*/
 //major event
@@ -8329,7 +8140,7 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_HUMAN_DETECT_FAIL                         0x68    //human detect fail
 #define MINOR_PEOPLE_AND_ID_CARD_COMPARE_PASS           0x69    //the comparison with people and id card success
 #define MINOR_PEOPLE_AND_ID_CARD_COMPARE_FAIL           0x70    //the comparison with people and id card failed
-#define MINOR_CERTIFICATE_BLOCKLIST                     0x71    //block list
+#define MINOR_CERTIFICATE_BLACK_LIST                    0x71    //black list
 #define MINOR_LEGAL_MESSAGE                             0x72    //legal message
 #define MINOR_ILLEGAL_MESSAGE                           0x73    //illegal messag
 #define MINOR_DOOR_OPEN_OR_DORMANT_FAIL                 0x75    //door open or dormant fail
@@ -8355,11 +8166,7 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_COMBINED_VERIFY_PASS                      0x99    //combined verify pass
 #define MINOR_COMBINED_VERIFY_TIMEOUT                   0x9a    //combined verify timeout
 #define MINOR_VERIFY_MODE_MISMATCH                      0x9b    //verify mode mismatch
-#define MINOR_ORCODE_VERIFY_PASS                        0x9c    //QR code verify pass
-#define MINOR_ORCODE_VERIFY_FAIL                        0x9d    //QR code verify fail
-#define MINOR_HOUSEHOLDER_AUTHORIZE_PASS                0x9e    //house holder authorize pass
-#define MINOR_BLUETOOTH_VERIFY_PASS                     0x9f    //bluetooth verify pass
-#define MINOR_BLUETOOTH_VERIFY_FAIL                     0xa0    //bluetooth verify fail
+
 
 #define MINOR_PASSPORT_VERIFY_FAIL                      0xa1    //passport info verify failed
 #define MINOR_INFORMAL_MIFARE_CARD_VERIFY_FAIL          0xa2   //informal mifare card verify failed
@@ -8382,35 +8189,6 @@ NET_DVR_DecPlayBackCtrl
 #define MINOR_REMOTE_FINGER_PRINT_MODULE_UPGRADE_SUCC   0xb1   //remote finger print module upgrade succ
 #define MINOR_REMOTE_FINGER_PRINT_MODULE_UPGRADE_FAIL   0xb2   //remote fimger print module upgrade fail
 #define MINOR_PASSWD_VERIFY_PASS                        0xb5   //passwd verify pass
-#define MINOR_COMSUME_TIMEOUT                     0xb6   
-#define MINOR_REFUND_TIMEOUT                       0xb7  
-#define MINOR_COMSUME_AMOUNT_OVERLIMIT         0xb8  
-#define MINOR_COMSUME_TIMES_OVERLIMIT            0xb9   
-#define MINOR_USER_COMSUME_ENSURE_TIMEOUT      0xba 
-#define MINOR_BLOCKLIST_REACH_THRESHOLD        0xbb  
-#define MINOR_DESFIRE_CARD_ENCRYPT_VERIFY_FAIL          0xbc   
-#define MINOR_DESFIRE_CARD_RECOGNIZE_NOT_ENABLED        0xbd   
-#define MINOR_IRIS_VERIFY_PASS              0xbe
-#define MINOR_IRIS_VERIFY_FAIL              0xbf
-#define MINOR_IRIS_BIOASSAY_FAIL            0xc0
-#define MINOR_FULL_STAFF                    0xc1
-#define MINOR_ATTENDANCE_RECORD_EXCEED_THRESHOLD   0xc2
-#define MINOR_DYNAMICCODE_VERIFY_INVALID           0xc3
-#define MINOR_MEETING_NO_SIGNIN             0xc4  
-#define MINOR_MEETING_SIGNIN                0xc5  
-#define MINOR_MEETING_LATE                  0xc6  
-
-#define MINOR_INTERLOCK_SERVER_FAILED_RESPONSE 0xc9
-#define MINOR_FINGERPRINT_DISENABELD_VERIFY_FAIL 0xca 
-#define MINOR_FACE_DISENABELD_VERIFY_FAIL 0xcb 
-#define MINOR_MONITOR_OPEN_DOOR 0xcc
-#define MINOR_READER_FACTORY_RESET 0xcd
-#define MINOR_READER_ID_CONFLICT 0xce
-#define MINOR_FELICA_CARD_RECOGNIZE_NOT_ENABLED        0xcf
-#define MINOR_PROPERTY_EXCEPTION_VERIFY_FAIL           0xd0
-#define MINOR_MEETING_NO_PERSON             0xd1
-#define MINOR_MEETING_NOT_START             0xd2
-#define MINOR_MEETING_SIGNEDIN              0xd3
 
 #define MINOR_EVENT_CUSTOM1                         0x500  //event custom 1
 #define MINOR_EVENT_CUSTOM2                         0x501  //event custom 2
@@ -8527,7 +8305,6 @@ NET_DVR_DecPlayBackCtrl
 #define  MINOR_POE_PORT_POWER_OFF    0x101f  //POE port power off
 #define  MINOR_POE_TOTAL_POWER_MAX    0x1020  //POE total power to poe-max
 #define  MINNOR_POE_TOTAL_POWER_RESUME   0x1021  //POE total power resume
-#define  MINNOR_CARGO_ITEMS   0x1022  //cargo items
 
 typedef enum tagALARMHOST_MAJOR_TYPE
 {
@@ -8626,8 +8403,6 @@ typedef enum tagALARMHOST_MINOR_TYPE
     MINOR_SOUND_INTENSITY_DROP_RESET,   // sound intensity drop reset
     MINOR_AUDIO_INPUT_EXCEPTION,        // audio input exception
     MINOR_AUDIO_INPUT_EXCEPTION_RESET,  // audio input exception reset
-	MINOR_FACE_DETECTION_ALARM,    // face detection alarm
-    MINOR_FACE_DETECTION_ALARM_RESTORE,    // face detection alarm reset
 
     // Exception
     MINOR_POWER_ON = 0x01,        // Power on
@@ -8787,7 +8562,7 @@ typedef enum tagALARMHOST_MINOR_TYPE
     MINOR_ALARMHOST_PHONE_QUICK_ARM,//phone quick arm
     MINOR_ALARMHOST_PHONE_DISARM,    //phone disarm
     MINOR_ALARMHOST_PHONE_CLEAR_ALARM,    //phone clear alarm
-    MINOR_ALARMHOST_ALLOWLIST_CFG,    //allow list config
+    MINOR_ALARMHOST_WHITELIST_CFG,    //white list config
     MINOR_ALARMHOST_TIME_TRIGGER_CFG,            //turn on/off trigger config
     MINOR_ALARMHOST_CAPTRUE_CFG,                //capture config
     MINOR_ALARMHOST_TAMPER_CFG,                //tamper config
@@ -8909,22 +8684,6 @@ typedef enum tagALARMHOST_MINOR_TYPE
     MINOR_ALARMHOST_STOP_LIVEVIEW_REMOTELT,
     MINOR_ALARMHOST_TELEPHONE_CENTER_SETTINGS,
     MINOR_ALARMHOST_NATIONAL_STANDARD_CFG,
-    MINOR_ALARMHOST_SUPPLEMENTLIGHT_CFG,
-    MINOR_ALARMHOST_FACESNAP_CFG,
-    MINOR_ALARMHOST_PUBLISHMANAGE_CFG,
-    MINOR_ALARMHOST_KEYDIAL_CFG,
-    MINOR_ALARMHOST_VOICETALK_SILENT_CFG,
-    MINOR_ALARMHOST_START_VIDEO_PROTECT,
-    MINOR_ALARMHOST_START_AUDIO_PROTECT,
-    MINOR_ALARMHOST_START_MANUAL_ANSWER,
-    MINOR_ALARMHOST_START_LOG_SERVER,
-    MINOR_ALARMHOST_ADD_CARD,
-    MINOR_ALARMHOST_DELETE_CARD,
-	MINOR_ALARMHOST_MOTION_DETECTION_CFG,
-    MINOR_ALARMHOST_VIDEO_BLOCK_CFG,
-    MINOR_ALARMHOST_FACE_DETECTION_CFG,
-    MINOR_ALARMHOST_LOG_BACKUP,
-
 
     MINOR_ALARMHOST_LOCAL_SET_DEVICE_ACTIVE = 0xf0,        //local activate device
     MINOR_ALARMHOST_REMOTE_SET_DEVICE_ACTIVE = 0xf1,        //remote activate device
@@ -8937,13 +8696,7 @@ typedef enum tagALARMHOST_MINOR_TYPE
     MINOR_SYS_CHECK_START = 0xf7,  //sys check start
     MINOR_SYS_CHECK_STOP = 0xf8,  //sys check stop   
     MINOR_SYS_CHECK_FINISH = 0xf9, //sys check finish
-    MINOR_DEVICE_TAMPER_CFG = 0xfa, //device tamper cfg
-	MINOR_ALARMHOST_INDICATORLIGHT_CFG = 0xfb, //indicator light cfg
-    MINOR_ALARMHOST_WIRELESSBUTTON_CFG = 0xfc, //wireless button cfg
-    MINOR_ALARMHOST_IRCUTFILTER_CFG = 0xfd, //ircutfilter cfg
-    MINOR_ALARMHOST_KEYWORD_AUDIO_RECOGNITION_CFG = 0xfe, //keyword audio recognition cfg
 
-	
     // Event 
     MINOR_SCHOOLTIME_IRGI_B = 0x01,        // B code timing
     MINOR_SCHOOLTIME_SDK,                // SDK timing
@@ -8963,7 +8716,6 @@ typedef enum tagALARMHOST_MINOR_TYPE
     MINOR_KEYPAD_LOCKED,            //keypad locked
     MINOR_USB_INSERT,
     MINOR_USB_PULLOUT,
-    MINOR_KEYPAD_UNLOCK,            //keypad unlocked
 }ALARMHOST_MINOR_TYPE;
 /*
 If the main type of the log is MAJOR_OPERATION=03 (Operation) And Sub type is
@@ -8997,10 +8749,6 @@ dwParaType:  is valid,  and the relative definition is listed as below:
 #define PARA_AUTOBOOT      0x2004            /* Auto-reboot info*/
 #define PARA_HOLIDAY      0x2005            /* Holiday info*/            
 #define PARA_IPC          0x2006            /* IPC channel info */
-
-#define NET_DVR_DEV_ADDRESS_MAX_LEN 129
-#define NET_DVR_LOGIN_USERNAME_MAX_LEN 64
-#define NET_DVR_LOGIN_PASSWD_MAX_LEN 64
 
 typedef enum tagCharEncodeType
 {
@@ -9100,12 +8848,6 @@ typedef struct
     char    sIpV4[16];                         //IPv4 Address 
     BYTE    byIPv6[128];                     //Reserved 
 }NET_DVR_IPADDR, *LPNET_DVR_IPADDR;
-
-typedef union tagNET_DVR_IPADDR_UNION
-{
-    char    szIPv4[16];                        //IPv4 Address 
-    char    szIPv6[256];                        //IPv4 Address 
-}NET_DVR_IPADDR_UNION, *LPNET_DVR_IPADDR_UNION;
 
 //Log Info (9000extended) 
 typedef struct
@@ -9229,9 +8971,8 @@ typedef struct tagNET_DVR_HANDLEEXCEPTION_V41
     /*0x20:  wireless voice and light alarm*/
     /*0x40:  Trigger electric map(only PCNVR supports)*/
     /*0x200: capture jpeg and update to FTP*/
-    /*0x4000: allow light alarm*/
+    /*0x4000: white light alarm*/
     /*0x10000: SMS alarm*/
-    /*0x20000: indicator light alarm*/
     DWORD   dwMaxRelAlarmOutChanNum; //the max of dvr support can trigger the alarm output channel number (read-only)
     DWORD   dwRelAlarmOut[MAX_ALARMOUT_V40];  //Trigger an alarm channel ,  Encountered 0xffffffff follow-up without alarm trigger channel  
     BYTE    byRes[64];
@@ -9748,7 +9489,7 @@ typedef struct
     /* 4:  not Transparent,  not Flash */
     BYTE byHourOSDType;                 /* : 24- Hour system, 12- Hour system */
     BYTE byFontSize;
-    BYTE byOSDColorType;    //0-auto(black or white);1-custom;2-outline
+    BYTE byOSDColorType;    //0-OSD Color type(black or white);1-custom
     BYTE byAlignment;//0- adaptive, 1- right aligned 2- left aligned, 3 - gb model, 4-all right aligned, 5-all left aligned
     BYTE byOSDMilliSecondEnable;//OSD MilliSecond Enable
     NET_DVR_RGB_COLOR    struOsdColor;//OSD color
@@ -9972,16 +9713,7 @@ typedef struct
             344-1776*528                 345-1392*400                346-7256*1520            347-512*288
             348-1936*1210                349-640*400                  350-2688*1792           351-2464*2056
             352-2720*1600                353-4800*1600               354-3600*1200            355-not define
-            356-2400*800                 357-1200*400                358-4096*3008            359-7680*4096
-            360-1080*1520                361-6656*3744               362-5120*1400            363-2560*704
-            364-2688*3040                365-1280*352                366-3376*1008            367-1688*504
-            368-5120*1440                369-1920*2160               370-4080*1808            371-4080*1152
-            372-2688*3888                373-3840*2880               374-2464*3520            375-4416*1696
-            376-1408*540                 377-3456*1080               378-1728*540             379-704*1152
-            380-1408*1152                381-5120*2880               382-720*576              383-3984*1168
-            384-1920*1440                385-3840*4096               386-1920*536             387-1536*432
-            388-3072*864                 389-1440*1080               390-720*540              391-960*544
-            392-720*544                  393-5430*3054               394-8000*6000            395-6560*3690
+            356-2400*800                 357-1200*400
             */
     BYTE byResolution;
     BYTE byBitrateType;         //Bitrate Type 0: VBR, 1: CBR
@@ -10025,9 +9757,9 @@ typedef struct
     BYTE byResolution;       //Resolution 0- DCIF 1- CIF,  2- QCIF,  3- 4CIF,  4- 2CIF,  5- 2QCIF (352X144)  (for Mobile DVR) 
     BYTE byBitrateType;         //Bit rate type 0: VBR, 1: CBR, 2:LBR
     BYTE  byPicQuality;         //Image Quality 0- best 1- much better 2- better 3- Normal 4- worse 5- worst
-    DWORD dwVideoBitrate;      /*video bit rate 0- reserved 1- 16K (reserved)  2-32K 3-48k 4-64K 5-80K 6-96K 7-128K 8-160k 9-192K 10-224K 11-256K 12-320K 
-								13 - 384K 14 - 448K 15 - 512K 16 - 640K 17 - 768K 18 - 896K 19 - 1024K 20 - 1280K 21 - 1536K 22 - 1792K 23 - 2048K
-								24 - 2560K 25 - 3072K 26 - 4096K 27 - 5120K 28 - 6144K 29 - 7168K 30 - 8192K */
+    DWORD dwVideoBitrate;      //video bit rate 0- reserved 1- 16K (reserved)  2- 32K 3- 48k 4- 64K 5- 80K 6- 96K 7- 128K 8- 160k 9- 192K 10- 224K 11- 256K 12- 320K
+    // 13- 384K 14- 448K 15- 512K 16- 640K 17- 768K 18- 896K 19- 1024K 20- 1280K 21- 1536K 22- 1792K 23- 2048K
+    //if The highest bit (31 bit)  is 1,  it stands for user defined bit rate,  0- 30 is the value of bit rate (MIN- 32K) 
     DWORD dwVideoFrameRate;     //Frame rate 0- full;  1- 1/16;  2- 1/8;  3- 1/4;  4- 1/2;  5- 1;  6- 2;  7- 4;  8- 6;  9- 8;  10- 10;  11- 12;  12- 16;  13- 20; 
 }NET_DVR_COMPRESSION_INFO, *LPNET_DVR_COMPRESSION_INFO;
 
@@ -10401,8 +10133,8 @@ typedef struct tagNET_DVR_PTZ_NOTIFICATION_COND
     17-thermometry,
     18-shipsDetection
     19-fieldDetection
-    20-blockListFaceContrast
-    21-allowListFaceContrast
+    20-blackListFaceContrast
+    21-whiteListFaceContrast
     22-humanRecognition
     23- faceContrast
     */
@@ -10449,8 +10181,8 @@ typedef struct tagNET_DVR_PTZ_NOTIFICATION
     17-thermometry,
     18-shipsDetection
     19-fieldDetection
-    20-blockListFaceContrast
-    21-allowListFaceContrast
+    20-blackListFaceContrast
+    21-whiteListFaceContrast
     22- humanRecognition
     */
     WORD    byEventType;
@@ -10612,7 +10344,7 @@ typedef struct tagNet_DVR_ANALOG_ALARMINCFG
 typedef struct tagNET_DVR_ALARMINFO_FIXED_HEADER
 {
     DWORD dwAlarmType;              /*0- sensor alarm; 1- hard disk full; 2- video lost; 3- motion detection; 4- hard disk unformatted; 5- hard disk error; 6- tampering detection; 7- unmatched video output standard; 8- illegal operation; 9- video exception; 0xa- record exception
-                        11- Vca scene change 12-Array exception 13 resolution dismatch,14-alloc decode resource fail,15-VCA detect,19-audio input lost, 20-record on,21-record off,22-vehicle detection exception, 23-pulse alarm,24-face lib disk alarm,25-face lib change,26-face picture change,28-camera angle anomaly,34-abnormal reboot*/
+                        11- Vca scene change 12-Array exception 13 resolution dismatch,14-alloc decode resource fail,15-VCA detect,19-audio input lost, 20-record on,21-record off,22-vehicle detection exception, 23-pulse alarm,24-face lib disk alarm,25-face lib change,26-face picture change,28-camera angle anomaly*/
     NET_DVR_TIME_EX struAlarmTime;    //alarm Time
     union
     {
@@ -10627,7 +10359,7 @@ typedef struct tagNET_DVR_ALARMINFO_FIXED_HEADER
         {
             DWORD    dwAlarmChanNum;
             DWORD    dwPicLen;//Jpeg
-            BYTE     byPicURL; //0-BinaryÂ£Â¬1-URL
+            BYTE     byPicURL; //0-Binary£¬1-URL
             BYTE    byTarget; // 0-not distinguish,1-hunman,2-vehicle
             BYTE    byRes1[2]; //
 #if (defined(OS_WINDOWS64) || defined(OS_POSIX64))
@@ -10661,30 +10393,18 @@ typedef struct tagNET_DVR_ALARMINFO_FIXED_HEADER
             BYTE*      pCustomInfo; //custom information
             BYTE       byType;  //PTLocking type 1-pan 2-tilt
             BYTE       byDeicingEnabled;  // Deicing enabled 0-close 1-open
-            BYTE       byRes2[2]; //
-            DWORD      dwChannel; //
         }struPTLocking;  //PTLocking dwAlarmType=32 is valid
 
         struct
         {
             BYTE       byExceptionType;	//Exception type, 0-reserved, 1-log storage exception, 2-log disk full
         }struLogException;  //Valid when dwalarmtype = 33, log exception information
-
-        struct
-        {
-            NET_DVR_TIME_EX struAlarmTime;    //Restart time, device local time 
-            BYTE            byExceptionType;  //Restart specific type 0-reserved 1-thread 2-NO stream 
-            BYTE            byRes1[3];        //res
-        }struAbnormalReboot;  //Valid when dwAlarmType=34, abnormalReboot
-
     }uStruAlarm;
     DWORD*  pRes;    //res
     BYTE   byTimeDiffFlag;      /*Time difference is valid or not 0-invalid 1-valid */
     char   cTimeDifferenceH;         /*Time difference(HOUR) from UTC */
     char   cTimeDifferenceM;      	/*Time difference(MINUTE) from UTC*/
-    BYTE    byRes;
-    WORD    wDevInfoIvmsChannel; //Add transmission channel number 
-    BYTE   byRes2[2];
+    BYTE   byRes2[5];
 }NET_DVR_ALRAM_FIXED_HEADER, *LPNET_DVR_ALARM_FIXED_HEADER;
 
 //Upload Alarm Information(256 NVR extended)
@@ -10894,7 +10614,7 @@ typedef  struct
     char    sLicense[MAX_LICENSE_LEN_EX/*32*/];        //vehicle num
     BYTE    byMonitoringSiteID[MONITORSITE_ID_LEN /*48*/];    //
     BYTE    byCountry; // conutry index,COUNTRY_INDEX(no support"COUNTRY_ALL = 0xff, //ALL ")
-    BYTE    byMatchingResult;//match result:0-res,1-allowlist,2-blocklist,3-otherlist
+    BYTE    byMatchingResult;//match result:0-res,1-whitelist,2-blacklist,3-otherlist
     BYTE    byArea;                         //Area of  The United Arab Emirates, refer to EMI_AREA
     BYTE    byPlateType;                    //Plate Type, refer to VCA_PLATE_TYPE
     char    sDeviceName[NAME_LEN/*32*/];    //Device Name
@@ -12571,7 +12291,7 @@ typedef  struct
 {
     NET_DVR_JPEGPARA  struParam;
     BYTE   byPicFormat;            // The equipment at 0 - Jpeg image format 
-    BYTE   byCapturePicType;        // Equipment, scratching figure type 0 - equipment general figure, 1 - eagle eye calibration images ,3-fish circle picture, 4-HD capture
+    BYTE   byCapturePicType;        // Equipment, scratching figure type 0 - equipment general figure, 1 - eagle eye calibration images ,3-fish circle picture
     BYTE   bySceneID;              //0-not support,1-scene1, 2-scene2 .....
     BYTE   byRes[253];
 }NET_DVR_PICPARAM_V50, *LPNET_DVR_PICPARAM_V50;
@@ -12939,13 +12659,6 @@ typedef struct tagNET_DVR_MATRIX_DEC_REMOTE_PLAY_V50
     BYTE    sStreamPassword[STREAM_PASSWD_LEN];//stream password
     BYTE    byRes2[116];
 }NET_DVR_MATRIX_DEC_REMOTE_PLAY_V50, *LPNET_DVR_MATRIX_DEC_REMOTE_PLAY_V50;
-
-typedef struct tagNET_DVR_DISPLAY_EFFECT_CFG
-{
-    DWORD dwSize;
-    NET_DVR_COLOR  struColor;
-    BYTE byRes[32];
-}NET_DVR_DISPLAY_EFFECT_CFG, *LPNET_DVR_DISPLAY_EFFECT_CFG;
 
 //Multi- channels Decoder new
 typedef struct tagNET_MATRIX_PASSIVEMODE
@@ -13385,7 +13098,6 @@ typedef struct
     BYTE byStartDTalkChan;    //Start digital talk channel
     BYTE byHighDChanNum;        //Digital channel number high
     BYTE bySupport4;        //Support  epresent by bit, 0 - not support 1 - support
-    //bySupport4 0x02 whether support NetSDK(NET_DVR_STDXMLConfig) tranfer form data
     //bySupport4 & 0x4 whether support video wall unified interface
     // bySupport4 & 0x80 Support device upload center alarm enable
     BYTE byLanguageType;    // support language type by bit,0-support,1-not support  
@@ -13417,10 +13129,7 @@ typedef struct tagNET_DVR_DEVICEINFO_V40
     NET_DVR_DEVICEINFO_V30 struDeviceV30;
     BYTE  bySupportLock;        //the device support lock function,this byte assigned by SDK.when bySupportLock is 1,dwSurplusLockTime and byRetryLoginTime is valid 
     BYTE  byRetryLoginTime;        //retry login times
-    BYTE  byPasswordLevel;      //PasswordLevel,0-invalid,1-default password,2-valid password,3-risk password,
-    //4- the administrator creates an ordinary user to set the password for him/her, and the ordinary user shall be prompted to "please modify the initial login password" after correctly logging into the device. In the case of no modification, the user will be reminded every time he/she logs in; 
-    //5- when the password of an ordinary user is modified by the administrator, the ordinary user needs to be prompted "please reset the login password" after correctly logging into the device again. If the password is not modified, the user will be reminded of each login;
-    //6- the administrator creates an installer/operator user and sets password for him/her,  then need prompt "please change initial password" after the user login in the device. If the password is not modified, it can't operate other actions except for changing password
+    BYTE  byPasswordLevel;      //PasswordLevel,0-invalid,1-default password,2-valid password,3-risk password,4- the administrator creates an ordinary user to set the password for him/her, and the ordinary user shall be prompted to "please modify the initial login password" after correctly logging into the device. In the case of no modification, the user will be reminded every time he/she logs in; 5- when the password of an ordinary user is modified by the administrator, the ordinary user needs to be prompted "please reset the login password" after correctly logging into the device again. If the password is not modified, the user will be reminded of each login
     BYTE  byProxyType;  //Proxy Type,0-not use proxy, 1-use socks5 proxy, 2-use EHome proxy
     DWORD dwSurplusLockTime;    //surplus locked time
     BYTE  byCharEncodeType;     //character encode type
@@ -13504,9 +13213,8 @@ typedef struct tagNET_DVR_PREVIEWINFO{
     BYTE byVideoCodingType;
     DWORD dwDisplayBufNum; //soft player display buffer size(number of frames), range:1-50, default:1 
     BYTE byNPQMode;  //0-direct connect 1-by SMS
-    BYTE byRecvMetaData;  //wwhether to recieve metadataÂ£Â¬Capability is GET /ISAPI/System/capabilities, and  DeviceCap.SysCap.isSupportMetadata is true
-    BYTE byDataType;    //0-stream data,1-audio data
-    BYTE byRes[213];
+    BYTE byRecvMetaData;  //wwhether to recieve metadata£¬Capability is GET /ISAPI/System/capabilities, and  DeviceCap.SysCap.isSupportMetadata is true
+    BYTE byRes[214];
 }NET_DVR_PREVIEWINFO, *LPNET_DVR_PREVIEWINFO;
 
 //
@@ -13652,28 +13360,6 @@ typedef struct tagNET_DVR_ADDRESS
     BYTE byRes[2];
 }NET_DVR_ADDRESS, *LPNET_DVR_ADDRESS;
 
-//link type
-typedef enum _NET_DVR_LINK_KIND_
-{
-    ENUM_LINK_PREVIEW = 1, //preview
-    ENUM_LINK_PLAYBACK,   //playback, download
-    ENUM_LINK_VOICEPLAY   //audiotalk
-}NET_DVR_LINK_KIND;
-
-//link addr
-typedef struct tagNET_DVR_LINK_ADDR
-{
-    NET_DVR_IPADDR_UNION      uLocalIP;    //IP of client
-    WORD                      wLocalPort[10];   //port of client
-    BYTE                      byLocalPortNum;   //port num of client
-    BYTE                      byRes1[3];
-    NET_DVR_IPADDR_UNION      uDevIP;        //IP of device
-    WORD                      wDevPort[10];     //port of device
-    BYTE                      byDevPortNum;     //port num of device
-    BYTE                      byRes2[3];
-    BYTE                      byRes[80];
-}NET_DVR_LINK_ADDR, *LPNET_DVR_LINK_ADDR;
-
 typedef struct tagNET_DVR_FINDDATA_V50
 {
     char sFileName[100];
@@ -13730,7 +13416,7 @@ typedef struct
 //audio encode type
 typedef struct tagNET_DVR_COMPRESSION_AUDIO
 {
-    BYTE  byAudioEncType;    //AudioTalk Code Type 0-G722.1; 1-G711_U; 2-G711_A;5-MP2L2;6-G726;7-AAC,8-PCM;9-G722.1.C;12-AAC_LC;13-AAC_LD;14-Opus;15-MP3;16-ADPCM
+    BYTE  byAudioEncType;    //AudioTalk Code Type 0-G722.1; 1-G711_U; 2-G711_A;5-MP2L2;6-G726;7-AAC,8-PCM;9-G722.1.C;12-AAC_LC;13-AAC_LD;14-Opus;
     BYTE  byAudioSamplingRate;//audio sample rate 0-default,1-16kHZ,2-32kHZ,3-48kHZ,4- 44.1kHZ,5-8kHZ
     BYTE  byAudioBitRate;// audio bitrate see BITRATE_ENCODE_INDEX
     BYTE  byres[4];//
@@ -14012,8 +13698,7 @@ typedef enum _VCA_ABILITY_TYPE_EX_
     EVENT_HIGH_DENSITY_STATUS_ABILITY = 0x00000020,    //high density status
     EVENT_RUNNING = 0x00000040,        //running
     EVENT_RETENTION = 0x00000080, //retention
-    EVENT_TEACHER_WRITING = 0x00000100,   //Writing
-    EVENT_FAKECARD = 0x00000200 //fake card
+    EVENT_TEACHER_WRITING = 0x00000100   //Writing
 }VCA_ABILITY_TYPE_EX;
 
 //Intelligent channel type
@@ -14217,8 +13902,7 @@ typedef enum _VCA_RULE_EVENT_TYPE_EX_
     ENUM_VCA_EVENT_BLACKBOARD_WRITE = 42,   //Black Board Writing
     ENUM_VCA_EVENT_SITUATION_ANALYSIS = 43,   //Situational analysis
     ENUM_VCA_EVENT_PLAY_CELLPHONE = 44,    //play cellphone
-    ENUM_VCA_EVENT_DURATION = 45,     //duration
-    ENUM_VCA_EVENT_FAKECARD = 46     //fake card
+    ENUM_VCA_EVENT_DURATION = 45     //duration
 } VCA_RULE_EVENT_TYPE_EX;
 
 //Traverse plane direction
@@ -14251,10 +13935,8 @@ typedef struct tagNET_VCA_TRAVERSE_PLANE
     BYTE bySensitivity;                    //[1,5]
     BYTE byPlaneHeight;                    //Height of the alarm plane
     BYTE byDetectionTarget;                //DetectionTarget: 0-all, 0x01-Human,0x02-Vehicle,0x04-Others, support mutil select eg. 0x03=0x01+0x02
-    BYTE byPriority;                       //byPriority,0-low,1-mid,2-high
-    BYTE byAlarmConfidence;                //alarmConfidence, 0-low,1-mediumLow,2-mediumHigh,3-high
-    BYTE byRecordConfidence;               //recordConfidence , 0-low,1-mediumLow,2-mediumHigh,3-high
-    BYTE byRes2[34];
+    BYTE byPriority;//byPriority,0-low,1-mid,2-high
+    BYTE byRes2[36];
 }NET_VCA_TRAVERSE_PLANE, *LPNET_VCA_TRAVERSE_PLANE;
 
 typedef struct tagNET_VCA_SIT_QUIETLY
@@ -14284,8 +13966,7 @@ typedef struct tagNET_VCA_INTRUSION
     BYTE byRate;
     BYTE byDetectionTarget;    //DetectionTarget: 0-all, 0x01-Human, 0x02-Vehicle,0x04-Others, support mutil select eg. 0x03=0x01+0x02
     BYTE byPriority;//Priority,0-low,1-mid,2-high
-    BYTE byAlarmConfidence;    //alarmConfidence, 0-low,1-mediumLow,2-mediumHigh,3-high
-    BYTE byRecordConfidence;   //recordConfidence , 0-low,1-mediumLow,2-mediumHigh,3-high
+    BYTE byRes[2];
 }NET_VCA_INTRUSION, *LPNET_VCA_INTRUSION;
 
 //Loitering
@@ -14419,7 +14100,7 @@ typedef struct tagNET_VCA_LEAVE_POSITION
     NET_VCA_POLYGON   struRegion; //Region
     WORD wLeaveDelay;  //Alarm time of no people, unit: s
     WORD wStaticDelay; //Alarm time of sleeping, unit: s
-    BYTE byMode;       //mode,0-leave,1-sleep,2-leave and sleepÂ£Â¬3-onPosition
+    BYTE byMode;       //mode,0-leave,1-sleep,2-leave and sleep
     BYTE byPersonType; //Person on guard,0-single,1-couple
     BYTE   byOnPosition; //Number of posts, 1-10, default 1
     BYTE      bySensitivity;     //sensitivity, 1-5
@@ -14650,14 +14331,6 @@ typedef struct _NET_VCA_DURATION_
     BYTE   byRes[90];
 }NET_VCA_DURATION, *LPNET_VCA_DURATION;
 
-//fake card
-typedef struct tagNET_VCA_FAKECARD
-{
-    NET_VCA_POLYGON struRegion;  // Area range
-    BYTE         bySensitivity;  // Sensitivity, value range: [1,5]
-    BYTE         byRes[7];
-}NET_VCA_FAKECARD, *LPNET_VCA_FAKECARD;
-
 //Alarm event parameters
 typedef union tagNET_VCA_EVENT_UNION
 {
@@ -14701,7 +14374,6 @@ typedef union tagNET_VCA_EVENT_UNION
     NET_VCA_SITUATION_ANALYSIS   struSituationAnalysis; //Situational analysis
     NET_VCA_PLAY_CELLPHONE    struPlayCellphone; //Play cellphone
     NET_VCA_DURATION            struDruation;//duration
-    NET_VCA_FAKECARD           struFakeCard; //fake card
 }NET_VCA_EVENT_UNION, *LPNET_VCA_EVENT_UNION;
 
 // Target size filter
@@ -15101,10 +14773,7 @@ typedef struct tagNET_VCA_APPEND_INFO
     DWORD   dwTargetDistance;  //distance,m
     BYTE    byAlarmType;// 0-vedio 1-radar
     BYTE    byRadarChannel; //radar channel,1,2,3,...
-    BYTE    byRes2; 
-    BYTE    byAppendChannelType;//0-res;1-visible channel;2-themetry channel;
-    DWORD   dwAppendChannel; 
-    BYTE    byRes[44];
+    BYTE    byRes[50];
 }NET_VCA_APPEND_INFO, *LPNET_VCA_APPEND_INFO;
 
 
@@ -16039,6 +15708,7 @@ typedef struct tagNET_DVR_SEARCH_EVENT_PARAM_V40
             BYTE byAll;
             BYTE byRes1[3];
             WORD wChanNo[MAX_CHANNUM_V30];
+            BYTE byRes[668];
         }struVCADetect;
 
         struct
@@ -16134,6 +15804,7 @@ typedef struct tagNET_DVR_SEARCH_EVENT_PARAM_V50
             BYTE byAll;
             BYTE byRes1[3];
             WORD wChanNo[MAX_CHANNUM_V30];//The channel, according to the value, the compact arrangement, encountered 0xFFFF, said the follow-up value of the array is invalid 
+            BYTE byRes[668];
         }struVCADetect;
 
         struct
@@ -16527,7 +16198,7 @@ typedef struct tagNET_DVR_BEHAVIOR_IN_CALIBRATION
     DWORD    dwCalSampleNum;       //  Calibration sample number
     NET_DVR_IN_CAL_SAMPLE  struCalSample[MAX_SAMPLE_NUM];  // Max. calibration sample number
     NET_DVR_CAMERA_PARAM    struCameraParam;     // Camera parameters
-    BYTE byRes[16];
+    BYTE byRes[20];
 }NET_DVR_BEHAVIOR_IN_CALIBRATION, *LPNET_DVR_BEHAVIOR_IN_CALIBRATION;
 
 #define  CALIB_PT_NUM 4
@@ -16543,8 +16214,8 @@ typedef struct tagNET_DVR_ITS_CALIBRATION
 typedef struct tagNET_DVR_BV_DIRECT_CALIBRATION
 {
     DWORD  dwCameraHeight;   //Camera Height,unit:cm
-    float  fPitchAngle;      //Camera Pitch Angle[0Â¡Ã£, 60Â¡Ã£],
-    float  fInclineAngle;    //Camera Incline Angle[-20Â¡Ã£,20Â¡Ã£]
+    float  fPitchAngle;      //Camera Pitch Angle[0¡ã, 60¡ã],
+    float  fInclineAngle;    //Camera Incline Angle[-20¡ã,20¡ã]
     BYTE   byRes1[228];
 }NET_DVR_BV_DIRECT_CALIBRATION, *LPNET_DVR_BV_DIRECT_CALIBRATION;
 
@@ -16552,7 +16223,7 @@ typedef struct tagNET_DVR_BV_DIRECT_CALIBRATION
 typedef struct  tagNET_DVR_PDC_LINE_CALIBRATION
 {
     NET_VCA_LINE  struCalibrationLine;
-    BYTE       byRes[224];
+    BYTE       byRes[232];
 } NET_DVR_PDC_LINE_CALIBRATION, *LPNET_DVR_PDC_LINE_CALIBRATION;
 
 
@@ -16918,7 +16589,7 @@ typedef enum tagTRAFFIC_AID_TYPE
     DEBRIS = 0x10,     //Debris 
     SMOKE = 0x20,     //Smoke
     OVERLINE = 0x40,      //Over line
-    VEHICLE_CONTROL_LIST = 0x80,    //block list
+    VEHICLE_CONTROL_LIST = 0x80,    //black list
     SPEED = 0x100,    //over speed
     LANECHANGE = 0x200,      //lane change
     TURNAROUND = 0x400,     //turn around
@@ -16956,7 +16627,7 @@ typedef enum tagITS_ABILITY_TYPE
     ITS_DEBRIS_ABILITY = 0x10,       //Debris
     ITS_SMOKE_ABILITY = 0x20,       //Smoke - tunnel
     ITS_OVERLINE_ABILITY = 0x40,       //Over line
-    ITS_VEHICLE_CONTROL_LIST_ABILITY = 0x80,        //block list
+    ITS_VEHICLE_CONTROL_LIST_ABILITY = 0x80,        //black list
     ITS_SPEED_ABILITY = 0x100,        //over speed    
     ITS_LANECHANGE_ABILITY = 0x200,     //lane change
     ITS_TURNAROUND_ABILITY = 0x400,      //turn around
@@ -17170,20 +16841,6 @@ typedef enum tagTRAFFIC_AID_TYPE_EX
     ENUM_AID_TYPE_CHANGE_LANE_CONTINUOUSLY = 33,
     ENUM_AID_TYPE_S_SHARP_DRIVING = 34,
     ENUM_AID_TYPE_LARGE_VEHICLE_OCCUPY_LINE = 35,
-    ENUM_AID_TYPE_ROAD_GROUP = 36,
-    ENUM_AID_TYPE_SINGLE_VEHICLE_BREAKDOWN = 37,
-    ENUM_AID_TYPE_BLACK_SMOKE_VEHICLE = 38,
-    ENUM_AID_TYPE_VEHNOYIELDPEDEST = 39,//Motor Vehicles Failing to Yield for Pedestrians
-    ENUM_AID_TYPE_ILLEGALMANNEDVEH = 40,//Illegal Manned Motor Vehicle
-    ENUM_AID_TYPE_ILLEGALMANNEDNONMOTORVEH = 41,//Illegal Manned Non-Motor Vehicle
-    ENUM_AID_TYPE_UMBRELLATENTINSTALL = 42,//Umbrella Tent Installation Violation on Non-Motor Vehicle
-    ENUM_AID_TYPE_NONMOTORVEHONVEHLANE = 43,//Non-Motor Vehicle on Motor Vehicle Lane
-    ENUM_AID_TYPE_WEARINGNOHELMET = 44,//Wearing No Helmet
-    ENUM_AID_TYPE_PEDESTREDLIGHTRUNNING = 45,//Pedestrian Red Light Running
-    ENUM_AID_TYPE_PEDESTONNONMOTORVEHLANE = 46,//Pedestrian Walking on Non-Motor Vehicle Lane
-    ENUM_AID_TYPE_PEDESTONVEHLANE = 47,//Pedestrian Walking on Motor Vehicle Lane
-    ENUM_AID_TYPE_OCCUPYDEDICATEDLANE = 48,//Occupy Dedicated Lan
-    ENUM_AID_TYPE_NOTDRIVEINDEDICATEDLANE = 49,//Not Drive In Dedicated Lane
 }TRAFFIC_AID_TYPE_EX;
 
 
@@ -17518,10 +17175,7 @@ typedef struct tagNET_DVR_AID_ALARM_V41
     DWORD              dwXmlLen;//XML Alarm Len
     char*              pXmlBuf;// EventNotificationAlert XML Block
     BYTE               byTargetType;// Type of calibration target,0~unknown,1~pedestrians,2~Two wheels,3~tricycle(Return during pedestrian detection)
-    BYTE               byRuleID;//ID of rule, 1-4
-	WORD               wDevInfoIvmsChannelEx;     //NET_VCA_DEV_INFO->byIvmsChannel
-    BYTE               byBrokenNetHttp;           //Broken net HTTP(0 - not continuingly, 1 - continuingly)
-    BYTE               byRes[3];
+    BYTE               byRes[7];
     DWORD              dwPlateSmallPicDataLen;
 #if (defined(OS_WINDOWS64) || defined(OS_POSIX64))
     char*                   pPlateSmallImage;  
@@ -17598,14 +17252,6 @@ typedef struct tagNET_DVR_ALLSUBSYSTEMINFO
     NET_DVR_SUBSYSTEMINFO struSubSystemInfo[MAX_SUBSYSTEM_NUM];
     BYTE byRes[8];
 }NET_DVR_ALLSUBSYSTEMINFO, *LPNET_DVR_ALLSUBSYSTEMINFO;
-
-typedef struct  tagNET_DVR_LOOPPLAN_SUBCFG
-{
-    DWORD                             dwSize;
-    DWORD                            dwPoolTime;        /*unit: second*/
-    NET_DVR_MATRIX_CHAN_INFO_V30 struChanConInfo[MAX_CYCLE_CHAN_V30];
-    BYTE                               byRes[16];
-}NET_DVR_LOOPPLAN_SUBCFG, *LPNET_DVR_LOOPPLAN_SUBCFG;
 
 typedef struct tagNET_DVR_ALARMMODECFG
 {
@@ -17730,8 +17376,7 @@ typedef struct tagNET_DVR_SUBSYSTEM_ABILITY
     BYTE  bySubSystemType; //Sub system type, 1- Decoding, 2- Encoding, 0- NULL
     BYTE  byChanNum; //Channel number in the sub system
     BYTE  byStartChan; //Start channel of the sub system
-    BYTE  bySlotNum;
-    BYTE  byRes1[4];
+    BYTE  byRes1[5];
     union
     {
         BYTE Res[200];
@@ -18243,9 +17888,9 @@ typedef struct tagNET_DVR_CAMERAPARAMCFG_EX
     2-P-Iris1
     3-Union 3-9mm F1.6-2.7 (T5280-PQ1)
     4-Union 2.8-12mm F1.
-    5-private 3.8-16mm F1.5(HV3816P-8MPIR)
-    6-private 11-40mm F1.7 (HV1140P-8MPIR)
-    7-private 2.7-12mm F1.2(TV2712P-MPIR)
+    5-HIK 3.8-16mm F1.5(HV3816P-8MPIR)
+    6-HIK 11-40mm F1.7 (HV1140P-8MPIR)
+    7-HIK 2.7-12mm F1.2(TV2712P-MPIR)
     8- MZ5721D-12MPIR
     9- MZ1555D-12MPIR
     10- MZ5721D-12MPIR(RS485)
@@ -18305,21 +17950,17 @@ typedef struct tagNET_DVR_CAMERAPARAMCFG_EX
       113-2560*1120@25fps,114-704*320@25fps,115-1280*560@25fps,116-2400*3840@24fps,117-3840*2400@24fps,118-3840*2400@25fps,119-2560*1920@12.5fps,
       120-2560*2048@12fps,121-2560*2048@15fps,122-2560*1536@25fps,123-2560*1536@30fps,124-2256*2048@25fps,125-2256*2048@30fps,126-2592*2592@12.5fps,127-2592*2592@15fps,
       128 - 640*512@30fps,129-2048*1520@30fps,130-2048*1520@25fps,131-3840*2160@24fps,132-2592*1520@25fps,133-2592*1520@30fps,134-2592*1536@25fps,135-2592*1536@30fps,
-      136-640*960@25fps,137-640*960@24fps,139-3840*1080@25fps,140-3840*1080@30fps,142-2992*2192@25fps,143-2992*2192@30fps,144-3008*2160@25fps,145-3008*2160@30fps,
-      146-3072*1728@20fps,147-2560*1440@20fps,148-2160*3840@25fps,149-2160*3840@30fps,150-7008*1080@25fps,151-7008*1080@30fps,152-3072*2048@20fps,153-1536*864@25fps,
-      154-2560*1920@24fps,155-2400*3840@30fps,156-3840*2400@30fps,157-3840*2160@15fps,
+      136-640*960@25fps,137-640*960@24fps,142-2992*2192@25fps,143-2992*2192@30fps,144-3008*2160@25fps,145-3008*2160@30fps,146-3072*1728@20fps,147-2560*1440@20fps,
+      148-2160*3840@25fps,149-2160*3840@30fps,150-7008*1080@25fps,151-7008*1080@30fps,152-3072*2048@20fps,153-1536*864@25fps,154-2560*1920@24fps,155-2400*3840@30fps,
+      156-3840*2400@30fps,157-3840*2160@15fps
       158-384*288@8.3fps, 159-640*512@8.3fps, 160-160*120@8.3fps, 161-1024*768@8.3fps, 162-640*480@8.3fps, 163-3840*2160@12.5fps, 164-2304*1296@30fps, 165-2304*1296@25fps,
       166-2560*1440@24fps, 167-2688*1512@25fps, 168-2688*1512@30fps, 169-2688*1512@50fps, 170-2688*1512@60fps, 171-1536*864@30fps, 172-2560*1440@50fps, 173-2560*1440@60fps,
       174-2048*2048@25fps, 175-2048*2048@30fps, 176-4000*3060@20fps, 177-3060*3060@25fps, 178-3060*3060@30fps, 179-3000*3000@25fps, 180-3000*3000@30fps,181-8160*3616@30fps,
       182-8160*3616@25fps, 183-3000*3000@20fps, 184-3000*3000@15fps, 185-3000*3000@12.5fps,186-5472*3648@25fps,187-5472*3648@30fps,188-7680*4320@25fps,189-7680*4320@30fps,
-      190-8160*2400@25fps, 191-8160*2400@30fps, 192-5520*2400@25fps, 193-5520*2400@30fps, 194-2560*1440@15fps, 195-1944*1212@24fps, 196-1944*1212@25fps, 197-3456*1920@30fps,
+      190-8160*2400@25fps, 191-8160*2400@30fps, 192-5520*2400@25fps, 193-5520*2400@30fps, 194-2560*1440@15 fps, 195-1944*1212@24fps, 196-1944*1212@25fps, 197-3456*1920@30fps,
       198-4800*2688@25fps, 199-4800*2688@30fps, 200-6480*1080@25fps, 201-6480*1080@30fps, 202-8640*1440@25fps, 203-8640*1440@30fps, 204-3456*1920@25fps, 205-2688*1520@50fps,
       206-2688*1520@60fps, 207-4976*1452@25fps, 208-4976*1452@30fps, 209-3200*1800@25fps, 210-3200*1800@30fps, 211-5472*3648@24fps, 212-1920*1080@12.5fps, 213-2944*1656@20fps,
-      214-1920*1080@24fps, 215-4800*1600@25fps, 216-4800*1600@30fps, 217-2560*1440@12.5fps, 218-6560*3690@1fps, 219-5120*1400@20fps, 220-7680*4320@1fps, 221-1920*1080@20fps,
-      222-5120*1440@20fps, 222-5120*1440@20fps, 223-4080*1808@25fps, 224-4080*1808@30fps, 225-4080*1152@25fps, 226-4080*1152@30fps, 227-2688*1944@20fps,228-2592*1944@24fps,
-      229-3200*1800@15fps, 230-4416*1696@20fps, 231-3456*1080@25fps, 232-3200*1800@12.5fps, 233-2688*1532@25fps, 234-2688*1532@30fps, 235-4416*1696@12.5fps, 236-3840*2048P12.5fps,
-      237-3840*4096P12.5fps, 238-5120*1440@12.5fps, 239-3840*1080@24fps, 240-320*256@30fps, 241-3264*2448@25fps, 242-3264*2448@30fps, 243-5430*3054@1fps, 244-2688*1520@24@24fps,
-      245-4000*3000@30fps*/
+      214-1920*1080@24fps, 215-4800*1600@25fps, 216-4800*1600@30fps*/
     BYTE   byCaptureModeN;
     BYTE   byCaptureModeP;
     NET_DVR_SMARTIR_PARAM struSmartIRParam;
@@ -18376,8 +18017,6 @@ typedef enum _VCA_PLATE_TYPE_
     VCA_NONGYONG_PLATE,         //Agricultural vehicles
     VCA_MOTO_PLATE,              //Motorcycle
     NEW_ENERGY_PLATE,             //new Energy Plate
-    VCA_CONSULATE_PLATE = 9,      //consulate Plate
-    VCA_EMERGENCY_PLATE = 10,     //emergency plate
     //2017-05-18 add The Middle East Plate Type
     TRANSPORT_PLATE = 0x20,     //Transport
     COMMERCIAL_PLATE,           //Commercial
@@ -20921,28 +20560,6 @@ typedef enum _VSB_HUANGHAI_CLASS
 /********************Vehicle Brand Sub Type End*************************/
 
 //LPR sub structure
-
-typedef struct tagNET_DVR_PLATE_PARAM
-{
-    BYTE    byPlateRecoMode;   
-    BYTE    byBelive;         
-    BYTE    byRes[22];        
-}NET_DVR_PALTE_PARAM, *LPNET_DVR_PALTE_PARAM;
-
-typedef struct tagNET_DVR_PLATECFG
-{
-    DWORD        dwSize;
-    DWORD    dwEnable;
-    BYTE    byPicProType; 
-    BYTE    byRes1[3];  
-    NET_DVR_JPEGPARA struPictureParam;   
-    NET_DVR_PALTE_PARAM struPlateParam;   
-    NET_DVR_HANDLEEXCEPTION struHandleType;  
-    NET_DVR_SCHEDTIME struAlarmTime[MAX_DAYS][MAX_TIMESEGMENT];
-    BYTE    byRelRecordChan[MAX_CHANNUM];  
-    BYTE   byRes[20];  
-}NET_DVR_PLATECFG, *LPNET_DVR_PLATECFG;
-
 typedef struct tagNET_DVR_PLATE_INFO
 {
     BYTE  byPlateType;                     //license type
@@ -20950,7 +20567,7 @@ typedef struct tagNET_DVR_PLATE_INFO
     BYTE  byBright;                         //License brightness
     BYTE  byLicenseLen;                     //Character number of the license plate
     BYTE  byEntireBelieve;                     //Accuracy of the license plate (percentage)
-    BYTE  byRegion;         //Region index value, 0 reserved, 1 Europe, 2 Russia(Russian regions), 3-EU&CIS,4-Middle East,5-APAC,6-AfandAM,0xff- all
+    BYTE  byRegion;         //Region index value, 0 reserved, 1 Europe, 2 Russia(Russian regions), 3-EU&CIS,4-Middle East,0xff- all
     BYTE  byCountry;        //Country INdex,Reference :COUNTRY_INDEX(not support "COUNTRY_ALL = 0xff, //ALL")
     BYTE  byArea;           //Area,refer to EMI_AREA
     BYTE  byPlateSize;      //PlateSize,0~unknown,1~long,2~short
@@ -20973,18 +20590,6 @@ typedef struct tagNET_DVR_PLATE_INFO
     BYTE byBelieve[MAX_LICENSE_LEN];     //Accuracy of each letter
 }NET_DVR_PLATE_INFO, *LPNET_DVR_PLATE_INFO;
 
-typedef struct tagNET_DVR_PLATERECO_RESULE
-{
-    DWORD dwSize;
-    DWORD    dwRelativeTime;
-    DWORD    dwAbsTime;
-    NET_VCA_DEV_INFO struDevInfo;
-    NET_DVR_PLATE_INFO struPlateInfo;
-    DWORD dwPicDataLen;
-    DWORD dwRes[4];
-    BYTE  *pImage;
-}NET_DVR_PLATERECO_RESULE, *LPNET_DVR_PLATERECO_RESULE;
-
 //Vehicle info
 typedef struct tagNET_DVR_VEHICLE_INFO_
 {
@@ -21001,9 +20606,7 @@ typedef struct tagNET_DVR_VEHICLE_INFO_
     18-ban turn right, 19-ban turn left, 20-press Yellow line, 21-Non - fastened seat belt, 22-Pedestrians run a red light, 23-gasser,
     24-Illegal using high beam, 25-drving&uphone, 26-turn left do not give precedence to going straight, 27-turn right do not give precedence to going straight,
     28-turn around do not give precedence to going straight, 29-Big bend small turn, 30-run green light, 31-dont wear helmet, 32-nonMotor pickup human,
-    33-nonMotor on motor lane, 34-nonMotor have shed, 35-black smoke, 36-whistle,37-parking in line,38-parking straddle,39-parking in line&parking straddle,
-    40-not yield to vehicles from right roads,41-vehicles about to enter a roundabout not yield to vehicles in the roundabout,42-vehicles from ramp not yield to vehicles from main road,
-    43-large vehicle occupy line, 44-roar, 45-smoke*/
+    33-nonMotor on motor lane, 34-nonMotor have shed, 35-black smoke, 36-whistle,37-parking in line,38-parking straddle,39-parking in line&parking straddle*/
     BYTE  byIllegalType;
     BYTE  byVehicleLogoRecog; //
     BYTE  byVehicleSubLogoRecog; //
@@ -21324,16 +20927,8 @@ typedef enum _PRIDATA_RENDER
     RENDER_ADD_PIC = 0x00000008,
     RENDER_FIRE_DETCET = 0x00000010,
     RENDER_TEM = 0x00000020,
-    RENDER_TRACK_TEM = 0x00000040,
-    RENDER_THERMAL = 0x00000080
+    RENDER_TRACK_TEM = 0x00000040 
 }PRIDATA_RENDER;
-
-typedef enum _THERMAL_FLAG
-{
-    THERMAL_FIREMASK = 0x00000001,
-    THERMAL_RULEGAS = 0x00000002,
-    THERMAL_TARGETGAS = 0x00000004
-}THERMAL_FLAG;
 
 typedef enum _FIRE_ALARM{
     FIRE_FRAME_DIS = 0x00000001,
@@ -21347,13 +20942,6 @@ typedef enum _TEM_FLAG{
     TEM_REGION_LINE = 0x00000002,
     TEM_REGION_POINT = 0x00000004
 }TEM_FLAG;
-
-typedef enum _TRACK_FLAG
-{
-    TRACK_PEOPLE = 0x00000001,
-    TRACK_VEHICLE = 0x00000002
-}TRACK_FLAG;
-
 typedef struct tagNET_DVR_VTPARAM
 {
     DWORD   dwSize;
@@ -21642,12 +21230,12 @@ typedef struct tagNET_VCA_HUMAN_FEATURE
     //Capture images face age use, such as byAge 15, byAgeDeviation 1, and the actual age is between 14 - 16 face images
     BYTE byAge;//age
     BYTE byAgeDeviation;//deviation
-    BYTE byRes0;
+    BYTE byEthnic;
     BYTE byMask;
     BYTE bySmile;
     BYTE byFaceExpression;    /*FACE_EXPRESSION_GROUP_ENUM*/
-    BYTE byRes1;
-    BYTE byRes2;
+    BYTE byBeard;
+    BYTE byRace;
     BYTE byHat; //hat
     BYTE byRes[4];
 }NET_VCA_HUMAN_FEATURE, *LPNET_VCA_HUMAN_FEATURE;
@@ -21998,7 +21586,7 @@ typedef struct tagNET_DVR_SADPINFO
     BYTE        szGB28181DevID[DEV_ID_LEN];  //GB28181 protocol access device for ID, IPC to GB28181 protocol access
     BYTE        byActivated;//0-invalid,1-activated,2-not activated
     BYTE        byDeviceModel[NET_SDK_DEVICE_MODEL_LEN/*24*/];//Device model
-    BYTE        byRes[101];      // Reserved
+    BYTE        byRes[125];      // Reserved
 }NET_DVR_SADPINFO, *LPNET_DVR_SADPINFO;
 
 #define  MAX_SADP_NUM   256   // Max device number for searching
@@ -22702,7 +22290,7 @@ typedef struct tagNET_DVR_AIR_CONDITION_PARAM
     DWORD    dwSize;            //Structure size
     BYTE    byEnable;        //0- open, 1- shutdown
     BYTE    byMode;            //Air conditioning mode
-    BYTE    byTemperature;    //Temperature, general value is 16-30Â¡Ã£
+    BYTE    byTemperature;    //Temperature, general value is 16-30¡ã
     BYTE	byAirConditionNo;	// air Number
     BYTE    byRes[8];        //Reserved
 }NET_DVR_AIR_CONDITION_PARAM, *LPNET_DVR_AIR_CONDITION_PARAM;
@@ -22736,7 +22324,7 @@ typedef enum tagDETECTOR_TYPE
     SINGLE_INFRARED_DETECTOR,    //sigle infrared detector
     SINGLE_ZONE_MODULE,    //single zone
     CURTAIN_INFRARED_DETECTOR,   //curtain infrared detector19
-    UNKNOWN,//unknown20
+    //20
     DOORBELL_SWITCH = 21,              //door bell switch 21
     MEDICAL_HELP_BUTTON,			//medical help button
     OUTDOOR_DUAL_TECH,				//the sensor of detecting inside and outside
@@ -22910,8 +22498,7 @@ typedef struct tagNET_DVR_ALARMOUT_PARAM
     BYTE    byAlarmOutMode;    //alarmout,1-none pulse,2-pulse
     BYTE    byTimeOn;        //time on 1~60s
     BYTE    byTimeOff;        //time off 1~60s
-    BYTE    byDurationConstOutputEnable; //
-    BYTE       byRes2[50];
+    BYTE       byRes2[51];
 }NET_DVR_ALARMOUT_PARAM, *LPNET_DVR_ALARMOUT_PARAM;
 
 typedef struct tagNET_DVR_ALARMIN_SETUP
@@ -23129,10 +22716,9 @@ typedef struct tagNET_DVR_ALARM_RS485CFG
     BYTE    byChannel;                //485 chan
     BYTE    bySerialType;            //serial type: 0--485, 1--232
     BYTE    byMode;                 //mode 0-Connect card reader  1-Connect client  2-Connect extension module   3-access control host  4-elevator control host 0xff-disabled
-    BYTE    byOutputDataType;  //0-invalid 1-cardno 2-employeeno
+    BYTE       byOutputDataType;  //0-invalid 1-cardno 2-employeeno
     BYTE    byAddress;               //serial address
-    BYTE    byStairsOutputDataType;   //0-invalid, 1-floorno, 2-cardno, valid only byMode is 4-elevator control host
-    BYTE    byRes[32];                // Reserved
+    BYTE    byRes[33];                // Reserved
 }NET_DVR_ALARM_RS485CFG, *LPNET_DVR_ALARM_RS485CFG;
 
 #define MAX_DEVICE_PROTO_NUM       256
@@ -23171,7 +22757,7 @@ typedef struct tagNET_DVR_ALARM_DEVICE_USER
     BYTE    sPassword[PASSWD_LEN];    //Password
     NET_DVR_IPADDR    struUserIP;        //User IP (0 stands for no IP restriction) 
     BYTE    byMACAddr[MACADDR_LEN];    //MAC
-    BYTE        byUserType;         //0- general user(operator), 1- administrator user, 2-installers users, 3-manufacturer user
+    BYTE        byUserType;         //0- general user, 1- administrator user
     BYTE   byAlarmOnRight;          //Arming authority
     BYTE   byAlarmOffRight;         //Disarming authority
     BYTE   byBypassRight;           //Bypass authority
@@ -23186,20 +22772,13 @@ typedef struct tagNET_DVR_ALARM_DEVICE_USER
     // 7 -- remote upgrade
     // 8 -- preview
     // 9 -- manual record
-    // 10 -- remote playback
-    // 11 -- fire alarm
-    // 12 -- forced deployment
-    // 13 -- permanent bypass
-    // 14 -- add and change personal authorization code
-    // 15 -- debug mode
+    // 10 --remote playback
     BYTE    byNetPreviewRight[MAX_ALARMHOST_VIDEO_CHAN / 8];    // preview channels,eg. bit0-channel 1,0-no permission 1-permission enable
     BYTE    byNetRecordRight[MAX_ALARMHOST_VIDEO_CHAN / 8];    // record channels,eg. bit0-channel 1,0-no permission 1-permission enable
     BYTE    byNetPlaybackRight[MAX_ALARMHOST_VIDEO_CHAN / 8]; // playback channels,eg. bit0-channel 1,0-no permission 1-permission enable
     BYTE    byNetPTZRight[MAX_ALARMHOST_VIDEO_CHAN / 8];        // PTZ channels,eg. bit0-channel 1,0-no permission 1-permission enable
     BYTE        sOriginalPassword[PASSWD_LEN];        // Original password
-    BYTE        sKeypadPassword[PASSWD_LEN];        // keyboard password
-    BYTE        byUserEnabled;        // user enable: 0-invalid, 1-open, 2-close
-    BYTE        byRes2[135];                  // Reserved
+    BYTE        byRes2[152];                  // Reserved
 }NET_DVR_ALARM_DEVICE_USER, *LPNET_DVR_ALARM_DEVICE_USER;
 
 
@@ -23330,23 +22909,6 @@ typedef struct tagNET_DVR_ALARMHOSTDIALSETUPMODE
     BYTE byCallType; //report mode,1-one center,2-two centers,3,one is main center and the other is standby
     BYTE byRes1[14];
 }NET_DVR_ALARMHOSTDIALSETUPMODE, *LPNET_DVR_ALARMHOSTDIALSETUPMODE;
-
-#define  MAX_PU_CHAN_NUM    512
-
-typedef struct tagNET_DVR_PU_CHAN_INFO
-{
-    NET_DVR_IPADDR  struIpAddr;    
-    WORD            wPort;      
-    WORD            wChannel;      
-    BYTE            byRes[24];    
-}NET_DVR_PU_CHAN_INFO, *LPNET_DVR_PU_CHAN_INFO;
-
-typedef struct tagNET_DVR_PU_CHAN_LIST
-{
-    DWORD   dwSize;    
-    DWORD   dwNum;      
-    NET_DVR_PU_CHAN_INFO struPuChanInfo[MAX_PU_CHAN_NUM];
-}NET_DVR_PU_CHAN_LIST, *LPNET_DVR_PU_CHAN_LIST;
 
 #define  MAX_ALARM_CAM_NUM    32        // Total number of alarm triggered CAMs
 
@@ -24276,9 +23838,9 @@ typedef enum _COUNTRY_INDEX_
     COUNTRY_BVI = 191, //The British Virgin Islands 
     COUNTRY_ATV = 192, //Anguilla The Valley 
     COUNTRY_ANB = 193, //Antigua and Barbuda 
-    COUNTRY_CSM = 194, //CollectivitÂ¨Â¦ de Saint-Martin 
+    COUNTRY_CSM = 194, //Collectivit¨¦ de Saint-Martin 
     COUNTRY_ACY = 195, //Autonomous country 
-    COUNTRY_SBY = 196, //Saint-BarthÂ¨Â¦lemy 
+    COUNTRY_SBY = 196, //Saint-Barth¨¦lemy 
     COUNTRY_SKN = 197, //Saint Kitts and Nevis 
     COUNTRY_MOT = 198, //Montserrat 
     COUNTRY_GLP = 199, //Guadeloupe
@@ -24333,7 +23895,7 @@ typedef enum _COUNTRY_INDEX_
     COUNTRY_TOE = 246, //Tokelau
     COUNTRY_NUE = 247, //Niue
     COUNTRY_TCD = 248, //The Cook Islands
-    COUNTRY_PFP = 249, //PolynÂ¨Â¦sie francaiseFrench Polynesia
+    COUNTRY_PFP = 249, //Polyn¨¦sie francaiseFrench Polynesia
     COUNTRY_PID = 250, //Pitcairn Islands 
     COUNTRY_HAW = 251, //Hawaii State 
     COUNTRY_RES17 = 252, //Res
@@ -24546,9 +24108,9 @@ typedef enum _CR_INDEX_
     CR_BVI = 191, //The British Virgin Islands 
     CR_ATV = 192, //Anguilla The Valley 
     CR_ANB = 193, //Antigua and Barbuda 
-    CR_CSM = 194, //CollectivitÂ¨Â¦ de Saint-Martin 
+    CR_CSM = 194, //Collectivit¨¦ de Saint-Martin 
     CR_ACY = 195, //Autonomous country 
-    CR_SBY = 196, //Saint-BarthÂ¨Â¦lemy 
+    CR_SBY = 196, //Saint-Barth¨¦lemy 
     CR_SKN = 197, //Saint Kitts and Nevis 
     CR_MOT = 198, //Montserrat 
     CR_GLP = 199, //Guadeloupe
@@ -24603,7 +24165,7 @@ typedef enum _CR_INDEX_
     CR_TOE = 246, //Tokelau
     CR_NUE = 247, //Niue
     CR_TCD = 248, //The Cook Islands
-    CR_PFP = 249, //PolynÂ¨Â¦sie francaiseFrench Polynesia
+    CR_PFP = 249, //Polyn¨¦sie francaiseFrench Polynesia
     CR_PID = 250, //Pitcairn Islands 
     CR_HAW = 251, //Hawaii State 
     CR_RES17 = 252, //Res
@@ -24646,9 +24208,7 @@ typedef struct tagNET_DVR_FIND_PICTURE_PARAM
     0x47-parallelParking,0x48-manualTriggerAlarm,0x49-playCellphone,0x4a- face recognition,0x4b- driver driving behavior,
     0x4c- advanced auxiliary driving,0x4d- sand-dredging ship detection and alarm,0x4e- license plate recognition,
     0x52-personQueueCounting,0x53-personQueueTime,0x54-vehicleMonitor(three Types of vehicleMonitor),0x55-timingArousingCapture,
-    0x58-vibrationDetection,0x59-running,0x5a-retention,0x5b-spacingChange,0x5c-failDown, 0x5d-smokeDetectAlarm,0x5e-vehiclepass,0x5f-breakban,
-    0x60-ocplane,0x61-largeVehicleOccupyLine,0x62-plateblack,0x63-occupylane,0x64-smokeDetection,0x65-ReID people track,0x66-channel timing recording,
-    0x67-AI open platform, 0x68-methane concentration exception, 0x69-methane light intensity exception,0x70-Professional channel image Schedule Capture, 0xff-All types*/
+    0x58-vibrationDetection,0x59-running,0x5a-retention,0x5b-spacingChange,0x5c-failDown,0xff-All types*/
     BYTE   byNeedCard;     //Whether need card number
     BYTE   byProvince;     //Province
     BYTE   byEventType;      // 0-Res,1-Traffic incident;2-Illegal evidence;3-other
@@ -24910,8 +24470,7 @@ typedef struct tagNET_DVR_INQUEST_ROOM_INFO
     BYTE        byAlarmThreshold;        // Alarm threshold
     BYTE        byInquestChannelResolution;     //0:720P,1:1080P,2:CIF,3:4CIF,4:WD1,5-VGA
     BYTE        byAutoOpenTray;        //Whether automatic open tray 0 - no, 1 - yes 
-    BYTE        byCDPrintEnabled;      //CDPrintEnabled  0-no 1-yes
-    BYTE        byRes[9];
+    BYTE        byRes[10];
 }NET_DVR_INQUEST_ROOM_INFO, *LPNET_DVR_INQUEST_ROOM_INFO;
 
 typedef struct tagNET_DVR_INQUEST_SYSTEM_INFO
@@ -24923,8 +24482,7 @@ typedef struct tagNET_DVR_INQUEST_SYSTEM_INFO
     NET_DVR_INQUEST_ROOM_INFO     struInquestRoomInfo[INQUEST_MAX_ROOM_NUM];
     BYTE    byEnableHashCheck;        //enable HASH check or not, 0-invalid,1-disable,2-enable
     BYTE    byEnableInitCD;        //enable initial disk or not, 0-invalid,1-disable,2-enable
-    BYTE    byCDProcessingMode;    //CD Processing Mode,1-,2-
-    BYTE    byRes[21];             //Reserved
+    BYTE    byRes[22];             //Reserved
 }NET_DVR_INQUEST_SYSTEM_INFO, *LPNET_DVR_INQUEST_SYSTEM_INFO;
 
 typedef struct tagNET_DVR_INQUEST_RESUME_SEGMENT
@@ -24964,8 +24522,7 @@ typedef struct tagNET_DVR_INQUEST_RESUME_EVENT
     DWORD   dwResumeNum;       //Number of events requiring to be resumed
     NET_DVR_INQUEST_RESUME_SEGMENT struResumeSegment[MAX_RESUME_SEGMENT];
     BYTE    byResumeMode;
-    BYTE    byCDPrintEnbled;    //CD Print Enbled 0-no  1-yes
-    BYTE    byRes[198];        //Reserved
+    BYTE    byRes[199];        //Reserved
 }NET_DVR_INQUEST_RESUME_EVENT, *LPNET_DVR_INQUEST_RESUME_EVENT;
 
 typedef struct tagNET_DVR_INQUEST_DEVICE_VERSION
@@ -25055,7 +24612,7 @@ typedef struct tagNET_DVR_LOCK_RETURN
     BYTE         byISO8601;     
     char         cTimeDifferenceH;    
     char         cTimeDifferenceM;    
-    BYTE         byRes[17];
+    BYTE    byRes[20];
 }NET_DVR_LOCK_RETURN, *LPNET_DVR_LOCK_RETURN;
 
 //***channel record state*****//
@@ -25243,24 +24800,6 @@ typedef enum tagFACE_EXPRESSION_GROUP_ENUM
     ENUM_EXPRESSION_GROUP_UNKNOW = 0xff   //unknown
 }FACE_EXPRESSION_GROUP_ENUM;
 
-typedef struct tagNET_DVR_LLI_PARAM
-{
-    float fSec;//Seconds [0.000,60.000]
-    BYTE byDegree;//Degree :Latitude[0,90] Longitude[0,180]
-    BYTE byMinute;//Minute[0,59]
-    BYTE byRes[6];
-}NET_DVR_LLI_PARAM, *LPNET_DVR_LLI_PARAM;
-
-typedef struct tagNET_DVR_LLPOS_PARAM
-{
-    BYTE   byLatitudeType;
-    BYTE   byLongitudeType;
-    BYTE   byRes1[2];
-    NET_DVR_LLI_PARAM    struLatitude;
-    NET_DVR_LLI_PARAM    struLongitude;
-    BYTE   byRes[16];
-}NET_DVR_LLPOS_PARAM, *LPNET_DVR_LLPOS_PARAM;
-
 //face snap additional information structure
 typedef struct tagNET_VCA_FACESNAP_ADDINFO
 {
@@ -25277,19 +24816,7 @@ typedef struct tagNET_VCA_FACESNAP_ADDINFO
     NET_DVR_TIME_EX  struExitTime;    // exit Time
     float       fFaceTemperature; 
     float       fAlarmTemperature;
-    DWORD   dwThermalPicLen;
-    BYTE    *pThermalPicBuff;
-    BYTE    szCustomChanID[65];// CustomChanID  string  max.len = 64
-    BYTE    byRes1[3];// res
-    NET_DVR_LLPOS_PARAM struLLPos;//Longitude and latitude location information of the device
-#if (defined(OS_WINDOWS64) || defined(OS_POSIX64))
-    char*    pEventNotificationAlertBuff;//EventNotificationAlert JSON Block("eventType":  "faceCapture")
-#else
-    char*   pEventNotificationAlertBuff;//EventNotificationAlert JSON Block("eventType":  "faceCapture")
-    BYTE  byRes2[4];
-#endif
-    DWORD   dwEventNotificationAlertLen;
-    BYTE    byRes[340];// res
+    BYTE   byRes[472];
 }NET_VCA_FACESNAP_ADDINFO, *LPNET_VCA_FACESNAP_ADDINFO;
 
 //Face snapshot result
@@ -25393,13 +24920,6 @@ typedef struct  tagNET_DVR_AUDIOEXCEPTION_ALARM
     WORD    wDevInfoIvmsChannelEx;     //NET_VCA_DEV_INFO->byIvmsChannel
     BYTE    byRes[62];        //Reserved
 }NET_DVR_AUDIOEXCEPTION_ALARM, *LPNET_DVR_AUDIOEXCEPTION_ALARM;
-
-typedef struct  tagNET_BUTTON_DOWN_EXCEPTION_ALARM
-{
-    DWORD      dwSize;                   //Structure size
-    NET_VCA_DEV_INFO       struDevInfo;  //Device Info
-    BYTE    byRes[64];                   // Reserved
-}NET_BUTTON_DOWN_EXCEPTION_ALARM, *LPNET_BUTTON_DOWN_EXCEPTION_ALARM;
 
 typedef struct tagNET_VCA_FD_IMAGE_CFG
 {
@@ -25505,14 +25025,7 @@ typedef struct tagNET_VCA_HUMAN_ATTRIBUTE
     DWORD  dwPersonInfoExtendLen;// PersonInfoExtendLen
     BYTE  *pPersonInfoExtend;  //PersonInfoExtend
     BYTE   byAgeGroup;//age group, 0xff-unknown
-    BYTE   byRes2[3];
-#if (defined(OS_WINDOWS64) || defined(OS_POSIX64))
-    BYTE*  pThermalData;//Thermal image pointer
-#else
-    BYTE*  pThermalData;//Thermal image pointer
-    BYTE   byRes3[4];
-#endif
-
+    BYTE   byRes2[11];
 }NET_VCA_HUMAN_ATTRIBUTE, *LPNET_VCA_HUMAN_ATTRIBUTE;
 
 typedef struct tagNET_VCA_HUMANATTRIBUTE_COND
@@ -25528,50 +25041,50 @@ typedef struct tagNET_VCA_HUMANATTRIBUTE_COND
 }NET_VCA_HUMANATTRIBUTE_COND, *LPNET_VCA_HUMANATTRIBUTE_COND;
 
 
-typedef struct tagNET_VCA_BLOCKLIST_INFO
+typedef struct tagNET_VCA_BLACKLIST_INFO
 {
     DWORD  dwSize;   //Structure size 
     DWORD  dwRegisterID;  //Register ID (read-only)
     DWORD  dwGroupNo; //Group number
-    BYTE   byType; //block and allow list flag: 0- all, 1- allow list, 2- block list
-    BYTE   byLevel; //block list level: 0- all, 1- low, 2- middle, 3- high
+    BYTE   byType; //Black and white list flag: 0- all, 1- white list, 2- black list
+    BYTE   byLevel; //Black list level: 0- all, 1- low, 2- middle, 3- high
     BYTE   byRes1[2];  //Reserved
     NET_VCA_HUMAN_ATTRIBUTE struAttribute;  //Personnel information
     BYTE   byRemark[NAME_LEN]; //Remark information
-    DWORD  dwFDDescriptionLen;//face lib desc len
-    BYTE   *pFDDescriptionBuffer;//face lib desc ptr
-    DWORD  dwFCAdditionInfoLen;//Snapshot library additional information length
-    BYTE   *pFCAdditionInfoBuffer;//Snapshot library additional information data pointer
-    DWORD  dwThermalDataLen;//Thermal image length
-}NET_VCA_BLOCKLIST_INFO, *LPNET_VCA_BLOCKLIST_INFO;
+    DWORD dwFDDescriptionLen;//face lib desc len
+    BYTE  *pFDDescriptionBuffer;//face lib desc ptr
+    DWORD dwFCAdditionInfoLen;//Snapshot library additional information length
+    BYTE  *pFCAdditionInfoBuffer;//Snapshot library additional information data pointer
+    BYTE   byRes2[4];
+}NET_VCA_BLACKLIST_INFO, *LPNET_VCA_BLACKLIST_INFO;
 
-typedef struct tagNET_VCA_BLOCKLIST_PARA
+typedef struct tagNET_VCA_BLACKLIST_PARA
 {
     DWORD dwSize;   //Structure size 
-    NET_VCA_BLOCKLIST_INFO struBlockListInfo;  //block list information
-    DWORD dwRegisterPicNum;  //The total number of blocklist pictures
-    NET_VCA_PICMODEL_RESULT struRegisterPic[MAX_HUMAN_PICTURE_NUM];  //blocklist picture information
+    NET_VCA_BLACKLIST_INFO struBlackListInfo;  //Black list information
+    DWORD dwRegisterPicNum;  //The total number of blacklist pictures
+    NET_VCA_PICMODEL_RESULT struRegisterPic[MAX_HUMAN_PICTURE_NUM];  //blacklist picture information
     BYTE  byRes[40]; //Reserved
-}NET_VCA_BLOCKLIST_PARA, *LPNET_VCA_BLOCKLIST_PARA;
+}NET_VCA_BLACKLIST_PARA, *LPNET_VCA_BLACKLIST_PARA;
 
-typedef struct tagNET_VCA_BLOCKLIST_COND
+typedef struct tagNET_VCA_BLACKLIST_COND
 {
     LONG  lChannel; //Channel number 
     DWORD dwGroupNo; //Group number
-    BYTE  byType; //Block and allow list flag: 0- all, 1- allow list, 2- Block list
-    BYTE  byLevel; //Block list level: 0- all, 1- low, 2- middle, 3- high
+    BYTE  byType; //Black and white list flag: 0- all, 1- white list, 2- black list
+    BYTE  byLevel; //Black list level: 0- all, 1- low, 2- middle, 3- high
     BYTE  byRes1[2];  //Reserved
     NET_VCA_HUMAN_ATTRIBUTE struAttribute; //Personnel information
     BYTE  byRes[20];
-}NET_VCA_BLOCKLIST_COND, *LPNET_VCA_BLOCKLIST_COND;
+}NET_VCA_BLACKLIST_COND, *LPNET_VCA_BLACKLIST_COND;
 
-typedef struct tagNET_VCA_BLOCKLIST_PIC
+typedef struct tagNET_VCA_BLACKLIST_PIC
 {
     DWORD dwSize;   //Structure size
     DWORD dwFacePicNum;  //Face picture number
     BYTE  byRes[20]; //Reserved
-    NET_VCA_PICMODEL_RESULT  struBlockListPic[MAX_HUMAN_PICTURE_NUM];  //Single picture information
-}NET_VCA_BLOCKLIST_PIC, *LPNET_VCA_BLOCKLIST_PIC;
+    NET_VCA_PICMODEL_RESULT  struBlackListPic[MAX_HUMAN_PICTURE_NUM];  //Single picture information
+}NET_VCA_BLACKLIST_PIC, *LPNET_VCA_BLACKLIST_PIC;
 
 typedef struct tagNET_VCA_FIND_PICTURECOND
 {
@@ -25643,17 +25156,17 @@ typedef struct tagNET_VCA_FACESNAP_INFO_ALARM
     BYTE byAgeDeviation;//AgeDeviation
     BYTE byAgeGroup;//age group, 0xff - unknown
     BYTE byFacePicQuality;//face snap subpicture quality
-    BYTE  byRes;
+    BYTE  byEthnic;
     DWORD dwUIDLen; //UIDLen
     BYTE  *pUIDBuffer; //UIDBuffer
     float   fStayDuration;  //stay duration
     BYTE  *pBuffer1;  //Snapshot face subgraph data
 }NET_VCA_FACESNAP_INFO_ALARM, *LPNET_VCA_FACESNAP_INFO_ALARM;
 
-typedef struct tagNET_VCA_BLOCKLIST_INFO_ALARM
+typedef struct tagNET_VCA_BLACKLIST_INFO_ALARM
 {
-    NET_VCA_BLOCKLIST_INFO struBlockListInfo; //Blocklist basic information
-    DWORD dwBlockListPicLen;       //Length of blocklist face subgraph: 0- no picture, larger than 0- there is related picture
+    NET_VCA_BLACKLIST_INFO struBlackListInfo; //Blacklist basic information
+    DWORD dwBlackListPicLen;       //Length of blacklist face subgraph: 0- no picture, larger than 0- there is related picture
     DWORD  dwFDIDLen;// Face library length ID
     BYTE  *pFDID;  //Face library ID buffer
     DWORD  dwPIDLen;//Face library P length ID
@@ -25661,8 +25174,8 @@ typedef struct tagNET_VCA_BLOCKLIST_INFO_ALARM
     WORD  wThresholdValue; //ThresholdValue[0,100]
     BYTE  byIsNoSaveFDPicture;//0-save FD picture 1-not save FD picture
     BYTE  byRealTimeContrast;//Whether real time alarm 0- real time 1- non-real time
-    BYTE  *pBuffer1;  //Blocklist face subgraph data
-}NET_VCA_BLOCKLIST_INFO_ALARM, *LPNET_VCA_BLOCKLIST_INFO_ALARM;
+    BYTE  *pBuffer1;  //Blacklist face subgraph data
+}NET_VCA_BLACKLIST_INFO_ALARM, *LPNET_VCA_BLACKLIST_INFO_ALARM;
 
 typedef struct NET_DVR_FD_DATA_COND
 {
@@ -25678,7 +25191,7 @@ typedef struct tagNET_VCA_FACESNAP_MATCH_ALARM
     DWORD dwSize;             //Structure size 
     float fSimilarity; //Similarity, value range: [0.001,1]
     NET_VCA_FACESNAP_INFO_ALARM  struSnapInfo; //Snapshot information
-    NET_VCA_BLOCKLIST_INFO_ALARM struBlockListInfo; //Blocklist information
+    NET_VCA_BLACKLIST_INFO_ALARM struBlackListInfo; //Blacklist information
     char         sStorageIP[16];
     WORD   wStoragePort;
     BYTE  byMatchPicNum; //MatchPicNum
@@ -25699,12 +25212,12 @@ typedef struct tagNET_VCA_FACESNAP_MATCH_ALARM
 }NET_VCA_FACESNAP_MATCH_ALARM, *LPNET_VCA_FACESNAP_MATCH_ALARM;
 
 
-typedef struct tagNET_VCA_BLOCKLIST_INFO_ALARM_LOG
+typedef struct tagNET_VCA_BLACKLIST_INFO_ALARM_LOG
 {
-    NET_VCA_BLOCKLIST_INFO struBlockListInfo; //Blocklist basic information
-    DWORD dwBlockListPicID;       //Blocklist face subgraph ID, used to search pictures
+    NET_VCA_BLACKLIST_INFO struBlackListInfo; //Blacklist basic information
+    DWORD dwBlackListPicID;       //Blacklist face subgraph ID, used to search pictures
     BYTE  byRes[20];              //Reserved
-}NET_VCA_BLOCKLIST_INFO_ALARM_LOG, *LPNET_VCA_BLOCKLIST_INFO_ALARM_LOG;
+}NET_VCA_BLACKLIST_INFO_ALARM_LOG, *LPNET_VCA_BLACKLIST_INFO_ALARM_LOG;
 
 typedef struct tagNET_VCA_FACESNAP_INFO_ALARM_LOG
 {
@@ -25720,7 +25233,7 @@ typedef struct tagNET_VCA_FACESNAP_MATCH_ALARM_LOG
     DWORD dwSize;             //Structure size 
     float fSimilarity;      //Similarity, value range: [0.001,1]
     NET_VCA_FACESNAP_INFO_ALARM_LOG  struSnapInfoLog; //Snapshot information
-    NET_VCA_BLOCKLIST_INFO_ALARM_LOG struBlockListInfoLog; //Blocklist information
+    NET_VCA_BLACKLIST_INFO_ALARM_LOG struBlackListInfoLog; //Blacklist information
     BYTE  byRes[60];              // Reserved
 }NET_VCA_FACESNAP_MATCH_ALARM_LOG, *LPNET_VCA_FACESNAP_MATCH_ALARM_LOG;
 
@@ -25728,9 +25241,9 @@ typedef struct tagNET_VCA_FACESNAP_MATCH_ALARM_LOG
 typedef struct tagNET_VCA_FACEMATCH_PICCOND
 {
     DWORD dwSize;             // Structure size 
-    DWORD dwSnapFaceID; //Blocklist face subgraph ID
-    DWORD dwBlockListID; //Matched blocklist ID
-    DWORD dwBlockListFaceID; //Compared blocklist face subgraph ID
+    DWORD dwSnapFaceID; //Blacklist face subgraph ID
+    DWORD dwBlackListID; //Matched blacklist ID
+    DWORD dwBlackListFaceID; //Compared blacklist face subgraph ID
     BYTE  byRes[20];              // Reserved
 }NET_VCA_FACEMATCH_PICCOND, *LPNET_VCA_FACEMATCH_PICCOND;
 
@@ -25738,20 +25251,20 @@ typedef struct tagNET_VCA_FACEMATCH_PICTURE
 {
     DWORD dwSize;             //Structure size 
     DWORD dwSnapFaceLen; //Length of face subgraph
-    DWORD dwBlockListFaceLen; //Length of compared blocklist face subgraph
+    DWORD dwBlackListFaceLen; //Length of compared blacklist face subgraph
     BYTE  byRes[20];              //Reserved
     BYTE *pSnapFace;  //Picture data of face subgraph
-    BYTE *pBlockListFace;  //Picture data of compared blocklist face subgraph
+    BYTE *pBlackListFace;  //Picture data of compared blacklist face subgraph
 }NET_VCA_FACEMATCH_PICTURE, *LPNET_VCA_FACEMATCH_PICTURE;
 
-typedef struct tagNET_VCA_BLOCKLIST_FASTREGISTER_PARA
+typedef struct tagNET_VCA_BLACKLIST_FASTREGISTER_PARA
 {
     DWORD dwSize;   //Structure size
-    NET_VCA_BLOCKLIST_INFO struBlockListInfo;  //Blocklist information
+    NET_VCA_BLACKLIST_INFO struBlackListInfo;  //Blacklist information
     DWORD dwImageLen;  //Length of image data
     BYTE  byRes[124];  //Reserved
     BYTE  *pImage;    //Image data
-}NET_VCA_BLOCKLIST_FASTREGISTER_PARA, *LPNET_VCA_BLOCKLIST_FASTREGISTER_PARA;
+}NET_VCA_BLACKLIST_FASTREGISTER_PARA, *LPNET_VCA_BLACKLIST_FASTREGISTER_PARA;
 
 
 /*******PJ01C20170209084 super-brainNVS customization dedicated******/
@@ -25773,7 +25286,7 @@ typedef struct tagNET_DVR_FRAMES_PEOPLE_COUNTING
 typedef struct tagNET_VCA_SINGLE_PATH
 {
     BYTE  byActive;  //Whether it is available: 0- no, 1- yes
-    BYTE  byType;    //0- save snapshot, 1- save blocklist comparison alarm, 2- save snapshot and blocklist comparison alarm,0xff-invalid
+    BYTE  byType;    //0- save snapshot, 1- save blacklist comparison alarm, 2- save snapshot and blacklist comparison alarm,0xff-invalid
     BYTE  bySaveAlarmPic; //save alarm picture,0-no,1-yes
     BYTE  byRes1[5]; //Reserved
     DWORD dwDiskDriver;   //Disk sign, start from 0
@@ -26048,8 +25561,7 @@ typedef struct tagNET_DVR_FILECOND_V50
     char  szCardNum[32];  //card no. byNeedCard should set to 1
     char  szWorkingDeviceGUID[16]; //working machine GUID,through access to the N + 1.byNeedCard should set to 2
     NET_DVR_SPECIAL_FINDINFO_UNION  uSpecialFindInfo; //Proprietary complex query conditions
-    DWORD dwTimeout; //
-    BYTE             byRes[252];
+    BYTE byRes[256];
 }NET_DVR_FILECOND_V50, *LPNET_DVR_FILECOND_V50;
 
 typedef struct
@@ -26104,8 +25616,7 @@ typedef struct tagNET_DVR_VOD_PARA
     BYTE                byCourseFile;    //Course file 0 - no, 1 - yes
     BYTE                byDownload;    //Download 0- no, 1- yes.
     BYTE                byOptimalStreamType;  //Whether to play back according to the optimal code stream type. 0 - no, 1 - yes
-    BYTE                byUseAsyn;       //0-SynIOÂ£Â¬1-AsynIO 
-    BYTE                byRes2[19];
+    BYTE                byRes2[20];
 }NET_DVR_VOD_PARA, *LPNET_DVR_VOD_PARA;
 
 typedef struct tagNET_DVR_VOD_PARA_V50
@@ -26127,14 +25638,12 @@ typedef struct tagNET_DVR_VOD_PARA_V50
     BYTE                    byDownload;    //Download 0- no, 1- yes.
     BYTE                    byOptimalStreamType;  //Whether to play back according to the optimal code stream type. 0 - no, 1 - yes
     BYTE                    byDisplayBufNum;
-    BYTE                    byNPQMode;
+    BYTE 					byNPQMode;	  
     BYTE                    sUserName[NAME_LEN/*32*/]; //Double verification user name
     BYTE                    sPassword[PASSWD_LEN/*16*/]; //Double verification password
     BYTE                    byRemoteFile;    //Play back the remote file 0- no, 1- yes
-    BYTE                    byUseAsyn;       //0-SynIOÂ£Â¬1-AsynIO 
-    BYTE                    byRes2[201];
-    BYTE                    byHls;          //HLS play backÂ£Â¬0- no, 1- yes
-    char*                   pSavedFileName;	//it works when 'byDownload' is 1
+    BYTE                    byRes2[203];
+    char*					pSavedFileName;	//it works when 'byDownload' is 1
 }NET_DVR_VOD_PARA_V50, *LPNET_DVR_VOD_PARA_V50;
 
 //B10 can support PSIA.
@@ -26475,70 +25984,12 @@ typedef struct tagNET_DVR_GPSALARMINFO
     BYTE byRes[3];
 }NET_DVR_GPSALARMINFO, *LPNET_DVR_GPSALARMINFO;
 
-typedef struct tagNET_DVR_PICINFO
-{
-    DWORD   dwSize;       
-    BYTE    byChanIndex;   
-    BYTE    byRes1[3];           
-    BYTE     byDeviceID[NAME_LEN];
-    BYTE    byAbsTime[32];  
-    DWORD   dwPicLen;        
-    BYTE    byRes2[32];
-    BYTE    *pPicBuffer;
-}NET_DVR_PICTUREINFO, *LPNET_DVR_PICTUREINFO;
-
 typedef struct tagNET_DVR_MB_DOWNLOADSVRPARA
 {
     DWORD dwSize;
     NET_DVR_IPADDR    struDownloadSvrIp;        /* auto load server address */
     BYTE  byRes[64];
 }NET_DVR_MB_DOWNLOADSVRPARA, *LPNET_DVR_MB_DOWNLOADSVRPARA;
-
-typedef struct tagNET_DVR_PLATERECOG_PARA
-{
-    DWORD dwSize;
-    BYTE byPrMode;
-    BYTE byPrScene; 
-    BYTE byPrDetRect; 
-    BYTE byPrPicQuality; /* picture quality: 0:lowest  3:highest */
-    BYTE byPrPicMode; /*picture mode: JPEG_MODE_D1, JPEG_MODE_CIF, JPEG_MODE_QCIF */
-    BYTE byPlateOsdDisplay; 
-    BYTE byPrProvCharIndex; 
-    BYTE byPrProvCharIndex1;    
-    BYTE byPrProvCharIndex2;   
-    BYTE byRes[7];
-}NET_DVR_PLATERECOG_PARA, *LPNET_DVR_PLATERECOG_PARA;
-
-typedef struct tagNET_DVR_SPEEDLMT_PARA
-{
-    BYTE    bStartMaxSpeedLimit;      
-    BYTE    bStartMinSpeedLimit;    
-    BYTE    byRes[6];
-    DWORD    dwMaxSpeedLimit;        
-    DWORD    dwMinSpeedLimit;     
-}NET_DVR_SPEEDLMT_PARA, *LPNET_DVR_SPEEDLMT_PARA;
-
-typedef struct tagNET_DVR_PLATECHECK_PARA
-{
-    BYTE    bAlarmWhenChecked;    
-    BYTE    bInformWhenChecked;    
-    BYTE    byRes[6];
-    NET_DVR_IPADDR struBlockFtpServer;  
-}NET_DVR_PLATECHECK_PARA, *LPNET_DVR_PLATECHECK_PARA;
-
-typedef struct tagNET_DVR_ENFORCESYS_PARA
-{
-    DWORD dwSize;
-    NET_DVR_SPEEDLMT_PARA    struSpeedLmtPara;  
-    NET_DVR_PLATECHECK_PARA struPlateCheckPara;   
-    BYTE    bySelPeccType;  
-    BYTE    byEnfOptHabit; 
-    BYTE    byAdjPrevFpsMode;
-    BYTE    byRes1;
-    NET_DVR_IPADDR  struUploadServerIp; 
-    WORD    wUploadServerPort;
-    BYTE    byRes2[18];
-}NET_DVR_ENFORCESYS_PARA, *LPNET_DVR_ENFORCESYS_PARA;
 
 typedef struct tagNET_DVR_MATRIX_ABILITY_V41
 {
@@ -26607,7 +26058,6 @@ typedef struct tagNET_DVR_MATRIX_VOUTCFG
     BYTE      byEnableVideoEffect;  //
     BYTE      byRes[3];  //
     NET_DVR_VIDEOEFFECT struVideoEffect;   //
-    BYTE    byRes2[60];
 }NET_DVR_MATRIX_VOUTCFG, *LPNET_DVR_MATRIX_VOUTCFG;
 
 typedef struct tagNET_DVR_DISP_CHAN_STATUS_V41
@@ -26887,8 +26337,7 @@ typedef struct tagNET_DVR_SUBSYSTEM_PARAM_EX
     BYTE     byJointKeyboard[MAX_ALARMHOSTKEYBOARD/*64*/ / 8];//subsystem joint keyboard 0-no, 1-yes
     BYTE    byJointOpetaterUser[MAX_KEYBOARD_USER_NUM / 8];//subsystem joint keyboard user 0-no, 1-yes
     NET_DVR_REMIND_TIME    struAlarmRemindTime[MAX_DAYS/*7*/][MAX_TIMESEGMENT_V30/*8*/];
-    BYTE	    byJointNetUser[NET_SDK_MAX_NET_USER_NUM / 8];//joint net user 0-no, 1-yes
-    BYTE    byRes2[280];
+    BYTE             byRes2[288];
 }NET_DVR_SUBSYSTEM_PARAM_EX, *LPNET_DVR_SUBSYSTEM_PARAM_EX;
 
 typedef struct tagNET_DVR_REGISTER_RS485CFG
@@ -26974,7 +26423,7 @@ typedef struct tagNET_DVR_ALARMHOST_REPORT_CENTER_CFG_V40
     BYTE        byValid;
     BYTE        byDataType;            //1-All alarm data 2-not alarm data 3-all data,4-zone report,5-not zone report
     BYTE        byRes[2];
-    BYTE        byChanAlarmMode[MAX_REPORTCHAN_NUM/*4*/];//alarm channels, 1-T1,2-T2, 3-N1, 4-N2,5-G1, 6-G2 ,7-N3, 8-N4, 9-CMK-4G, 10-CMK-NET
+    BYTE        byChanAlarmMode[MAX_REPORTCHAN_NUM/*4*/];//alarm channels, 1-T1,2-T2, 3-N1, 4-N2,5-G1, 6-G2 ,7-N3, 8-N4
     BYTE        byDealFailCenter[MAX_CENTERGROUP_NUM/*16*/]; //send to these centers while send fail 0-not choose,1-choose
     BYTE         byZoneReport[MAX_ALARMHOST_ALARMIN_NUM];    //zone report type,0-not upload,1-upload 
     BYTE        byNonZoneReport[MAX_EVENT_NUM]; //not zone report, 0-not upload,1-upload byNonZoneReport[0]-soft zone report byNonZoneReport[1]-system status report byNonZoneReport[2]-cancel report byNonZoneReport[3]-test report byNonZoneReport[4]-arm report byNonZoneReport[5]-disarm report byNonZoneReport[6]-duress report byNonZoneReport[7]-alarm recovery report byNonZoneReport[8]-bypass report byNonZoneReport[9]-bypass restore report,byNonZoneReport[10]-detector connect status report(online/offline),byNonZoneReport[11]-detector power status report(normal/low);bit12-video alarm report
@@ -26997,7 +26446,7 @@ typedef struct tagNET_DVR_STREAM_RECORD_STATUS
 typedef struct tagNET_DVR_DIRECT_CONNECT_CHAN_INFO
 {
     BYTE        byEnable;                    //Enable or not
-    BYTE        byProType;                    //Protocol type 0-private(default), need ability to get
+    BYTE        byProType;                    //Protocol type 0-Hik(default), need ability to get
     BYTE          byZeroChan;                    //Is zero channel ,0-no,1-yes
     BYTE        byPriority;                //priority                    
     BYTE        sUserName[NAME_LEN];        //User name
@@ -27484,15 +26933,15 @@ typedef struct tagNET_DVR_PICCFG
     DWORD    dwSize;
     BYTE    byUseType;    //1use for background picture
     BYTE    bySequence; //picture index
-    BYTE    byOverlayEnabled; //picture overlay enabledÂ£Â¬ 1-include overlay paramÂ£Â¬0-not include
+    BYTE    byOverlayEnabled; //picture overlay enabled£¬ 1-include overlay param£¬0-not include
     BYTE    byRes[1];
     NET_DVR_BASEMAP_CFG    struBasemapCfg;
     BYTE    sPicName[NAME_LEN];//Pic name
     DWORD   dwVideoWall;       //1 byte WallNo + 1 byte channelNo +2 byte windowNo
-    BYTE   	byFlash; //flashEnabledÂ£Â¬1-yesÂ£Â¬0-no
-    BYTE   	byTranslucent; //translucentEnabledÂ£Â¬1-yesÂ£Â¬0-no
-    BYTE    byShowEnabled; //showEnabledÂ£Â¬1-yesÂ£Â¬0-no
-    BYTE    byPictureType; //pictureTypeÂ£Â¬1-bmpÂ£Â¬2-jpgÂ£Â¬3-png
+    BYTE   	byFlash; //flashEnabled£¬1-yes£¬0-no
+    BYTE   	byTranslucent; //translucentEnabled£¬1-yes£¬0-no
+    BYTE    byShowEnabled; //showEnabled£¬1-yes£¬0-no
+    BYTE    byPictureType; //pictureType£¬1-bmp£¬2-jpg£¬3-png
     BYTE    byRes2[24];
 }NET_DVR_PICTURECFG, *LPNET_DVR_PICTURECFG;
 /*******************************OSD*******************************/
@@ -28133,17 +27582,6 @@ typedef struct tagNET_DVR_DECCARD_ABILITY_V41
     BYTE byWindowMode[MAX_DECODE_CARD_SUPPORTDISPNUMS][12]; 
     BYTE byRes2[36];
 } NET_DVR_DECCARD_ABILITY_V41, *LPNET_DVR_DECCARD_ABILITY_V41;
-
-#define        MAX_DECODE_CARD_NUM            6  
-typedef struct tagNET_DVR_DECODESVR_ABILITY_V41
-{
-    DWORD dwSize;  
-    BYTE byCardNums; 
-    BYTE byStartChan; 
-    BYTE byRes1[2];
-    NET_DVR_DECCARD_ABILITY_V41 struDecCardAbility[MAX_DECODE_CARD_NUM];
-    BYTE byRes2[64];
-}NET_DVR_DECODESVR_ABILITY_V41, *LPNET_DVR_DECODESVR_ABILITY_V41;
 /********************************DS_19SXX end *********************************/
 
 
@@ -28408,7 +27846,7 @@ typedef struct tagNET_ITC_POST_RS485_PARAM
 typedef struct tagNET_ITC_RADAR_PARAM
 {
     BYTE    byRadarType;    //Radar type: 0- no radar, 1- Andoray radar, 2- Olvia, 3- TransMicrowave, 0xff- other type
-    BYTE    byLevelAngle;   //Angle to the horizontal, default: 25Â¡Ã£, value range: 0~90Â¡Ã£
+    BYTE    byLevelAngle;   //Angle to the horizontal, default: 25¡ã, value range: 0~90¡ã
     WORD    wRadarSensitivity; //Radar sensitivity 
     WORD    wRadarSpeedValidTime;//Radar speed effective time (0~2000] MS, 0 did not support
     BYTE    byRes1[2];
@@ -29472,7 +28910,7 @@ typedef struct tagNET_DVR_SETUPALARM_PARAM
     WORD  wTaskNo;//Tasking number and the (field dwTaskNo corresponding data upload NET_DVR_VEHICLE_RECOG_RESULT the same time issued a task structure NET_DVR_VEHICLE_RECOG_COND corresponding fields in dwTaskNo
     BYTE  byDeployType;//deploy type:0-client deploy,1-real time deploy
     BYTE  bySubScription;
-    //Bit7-MotionDetection Target PictureÂ£Â»0-falseÂ£Â¬1-true
+    //Bit7-MotionDetection Target Picture£»0-false£¬1-true
     BYTE  byRes1[2];
     BYTE  byAlarmTypeURL;//bit0-(NET_DVR_FACESNAP_RESULT),0-binary,1-URL
     //bit1-(Picture data in EVENT_JSON),0-binary,1-URL
@@ -29504,13 +28942,9 @@ typedef struct tagNET_DVR_SETUPALARM_PARAM_V50
     BYTE  byBrokenNetHttp;
     WORD  wTaskNo;//Tasking number and the (field dwTaskNo corresponding data upload NET_DVR_VEHICLE_RECOG_RESULT the same time issued a task structure NET_DVR_VEHICLE_RECOG_COND corresponding fields in dwTaskNo
     BYTE  byDeployType;//deploy type:0-client deploy,1-real time deploy
-    BYTE  bySubScription; //Bit7-MotionDetection Target Picture;0-false,1-true
-	//broken V60 
-    //bit0-AID(COMM_ALARM_AID_V41) (0 - not continuingly, 1 - continuingly)
-    //bit1-TFS(OMM_ALARM_TFS) (0 - not continuingly, 1 - continuingly)
-    //bit2-TPS STATISTICS(COMM_ALARM_TPS_STATISTICS)  (0 - not continuingly, 1 - continuingly)
-    BYTE  byBrokenNetHttpV60;
-    BYTE  byRes1;
+    BYTE  bySubScription;
+    //Bit7-MotionDetection Target Picture£»0-false£¬1-true
+    BYTE  byRes1[2];
     BYTE  byAlarmTypeURL;//bit0-(NET_DVR_FACESNAP_RESULT),0-binary,1-URL
     //bit1-(Picture data in EVENT_JSON),0-binary,1-URL
     BYTE  byCustomCtrl;//Bit0- Support the copilot face picture upload: 0-Upload,1-Do not upload
@@ -30701,7 +30135,7 @@ typedef struct tagNET_ITS_PLATE_RESULT
     BYTE    byPilotSunVisor;//Pilot Sun Visor
     BYTE    byCopilotSunVisor;//Copilot Sun Visor
     BYTE    byPilotCall;// Pilot Call
-    //The 0-open, 1-close(dedicated to the historical data based on block and allow list matching, whether to open a sign of success)
+    //The 0-open, 1-close(dedicated to the historical data based on black and white list matching, whether to open a sign of success)
     BYTE    byBarrierGateCtrlType;
     BYTE    byAlarmDataType;//0-RealTime Data,1-Historical Data
     NET_DVR_TIME_V30  struSnapFirstPicTime;//End time (MS) (captured the first picture time.)
@@ -30724,7 +30158,7 @@ typedef struct tagNET_ITS_GATE_VEHICLE
     BYTE    byCamLaneId;    //The corresponding camera lane number from 1 to 16 (camera configuration lane number, you can jump, can be the same)
     BYTE    byRes1;
     BYTE    byAlarmReason[MAX_ALARMREASON_LEN]; //Custom alarm type defaults to Chinese
-    WORD    wBackList;    //Marked as to whether the alarm data of 0 indicates normal-car data expressed blocklist
+    WORD    wBackList;    //Marked as to whether the alarm data of 0 indicates normal-car data expressed blacklist
     WORD    wSpeedLimit;        //Speed limit upper limit (speeding) km / h
     DWORD   dwChanIndex;
     NET_DVR_PLATE_INFO    struPlateInfo;
@@ -30835,7 +30269,7 @@ typedef struct tagNET_DVR_TFS_ALARM
     NET_ITS_PICTURE_INFO    struPicInfo[8];        //Picture information, up to 8 pitures 
     BYTE                    bySpecificVehicleType;     //The specific vehicle type recognition result types reference  VTR_RESULT
     BYTE                    byLaneNo;  //Relate Lane No
-	WORD                    wDevInfoIvmsChannelEx; //NET_VCA_DEV_INFO->byIvmsChannel
+    BYTE                    byRes1[2];
     NET_DVR_TIME_V30        struTime;//Time
     DWORD                   dwSerialNo;//Serial No.
     BYTE                    byVehicleAttribute;// 0- no additional attributes, 1- standard yellow cars (banner), 2- dangerous goods vehicle
@@ -30862,8 +30296,7 @@ typedef struct tagNET_DVR_TFS_ALARM
     BYTE  byRes3[4];
 #endif  
     BYTE                    byVehicleHeadTailStatus; //the status  of  vehicle head or vehicle tail  0-res 1-vehicle head 2-vehicle tail
-    BYTE                    byBrokenNetHttp;         //Broken net HTTP(0 - not continuingly, 1 - continuingly)
-    BYTE                    byRes[30];               //Res
+    BYTE                    byRes[31]; //Res
 }NET_DVR_TFS_ALARM, *LPNET_DVR_TFS_ALARM;
 
 typedef struct tagNET_DVR_SOFTWARE_SERVICE_CFG
@@ -30874,7 +30307,7 @@ typedef struct tagNET_DVR_SOFTWARE_SERVICE_CFG
     BYTE        byRes[254];
 }NET_DVR_SOFTWARE_SERVICE_CFG, *LPNET_DVR_SOFTWARE_SERVICE_CFG;
 
-typedef struct tagNET_ITS_ECT_BLOCKLIST
+typedef struct _tagNET_ITS_ECT_BLACKLIST_
 {
     DWORD dwSize;
     DWORD dwChannel;
@@ -30883,7 +30316,7 @@ typedef struct tagNET_ITS_ECT_BLOCKLIST
     BYTE  byLaneName[NAME_LEN];
     NET_DVR_PLATE_INFO  struPlateInfo;
     BYTE  byRes2[256];
-}NET_ITS_ECT_BLOCKLIST, *LPNET_ITS_ECT_BLOCKLIST;
+}NET_ITS_ECT_BLACKLIST, *LPNET_ITS_ECT_BLACKLIST;
 
 //IPC channel configuration
 typedef    struct     tagNET_ITS_IPC_CHAN_CFG
@@ -31022,7 +30455,6 @@ typedef enum ITS_OVERLAP_ITEM_TYPE
     OVERLAP_ITEM_MANNED, //48-manned
     OVERLAP_ITEM_HUMAN, //49-human attr
     OVERLAP_ITEM_PLAYMOBILEPHONE, //50-play mobile phone
-    OVERLAP_ITEM_ADR //51- ADR
 }ITS_OVERLAP_ITEM_TYPE;
 
 //Single item of character overlay
@@ -31549,9 +30981,6 @@ typedef enum tagNET_SDK_LOCAL_CFG_TYPE
     NET_SDK_LOCAL_CFG_CERTIFICATION,                  //NET_DVR_LOCAL_CERTIFICATION
     NET_SDK_LOCAL_CFG_PORT_MULTIPLEX,                 //Port multiplexing,struct:NET_DVR_LOCAL_PORT_MULTI_CFG
     NET_SDK_LOCAL_CFG_ASYNC,                 //asynchronous configuration,struct:NET_DVR_LOCAL_ASYNC_CFG
-    NET_SDK_P2P_LOGIN_2C,
-    NET_SDK_P2P_LOGIN_2B,
-    NET_SDK_P2P_LOGOUT
 }NET_SDK_LOCAL_CFG_TYPE;
 
 typedef enum tagNET_SDK_EXCEPTION_CALLBACK_TYPE
@@ -31571,33 +31000,9 @@ typedef struct tagNET_DVR_LOCAL_GENERAL_CFG
     DWORD    dwResumeUpgradeTimeout;   //resume upgrade reconnect timeout,ms
     BYTE     byAlarmReconnectMode;          
     BYTE     byStdXmlBufferSize;       //Receive buffer size of ISAPI transparent transparent  1-1M other-default 
-    BYTE     byMultiplexing;           //0-general link(not TLS)not using byMultiplexingÂ£Â¬1-general link(not TLS)using byMultiplexing
-    BYTE     byFastUpgrade;           //0-normal upgrade, 1-fast upgrade
-    BYTE     byRes1[232];
+    BYTE     byMultiplexing;           //0-general link(not TLS)not using byMultiplexing£¬1-general link(not TLS)using byMultiplexing
+    BYTE     byRes1[233];
 }NET_DVR_LOCAL_GENERAL_CFG, *LPNET_DVR_LOCAL_GENERAL_CFG;
-
-typedef struct tagNET_SDK_P2P_SERVER_2C
-{
-    BYTE   byPlatformType;
-    BYTE   byRes1[3];
-    char   *pAppID;
-    char   *pAuthAddr;
-    char   *pPlatformAddr;
-    char   *pUserName;
-    char   *pPassword;
-    BYTE byRes[40];
-} NET_SDK_P2P_SERVER_2C, *LPNET_DVR_P2P_SERVER_2C;
-
-typedef struct tagNET_SDK_P2P_SERVER_2B
-{
-    BYTE   byPlatformType;
-    BYTE   byRes1[3];
-    char   *pAppID;
-    char   *pAuthAddr;
-    char   *pPlatformAddr;
-    char   *pToken;
-    BYTE byRes[44];
-} NET_SDK_P2P_SERVER_2B, *LPNET_DVR_P2P_SERVER_2B;
 
 typedef struct tagNET_DVR_LOCAL_STREAM_CALLBACK_CFG
 {
@@ -31605,18 +31010,10 @@ typedef struct tagNET_DVR_LOCAL_STREAM_CALLBACK_CFG
     BYTE     byRes[255];
 }NET_DVR_LOCAL_STREAM_CALLBACK_CFG, *LPNET_DVR_LOCAL_STREAM_CALLBACK_CFG;
 
-typedef void(CALLBACK *LOGCALLBACK)(char *pContent, unsigned int dwInputLen, int wLogLevel, void *pData);
-
 typedef struct tagNET_DVR_LOCAL_LOG_CFG
 {
-    WORD    wSDKLogNum;      //Default number 0 (meaning 10 logs) in SDK override mode
-    LOGCALLBACK    fnCB;        //Log callback function
-    void    *pUserData;        //User's pointer
-#if (defined(OS_WINDOWS64) || defined(OS_POSIX64))      //win64 or linux64 pointers are 8 bytes
-    BYTE    byRes[238];      //Reserve
-#else
-    BYTE    byRes[246];      //Reserve
-#endif  
+    WORD    wSDKLogNum;
+    BYTE    byRes[254];
 }NET_DVR_LOCAL_LOG_CFG, *LPNET_DVR_LOCAL_LOG_CFG;
 
 typedef int(CALLBACK * CHAR_ENCODE_CONVERT)(char * pInput, DWORD dwInputLen, DWORD dwInEncodeType, char *pOutput, DWORD dwOutputLen, DWORD dwOutEncodeType);
@@ -32343,7 +31740,7 @@ typedef struct tagNET_DVR_SERVER_TEST_PARA
             BYTE   byRes3[3];
             char  szAccessKey[NET_SDK_ACCESS_KEY_LEN/*64*/]; //access key
             char  szSecretKey[NET_SDK_SECRET_KEY_LEN/*64*/]; //secret kry
-            BYTE byRes1[354];
+            BYTE byRes1[358];
         }struCloudStoragePara;
         struct
         {
@@ -32494,7 +31891,7 @@ typedef enum
     UPLOAD_BACKGROUND_PIC = 10, //Upload Background Picture
     UPLOAD_CALIBRATION_FILE = 11, //Upload Calibration file
     UPLOAD_TME_FILE = 12, //Tme File
-    UPLOAD_VEHICLE_BLOCKALLOWLIST_FILE = 13,
+    UPLOAD_VEHICLE_BLACKWHITELST_FILE = 13,
     UPLOAD_PICTURE_TO_CLOUD = 15, //upload picture to cloud storage
     UPLOAD_VIDEO_FILE = 16,  //upload video file
     UPLOAD_SCREEN_FILE = 17,    //upload screen server file
@@ -32512,7 +31909,7 @@ typedef enum
     UPLOAD_AUDIO_FILE = 29,   //Upload Audio File
     UPLOAD_PUBLISH_THIRD_PARTY_FILE = 30,  //upload third part file
     UPLOAD_DEEPEYES_BINOCULAR = 31,//Upload eye binocular correction table
-    UPLOAD_CERTIFICATE_BLOCKLIST = 32,  //upload certificate block list 
+    UPLOAD_CERTIFICATE_BLACK_LIST = 32,  //upload certificate black list 
     UPLOAD_HD_CAMERA_CORRECT_TABLE = 33,//upload certificate for 2400/3200
     UPLOAD_FD_DATA = 35,//Export the specified face database
     UPLOAD_FACE_DATA = 36, //upload face data
@@ -32538,13 +31935,7 @@ typedef enum
     UPLOAD_OFFLINE_CAPTURE_INFO = 56,       //user info import
 	UPLOAD_FONT_TYPE_DLL_FILE = 57,            //Font library import
     UPLOAD_CLIENT_CALIBFILE_FILE = 58,   //Upload client calibration file(.pto format,add channel)
-    UPLOAD_HD_CAMERA_CORRECT_TABLE_3200W_FILE = 59,  //3200W camera correct table(.cal format,add channel)
-    IMPORT_DATA_TO_HBDLIB = 60,      /*Import data to human lib*/
-    UPLOAD_SCENE_FILE = 61,   //import scene file
-    UPLOAD_RATIOSTITCHING_FILE = 62,   //import ratioStitching file
-    UPLOAD_LENS_PARAM_FILE = 63,   // import lens parameter file 
-    UPLOAD_CUSTOMAUDIO_FILE=64,      //Import custom audio material file
-    UPLOAD_VIDEOWALL_MATERIAL_FILE = 65  //Import videowall material file
+    UPLOAD_HD_CAMERA_CORRECT_TABLE_3200W_FILE = 59  //3200W camera correct table(.cal format,add channel)
 }NET_SDK_UPLOAD_TYPE;
 
 typedef enum
@@ -32557,7 +31948,7 @@ typedef enum
     NET_SDK_DOWNLOAD_SCENE_CONFIGURATION_FILE = 5, //Download scene configure file
     NET_SDK_DOWNLOAD_FILE_FORM_DB = 6,                //Download from DB
     NET_SDK_DOWNLOAD_TME_FILE = 7,  //TME File
-    NET_SDK_DOWNLOAD_VEHICLE_BLOCKALLOWLIST_FILE = 8, //Download block and allow configure file
+    NET_SDK_DOWNLOAD_VEHICLE_BLACKWHITELST_FILE = 8, //Download black and white configure file
     NET_SDK_DOWNLOAD_GUID_FILE = 9, //Download GUID file 
     NET_SDK_DOWNLOAD_FILE_FORM_CLOUD = 10,   //download picture from cloud storage
     NET_SDK_DOWNLOAD_PICTURE = 11, //download picture file
@@ -32566,7 +31957,7 @@ typedef enum
     NET_SDK_DOWNLOAD_PUBLISH_MATERIAL = 14,    //download info publish material
     NET_SDK_DOWNLOAD_THERMOMETRIC_FILE = 15,  //Download Thermometric File
     NET_SDK_DOWNLOAD_LED_CHECK_FILE = 16,        //download LED check file
-    NET_SDK_DOWNLOAD_CERTIFICATE_BLOCKLIST_TEMPLET = 18, //download certificate block list template
+    NET_SDK_DOWNLOAD_CERTIFICATE_BLACK_LIST_TEMPLET = 18, //download certificate black list template
     NET_SDK_DOWNLOAD_LOG_FILE = 19, //Log export 
     NET_SDK_DOWNLOAD_FILEVOLUME_DATA = 20,//Download file data files (currently only CVR device support)
     NET_SDK_DOWNLOAD_FD_DATA = 21,//    Export the specified face database
@@ -32592,13 +31983,7 @@ typedef enum
     NET_SDK_DOWNLOAD_CAPTURE_DATA = 41, //download capture data
     NET_SDK_DOWNLOAD_HD_CAMERA_CORRECT_TABLE_FILE = 42, // camera correct table for 2400/3200 export(.cal format,add channel)
     NET_SDK_DOWNLOAD_CLIENT_CALIBFILE_FILE = 43, //client calibration file(.pto format,add channel)
-    NET_SDK_DOWNLOAD_FOUR_CAMERAS_PICTURES_FILE = 44, //four cameras pictures(.tar format,add channel)
-    NET_SDK_DOWNLOAD_SCENE_FILE = 45,   //export scene file
-    NET_SDK_DOWNLOAD_OPEN_SOURCE_CERT = 46,   //export open source cert
-    NET_SDK_DOWNLOAD_RATIOSTITCHING_FILE = 47,   //export ratioStitching file
-    NET_SDK_DOWNLOAD_LENS_PARAM_FILE = 48,   // export len parameter file
-    NET_SDK_DOWNLOAD_SELECT_DEVTYPE_CALIBFILE = 49,  //export calibration file(.cal format)
-    NET_SDK_DOWNLOAD_VIDEOWALL_MATERIAL_FILE = 50,  //export videowall material file
+    NET_SDK_DOWNLOAD_FOUR_CAMERAS_PICTURES_FILE = 44 //four cameras pictures(.tar format,add channel)
 }NET_SDK_DOWNLOAD_TYPE;
 
 typedef struct tagNET_DVR_CAPTURE_DATA_COND
@@ -32637,7 +32022,7 @@ typedef struct NET_DVR_UPLOAD_FACE_DATA
 {
     DWORD       dwSize;
     char        szFDID[NET_SDK_MAX_FDID_LEN/*256*/];   //FDID
-    BYTE        byFDLibType; //FDLibType0-res;1-blocklist;2-allowlist
+    BYTE        byFDLibType; //FDLibType0-res;1-balcklist;2-whitelist
     BYTE        byRes1[3];
     char        szCustomInfo[NET_SDK_FDPIC_CUSTOM_INFO_LEN/*96*/];   //CustomInfo
     BYTE        byRes[512];
@@ -33507,7 +32892,7 @@ typedef struct
     /* 4:  not Transparent,  not Flash */
     BYTE    byHourOSDType;/* : 24- Hour system, 12- Hour system */
     BYTE    byFontSize;
-    BYTE    byOSDColorType;    //0-auto;1-custom;2-outline
+    BYTE    byOSDColorType;    //0-default;1-Custom
     BYTE    byAlignment;//Alignment 0 - adaptive,1 - right aligned, 2 - left aligned, 3 - gb model, 4-all right aligned, 5-all left aligned
     BYTE    byOSDMilliSecondEnable;//OSD MilliSecond Enable
     NET_DVR_VILOST_V40 struVILost;
@@ -33615,17 +33000,17 @@ typedef struct tagNET_DVR_CAMERA_SETUPCFG
     BYTE byLensType; //The focal length of the lens type,0-unknow,1-8mm,2-12mm,3-16mm,4-25mm,5-35mm,6-50mm,7-4mm,8-6mm
     BYTE bySetupHeightUnit;// Height 0 ~ M, 1~CM
     DWORD dwSceneDis; //Between the edge position and camera image under the horizontal distance, unit: cm
-    float fPitchAngle; //Camera pitch angle [-180 Â¡Ã£, 180 Â¡Ã£], float * 1000
-    float fInclineAngle; //Camera tilt angle [-180 Â¡Ã£, 180 Â¡Ã£], float * 1000
-    float fRotateAngle;  //Camera rotation angle [-180 Â¡Ã£, 180 Â¡Ã£], float * 1000
+    float fPitchAngle; //Camera pitch angle [-180 ¡ã, 180 ¡ã], float * 1000
+    float fInclineAngle; //Camera tilt angle [-180 ¡ã, 180 ¡ã], float * 1000
+    float fRotateAngle;  //Camera rotation angle [-180 ¡ã, 180 ¡ã], float * 1000
     WORD  wVideoDetCoefficient; //Video test coefficient [0300] (3.6 new)
     BYTE  byErectMethod; //Erection of 0- dress, 1- side mounted (3.6 new)
     BYTE  byCameraViewAngle;//The camera view (0- vertical, 1- inclined, (Default) 0- vertical)
     DWORD dwHorizontalDistance;//Camera Horizontal distance: 1-1000, (Default) 30, unit:cm, pay attention to the camera angle to tilt the effective
     BYTE  byDetailLensType;//Range: 1-100, Default: 28, unit: 0.1mm
     BYTE  byRes[3];
-    float fHorFieldAngle; //[0Â¡Ã£, 360Â¡Ã£]
-    float fVerFieldAngle; //[0Â¡Ã£, 360Â¡Ã£]
+    float fHorFieldAngle; //[0¡ã, 360¡ã]
+    float fVerFieldAngle; //[0¡ã, 360¡ã]
     float fLableSetupHeight; //[0-100]
     float fMaxViewRadius;//MaxViewRadius,0-10000.00m,default:5000.
     BYTE  byRes1[16];
@@ -33711,8 +33096,8 @@ typedef  struct  tagNET_ITS_GATE_LANE_CFG
     WORD      wLaneid;            //Lane number 1 to 32 (index lane number, you can jump logic lane)
     BYTE      byRelativeIoNum;         //Logical lane number associated output port number      
     BYTE      byDirection;          //The direction number; 0 - 1 admission 2 3 appearances bidirectional
-    BYTE      byLprMode; //Brand identification release all configuration 0 into 1 in addition to the blocklist into the allow list into
-    BYTE       byCardMode; //The card release configuration 0 all into an addition to the blocklist into the allow list into
+    BYTE      byLprMode; //Brand identification release all configuration 0 into 1 in addition to the blacklist into the white list into
+    BYTE       byCardMode; //The card release configuration 0 all into an addition to the blacklist into the white list into
     BYTE       byGateLaneMode;//Release of entrances and exits configuration mode - all into 1 - only the brand identify matching release only credit card matching put / / line 3 - brand identification card has a matching release - brand identification card at the same time match release - all into
     //2013-11-19 Add Parameter
     BYTE      byCharge;//Charge 0- No Charge,1-Charge
@@ -33988,13 +33373,6 @@ typedef enum tagEXTERNAL_DEVICES_STATUS
     PP_STATUS_PRINTING,
 }EXTERNAL_DEVICES_STATUS;
 
-/* Devices Control Status */
-typedef enum tagEXTERNAL_DEVICESCTRL_TYPE
-{
-    DEVICES_CTRL_RES = 0,        //Res
-    DEVICES_CTRL_REMOTE = 1,     //Remote control
-}EXTERNAL_DEVICESCTRL_TYPE;
-
 
 typedef struct  tagNET_DVR_GATE_ALARMINFO
 {
@@ -34008,7 +33386,7 @@ typedef struct  tagNET_DVR_GATE_ALARMINFO
     BYTE  byAlarmType;
     BYTE  byExternalDevType;//EXTERNAL_DEVICES_TYPE
     BYTE  byExternalDevStatus;//EXTERNAL_DEVICES_STATUS
-    BYTE  byExternalDevCtrlType;//EXTERNAL_DEVICESCTRL_TYPE
+    BYTE  byRes;
     NET_DVR_TIME_V30  struAlarmTime;
     union
     {
@@ -35094,148 +34472,6 @@ typedef struct tagNET_DVR_TEST_SPOTCFG
     BYTE  byRes[14];
 }NET_DVR_TEST_SPOTCFG, *LPNET_DVR_TEST_SPOTCFG;
 
-typedef enum tagNET_DVR_IPC_ENUM
-{
-    ENUM_BUSINESS_INVALID = -1,
-
-    ENUM_BUSINESS_HIKVISION = 0,
-    ENUM_BUSINESS_PANASONIC,
-    ENUM_BUSINESS_SONY,
-    ENUM_BUSINESS_AXIS,
-    ENUM_BUSINESS_SANYO,
-    ENUM_BUSINESS_BOSCH,
-    ENUM_BUSINESS_ZAVIO,
-    ENUM_BUSINESS_GRANDEYE,
-    ENUM_BUSINESS_PROVIDEO,
-    ENUM_BUSINESS_ARECONT, // 9 
-    ENUM_BUSINESS_ACTI,
-    ENUM_BUSINESS_PELCO,
-    ENUM_BUSINESS_VIVOTEK,
-    ENUM_BUSINESS_INFINOVA,
-    ENUM_BUSINESS_DAHUA,    //14
-
-    ENUM_BUSINESS_HIK_STD_H264 = 0x20,
-    ENUM_BUSINESS_HIK_STD_MPEG4,
-    ENUM_BUSINESS_SUNELL,  
-    ENUM_BUSINESS_ATEME,
-    ENUM_BUSINESS_LAUNCH,    
-    ENUM_BUSINESS_YAAN,   
-    ENUM_BUSINESS_BLUESKY,   
-    ENUM_BUSINESS_BLUESKYLIMIT,
-    ENUM_BUSINESS_TDWY,       
-    ENUM_BUSINESS_HBGK,    
-    ENUM_BUSINESS_SANTACHI,    
-    ENUM_BUSINESS_HIGHEASY,     
-    ENUM_BUSINESS_SAMSUNG,
-
-    ENUM_BUSINESS_URL_RTSP = 0x40,   
-    ENUM_BUSINESS_ONVIF,
-
-    ENUM_MAX_BUSINESS_TYPE,    
-} NET_DVR_IPC_ENUM, *LPNET_DVR_IPC_ENUM;
-
-typedef enum tagNET_DVR_IPC_ENUM_UNIFY
-{
-    ENUM_IPC_PROTOCOL_INVALID = -1,
-    ENUM_IPC_PROTOCOL_HIKVISION = 0,  
-    ENUM_IPC_PROTOCOL_PANASONIC,   
-    ENUM_IPC_PROTOCOL_SONY,          
-
-    ENUM_IPC_PROTOCOL_AXIS = 4,      
-    ENUM_IPC_PROTOCOL_SANYO,        
-    ENUM_IPC_PROTOCOL_BOSCH,         
-    ENUM_IPC_PROTOCOL_ZAVIO,        
-    ENUM_IPC_PROTOCOL_GRANDEYE,     
-    ENUM_IPC_PROTOCOL_PROVIDEO,    
-    ENUM_IPC_PROTOCOL_ARECONT,     
-    ENUM_IPC_PROTOCOL_ACTI,         
-    ENUM_IPC_PROTOCOL_PELCO,     
-    ENUM_IPC_PROTOCOL_VIVOTEK,     
-    ENUM_IPC_PROTOCOL_DAHUA,        
-    ENUM_IPC_PROTOCOL_SAMSUNG,       
-
-    ENUM_IPC_PROTOCOL_PSIA = 17,     
-    ENUM_IPC_PROTOCOL_ONVIF,         
-    ENUM_IPC_PROTOCOL_BRICKCOM,      
-    ENUM_IPC_PROTOCOL_GB28181,    
-
-    ENUM_IPC_PROTOCOL_CANON = 23,    
-
-    ENUM_IPC_PROTOCOL_HUINT = 32,     
-    ENUM_IPC_PROTOCOL_INFINOVA,      
-    ENUM_IPC_PROTOCOL_HIK_STD_H264,    
-    ENUM_IPC_PROTOCOL_HIK_STD_MPEG4,  
-    ENUM_IPC_PROTOCOL_SUNELL,       
-    ENUM_IPC_PROTOCOL_ATEME,        
-    ENUM_IPC_PROTOCOL_LAUNCH,     
-    ENUM_IPC_PROTOCOL_YAAN,              
-    ENUM_IPC_PROTOCOL_BLUESKY,          
-    ENUM_IPC_PROTOCOL_BLUESKYLIMIT,    
-    ENUM_IPC_PROTOCOL_TDWY,         
-    ENUM_IPC_PROTOCOL_HBGK,           
-    ENUM_IPC_PROTOCOL_SANTACHI,          
-    ENUM_IPC_PROTOCOL_HIGHEASY,          
-    ENUM_IPC_PROTOCOL_HANBANG,       
-    ENUM_IPC_PROTOCOL_SAMSUNG_3120,    
-    ENUM_IPC_PROTOCOL_SAMSUNG_3080,    
-    ENUM_IPC_PROTOCOL_SAMSUNG_2000,     
-    ENUM_IPC_PROTOCOL_SAMSUNG_5200,    
-    ENUM_IPC_PROTOCOL_JINGYUAN,       
-    ENUM_IPC_PROTOCOL_VIDEOTREC,     
-    ENUM_IPC_PROTOCOL_CHENOVA,           
-    ENUM_IPC_PROTOCOL_FENGHUO,     
-    ENUM_IPC_PROTOCOL_ZB_5301,      
-    ENUM_IPC_PROTOCOL_ZB_5401,        
-    ENUM_IPC_PROTOCOL_HAIXIN,          
-    ENUM_IPC_PROTOCOL_ZHONGYINGXIN,    
-    ENUM_IPC_PROTOCOL_AVUN,       
-    ENUM_IPC_PROTOCOL_GOVTY,       
-    ENUM_IPC_PROTOCOL_SAE,             
-    ENUM_IPC_PROTOCOL_DONGFANGWANGLI,  
-    ENUM_IPC_PROTOCOL_CHANGHONG,     
-    ENUM_IPC_PROTOCOL_H3C,          
-    ENUM_IPC_PROTOCOL_BAIAN,         
-    ENUM_IPC_PROTOCOL_HAT,               
-    ENUM_IPC_PROTOCOL_YUANYE,         
-    ENUM_IPC_PROTOCOL_HIKCARD,           
-    ENUM_IPC_PROTOCOL_HAIXINCAP,       
-    ENUM_IPC_PROTOCOL_WENANCAP,       
-    ENUM_IPC_PROTOCOL_XUNMEI,           
-    ENUM_IPC_PROTOCOL_BAIWO,          
-    ENUM_IPC_PROTOCOL_APD,                
-    ENUM_IPC_PROTOCOL_REACHDEV,      
-    ENUM_IPC_PROTOCOL_XUNMEI_DAHUA,  
-    ENUM_IPC_PROTOCOL_HUANGHE,           
-    ENUM_IPC_PROTOCOL_LIANCHEN,       
-    ENUM_IPC_PROTOCOL_CHENGYE,            
-    ENUM_IPC_PROTOCOL_VISIONDIGI,      
-    ENUM_IPC_PROTOCOL_HENGHE,        
-    ENUM_IPC_PROTOCOL_KODAK,           
-    ENUM_IPC_PROTOCOL_AIRONIX,      
-    ENUM_IPC_PROTOCOL_LG,            
-    ENUM_IPC_PROTOCOL_HASEE,          
-    ENUM_IPC_PROTOCOL_8000ME,  
-    ENUM_IPC_PROTOCOL_POVITEL,       
-    ENUM_IPC_PROTOCOL_YIVIEW,       
-    ENUM_IPC_PROTOCOL_TIANYUE,        
-    ENUM_IPC_PROTOCOL_HOWELL,  
-    ENUM_IPC_PROTOCOL_WAPA,           
-    ENUM_IPC_PROTOCOL_SANLE,           
-    ENUM_IPC_PROTOCOL_HIKCARD_ENCRYPTION,     
-    ENUM_IPC_PROTOCOL_JUNSDA,      
-    ENUM_IPC_PROTOCOL_LIYUAN,         
-    ENUM_IPC_PROTOCOL_XINCHAN,      
-    ENUM_IPC_PROTOCOL_BITE,         
-    ENUM_IPC_PROTOCOL_MEIAN,            
-    ENUM_IPC_PROTOCOL_ROSEEK,       
-    ENUM_IPC_PROTOCOL_AEBELL,     
-    ENUM_IPC_PROTOCOL_JSL_ST,   
-    ENUM_IPC_PROTOCOL_VIMICRO,
-    ENUM_IPC_PROTOCOL_UNIVIEW, 
-
-    ENUM_IPC_PROTOCOL_TYPE, 
-}NET_DVR_IPC_ENUM_UNIFY, *LPNET_DVR_IPC_ENUM_UNIFY;
-
 typedef struct tagNET_DVR_ACCESS_DEVICE_INFO
 {
     DWORD    dwSize;
@@ -35770,7 +35006,7 @@ typedef struct _NET_DVR_SEARCH_CONDITION
     BYTE        byRes1[2];
     NET_DVR_TIME        struStartTime;    //start time
     NET_DVR_TIME        struStopTime;    //stop time
-    BYTE        byChanType;        //channel type;,1-sensor,2-485,3-net
+    BYTE        byChanType;        //channel type;,1-sensor,2-switch,3-485
     BYTE        byRes2[3];
     DWORD        dwChanNo;        //channel no. start from 1,0xffffffff means invalid
     DWORD        dwSubChanNo;    //slot no,start from 1,0xffffffff means invalid
@@ -35784,7 +35020,7 @@ typedef struct _NET_DVR_HISTORY_DATA
 {
     DWORD        dwSize;
     NET_DVR_TIME        struTime;    //time
-    BYTE        byChanType;        //channel type,1-sensor,2-485,3-net,0xff means invalid
+    BYTE        byChanType;        //channel type,1-sensor,2-switch,3-485,0xff means invalid
     BYTE        byRes1[3];
     DWORD        dwChanNo;        //channel no. start from 1,0xffffffff means invalid
     DWORD        dwSubChanNo;    //slot no,start from 1,0xffffffff means invalid
@@ -35812,9 +35048,8 @@ typedef struct tagNET_DVR_ALARMHOST_POINT_VALUE
     DWORD    dwSubChanNo;    //slot no,start from 1,0xffffffff means invalid
     DWORD    dwVariableNo;    //variable no,start from 1,0xffffffff means invalid
     DWORD     dwPointNo;        //point no,0xffffffff means invalid
-	int        iValue;            //The value of the monitoring point, indicating the lower 32 bits
-	int        iValueEx;          //The value of the monitoring point, which indicates the upper 32 bits
-	BYTE    byRes[12];
+    int        iValue;            //point value
+    BYTE    byRes[16];
 }NET_DVR_ALARMHOST_POINT_VALUE, *LPNET_DVR_ALARMHOST_POINT_VALUE;
 
 typedef union tagNET_DVR_ALARMHOST_DATA_UNION
@@ -36488,7 +35723,7 @@ typedef struct tagNET_DVR_VEHICLE_CONTROL_COND
     DWORD  dwOperateType;//Operate Type,VCA_OPERATE_TYPE.
     char   sLicense[MAX_LICENSE_LEN];//License
     char   sCardNo[MAX_CARDNO_LEN]; // Card No.
-    BYTE   byListType;//List Type;0-allow list,1-block list,0xff-all
+    BYTE   byListType;//List Type;0-white list,1-black list,0xff-all
     //2014-02-25
     BYTE   byRes1[3];
     DWORD  dwDataIndex;//Data Index     
@@ -36508,7 +35743,7 @@ typedef struct
 typedef struct tagNET_DVR_VEHICLE_CONTROL_ALARM
 {
     DWORD dwSize;
-    BYTE  byListType;   //List Type;0-allow list,1-block list,2-Provisional List
+    BYTE  byListType;   //List Type;0-white list,1-black list,2-Provisional List
     BYTE  byPlateType;  //Plate Type
     BYTE  byPlateColor;    //Plate Color
     BYTE  byRes1;
@@ -36543,7 +35778,7 @@ typedef struct
     BYTE  byPlateColor;    //Plate Color
     BYTE  byOperateType;//Operate Type(0-Delete a,0xff-Delete All)
     //2014-02-25
-    BYTE  byListType;//List Type;0-Allow List,1-Block List 2014-03-03
+    BYTE  byListType;//List Type;0-White List,1-Black List 2014-03-03
     DWORD dwDataIndex;//Data Index     
     char  sOperateIndex[MAX_OPERATE_INDEX_LEN]; //Operate Index 2014-03-03
     BYTE  byRes[24];
@@ -36927,10 +36162,10 @@ typedef struct tagNET_DVR_MOBILE_RADAR_CFG
 typedef struct tagNET_DVR_MOBILE_LOCALPLATECHK_CFG
 {
     DWORD       dwSize;
-    BYTE  byCheck;  /* 0-block list check,1-no block list check*/
+    BYTE  byCheck;  /* 0-black list check,1-no black list check*/
     BYTE  byCheckAlarm;/* check success with alarm 0-not alarm,1-alarm*/
     BYTE  byCheckHint; /* check success with promte (software promte) 0-no promte,1-promte*/
-    BYTE  byUploadUnlicensedCar; /*0-not upload block car info,1-upload block car info*/
+    BYTE  byUploadBlackCar; /*0-not upload black car info,1-upload black car info*/
     BYTE  byRes[64];
 }NET_DVR_MOBILE_LOCALPLATECHK_CFG, *LPNET_DVR_MOBILE_LOCALPLATECHK_CFG;
 
@@ -36951,7 +36186,7 @@ typedef struct tagNET_DVR_VEHICLE_CHECK
 
 typedef enum _LONG_CFG_SEND_DATA_TYPE_ENUM_
 {
-    ENUM_DVR_VEHICLE_CHECK = 1, //vehicle block list check
+    ENUM_DVR_VEHICLE_CHECK = 1, //vehicle Black list check
     ENUM_MSC_SEND_DATA = 2,  //screen control data type
     ENUM_ACS_SEND_DATA = 3, //access card data type
     ENUM_TME_CARD_SEND_DATA = 4, //Parking Card data type
@@ -37058,7 +36293,7 @@ typedef struct tagNET_DVR_SCREEN_DISPLAY_CFG
     BYTE    byCfgType;       /*Set Parameter type ,Get Parameter Invalid,
                                0-Invalid,1-Back Light,2-Video Out Cfg,3-Color Temperature Cfg,4-ADC,5-Screen Edge Cfg*/
     BYTE    byBackLight;        //Back Light 0~100
-    BYTE    byRes1[2];
+    BYTE    byRes1[3];
     NET_DVR_VIDEO_OUT_CFG           struVideoOutCfg;     //Video Out Cfg(Picture mode)
     NET_DVR_COLOR_TEMPERATURE_CFG struColorTempCfg;  //Color Temperature Cfg
     NET_DVR_ADC_CFG               struAdcCfg;        //ADC
@@ -37288,7 +36523,7 @@ typedef struct tagNET_DVR_LOCAL_CHECK_DEV
     DWORD   dwCheckOnlineTimeout;     //heart check time,Unit (ms), min 30s, max 120s, while set Cfg ,0 meas use the default 120s
     DWORD   dwCheckOnlineNetFailMax;  //Since the maximum  number of reasons for the failure of the network,
     //Exceed the value of the SDK before the callback user exception, while set cfg ,0 means use the default value of 1
-    BYTE    byRes[256];
+    BYTE    byRes[252];
 }NET_DVR_LOCAL_CHECK_DEV, *LPNET_DVR_LOCAL_CHECK_DEV;
 
 typedef struct tagNET_DVR_LOCAL_PTZ_CFG
@@ -37613,7 +36848,7 @@ typedef struct tagNET_DVR_VIRTUALLED_PARAM
     BYTE    byPMFormat;
     BYTE    byAlignmentX;
     BYTE    byAlignmentY;
-    BYTE    byFontType;  //font type, 0-default,1-Simsun,2-boldface,3-regular script,255-custom
+    BYTE    byFontType;
     BYTE    byRes2[90];
 }NET_DVR_VIRTUALLED_PARAM, *LPNET_DVR_VIRTUALLED_PARAM;
 
@@ -38817,8 +38052,8 @@ typedef struct tagNET_DVR_BV_SAMPLE_CALIB_CFG
 {
     DWORD  dwSize;
     DWORD  dwCameraHeight; //Camera Height,Unit:cm
-    float  fPitchAngle;    //Camera Pitch Angle[0Â¡Ã£, 60Â¡Ã£],
-    float  fInclineAngle;  //Camera Incline Angle[-20Â¡Ã£,20Â¡Ã£]
+    float  fPitchAngle;    //Camera Pitch Angle[0¡ã, 60¡ã],
+    float  fInclineAngle;  //Camera Incline Angle[-20¡ã,20¡ã]
     NET_DVR_BV_SAMPLE_CALIB_POINT struCalibPoint[MAX_SAMPLE_NUM]; //Sample calibration 
     NET_DVR_BV_SAMPLE_CALIB_POINT struCalibPointEx[MAX_SAMPLE_NUM_EX/*7*/]; //Sample calibration extension
     BYTE  byRes[60];
@@ -38981,9 +38216,7 @@ typedef struct tagNET_DVR_REGIONENTRANCE_REGION
     NET_VCA_POLYGON struRegion;//region range
     BYTE bySensitivity;        //sensitivity,[1-100]
     BYTE byDetectionTarget;    //Detection Target
-    BYTE byAlarmConfidence;    //alarmConfidence, 0-low,1-mediumLow,2-mediumHigh,3-high
-    BYTE byRecordConfidence;   //recordConfidence , 0-low,1-mediumLow,2-mediumHigh,3-high
-    BYTE byRes[60];
+    BYTE byRes[62];
 }NET_DVR_REGIONENTRANCE_REGION, *LPNET_DVR_REGIONENTRANCE_REGION;
 
 typedef    struct tagNET_DVR_REGION_ENTRANCE_DETECTION
@@ -39008,10 +38241,7 @@ typedef struct tagNET_DVR_ENTRANCE_REGION
 {
     NET_VCA_POLYGON struRegion;//region range
     BYTE bySensitivity;        //sensitivity,[1-100]
-    BYTE byDetectionTarget;
-    BYTE byAlarmConfidence;    //alarmConfidence, 0-low,1-mediumLow,2-mediumHigh,3-high
-    BYTE byRecordConfidence;   //recordConfidence , 0-low,1-mediumLow,2-mediumHigh,3-high
-    BYTE byRes[60];
+    BYTE byRes[63];
 }NET_DVR_ENTRANCE_REGION, *LPNET_DVR_ENTRANCE_REGION;
 
 typedef    struct tagNET_DVR_EVENT_TRIGGER
@@ -39082,9 +38312,7 @@ typedef struct tagNET_DVR_REGIONEXITING_REGION
     NET_VCA_POLYGON struRegion;//region range
     BYTE bySensitivity;        //sensitivity,[1-100]
     BYTE byDetectionTarget;    //Detection Target
-    BYTE byAlarmConfidence;    //alarmConfidence, 0-low,1-mediumLow,2-mediumHigh,3-high
-    BYTE byRecordConfidence;   //recordConfidence , 0-low,1-mediumLow,2-mediumHigh,3-high
-    BYTE byRes[60];
+    BYTE byRes[62];             //
 }NET_DVR_REGIONEXITING_REGION, *LPNET_DVR_REGIONEXITING_REGION;
 
 typedef    struct tagNET_DVR_REGION_EXITING_DETECTION
@@ -39359,25 +38587,6 @@ typedef struct tagNET_DVR_MIME_UNIT
     BYTE byRes[15];
 }NET_DVR_MIME_UNIT, *LPNET_DVR_MIME_UNIT;
 
-typedef struct tagNET_DVR_MIME_DATA
-{
-    BYTE  byContentType;   //file type: 0-invalid, 1-json, 2-bmp
-    BYTE  byRes1[3];
-    void  *lpContent;  //file content
-    DWORD  dwContentSize;  //file size
-    char  sContentID[32];  //Content-ID
-    BYTE  byRes[512];
-}NET_DVR_MIME_DATA, *LPNET_DVR_MIME_DATA;
-
-typedef struct tagNET_DVR_FORM_DATA_CFG
-{
-    DWORD  dwSize;  //
-    void  *lpBuffer;  //buffer of NET_DVR_MIME_DATA
-    DWORD  dwBufferSize;  //buffer size
-    BYTE byNumOfMultiPart;  // 0-invalid
-    BYTE   byRes[67];
-}NET_DVR_FORM_DATA_CFG, *LPNET_DVR_FORM_DATA_CFG;
-
 /*********************************IPC 5.2.2***************************************/
 typedef struct tagNET_DVR_XML_CONFIG_INPUT
 {
@@ -39389,8 +38598,7 @@ typedef struct tagNET_DVR_XML_CONFIG_INPUT
     DWORD   dwRecvTimeOut;
     BYTE    byForceEncrpt;
     BYTE    byNumOfMultiPart;
-    BYTE    byMIMEType;
-    BYTE    byRes[29];
+    BYTE    byRes[30];
 }NET_DVR_XML_CONFIG_INPUT, *LPNET_DVR_XML_CONFIG_INPUT;
 
 typedef struct tagNET_DVR_XML_CONFIG_OUTPUT
@@ -39401,14 +38609,7 @@ typedef struct tagNET_DVR_XML_CONFIG_OUTPUT
     DWORD   dwReturnedXMLSize;
     void*    lpStatusBuffer;
     DWORD    dwStatusSize;
-#if (defined(OS_WINDOWS64) || defined(OS_POSIX64))
-    void*     lpDataBuffer;                     
-#else
-    void*     lpDataBuffer;                     
-    BYTE    byRes2[4];
-#endif  
-    BYTE    byNumOfMultiPart;
-    BYTE    byRes[23];
+    BYTE    byRes[32];
 }NET_DVR_XML_CONFIG_OUTPUT, *LPNET_DVR_XML_CONFIG_OUTPUT;
 
 typedef struct tagNET_DVR_JSON_DATA_CFG
@@ -39448,7 +38649,7 @@ typedef struct tagNET_DVR_SINGLE_PLAN_SEGMENT
     //16-finger print or password,17-employee no and finger print,18-employee no and finger print and password,
     //19-face and finger print and swipe card,20-face and password and finger print,21-employee no and face,22-face or face and swipe card
     //22-fingerprint or face, 23-card or face or password 24-card or face or password 25-card or face,26-card or face or fingerprint ,27-card or fingerprint or password
-    //28-face or password,29-employee and face and password,30-card or face or face and cardÂ£Â¬31-face or finger or passwordÂ£Â¬32-irisÂ£Â¬33-face or finger or card or irisÂ£Â¬34-face or card or password or iris
+    //28-face or password,29-employee and face and password,30-card or face or face and card
     BYTE byRes[5];
     NET_DVR_TIME_SEGMENT struTimeSegment; //time segment parameter 
 }NET_DVR_SINGLE_PLAN_SEGMENT, *LPNET_DVR_SINGLE_PLAN_SEGMENT;
@@ -39535,7 +38736,7 @@ typedef struct tagNET_DVR_DOOR_CFG
     BYTE byMagneticType; //magnetic type, 0-always close 1-always open
     BYTE byOpenButtonType; //open button type,  0-always close 1-always open
     BYTE byOpenDuration; //open duration time, 1-255s(ladder control relay action time)
-    BYTE byAccessibleOpenDuration; //accessible open duration , 1-255s  
+    BYTE byDisabledOpenDuration; //disable open duration , 1-255s  
     BYTE byMagneticAlarmTimeout; //magnetic alarm time out , 0-255s,0 means not to alarm
     BYTE byEnableDoorLock; //whether to enable door lock, 0-disable, 1-enable
     BYTE byEnableLeaderCard; //whether to enable leader card , 0-disable, 1-enable
@@ -39686,7 +38887,7 @@ typedef struct tagNET_DVR_CARD_CFG
     // #define CARD_PARAM_SWIPED_NUM       0x00000200  //has swiped card time parameter
     BYTE byCardNo[ACS_CARD_NO_LEN]; //card No
     BYTE byCardValid; //whether is a vaild card,0-invalid,1-valid(use to delete card, 0 means delete card when setting, it will be 1 when getting)
-    BYTE byCardType; //card type ,1-ordinary card,2-accessible card,3-block list card, 4-patrol card,5-stress card,6-super card,7-client card,8-remove card, default ordinary card  
+    BYTE byCardType; //card type ,1-ordinary card,2-disable card,3-black list card, 4-patrol card,5-stress card,6-super card,7-client card,8-remove card, default ordinary card  
     BYTE byLeaderCard; //whether is leader card, 0-no, 1-yes 
     BYTE byRes1;
     DWORD dwDoorRight; //door right , accord to bit, 1-has right 0-no right, from low bit to high bit means door 1-N have right
@@ -39726,8 +38927,7 @@ typedef struct tagNET_DVR_CARD_USER_INFO_CFG
 {
     DWORD dwSize;
     BYTE sUsername[NAME_LEN]; //user name
-    BYTE	byAssociateNetUser;//associate net user
-    BYTE byRes2[255];         //byRes2[0]--user num
+    BYTE byRes2[256];         //byRes2[0]--user num
 }NET_DVR_CARD_USER_INFO_CFG, *LPNET_DVR_CARD_USER_INFO_CFG;
 
 #define ACS_PARAM_DOOR_STATUS_WEEK_PLAN        0x00000001 //door status week plan
@@ -39748,8 +38948,8 @@ typedef struct tagNET_DVR_CARD_USER_INFO_CFG
 #define ACS_PAPAM_EVENT_CARD_LINKAGE           0x00008000 //event card linkage
 #define ACS_PAPAM_CARD_PASSWD_CFG              0x00010000 //card passwd open door parameter
 #define ACS_PARAM_PERSON_STATISTICS_CFG           0x00020000 //The number of statistical parameters
-#define ACS_PARAM_BLOCKLIST_PICTURE           0x00040000 //block list picture
-#define ACS_PARAM_ID_BLOCKLIST                0x00080000 //ID card block list parameters 
+#define ACS_PARAM_BLACK_LIST_PICTURE           0x00040000 //black list picture
+#define ACS_PARAM_ID_BLACK_LIST                0x00080000 //ID card black list parameters 
 #define ACS_PARAM_EXAM_INFO                     0x00100000 //exam info parameter
 #define ACS_PARAM_EXAMINEE_INFO                 0x00200000 //examinee info parameter
 #define ACS_PARAM_FAILED_FACE_INFO             0x00400000 //when upgrade device,get failed face
@@ -39776,8 +38976,8 @@ typedef struct tagNET_DVR_ACS_PARAM_TYPE
     //#define ACS_PAPAM_EVENT_CARD_LINKAGE           0x00008000 //event card linkage
     //#define ACS_PAPAM_CARD_PASSWD_CFG              0x00010000 //card passwd open door parameter
     //#define ACS_PARAM_PERSON_STATISTICS_CFG           0x00020000 //The number of statistical parameters
-    //#define ACS_PARAM_BLOCK_LIST_PICTURE        0x00040000 //block list picture
-    //#define ACS_PARAM_ID_BLOCK_LIST             0x00080000 //ID card block list parameters 
+    //#define ACS_PARAM_BLACK_LIST_PICTURE        0x00040000 //black list picture
+    //#define ACS_PARAM_ID_BLACK_LIST             0x00080000 //ID card black list parameters 
     //#define ACS_PARAM_EXAM_INFO                     0x00100000 //exam info parameter
     //#define ACS_PARAM_EXAMINEE_INFO                 0x00200000 //examinee info parameter
     //#define ACS_PARAM_FAILED_FACE_INFO             0x00400000 //when upgrade device,get failed face
@@ -39848,7 +39048,7 @@ typedef struct tagNET_DVR_CARD_READER_CFG
     WORD wLocalControllerID; //Read-only, on-site controller serial number, 1-64, 0 on behalf of unregistered 
     WORD wLocalControllerReaderID; //Read-only, on-site controller card reader ID, 0 represents the unregistered 
     WORD wCardReaderChannel; //Read-only, card reader communication channel number, 0 wiggins or offline, 1 - RS485A, 2 - RS485B 
-    BYTE byRes[16];
+    BYTE byRes[18];
 }NET_DVR_CARD_READER_CFG, *LPNET_DVR_CARD_READER_CFG;
 
 typedef struct tagNET_DVR_CARD_READER_CFG_V50
@@ -39902,16 +39102,13 @@ typedef struct tagNET_DVR_CARD_READER_CFG_V50
     BYTE byDayFaceMatchThresholdN; //day range 0-100
     BYTE byNightFaceMatchThresholdN; //night range 0-100
     BYTE byFaceRecogizeEnable; //face recogize enable:0-invalid,1-open,2-close
-    BYTE byBlockListMatchThreshold; //block list threshold 0-100
+    BYTE byBlackFaceMatchThreshold; //black list threshold 0-100
     BYTE byRes3;
     BYTE byDefaultVerifyMode; //read only,default verify mode
     DWORD dwFingerPrintCapacity;//readonly,capacity
     DWORD dwFingerPrintNum;//readonly,num of fingerprint
     BYTE byEnableFingerPrintNum;//readonly 
-    BYTE byEnableReverseCardNo; //reverse cardno 0-no 1-yes
-    BYTE byRes2[2];
-    DWORD dwIndependSwipeIntervals;
-    BYTE byRes[224];
+    BYTE byRes[231];
 }NET_DVR_CARD_READER_CFG_V50, *LPNET_DVR_CARD_READER_CFG_V50;
 
 typedef struct tagNET_DVR_FAILED_FACE_COND
@@ -40086,8 +39283,8 @@ typedef struct tagNET_DVR_ACS_WORK_STATUS_V50
     BYTE bySlaveChannelControllerStatus; //slave channel controller status: 0-invalid;1-offline;2-online
     BYTE byAntiSneakServerStatus; //anti sneak server status:0-invalid,1-disable,2-normal,3-offline
     BYTE byRes3[3];
-    DWORD dwAllowFaceNum;
-    DWORD dwBlockFaceNum;
+    DWORD dwWhiteFaceNum;
+    DWORD dwBlackFaceNum;
     BYTE byRes2[108];
 }NET_DVR_ACS_WORK_STATUS_V50, *LPNET_DVR_ACS_WORK_STATUS_V50;
 
@@ -40132,8 +39329,8 @@ typedef struct tagNET_DVR_ACS_EVENT_INFO
 {
     DWORD dwSize;
     BYTE byCardNo[ACS_CARD_NO_LEN]; //card No, 0 means invalid 
-    BYTE byCardType; //card type,1-ordinary card,2-accessible card,3-block list card, 4-patrol card,5-stress card,6-super card,7-client card, 0 means invalid
-    BYTE byAllowListNo; //allow list No, 1-8, 0 means invalid
+    BYTE byCardType; //card type,1-ordinary card,2-disable card,3-black list card, 4-patrol card,5-stress card,6-super card,7-client card, 0 means invalid
+    BYTE byWhiteListNo; //white list No, 1-8, 0 means invalid
     BYTE byReportChannel; //report channel, 1-alarmin updata, 2-center group 1, 3-center group 2, 0 means invalid
     BYTE byCardReaderKind;//4 - fingerprint head
     DWORD dwCardReaderNo; // card reader No, 0 means invalid
@@ -40153,14 +39350,13 @@ typedef struct tagNET_DVR_ACS_EVENT_INFO
     BYTE    byType;     //Alarm type
     BYTE  byMACAddr[MACADDR_LEN]; //mac addr
     BYTE  bySwipeCardType;//swipe card type
-    BYTE  byMask; //wear mask:1-unknown,2-no,3-yes
+    BYTE  byRes2;
     DWORD dwSerialNo;
     BYTE  byChannelControllerID; //channel controller ID
     BYTE  byChannelControllerLampID; //channel controller lamp ID
     BYTE  byChannelControllerIRAdaptorID; //channel controller IR adaptor ID
     BYTE  byChannelControllerIREmitterID; //channel controller IR emitter ID
-    BYTE  byHelmet;//wear helmet: 1-unknown, 2-no, 3-yes
-    BYTE  byRes[3];
+    BYTE  byRes[4];
 }NET_DVR_ACS_EVENT_INFO, *LPNET_DVR_ACS_EVENT_INFO;
 
 typedef struct tagNET_DVR_ACS_EVENT_INFO_EXTEND
@@ -40178,24 +39374,6 @@ typedef struct tagNET_DVR_ACS_EVENT_INFO_EXTEND
     BYTE  byDeviceName[NET_DEV_NAME_LEN];
     BYTE  byRes[24];
 }NET_DVR_ACS_EVENT_INFO_EXTEND, *LPNET_DVR_ACS_EVENT_INFO_EXTEND;
-
-typedef struct tagNET_DVR_ACS_EVENT_INFO_EXTEND_V20
-{
-    BYTE byRemoteCheck; //remote check(0-invalid,1-not need(default),2-need)
-    BYTE byThermometryUnit; //thermometry unit(0-celsius(default),1-fahrenheit,2-kelvin)
-    BYTE byIsAbnomalTemperature; //is abnomal temperature(0-no,1-yes)
-    BYTE byRes2;
-    float fCurrTemperature; //face temperature
-    NET_VCA_POINT struRegionCoordinates; //face temperature region coordinates
-    DWORD dwQRCodeInfoLen; //QR code info len
-    DWORD dwVisibleLightDataLen; //visible light data len
-    DWORD dwThermalDataLen; //thermal data len
-    char *pQRCodeInfo; //QR code info buffer
-    char *pVisibleLightData; //visible light data buffer
-    char *pThermalData; //thermal data buffer
-    BYTE  byAttendanceLabel[64];
-    BYTE  byRes[960];
-}NET_DVR_ACS_EVENT_INFO_EXTEND_V20, *LPNET_DVR_ACS_EVENT_INFO_EXTEND_V20;
 
 typedef struct tagNET_DVR_ACS_ALARM_INFO
 {
@@ -40215,10 +39393,7 @@ typedef struct tagNET_DVR_ACS_ALARM_INFO
     char    *pAcsEventInfoExtend;
     BYTE    byAcsEventInfoExtend;
     BYTE    byTimeType; //time type:0-local time,1-UTC time(struTime struct)
-    BYTE    byRes2;
-    BYTE    byAcsEventInfoExtendV20;
-    char    *pAcsEventInfoExtendV20;
-    BYTE byRes[4];
+    BYTE byRes[10];
 }NET_DVR_ACS_ALARM_INFO, *LPNET_DVR_ACS_ALARM_INFO;
 
 
@@ -40436,9 +39611,7 @@ typedef struct tagNET_DVR_TPS_REAL_TIME_INFO
 #endif  
     /*Additional information identification(NET_DVR_TPS_ADDINFO)*/
     BYTE                  byAddInfoFlag;
-    BYTE                  byRes1[3];      // res
-    DWORD                 dwDeviceIDEx;   // Device ID Extension 
-    BYTE                  byRes[8];       // res
+    BYTE                  byRes[15];
 }NET_DVR_TPS_REAL_TIME_INFO, *LPNET_DVR_TPS_REAL_TIME_INFO;
 
 typedef struct tagNET_DVR_TPS_LANE_PARAM
@@ -40470,9 +39643,7 @@ typedef struct tagNET_DVR_TPS_STATISTICS_PARAM
     WORD                wDeviceID;      // Device ID
     WORD                wDataLen;       //Data Len
     BYTE                byTotalLaneNum;  // Total Lane Num
-    BYTE                byRes2[3];
-    DWORD               dwDeviceIDEx;      // Device ID Extend
-    BYTE                byRes1[8];
+    BYTE                byRes1[15];
     NET_DVR_TIME_V30    struStartTime;    //Start Time
     DWORD                dwSamplePeriod;    //Sample Period
     NET_DVR_TPS_LANE_PARAM  struLaneParam[MAX_TPS_RULE/*8*/];
@@ -40491,9 +39662,8 @@ typedef struct tagNET_DVR_TPS_STATISTICS_INFO
     BYTE*                 pJsonBuf;
     BYTE                  byRes2[4];
 #endif  
-    BYTE                  byJsonInfoFlag;          //Whether there is Json transmission data, 0- none, 1- yes
-    BYTE                  byBrokenNetHttp;         //Broken net HTTP(0 - not continuingly, 1 - continuingly)
-    BYTE                  byRes[114];
+    BYTE                byJsonInfoFlag;          // Whether there is Json transmission data, 0- none, 1- yes
+    BYTE                  byRes[115];
 }NET_DVR_TPS_STATISTICS_INFO, *LPNET_DVR_TPS_STATISTICS_INFO;
 
 
@@ -40868,8 +40038,8 @@ typedef struct tagNET_DVR_DIALSTATUS
     BYTE  byRes2[16];
 }NET_DVR_DIALSTATUS, *LPNET_DVR_DIALSTATUS;
 
-#define MAX_ALLOWLIST_NUM            8 
-#define NET_SDK_MAX_ALLOWLIST_NUM_32 32
+#define MAX_WHITELIST_NUM            8 
+#define NET_SDK_MAX_WHITELIST_NUM_32 32
 
 #define HARDDISKFULL_EXCEPTION      0x0    
 #define HARDDISKERROR_EXCEPTION     0x1    
@@ -40916,7 +40086,7 @@ typedef struct tagNET_DVR_DIALSTATUS
 
 typedef struct tagNET_DVR_PHONECFG
 {
-    BYTE byAllowList[MAX_PHONE_NUM];
+    BYTE byWhiteList[MAX_PHONE_NUM];
     BYTE byPhonePerssion[32];
     BYTE byAlarmHandler[32];
     BYTE byRes[128];
@@ -40927,13 +40097,13 @@ typedef struct tagNET_DVR_SMSRELATIVEPARAM
     DWORD dwSize;
     BYTE bEnableSmsAlarm;    /* 0: disable; 1: enable 3g */
     BYTE byRes1[7];
-    NET_DVR_PHONECFG struAllowList[MAX_ALLOWLIST_NUM];
+    NET_DVR_PHONECFG struWhiteList[MAX_WHITELIST_NUM];
     BYTE byRes2[32];
 }NET_DVR_SMSRELATIVEPARAM, *LPNET_DVR_SMSRELATIVEPARAM;
 
 typedef struct tagNET_DVR_PHONECFG_V50
 {
-    BYTE byAllowList[MAX_PHONE_NUM];
+    BYTE byWhiteList[MAX_PHONE_NUM];
     BYTE byPhonePerssion[32];
     BYTE byAlarmHandler[32];
     BYTE byAcsPassword[16];
@@ -40946,7 +40116,7 @@ typedef struct tagNET_DVR_SMSRELATIVEPARAM_V50
     DWORD dwSize;
     BYTE bEnableSmsAlarm;    /* 0: disable; 1: enable 3g */
     BYTE byRes1[7];
-    NET_DVR_PHONECFG_V50 struAllowList[NET_SDK_MAX_ALLOWLIST_NUM_32];
+    NET_DVR_PHONECFG_V50 struWhiteList[NET_SDK_MAX_WHITELIST_NUM_32];
     BYTE byRes2[32];
 }NET_DVR_SMSRELATIVEPARAM_V50, *LPNET_DVR_SMSRELATIVEPARAM_V50;
 
@@ -40980,7 +40150,7 @@ typedef struct tagNET_DVR_ACS_EVENT_DETAIL
     DWORD dwSize;
     BYTE byCardNo[ACS_CARD_NO_LEN];
     BYTE byCardType;
-    BYTE byAllowListNo;
+    BYTE byWhiteListNo;
     BYTE byReportChannel;
     BYTE byCardReaderKind;
     DWORD dwCardReaderNo;
@@ -41013,13 +40183,7 @@ typedef struct tagNET_DVR_ACS_EVENT_DETAIL
     BYTE  byAttendanceStatus; //0-undefined, 1-checkIn, 2-checkOut, 3-breakOut, 4-breakIn, 5-overtimeIn, 6-overtimeOut
     BYTE  byStatusValue; //Attendance Status Value
     BYTE  byEmployeeNo[NET_SDK_EMPLOYEE_NO_LEN];
-    BYTE  byRes1;
-    BYTE  byMask;
-    BYTE  byThermometryUnit;
-    BYTE  byIsAbnomalTemperature;
-    float fCurrTemperature;
-    NET_VCA_POINT struRegionCoordinates;
-    BYTE  byRes[48];
+    BYTE  byRes[64];
 }NET_DVR_ACS_EVENT_DETAIL, *LPNET_DVR_ACS_EVENT_DETAIL;
 
 typedef struct tagNET_DVR_ACS_EVENT_CFG
@@ -41035,14 +40199,7 @@ typedef struct tagNET_DVR_ACS_EVENT_CFG
     char    *pPicData;
     WORD  wInductiveEventType; //Inductive event types, 0 - invalid
     BYTE byTimeType;
-    BYTE byRes1;
-    DWORD dwQRCodeInfoLen;
-    DWORD dwVisibleLightDataLen;
-    DWORD dwThermalDataLen;
-    char *pQRCodeInfo;
-    char *pVisibleLightData;
-    char *pThermalData;
-    BYTE byRes[36];
+    BYTE byRes[61];
 }NET_DVR_ACS_EVENT_CFG, *LPNET_DVR_ACS_EVENT_CFG;
 
 typedef struct tagNET_DVR_SMSLISTINFO
@@ -41370,7 +40527,7 @@ typedef struct tagNET_DVR_DEL_MONITOR_COND
     BYTE   byRes[64];
 }NET_DVR_DEL_MONITOR_COND, *LPNET_DVR_DEL_MONITOR_COND;
 
-typedef struct tagNET_DVR_BLOCKLIST_ALARM_COND
+typedef struct tagNET_DVR_BLACKLIST_ALARM_COND
 {
     DWORD       dwSize;
     BYTE        byType;
@@ -41378,7 +40535,7 @@ typedef struct tagNET_DVR_BLOCKLIST_ALARM_COND
     DWORD       dwFaceID;
     DWORD       dwMaxSnapNum;
     BYTE        byRes[256];
-}NET_DVR_BLOCKLIST_ALARM_COND, *LPNET_DVR_BLOCKLIST_ALARM_COND;
+}NET_DVR_BLACKLIST_ALARM_COND, *LPNET_DVR_BLACKLIST_ALARM_COND;
 
 typedef struct tagNET_DVR_STORAGE_RESOURCE_COND
 {
@@ -41387,16 +40544,16 @@ typedef struct tagNET_DVR_STORAGE_RESOURCE_COND
     BYTE        byRes[64];
 }NET_DVR_STORAGE_RESOURCE_COND, *LPNET_DVR_STORAGE_RESOURCE_COND;
 
-typedef struct tagNET_DVR_BLOCKLIST_ALARM_RECORD
+typedef struct tagNET_DVR_BLACKLIST_ALARM_RECORD
 {
     DWORD          dwSize;
     DWORD            dwSnapFacePicID;
     DWORD            dwRegisterID;
     DWORD            dwGroupNo;
     BYTE            byRes[128];
-}NET_DVR_BLOCKLIST_ALARM_RECORD, *LPNET_DVR_BLOCKLIST_ALARM_RECORD;
+}NET_DVR_BLACKLIST_ALARM_RECORD, *LPNET_DVR_BLACKLIST_ALARM_RECORD;
 
-typedef struct tagNET_DVR_BLOCKLIST_GROUP_INFO
+typedef struct tagNET_DVR_BLACKLIST_GROUP_INFO
 {
     DWORD          dwSize;
     DWORD          dwGroupID;
@@ -41410,10 +40567,10 @@ typedef struct tagNET_DVR_BLOCKLIST_GROUP_INFO
     BYTE            byStorageAddr[MAX_DOMAIN_NAME];
     WORD            wStoragePort;
     BYTE            byRes[126];
-}NET_DVR_BLOCKLIST_GROUP_INFO, *LPNET_DVR_BLOCKLIST_GROUP_INFO;
+}NET_DVR_BLACKLIST_GROUP_INFO, *LPNET_DVR_BLACKLIST_GROUP_INFO;
 
 
-typedef struct tagNET_DVR_SINGLE_BLOCKLIST_GROUP_RECORD
+typedef struct tagNET_DVR_SINGLE_BLACKLIST_GROUP_RECORD
 {
     DWORD          dwSize;
     DWORD            dwGroupRecordID;
@@ -41424,37 +40581,37 @@ typedef struct tagNET_DVR_SINGLE_BLOCKLIST_GROUP_RECORD
     BYTE            byRes1[3];
     NET_DVR_ADDR_DOMAIN_INFO struStorageAddr;
     BYTE            byRes[256];
-}NET_DVR_SINGLE_BLOCKLIST_GROUP_RECORD, *LPNET_DVR_SINGLE_BLOCKLIST_GROUP_RECORD;
+}NET_DVR_SINGLE_BLACKLIST_GROUP_RECORD, *LPNET_DVR_SINGLE_BLACKLIST_GROUP_RECORD;
 
-typedef struct tagNET_DVR_BLOCKLIST_GROUP_RECORD_COND
+typedef struct tagNET_DVR_BLACKLIST_GROUP_RECORD_COND
 {
     DWORD          dwSize;
     DWORD            dwRecordID;
     BYTE            byRes[64];
-}NET_DVR_BLOCKLIST_GROUP_RECORD_COND, *LPNET_DVR_BLOCKLIST_GROUP_RECORD_COND;
+}NET_DVR_BLACKLIST_GROUP_RECORD_COND, *LPNET_DVR_BLACKLIST_GROUP_RECORD_COND;
 
-typedef struct tagNET_DVR_BLOCKLIST_GROUP_RECORD_CFG
+typedef struct tagNET_DVR_BLACKLIST_GROUP_RECORD_CFG
 {
     DWORD          dwSize;
     DWORD            dwRecordNum;
-    NET_DVR_SINGLE_BLOCKLIST_GROUP_RECORD struRecord[MAX_GROUP_RECORD_NUM];
+    NET_DVR_SINGLE_BLACKLIST_GROUP_RECORD struRecord[MAX_GROUP_RECORD_NUM];
     BYTE            byRes[256];
-}NET_DVR_BLOCKLIST_GROUP_RECORD_CFG, *LPNET_DVR_BLOCKLIST_GROUP_RECORD_CFG;
+}NET_DVR_BLACKLIST_GROUP_RECORD_CFG, *LPNET_DVR_BLACKLIST_GROUP_RECORD_CFG;
 
-typedef struct tagNET_DVR_BLOCKLIST_GROUP_CFG
+typedef struct tagNET_DVR_BLACKLIST_GROUP_CFG
 {
     DWORD          dwSize;
     DWORD            dwGroupNum;
-    NET_DVR_BLOCKLIST_GROUP_INFO struGroup[MAX_GROUP_RECORD_NUM];
+    NET_DVR_BLACKLIST_GROUP_INFO struGroup[MAX_GROUP_RECORD_NUM];
     BYTE            byRes[256];
-}NET_DVR_BLOCKLIST_GROUP_CFG, *LPNET_DVR_BLOCKLIST_GROUP_CFG;
+}NET_DVR_BLACKLIST_GROUP_CFG, *LPNET_DVR_BLACKLIST_GROUP_CFG;
 
-typedef struct tagNET_DVR_BLOCKLIST_GROUP_COND
+typedef struct tagNET_DVR_BLACKLIST_GROUP_COND
 {
     DWORD        dwSize;
     DWORD            dwGroupID;
     BYTE            byRes[64];
-}NET_DVR_BLOCKLIST_GROUP_COND, *LPNET_DVR_BLOCKLIST_GROUP_COND;
+}NET_DVR_BLACKLIST_GROUP_COND, *LPNET_DVR_BLACKLIST_GROUP_COND;
 
 typedef struct  tagNET_DVR_MOUSE_EVENT_PARAM
 {
@@ -41692,10 +40849,7 @@ typedef enum _ACS_DEV_SUBEVENT_ENUM_
     EVENT_ACS_CHANNEL_CONTROLLER_FIRE_IMPORT_ALARM,
     EVENT_ACS_CHANNEL_CONTROLLER_FIRE_IMPORT_RESUME,
     EVENT_ACS_STAY_EVENT,
-    EVENT_ACS_LEGAL_EVENT_NEARLY_FULL,
-    EVENT_ACS_FIRE_IMPORT_ALARM = 52,
-    EVENT_ACS_NOMASK_ALARM,
-    EVENT_ACS_FIREMATRIX_EVENT
+    EVENT_ACS_LEGAL_EVENT_NEARLY_FULL
 }ACS_DEV_SUBEVENT_ENUM;
 
 typedef enum _ACS_ALARM_SUBEVENT_ENUM_
@@ -41863,12 +41017,7 @@ typedef enum _ACS_CARD_READER_SUBEVENT_ENUM_
     EVENT_ACS_M1_CARD_RECOGNIZE_NOT_ENABLED,
     EVENT_ACS_CPU_CARD_RECOGNIZE_NOT_ENABLED,
     EVENT_ACS_ID_CARD_RECOGNIZE_NOT_ENABLED,
-    EVENT_ACS_CARD_SET_SECRET_KEY_FAIL,
-    EVENT_ACS_DESFIRE_CARD_ENCRYPT_VERIFY_FAIL,  
-    EVENT_ACS_DESFIRE_CARD_RECOGNIZE_NOT_ENABLED,
-    EVENT_ACS_IRIS_VERIFY_PASS,
-    EVENT_ACS_IRIS_VERIFY_FAIL,
-    EVENT_ACS_IRIS_BIOASSAY_FAIL
+    EVENT_ACS_CARD_SET_SECRET_KEY_FAIL
 }ACS_CARD_READER_SUBEVENT_ENUM;
 
 typedef struct tagNET_DVR_EVENT_LINKAGE_INFO
@@ -41979,56 +41128,25 @@ typedef struct tagNET_DVR_CLIENT_CALIBFILE_PARAM
 {
     DWORD dwSize;
     DWORD dwFileLen;   //file length
-    BYTE  byChannel;     //channel
-    BYTE  byFileType;    //0-3200W calibration file ,1-800W calibration file
-    BYTE  byRes[22];
+    BYTE byChannel;     //channel
+    BYTE byRes[23];
 }NET_DVR_CLIENT_CALIBFILE_PARAM, *LPNET_DVR_CLIENT_CALIBFILE_PARAM;
 
-typedef struct tagNET_DVR_RATIOSTITCHING_PARAM
-{
-    DWORD  dwSize;
-    DWORD  dwFileLen;    //file length
-    BYTE   byChannel;    //channel
-    BYTE   byRes[23];
-}NET_DVR_RATIOSTITCHING_PARAM, *LPNET_DVR_RATIOSTITCHING_PARAM;
-
-typedef struct tagNET_DVR_VIDEOWALL_MATERIAL_COND
+typedef struct tagNET_DVR_CORRECT_TABLE_3200W_PARAM
 {
     DWORD dwSize;
-    BYTE byWallNo;   //videowall number, start from 1
-    BYTE byWindowType;   //window type, 0-picture&text window, 1-subtitle window
-    BYTE byFileType;   //file type, 0-picture
-    BYTE byRes1;   
-    DWORD dwWindowNo;	//window number, start from 1
-    DWORD dwMaterialNo;	//material number, start from 1
-    BYTE  byRes[32];
-}NET_DVR_VIDEOWALL_MATERIAL_COND, *LPNET_DVR_VIDEOWALL_MATERIAL_COND;
-
-typedef struct tagNET_DVR_CORRECT_TABLE_3200W_PARAM 
-{
-    DWORD dwSize;
-    DWORD dwFileLen;     //file length
-    BYTE  byChannel;     //channel
-    BYTE  byFileType;    //0-3200W calibration file ,1-800W calibration file
-    BYTE  byRes[22];
+    DWORD dwFileLen;   //file length
+    BYTE byChannel;     //channel
+    BYTE byRes[23];
 }NET_DVR_CORRECT_TABLE_3200W_PARAM, *LPNET_DVR_CORRECT_TABLE_3200W_PARAM;
 
 typedef struct tagNET_DVR_FOUR_CAMERAS_PICTURES
 {
     DWORD dwSize;
-    DWORD dwFileLen;    //file length
+    DWORD dwFileLen;   //file length
     BYTE byChannel;     //channel
     BYTE byRes[23];
 }NET_DVR_FOUR_CAMERAS_PICTURES, *LPNET_DVR_FOUR_CAMERAS_PICTURES;
-
-typedef struct tagNET_DVR_DEVTYPE_CALIBFILE_PARAM
-{
-    DWORD  dwSize;
-    DWORD  dwFileLen;     //file length
-    BYTE   byChannel;     //channel
-    BYTE   byFileType;    //0-3200W calibration file ,1-800W calibration file
-    BYTE   byRes[22];
-}NET_DVR_DEVTYPE_CALIBFILE_PARAM, *LPNET_DVR_DEVTYPE_CALIBFILE_PARAM;
 
 typedef struct tagNET_DVR_ANTI_SNEAK_HOST_INFO
 {
@@ -42343,28 +41461,6 @@ typedef struct tagNET_DVR_REGION_CHANNEL_LINKAGE_CFG_
     NET_DVR_SINGLE_CHANNEL_LINKAGE_CFG struLinkChannels[MAX_ZONE_LINKAGE_CHAN_NUM];
     BYTE    byRes[64];
 }NET_DVR_ZONE_CHANNEL_LINKAGE_CFG,*LPNET_DVR_ZONE_CHANNEL_LINKAGE_CFG;
-
-typedef struct tagNET_DVR_SINGLE_ASSOCIATED_CHAN_CFG
-{
-    BYTE    byDevSerialNo[SERIALNO_LEN];  
-    DWORD    dwChannel;       
-    BYTE    byRes[64];
-}NET_DVR_SINGLE_ASSOCIATED_CHAN_CFG, *LPNET_DVR_SINGLE_ASSOCIATED_CHAN_CFG;
-
-typedef struct tagNET_DVR_ALARMIN_ASSOCIATED_CHAN_CFG
-{
-    WORD    wZoneNo;
-    BYTE    byRes1[2];
-    NET_DVR_SINGLE_ASSOCIATED_CHAN_CFG struSingleChanCfg[MAX_ZONE_LINKAGE_CHAN_NUM];
-    BYTE    byRes2[64];
-}NET_DVR_ALARMIN_ASSOCIATED_CHAN_CFG, *LPNET_DVR_ALARMIN_ASSOCIATED_CHAN_CFG;
-
-typedef struct tagNET_DVR_ALARMIN_ASSOCIATED_CHAN_CFG_LIST_
-{
-    DWORD    dwSize;
-    NET_DVR_ALARMIN_ASSOCIATED_CHAN_CFG struAssociatedChanCfg[MAX_MAX_ALARMIN_NUM];
-    BYTE    byRes[64];
-}NET_DVR_ALARMIN_ASSOCIATED_CHAN_CFG_LIST, *LPNET_DVR_ALARMIN_ASSOCIATED_CHAN_CFG_LIST;
 
 typedef struct tagNET_DVR_LCD_ALARM
 {
@@ -43131,8 +42227,7 @@ typedef struct tagNET_DVR_UNLOCK_RECORD_INFO
     BYTE   byRes2[2];
     BYTE   byLockName[LOCK_NAME_LEN];
     BYTE   byEmployeeNo[NET_SDK_EMPLOYEE_NO_LEN]; //employee no
-    BYTE   byMask; //0-reserved 1-unknow 2-no mask 3-mask
-    BYTE   byRes[135];
+    BYTE   byRes[136];
 }NET_DVR_UNLOCK_RECORD_INFO,*LPNET_DVR_UNLOCK_RECORD_INFO;
 
 
@@ -43150,8 +42245,7 @@ typedef struct tagNET_DVR_AUTH_INFO    //not used
     BYTE   byCardNo[ACS_CARD_NO_LEN/*32*/]; //card no
     DWORD dwPicDataLen;
     BYTE*  pImage;
-    BYTE   byEmployeeNo[NET_SDK_EMPLOYEE_NO_LEN/*32*/]; 
-    BYTE   byRes[180];  //
+    BYTE   byRes[212];
 }NET_DVR_AUTH_INFO, *LPNET_DVR_AUTH_INFO;
 
 typedef struct tagNET_DVR_UPLOAD_PLATE_INFO
@@ -43168,13 +42262,6 @@ typedef struct tagNET_DVR_SEND_CARD_INFO
     BYTE   byRes[224];  //reserved
 } NET_DVR_SEND_CARD_INFO, *LPNET_DVR_SEND_CARD_INFO;
 
-//magnetic door status
-typedef struct tagNET_DVR_MAGNETIC_DOOR_STATUS
-{
-    BYTE   byMagneticDoorStatus; //status 1-open 2-close
-    BYTE   byRes[255];  //
-} NET_DVR_MAGNETIC_DOOR_STATUS, *LPNET_DVR_MAGNETIC_DOOR_STATUS;
-
 typedef union tagNET_DVR_VIDEO_INTERCOM_EVENT_INFO_UINON
 {
     BYTE byLen[256]; 
@@ -43183,7 +42270,6 @@ typedef union tagNET_DVR_VIDEO_INTERCOM_EVENT_INFO_UINON
     NET_DVR_AUTH_INFO struAuthInfo; //auth info(not used)
     NET_DVR_UPLOAD_PLATE_INFO struUploadPlateInfo; //upload plate info
     NET_DVR_SEND_CARD_INFO struSendCardInfo; //1,related to function of outdoor device send card ,upload this information when swiping card;2,ivalid card swipe
-    NET_DVR_MAGNETIC_DOOR_STATUS struMagneticDoorStatus; //magnetic door status
 }NET_DVR_VIDEO_INTERCOM_EVENT_INFO_UINON,*LPNET_DVR_VIDEO_INTERCOM_EVENT_INFO_UINON;
 
 // 
@@ -43192,7 +42278,7 @@ typedef struct tagNET_DVR_VIDEO_INTERCOM_EVENT
     DWORD dwSize;  
     NET_DVR_TIME_EX struTime; 
     BYTE   byDevNumber[MAX_DEV_NUMBER_LEN]; //Device No.
-    BYTE   byEventType; //Event Type, 1-Unlock Record,2-Noticedata Receipt,3-Auth Info,4-Upload Plate Info,5-invalid card swipe,6-outdoor device send card info(need enable function of send card ),7-mask detect event,8-magnetic door status
+    BYTE   byEventType; //Event Type, 1-Unlock Record,2-Noticedata Receipt,3-Auth Info,4-Upload Plate Info,5-invalid card swipe,6-outdoor device send card info(need enable function of send card )
     BYTE   byPicTransType;        //Image data transmission mode: 0-binary; 1 - the url
     BYTE   byRes1[2];
     NET_DVR_VIDEO_INTERCOM_EVENT_INFO_UINON uEventInfo;  
@@ -43470,7 +42556,7 @@ typedef struct tagNET_DVR_ELEVATORCONTROL_CFG_V50
     BYTE    byInterfaceType;           //Interface Type, 0-no, 1-RS485,2-Network
     BYTE    byRS485Protocol;        //RS485 , 0-Unknown, 1-private, 0xff-Sel-define, When the byInterfaceType value is 1 effective
     BYTE    byNetworkType;         //Network, 0-Unknown, 1-private, 0xff-Sel-define, When the byInterfaceType value is 2  effective
-    BYTE    byElevatorControlType;      //Elevator Control Type: 0-invalid,1-DS-K2201,2-DS-K2210,0xff-custom
+    BYTE    byElevatorControlType;      //Elevator Control Type: 0-invalid,1-DS-K2201,2-DS-K2210
     WORD    wServerPort;            //Ladder control server port number, when the card protocol type for the 1- private effective
     NET_DVR_IPADDR    struServerIP; //Server IP when the card protocol type for the 1- private effective
     BYTE    sUserName[NET_DVR_LOGIN_USERNAME_MAX_LEN]; //user name, when the card protocol type for the 1- private effective
@@ -43533,46 +42619,6 @@ typedef struct tagNET_DVR_VIS_REGISTER_INFO
     BYTE        byRes[127];                         
 }NET_DVR_VIS_REGISTER_INFO,*LPNET_DVR_VIS_REGISTER_INFO;
 
-typedef struct tagNET_DVR_CALLER_INFO
-{
-    DWORD dwSize;        
-    WORD   wBuildingNo;    
-    SHORT   wFloorNo;    
-    BYTE   byZoneNo;     
-    BYTE   byUnitNo;
-    BYTE   byDevNo;  
-    BYTE    byDevType;  
-    BYTE    byLockNum;
-    BYTE   byHighDevNo; 
-    BYTE   byRes1[2];    
-    BYTE   byVoipNo[16];  
-    BYTE   byRes[80];  
-}NET_DVR_CALLER_INFO, *LPNET_DVR_CALLER_INFO;
-
-typedef struct tagNET_DVR_CALL_STATUS
-{
-    DWORD dwSize;
-    BYTE   byCallStatus; 
-    BYTE   byRes[127];
-}NET_DVR_CALL_STATUS, *LPNET_DVR_CALL_STATUS;
-
-#define MAX_SERVER_DEVICE_NUMBER              16
-typedef struct tagNET_DVR_SERVER_DEVICE_CFG
-{
-    BYTE    byDeviceName[NAME_LEN]; 
-    BYTE       byDeviceType; 
-    BYTE       byDeviceID;
-    BYTE    byLockNum; 
-    BYTE    byRes[5]; 	  
-}NET_DVR_SERVER_DEVICE_CFG, *LPNET_DVR_SERVER_DEVICE_CFG;
-
-typedef struct tagNET_DVR_SERVER_DEVICE_INFO
-{
-    DWORD   dwSize; 
-    DWORD     dwDeviceNum; 
-    NET_DVR_SERVER_DEVICE_CFG    struDeviceCfg[MAX_SERVER_DEVICE_NUMBER];  
-    BYTE    byRes[200];       
-}NET_DVR_SERVER_DEVICE_INFO, *LPNET_DVR_SERVER_DEVICE_INFO;
 
 typedef  struct  tagNET_DVR_SENSOR_VALUE
 {
@@ -43587,7 +42633,7 @@ typedef  struct  tagNET_DVR_HISTORICAL_QUERY_PARAM //Historical Query Param
     NET_DVR_TIME_V30 struEndTime;//End Time
     NET_DVR_SENSOR_VALUE struVoltageValue; //Voltage Value; Unit: V 
     NET_DVR_SENSOR_VALUE struCurrentValue; //Current Value; Unit: mA
-    NET_DVR_SENSOR_VALUE struTemperatureValue;//Temperature Value,Unit: Â¡Ã¦
+    NET_DVR_SENSOR_VALUE struTemperatureValue;//Temperature Value,Unit: ¡æ
     NET_DVR_SENSOR_VALUE struHumidityValue;//Humidity Value
     BYTE   bySwitchStatus;//Switch Status, 0~Close,1~Open
     BYTE   bySensorStatus; //Sensor Status; 
@@ -43655,9 +42701,7 @@ typedef    struct    tagNET_DVR_ACTIVATECFG
 {
     DWORD   dwSize;    //struct size
     BYTE    sPassword[PASSWD_LEN];    //activate password
-    BYTE    byLoginMode; //0-Private 1-ISAPI
-    BYTE    byHttps;    //0-not use HTTPS, 1-use HTTPS
-    BYTE    byRes[106];
+    BYTE    byRes[108];
 }NET_DVR_ACTIVATECFG,*LPNET_DVR_ACTIVATECFG;
 
 typedef struct tagNET_DVR_IPDEVICE_ACTIVATE_CFG
@@ -43708,6 +42752,24 @@ typedef struct tagNET_DVR_CAMERACHAN_SERIALCFG
     BYTE    bySerialAddress;
     BYTE    byRes[15];
 }NET_DVR_CAMERACHAN_SERIALCFG, *LPNET_DVR_CAMERACHAN_SERIALCFG;
+
+typedef struct tagNET_DVR_LLI_PARAM
+{
+    float fSec;//Seconds [0.000,60.000]
+    BYTE byDegree;//Degree :Latitude[0,90] Longitude[0,180]
+    BYTE byMinute;//Minute[0,59]
+    BYTE byRes[6];
+}NET_DVR_LLI_PARAM, *LPNET_DVR_LLI_PARAM;
+
+typedef struct tagNET_DVR_LLPOS_PARAM
+{
+    BYTE   byLatitudeType;
+    BYTE   byLongitudeType;
+    BYTE   byRes1[2];
+    NET_DVR_LLI_PARAM    struLatitude;
+    NET_DVR_LLI_PARAM    struLongitude;
+    BYTE   byRes[16];
+}NET_DVR_LLPOS_PARAM, *LPNET_DVR_LLPOS_PARAM;
 
 //Turn direction information
 typedef struct tagNET_DVR_TURN_DIRECTION_PARAM
@@ -43900,7 +42962,7 @@ typedef    struct tagNET_SDK_MANUAL_THERMOMETRY
     DWORD        dwChannel;
     DWORD      dwRelativeTime; // relative time scale (read-only) 
     DWORD    dwAbsTime;      // absolute time scale (read-only) 
-    BYTE       byThermometryUnit;//Temperature measurement unit: 0 (Â¡Ã¦), 1 (Â¨H), 2 (K) 
+    BYTE       byThermometryUnit;//Temperature measurement unit: 0 (¡æ), 1 (¨H), 2 (K) 
     BYTE       byDataType;//State of data types: 0 - testing, 1 - start, 2 - end (read-only) 
     BYTE      byRes1[6];
     NET_SDK_MANUALTHERM_RULE struRuleInfo;
@@ -43996,30 +43058,6 @@ typedef enum
     AXLE_TYPE_6AXLE_11522_2,
 }TRUCK_AXLE_MODEL;
 
-typedef enum _TOOLWAY_VEHICLE_TYPE
-{
-    TOOLWAY_RESULT_OTHER = 0,  
-    TOOLWAY_PASSENGER_VEHICLE_CLASS_1_MINI = 1,
-    TOOLWAY_PASSENGER_VEHICLE_CLASS_1_SMALL = 2,
-    TOOLWAY_PASSENGER_VEHICLE_CLASS_2_MIDDLE = 3,
-    TOOLWAY_PASSENGER_VEHICLE_CLASS_2_TRAILER = 4,
-    TOOLWAY_PASSENGER_VEHICLE_CLASS_3_LARGR = 5,
-    TOOLWAY_PASSENGER_VEHICLE_CLASS_4_LARGR = 6,
-    TOOLWAY_GOODS_VEHICLE_CLASS_1 = 7,
-    TOOLWAY_GOODS_VEHICLE_CLASS_2 = 8,
-    TOOLWAY_GOODS_VEHICLE_CLASS_3 = 9,
-    TOOLWAY_GOODS_VEHICLE_CLASS_4 = 10,
-    TOOLWAY_GOODS_VEHICLE_CLASS_5 = 11,
-    TOOLWAY_GOODS_VEHICLE_CLASS_6 = 12,
-    TOOLWAY_MOTOR_VEHICLE_CLASS_1 = 13,
-    TOOLWAY_MOTOR_VEHICLE_CLASS_2 = 14,
-    TOOLWAY_MOTOR_VEHICLE_CLASS_3 = 15,
-    TOOLWAY_MOTOR_VEHICLE_CLASS_4 = 16,
-    TOOLWAY_MOTOR_VEHICLE_CLASS_5 = 17,
-    TOOLWAY_MOTOR_VEHICLE_CLASS_6 = 18
-}TOOLWAY_VEHICLE_TYPE;
-
-
 //Vehicle Weight
 typedef struct  tagNET_DVR_VEHICLE_WEIGHT_RESULT_
 {
@@ -44033,11 +43071,7 @@ typedef struct  tagNET_DVR_VEHICLE_WEIGHT_RESULT_
     char      sDevDescInfo[MAX_DEVDESC_LEN/*64*/];       //Device description information
     WORD      wAxleWeight[MAX_TRUCK_AXLE_NUM/*10*/];    //Axle weight array
     WORD      wAxleDistance[MAX_TRUCK_AXLE_NUM/*10*/];  //Axle distance array,unit mm.
-    DWORD     dwLength;                 //Vehicle Length Â£Â¬unit cm
-    DWORD     dwWidth;                  //Vehicle WidthÂ£Â¬unit cm
-    DWORD     dwHeight;                 //Vehicle HeightÂ£Â¬unit cm
-    BYTE      byTollwayVehicleType;     //TOOLWAY_VEHICLE_TYPE
-    BYTE      byRes2[11];               //res
+    BYTE      byRes2[24];            //res
 }NET_DVR_VEHICLE_WEIGHT_RESULT, *LPNET_DVR_VEHICLE_WEIGHT_RESULT;
 
 // Plate Result V50
@@ -44084,7 +43118,7 @@ typedef struct tagNET_DVR_PLATE_RESULT_V50
     BYTE    byPilotSunVisor;//Pilot Sun Visor
     BYTE    byCopilotSunVisor;//Copilot Sun Visor
     BYTE    byPilotCall;// Pilot Call
-    //The 0-open, 1-close(dedicated to the historical data based on block and allow list matching, whether to open a sign of success)
+    //The 0-open, 1-close(dedicated to the historical data based on black and white list matching, whether to open a sign of success)
     BYTE    byBarrierGateCtrlType;
     BYTE    byAlarmDataType;//0-RealTime Data,1-Historical Data
     NET_DVR_TIME_V30  struSnapFirstPicTime;//End time (MS) (captured the first picture time.)
@@ -44113,7 +43147,7 @@ typedef struct tagNET_DVR_SUBSYSTEM_ALARM
     BYTE byRes[254];
 }NET_DVR_SUBSYSTEM_ALARM,*LPNET_DVR_SUBSYSTEM_ALARM;
 
-#define MAX_ALLOWLIST_PHONE_NUM      16
+#define MAX_WHITELIST_PHONE_NUM      16
 
 typedef struct _NET_DVR_ALARM_PHONECFG
 {
@@ -44221,7 +43255,7 @@ typedef struct tagNET_DVR_REMOTECONTROLLER_PERMISSION_CFG
 {
     DWORD    dwSize;
     BYTE    byEnable;
-    BYTE    byAssociateNetUser;
+    BYTE    byRes1;
     WORD    wRemoteCtrllerID;//start from 1
     BYTE    sDevSn[16];
     BYTE    byArmRight;        
@@ -46617,9 +45651,8 @@ typedef enum _EN_SWICH_CONVERT_NOTIFICATION
 typedef struct tagNET_DVR_SWITCH_CONVERT_ALARM
 {
     DWORD dwSize;
-    BYTE  byPortNo; 
-    BYTE  byPortNoEx;
-    BYTE  byRes1[2];
+    BYTE  byPortNo;   
+    BYTE  byRes1[3];
     DWORD dwEventType; 
     DWORD dwEvent;     
     BYTE  byRes2[32];
@@ -46694,7 +45727,7 @@ typedef struct tagNET_DVR_ACS_EXTERNAL_DEV_CFG
     BYTE byACSDevType;//Id card reader, equipment type, 1:2: IC card reader, 3: qr code reader, 4: fingerprint reader, 5: character screen + qr code reader, 6: recipient, 7: character screen, 8: fingerprint head, 9: voice module, 10: people and id card
     BYTE byDoorMode; //access mode,0:in door,1:out door
     BYTE byRes2;
-    WORD wDevDetailType; //0-iDR210,1-IDM10,2-private ID card reader
+    WORD wDevDetailType; //0-iDR210,1-IDM10,2-hikvision ID card reader
     BYTE byRes[300];
 }NET_DVR_ACS_EXTERNAL_DEV_CFG, *LPNET_DVR_ACS_EXTERNAL_DEV_CFG;
 
@@ -46743,8 +45776,7 @@ typedef struct tagNET_DVR_ID_CARD_INFO_ALARM
     char    *pPicData;
     BYTE byCardType; 
     BYTE byDeviceNo;
-    BYTE byMask; //wear mask:1-unknown,2-no,3-yes
-    BYTE  byCurrentEvent; //is CurrentEventÂ£Âº0-invalidÂ£Â¬1-current eventÂ£Â¬2- off-line event
+    BYTE byRes2[2];
     DWORD dwFingerPrintDataLen;
     char *pFingerPrintData;
     DWORD dwCapturePicDataLen;
@@ -46752,38 +45784,16 @@ typedef struct tagNET_DVR_ID_CARD_INFO_ALARM
     DWORD dwCertificatePicDataLen; 
     char    *pCertificatePicData;
     BYTE byCardReaderKind;
-    BYTE byHelmet;//0-res, 1-unknown, 2-no helmet, 3-with helmet
-    BYTE byRes3;
-    BYTE    byIDCardInfoExtend;
-    char    *pIDCardInfoExtend;
-    DWORD dwSerialNo; //0-invalid
-    BYTE byRes[168];
+    BYTE byRes[179];
 }NET_DVR_ID_CARD_INFO_ALARM, *LPNET_DVR_ID_CARD_INFO_ALARM;
 
-typedef struct tagNET_DVR_ID_CARD_INFO_EXTEND
-{
-    BYTE byRemoteCheck; //remote check(0-invalid,1-not need(default),2-need)
-    BYTE byThermometryUnit; //thermometry unit(0-celsius(default),1-fahrenheit,2-kelvin)
-    BYTE byIsAbnomalTemperature; //is abnomal temperature(0-no,1-yes)
-    BYTE byRes2;
-    float fCurrTemperature; //face temperature
-    NET_VCA_POINT struRegionCoordinates; //face temperature region coordinates
-    DWORD dwQRCodeInfoLen; //QR code info len
-    DWORD dwVisibleLightDataLen; //visible light data len
-    DWORD dwThermalDataLen; //thermal data len
-    char *pQRCodeInfo; //QR code info buffer
-    char *pVisibleLightData; //visible light data buffer
-    char *pThermalData; //thermal data buffer
-    BYTE  byRes[1024];
-}NET_DVR_ID_CARD_INFO_EXTEND, *LPNET_DVR_ID_CARD_INFO_EXTEND;
-
-typedef struct tagNET_DVR_ID_CARD_BLOCKLIST_COND
+typedef struct tagNET_DVR_ID_CARD_BLACK_LIST_COND
 {
     DWORD       dwSize;
     BYTE        byRes[256];          //reserved
-}NET_DVR_ID_CARD_BLOCKLIST_COND, *LPNET_DVR_ID_CARD_BLOCKLIST_COND;
+}NET_DVR_ID_CARD_BLACK_LIST_COND, *LPNET_DVR_ID_CARD_BLACK_LIST_COND;
 
-typedef struct tagNET_DVR_ID_CARD_BLOCKLIST_CFG
+typedef struct tagNET_DVR_ID_CARD_BLACK_LIST_CFG
 {
     DWORD                     dwSize;
     NET_DVR_ID_CARD_INFO      struIDCardCfg;          // ID card information
@@ -46792,7 +45802,7 @@ typedef struct tagNET_DVR_ID_CARD_BLOCKLIST_CFG
     DWORD                     dwPicDataLen;           // ID card picture length,non 0 indicate that there are data appended
     char                      *pPicData;
     BYTE                      byRes[128];
-}NET_DVR_ID_CARD_BLOCKLIST_CFG, *LPNET_DVR_ID_CARD_BLOCKLIST_CFG;
+}NET_DVR_ID_CARD_BLACK_LIST_CFG, *LPNET_DVR_ID_CARD_BLACK_LIST_CFG;
 
 //A = alpha [a..z,A..Z],N = digit [0..9],S = special ['<'],B=binary data
 typedef struct tagNET_DVR_PASSPORT_INFO
@@ -47008,7 +46018,7 @@ typedef struct tagNET_DVR_PACKET_INFO_EX
     //reserved[5].bitIs a deep P frame,deepP:1,not deepP:0;     lizhonghu 20150203
 }NET_DVR_PACKET_INFO_EX, *LPNET_DVR_PACKET_INFO_EX;
 
-typedef BOOL (CALLBACK * DEV_WORK_STATE_CB)(void* pUserdata, int iUserID, LPNET_DVR_WORKSTATE_V40 lpWorkState);
+typedef BOOL (* DEV_WORK_STATE_CB)(void* pUserdata, int iUserID, LPNET_DVR_WORKSTATE_V40 lpWorkState);
 
 typedef struct tagNetDVRCheckDevState
 {
@@ -47564,7 +46574,7 @@ typedef    struct tagNET_DVR_TEMPHUMSENSOR
     BYTE        byTemperatureValue;//
     BYTE        byHumidityValue;//
     BYTE        byFanSwitch;//
-    BYTE        byThermometryUnit;//unit:(Â¡Ã¦),1-(Â¨H),2-(K)
+    BYTE        byThermometryUnit;//unit:(¡æ),1-(¨H),2-(K)
     BYTE        byRes[62];
 }NET_DVR_TEMPHUMSENSOR, *LPNET_DVR_TEMPHUMSENSOR;
 
@@ -47715,7 +46725,7 @@ typedef struct tagNET_DVR_RECORD_PASSBACK_MANUAL_TASK_RET
     DWORD        dwTaskID;        //task ID
     NET_DVR_TIME_EX    struStartTime;
     NET_DVR_TIME_EX    struStopTime;
-    BYTE        byTaskStatus;    //task status,0--unexecuted,1--pausing,2--executed, 3--executting, 4--failed, 5--success, but only part of the video was returned, 6--success, but there is no video on the front end
+    BYTE        byTaskStatus;    //task status,0--unexecuted,1--pausing,2--executed, 3--executting, 4--failed
     BYTE        byRes1[3];
     NET_DVR_TIME_EX    struExecuteStartTime;    //effect when byTaskStatus=1 0r 2
     NET_DVR_TIME_EX    struExecuteStopTime;    //effect when byTaskStatus=1 0r 2
@@ -47821,9 +46831,7 @@ typedef    struct tagNET_DVR_REC_PASSBACK_BASIC_CFG
     DWORD     dwStopTime;    //Detection window stop time
     WORD    wMaxTotalConcurrenceNum;   //Concurrent posts back because limit, is aimed at encoder, not the article back task 
     WORD    wMaxDvrConcurrenceNum;     //A single DVR concurrent back channel number limit 
-    DWORD   dwSyncSpeed;     //synchronization speedÂ£Â¨unit:MbpsÂ£Â¬Max:12MbpsÂ£Â©
-    DWORD   dwRecordType;     //The video type:0xffffffffÂ£Â­allÂ£Â¬0Â£Â­timingÂ£Â¬1- motion detection, 2Â£Â­alarm(all videos labeled as alarm type)Â£Â¬0xff-other
-    BYTE    byRes[248];
+    BYTE    byRes[256];
 }NET_DVR_REC_PASSBACK_BASIC_CFG, *LPNET_DVR_REC_PASSBACK_BASIC_CFG;
 
 typedef struct tagNET_DVR_ONLINE_USER_INFO_
@@ -47989,7 +46997,7 @@ typedef struct tagNET_DVR_CARD_CFG_V50
     // #define CARD_USER_TYPE              0x00040000  //user type
     BYTE byCardNo[ACS_CARD_NO_LEN]; //card No
     BYTE byCardValid; //whether is a vaild card,0-invalid,1-valid(use to delete card, 0 means delete card when setting, it will be 1 when getting)
-    BYTE byCardType; //card type ,1-ordinary card,2-accessible card,3-block list card, 4-patrol card,5-stress card,6-super card,7-client card,8-remove card, 9-employee card,10-emergency card,11-emergency management card(use authorize temporary card permission,this card can not open door),default ordinary card 
+    BYTE byCardType; //card type ,1-ordinary card,2-disable card,3-black list card, 4-patrol card,5-stress card,6-super card,7-client card,8-remove card, 9-employee card,10-emergency card,11-emergency management card(use authorize temporary card permission,this card can not open door),default ordinary card 
     BYTE byLeaderCard; //whether is leader card, 0-no, 1-yes
     BYTE byUserType; //0-normal, 1-admin;
     BYTE byDoorRight[MAX_DOOR_NUM_256]; //door right (floor right,lock right), accord to bit, 1-has right 0-no right, from low bit to high bit means door(lock) 1-N have right
@@ -48099,9 +47107,7 @@ typedef struct tagNET_DVR_STREAM_MEDIA_CFG
     BYTE    sUrl[MAX_URL_LEN];
     NET_DVR_IPADDR    struDMSIP; /* dms IP */
     WORD   wDMSPort;  /*dms port */
-    BYTE    byRes1[2];
-    DWORD   dwDomainID; /*domain id*/
-    BYTE    byRes[360];
+    BYTE    byRes[366];
 }NET_DVR_STREAM_MEDIA_CFG, *LPNET_DVR_STREAM_MEDIA_CFG;
 
 //Ship detection a single zone configuration 
@@ -48143,7 +47149,7 @@ typedef    struct tagNET_DVR_THERMOMETRY_BASICPARAM
     BYTE      byStreamOverlay; //Stream Overlay:0- No,1- Yes
     BYTE      byPictureOverlay;//Picture Overlay:0- No,1- Yes
     BYTE      byThermometryRange;//Thermometry Range,0-Default,1-(-20~150),2-(0~550),3-(0-650),4-(-40~150),5-(0-1200),6-(-20-120),7-(20~350),8-(20~45),,9-(30~45)0xff-Auto
-    BYTE      byThermometryUnit;//Thermometry Unit: 0-(Â¡Ã¦),1-(Â¨H),2-(K).
+    BYTE      byThermometryUnit;//Thermometry Unit: 0-(¡æ),1-(¨H),2-(K).
     BYTE      byThermometryCurve;//temperature curve mode display mode, 0 - closed, 1 - pattern 1 (transverse temperature trend line mode), 2 - to mode 2 (longitudinal temperature trend line mode) ,0xff-automatic
     BYTE      byFireImageModea;//Model of fire image, 0-res, 1 - black and white, 2 - thermal detection modes, 3 - fire mode (field 0 remains, avoid compatible with interface before) 
     BYTE      byShowTempStripEnable;//Show temperature Strip Enable
@@ -48152,7 +47158,7 @@ typedef    struct tagNET_DVR_THERMOMETRY_BASICPARAM
     BYTE      byEnviroHumidity;//Environment Humidity,range:0~100%
     BYTE      byRes2[2];
     NET_DVR_TEMPERATURE_COLOR struTempColor;//Thermometry Alarm Color
-    int       iEnviroTemperature;//Environment Temperatrue,range:-273~10000(Â¡Ã¦)
+    int       iEnviroTemperature;//Environment Temperatrue,range:-273~10000(¡æ)
     int       iCorrectionVolume;//Range:-100~100
     /*
     bit0-center point display:0-no,1-yes;
@@ -48266,8 +47272,7 @@ typedef struct tagNET_DVR_REALTIME_THERMOMETRY_COND
     BYTE        byRuleID;
     BYTE        byMode; //Mode, 0-reserved, 1-timing, 2-temperature
     WORD        wInterval; //Upload interval, only temperature difference mode is supported, 1~3600S, filling in 0 will be uploaded once as the default
-    float       fTemperatureDiff;//Temperature difference
-    BYTE        byRes[56];
+    BYTE        byRes[60];
 }NET_DVR_REALTIME_THERMOMETRY_COND, *LPNET_DVR_REALTIME_THERMOMETRY_COND;
 
 typedef struct tagNET_DVR_POINT_THERM_CFG
@@ -48313,12 +47318,9 @@ typedef struct tagNET_DVR_THERMOMETRY_UPLOAD
     NET_VCA_POINT struHighestPoint;
     NET_VCA_POINT struLowestPoint;
     BYTE          byIsFreezedata;  //Freeze data :0-no,1-yes;
-    BYTE          byFaceSnapThermometryEnabled;
-    BYTE          byRes2[2];
+    BYTE          byRes2[3];
     DWORD         dwChan; //Channel number, which takes effect when the channel number in the query condition is 0xffffffff
-    NET_VCA_RECT         struFaceRect;    
-    DWORD      dwTimestamp;//
-    BYTE          byRes[68];
+    BYTE          byRes[88];
 }NET_DVR_THERMOMETRY_UPLOAD, *LPNET_DVR_THERMOMETRY_UPLOAD;
 
 //Thermometry Alarm
@@ -48327,7 +47329,7 @@ typedef struct tagNET_DVR_THERMOMETRY_ALARM
     DWORD   dwSize;
     DWORD   dwChannel;//Channel
     BYTE    byRuleID;//Rule ID
-    BYTE    byThermometryUnit;//Thermometry Unit: 0-(Â¡Ã¦),1-(Â¨H),2-(K)
+    BYTE    byThermometryUnit;//Thermometry Unit: 0-(¡æ),1-(¨H),2-(K)
     WORD    wPresetNo; //Preset No.
     NET_PTZ_INFO  struPtzInfo;//ptz 
     BYTE    byAlarmLevel;//0-Advance Alarm 1-Alarm
@@ -48351,12 +47353,7 @@ typedef struct tagNET_DVR_THERMOMETRY_ALARM
     DWORD   dwTemperatureSuddenChangeCycle;//
     float   fTemperatureSuddenChangeValue;//
     BYTE    byPicTransType;        //Image data transmission: 0-binary; 1-url
-    BYTE    byRes1[3];
-    DWORD   dwVisibleChannel; 
-    DWORD   dwRelativeTime;   
-    DWORD   dwAbsTime;        
-    float   fAlarmRuleTemperature;
-    BYTE    byRes[20];
+    BYTE    byRes[39];
 }NET_DVR_THERMOMETRY_ALARM, *LPNET_DVR_THERMOMETRY_ALARM;
 
 
@@ -48383,13 +47380,12 @@ typedef struct tagNET_DVR_THERMOMETRY_DIFF_ALARM
     char*   pPicBuff;//Picture
     char*   pThermalPicBuff;//Thermal Picture
     char*   pThermalInfoBuff;//Thermal Info
-    BYTE    byThermometryUnit;//Thermometry Unit: 0-(Â¡Ã¦),1-(Â¨H),2-(K)
+    BYTE    byThermometryUnit;//Thermometry Unit: 0-(¡æ),1-(¨H),2-(K)
     BYTE    byPicTransType;        //Image data transmission: 0-binary; 1-url
     BYTE    byRes1[2];
     float   fToleranceTemperature;//
     DWORD   dwAlarmFilteringTime;//
-    DWORD   dwVisibleChannel; 
-    BYTE    byRes[48];
+    BYTE    byRes[52];
 }NET_DVR_THERMOMETRY_DIFF_ALARM, *LPNET_DVR_THERMOMETRY_DIFF_ALARM;
 
 typedef  struct  //Conditions of structure 
@@ -48430,18 +47426,6 @@ typedef struct tagNET_DVR_SHIPSINFO
     NET_VCA_POLYGON  struShipsRect; //Ships Rect
 } NET_DVR_SHIPSINFO, *LPNET_DVR_SHIPSINFO;
 
-//Ships Capture Info
-typedef struct tagNET_DVR_SHIPIMAGE_INFO
-{
-    DWORD   dwShipImageLen;//Ships Capture Binary Data Length
-#if (defined(OS_WINDOWS64) || defined(OS_POSIX64))
-    char*   pXmlBuf;  //Ships Capture Binary Data Pointer
-#else
-    char*   pXmlBuf;  //Ships Capture Binary Data Pointer
-    BYTE    byRes[4];
-#endif
-}NET_DVR_SHIPIMAGE_INFO, *LPNET_DVR_SHIPIMAGE_INFO;
-
 //Ships Dectction Alarm
 typedef struct tagNET_DVR_SHIPSDETECTION_ALARM
 {
@@ -48465,15 +47449,7 @@ typedef struct tagNET_DVR_SHIPSDETECTION_ALARM
     BYTE    bySID;//Scenario ID
     BYTE    byRes1[2];
     char    szSceneName[NAME_LEN];//Scenario name, no more than 32 characters
-    BYTE    byRes[132];
-    DWORD   dwXmlLen;//XML data length, The EventNotificationAlert XML Block data length
-#if (defined(OS_WINDOWS64) || defined(OS_POSIX64))
-    char*   pXmlBuf; // XML alarm info pointer, EventNotificationAlert XML Block
-#else
-    char*   pXmlBuf; // XML alarm info pointer, EventNotificationAlert XML Block
-    BYTE    byRes2[4];
-#endif
-    NET_DVR_SHIPIMAGE_INFO  struShipImageInfo[MAX_SHIPIMAGE_NUM/*6*/];// Array of Ships capture image info, no more than 6 image
+    BYTE    byRes[216];
 }NET_DVR_SHIPSDETECTION_ALARM, *LPNET_DVR_SHIPSDETECTION_ALARM;
 
 typedef    struct tagNET_DVR_RULESLINE_CFG
@@ -48652,8 +47628,7 @@ typedef struct tagNET_DVR_CALL_WAITTING_CFG
     BYTE    byEnable;    //0--disable,1--enable
     BYTE    byRes1;
     WORD    wWaitTime;//wait time(s)
-    WORD    wCalledWaitTime;//called wait time(s)
-    BYTE    byRes[510];
+    BYTE    byRes[512];
 }NET_DVR_CALL_WAITTING_CFG, *LPNET_DVR_CALL_WAITTING_CFG;
 
 //alarm lamp struct
@@ -48678,10 +47653,7 @@ typedef struct tagNET_DVR_VOICE_PROMPTION_CFG
     BYTE    byHangUpFile[NAME_LEN];//hang up file name
     BYTE    byCallWaittingFile[NAME_LEN];//call waitting file name
     BYTE    byConsultWaittingFile[NAME_LEN];//Consult waitting file name
-    BYTE    byWelcomeFile[NAME_LEN];//welcome file name
-    BYTE    byFarewellFile[NAME_LEN];//farewell file name
-    BYTE    byCalledVoicePromptName[NAME_LEN];//called voice prompt name
-    BYTE    byRes[384];
+    BYTE    byRes[480];
 }NET_DVR_VOICE_PROMPTION_CFG, *LPNET_DVR_VOICE_PROMPTION_CFG;
 
 //emergence alarm rsp configure
@@ -48725,7 +47697,7 @@ typedef enum tagNET_SDK_INIT_CFG_TYPE
 {
     NET_SDK_INIT_CFG_TYPE_CHECK_MODULE_COM = 0,
     NET_SDK_INIT_CFG_ABILITY = 1,
-    NET_SDK_INIT_CFG_SDK_PATH = 2,  //HCNetSDK path
+    NET_SDK_INIT_CFG_SDK_PATH = 2,  //com path
 	NET_SDK_INIT_CFG_LIBEAY_PATH = 3, //libeay32.dll/libcrypto.so/libcrypto.dylib path
     NET_SDK_INIT_CFG_SSLEAY_PATH = 4  //ssleay32.dll/libssl.so/libssl.dylib path
 }NET_SDK_INIT_CFG_TYPE;
@@ -48961,22 +47933,6 @@ typedef struct tagNET_DVR_FUSION_CFG
     BYTE byUseHistoryMap;
     BYTE byRes[30];
 }NET_DVR_FUSION_CFG, *LPNET_DVR_FUSION_CFG;
-
-typedef struct tagNET_DVR_MULTIFUNCTION_SERIALCFG
-{
-    DWORD dwSize;
-    BYTE  byVariable;  //serial port: 1-invariable  2-variable
-    BYTE  bySerialWorkMode;   //work mode: 1-RS485, 2-RS232
-    BYTE  byFunType;   //type: 1-keyboard control, 2-screen control, 3-transparent channel mode,  4-PTZ control,  5-matrix control, 6-console
-    BYTE byDataBit;// data bit:  0Â£Â­5bit, 1Â£Â­6bit, 2Â£Â­7bit, 3Â£Â­8bit
-    BYTE byStopBit;// stop bit:  0Â£Â­1bit, 1Â£Â­2bit
-    BYTE byParity;// 0Â£Â­no check, 1Â£Â­odd check, 2Â£Â­parity check
-    BYTE byFlowcontrol;// 0Â£Â­no, 1Â£Â­soft flow control, 2-hard flow control
-    BYTE byRes1;
-    DWORD dwBaudRate;//baud rate: 0Â£Â­50, 1Â£Â­75, 2Â£Â­110, 3Â£Â­150, 4Â£Â­300, 5Â£Â­600, 6Â£Â­1200, 7Â£Â­2400, 8Â£Â­4800, 9Â£Â­9600, 10Â£Â­19200, 11Â£Â­38400, 12Â£Â­57600, 13Â£Â­76800, 14Â£Â­115.2k   
-    WORD wProtocol;   
-    BYTE byRes[34];
-}NET_DVR_MULTIFUNCTION_SERIALCFG, *LPNET_DVR_MULTIFUNCTION_SERIALCFG;
 
 typedef struct tagNET_DVR_DISPINPUT_CFG_LIST
 {
@@ -49216,29 +48172,19 @@ typedef struct tagNET_VCA_FACESNAP_RAWDATA_ALARM_
     BYTE   byRes[256];
 }NET_VCA_FACESNAP_RAWDATA_ALARM, *LPNET_VCA_FACESNAP_RAWDATA_ALARM;
 
-typedef struct tagNET_DVR_ADVANCE_SCREEN_CHECK_PARAM
-{
-    BYTE byDelFullScreenGamut;	//valid only when byOperateType is 3,  0-no  1-yes
-    BYTE byDelLightPanelGamut;	//valid only when byOperateType is 3,  0-no  1-yes
-    BYTE byDelLightPanelWhiteBalance;	//valid only when byOperateType is 3,  0-no  1-yes
-    BYTE byRes[13];
-}NET_DVR_ADVANCE_SCREEN_CHECK_PARAM, *LPNET_DVR_ADVANCE_SCREEN_CHECK_PARAM;
-
 typedef struct tagNET_SDK_LED_SCREEN_CHECK_PARAM
 {
     DWORD dwSize;
     BYTE byOperateType;
     BYTE byIsRGBSynChk;
-    BYTE byScreenCheckType;
-    BYTE byRes1;
+    BYTE byRes1[2];
     WORD wRgbPermil;  
     WORD wRedPermil;   
     WORD wGreenPermil; 
     WORD wBluePermil; 
     DWORD dwRectCount;  
     NET_DVR_RECTCFG_EX struRectList[MAX_SCREEN_AREA_NUM];  
-    NET_DVR_ADVANCE_SCREEN_CHECK_PARAM struAdvanceScreenCheckParam;//valid only when byScreenCheckType is 1
-    BYTE byRes2[48];
+    BYTE byRes2[64];
 }NET_SDK_LED_SCREEN_CHECK_PARAM, *LPNET_SDK_LED_SCREEN_CHECK_PARAM;
 
 typedef struct tagNET_SDK_SCREEN_CHECK_RESPONSE_DATA
@@ -49378,17 +48324,6 @@ typedef struct tagNET_DVR_FACELIB_COND
     BYTE        byIdentityKey[NET_SDK_MAX_INDENTITY_KEY_LEN /*64*/];//Identity Key
     BYTE        byRes[60];
 }NET_DVR_FACELIB_COND, *LPNET_DVR_FACELIB_COND;
-
-//Human lib Cond
-typedef struct tagNET_DVR_HBDLIB_COND
-{
-    DWORD       dwSize;
-    char        szHBDID[NET_SDK_MAX_HBDID_LEN/*256*/];//HBDID
-    BYTE        byConcurrent;//Concurrent
-    BYTE        byCover;//cover enable 0-n,1-y
-    BYTE        byCustomHBDID;// HBDID: 0-n,1-y
-    BYTE        byRes[125];
-}NET_DVR_HBDLIB_COND, *LPNET_DVR_HBDLIB_COND;
 
 typedef struct tagNET_DVR_GBT28181_AUDIO_OUTPUT_COND
 {
@@ -49551,22 +48486,22 @@ typedef struct tagNET_DVR_EXAM_COMPARE_RESULT_CFG
     BYTE  byRes[256];
 }NET_DVR_EXAM_COMPARE_RESULT_CFG, *LPNET_DVR_EXAM_COMPARE_RESULT_CFG;
 
-typedef struct tagNET_DVR_BLOCKLIST_PICTURE_COND
+typedef struct tagNET_DVR_BLACK_LIST_PICTURE_COND
 {
     DWORD       dwSize;
     DWORD       dwPictureNum; //number of picture 
     BYTE  byRes[128];
-}NET_DVR_BLOCKLIST_PICTURE_COND, *LPNET_DVR_BLOCKLIST_PICTURE_COND;
+}NET_DVR_BLACK_LIST_PICTURE_COND, *LPNET_DVR_BLACK_LIST_PICTURE_COND;
 
-typedef struct tagNET_DVR_BLOCKLIST_PICTURE_STATUS
+typedef struct tagNET_DVR_BLACK_LIST_PICTURE_STATUS
 {
     DWORD dwSize;
     BYTE  byCardNo[ACS_CARD_NO_LEN/*32*/]; //card no.
     BYTE  byStatus; //status:0-invalid,1-processing,2-failed,3-success
     BYTE  byRes[63];
-}NET_DVR_BLOCKLIST_PICTURE_STATUS, *LPNET_DVR_BLOCKLIST_PICTURE_STATUS;
+}NET_DVR_BLACK_LIST_PICTURE_STATUS, *LPNET_DVR_BLACK_LIST_PICTURE_STATUS;
 
-typedef struct tagNET_DVR_BLOCKLIST_PICTURE_CFG
+typedef struct tagNET_DVR_BLACK_LIST_PICTURE_CFG
 {
     DWORD dwSize;
     BYTE  byCardNo[ACS_CARD_NO_LEN/*32*/]; //card no.
@@ -49577,30 +48512,30 @@ typedef struct tagNET_DVR_BLOCKLIST_PICTURE_CFG
     DWORD dwPictureLen;
     char*  pPictureBuffer;
     BYTE  byRes[128];
-}NET_DVR_BLOCKLIST_PICTURE_CFG, *LPNET_DVR_BLOCKLIST_PICTURE_CFG;
+}NET_DVR_BLACK_LIST_PICTURE_CFG, *LPNET_DVR_BLACK_LIST_PICTURE_CFG;
 
-typedef struct tagNET_DVR_UPLOAD_ID_BLOCKLIST_COND
+typedef struct tagNET_DVR_UPLOAD_ID_BLACK_LIST_COND
 {
     DWORD       dwSize;
-    DWORD       dwBlockListNum; //number of blocklist 
+    DWORD       dwBlackListNum; //number of blacklist 
     BYTE  byRes[128];
-}NET_DVR_UPLOAD_ID_BLOCKLIST_COND, *LPNET_DVR_UPLOAD_ID_BLOCKLIST_COND;
+}NET_DVR_UPLOAD_ID_BLACK_LIST_COND, *LPNET_DVR_UPLOAD_ID_BLACK_LIST_COND;
 
-typedef struct tagNET_DVR_UPLOAD_ID_BLOCKLIST_CFG
+typedef struct tagNET_DVR_UPLOAD_ID_BLACK_LIST_CFG
 {
     DWORD       dwSize;
     NET_DVR_ID_CARD_INFO  struIDCardCfg;//ID information
-    BYTE  byBlockListValid;
+    BYTE  byBlackListValid;
     BYTE  byRes[127];
-}NET_DVR_UPLOAD_ID_BLOCKLIST_CFG, *LPNET_DVR_UPLOAD_ID_BLOCKLIST_CFG;
+}NET_DVR_UPLOAD_ID_BLACK_LIST_CFG, *LPNET_DVR_UPLOAD_ID_BLACK_LIST_CFG;
 
-typedef struct tagNET_DVR_UPLOAD_ID_BLOCKLIST_STATUS
+typedef struct tagNET_DVR_UPLOAD_ID_BLACK_LIST_STATUS
 {
     DWORD       dwSize;
     BYTE  byIDNum[MAX_ID_NUM_LEN];  //certificate ID
     BYTE  byStatus;  //status:0-invalid,1-processing,2-failed,3-success
     BYTE  byRes[63];
-}NET_DVR_UPLOAD_ID_BLOCKLIST_STATUS, *LPNET_DVR_UPLOAD_ID_BLOCKLIST_STATUS;
+}NET_DVR_UPLOAD_ID_BLACK_LIST_STATUS, *LPNET_DVR_UPLOAD_ID_BLACK_LIST_STATUS;
 
 typedef struct tagNET_DVR_ALARM_ISAPI_INFO
 {
@@ -49741,17 +48676,16 @@ typedef	struct tagNET_DVR_ALARM_SEARCH_COND
     WORD                       wEventType;//Event type, only dwAlarmComm COMM_VCA_ALARM 0x4993 smart detection alarm is valid, 0- means all events,1- mixedTargetDetection, 2- radarVideoDetection
     WORD                       wSubEventType;//The subevent type, 0- represents all the subevents, and the remaining values vary according to the value of wEventType, see the capability set for details.
     BYTE                       bySupport; //reserve
-    BYTE                       byNoBoundary; //remove boundaryÂ£Â¬0-noÂ£Â¬1-yesÂ£Â¬only dwAlarmComm COMM_VCA_ALARM 0x4993 smart detection alarm is valid
-    BYTE                       byRes[122];    //reserve
+    BYTE                        byRes[123];    //reserve
 }NET_DVR_ALARM_SEARCH_COND, *LPNET_DVR_ALARM_SEARCH_COND;
 //alarm search result struct
 typedef	struct tagNET_DVR_ALARM_SEARCH_RESULT
 {
     DWORD                   dwSize;
     DWORD                   dwAlarmComm;
+    NET_DVR_ALARMER         struAlarmer;
     DWORD                   dwAlarmLen;
     char                    *pAlarmInfo;
-    NET_DVR_ALARMER         struAlarmer;
     BYTE                    byRes[128];
 }NET_DVR_ALARM_SEARCH_RESULT, *LPNET_DVR_ALARM_SEARCH_RESULT;
 
@@ -49810,21 +48744,14 @@ typedef struct tagNET_DVR_HEATMAP_RESULT_PDC
     NET_DVR_SINGLE_HEATMAP_RESULT_PDC struSingleHeatMap[2];
     WORD   wCurNumber;//current number
     WORD   wLeaveNumber;//leave number
-    #if (defined(OS_WINDOWS64) || defined(OS_POSIX64))
-    char*   pEventNotificationAlertBuff; //EventNotificationAlert JSON Block("eventType":  "heatmap")
-#else
-    char*   pEventNotificationAlertBuff; //EventNotificationAlert JSON Block("eventType":  "heatmap")
-    BYTE    byRes2[4];
-#endif
-    DWORD   dwEventNotificationAlertLen;//length of (EventNotificationAlert JSON Block("eventType":  "heatmap")
-    BYTE    byRes1[48];
+    BYTE   byRes1[60];
 }NET_DVR_HEATMAP_RESULT_PDC, *LPNET_DVR_HEATMAP_RESULT_PDC;
 
 
 //AIOP Video
 typedef struct _NET_AIOP_VIDEO_HEAD_
 {
-    DWORD dwSize;
+    DWORD dwSize;   
     DWORD dwChannel;       //Channel
     NET_DVR_SYSTEM_TIME     struTime;   //Time
     char  szTaskID[64];    //Task ID
@@ -49836,23 +48763,7 @@ typedef struct _NET_AIOP_VIDEO_HEAD_
     BYTE  byPictureMode;//Picture data transmission mode is 0-binary, 1-Wuhan cloud storage, pBuffer Picture is binary when byPicture Mode is 0, pBuffer Picture is Wuhan cloud URL when byPicture Mode is 1.
     BYTE  byRes2[3];//
     DWORD dwPresetIndex; //
-    DWORD dwAddInfoPictureSize;	//
-    BYTE *pAddInfoPictureBuffer;//
-#if (defined(OS_WINDOWS64) || defined(OS_POSIX64))
-    char* pFacePicBuff; //Face image pointer
-#else
-    char* pFacePicBuff; //Face image pointer
-    BYTE  byRes3[4];
-#endif
-    DWORD dwFacePicBuffLen;//The length of the data indicated by pFacePicBuff
-#if (defined(OS_WINDOWS64) || defined(OS_POSIX64))
-    char* pComparisonPicBuff; //Base image pointer
-#else
-    char* pComparisonPicBuff; //Base image pointer
-    BYTE  byRes4[4];
-#endif
-    DWORD dwComparisonPicBuffLen;//The length of the data indicated by pComparisonPicBuff
-    BYTE  byRes[144];
+    BYTE byRes[176];
 }NET_AIOP_VIDEO_HEAD, *LPNET_AIOP_VIDEO_HEAD;
 
 //AIOP Picture
@@ -49863,20 +48774,11 @@ typedef struct _NET_AIOP_PICTURE_HEAD_
     char  szPID[64];            //PID
     DWORD dwAIOPDataSize;       //AIOP data size
     BYTE byStatus;              //Status
-    BYTE  byPictureMode;//Picture data transmission mode(vaild when dwPictureSize>0) is 0-binary, 1-Wuhan cloud storage, pBuffer Picture is binary when byPicture Mode is 0, pBuffer Picture is Wuhan cloud URL when byPicture Mode is 1.
-    BYTE byRes1[2];
+    BYTE byRes1[3];
     char szMPID[64]; //model ID
     BYTE *pBufferAIOPData;//AIOPD data
     DWORD dwPresetIndex; //
-    DWORD dwPictureSize;   //picture or url length
-#if (defined(OS_WINDOWS64) || defined(OS_POSIX64))
-    BYTE *pBufferPicture;//picture buffer or url
-#else
-    BYTE *pBufferPicture;//picture buffer or url
-    BYTE  byRes2[4];
-#endif
-    char szTaskID[64]; //taskID
-    BYTE byRes[104];
+    BYTE byRes[180];
 }NET_AIOP_PICTURE_HEAD, *LPNET_AIOP_PICTURE_HEAD;
 
 #define MAX_FILE_NAME_LEN		100     //max file name len
@@ -49915,24 +48817,6 @@ typedef struct _NET_AIOP_POLLING_VIDEO_HEAD_
     BYTE byRes[176];
 } NET_AIOP_POLLING_VIDEO_HEAD, *LPNET_AIOP_POLLING_VIDEO_HEAD;
 
-typedef struct _NET_AIOP_HISTORY_VIDEO_HEAD_
-{
-	DWORD dwSize;			//dwSize = sizeof(_NET_AIOP_HISTORY_VIDEO_HEAD_)		
-	DWORD dwChannel;      //Channel number of device analysis channel (follow SDK protocol);
-	NET_DVR_SYSTEM_TIME     struTime; 	//time
-	char  szTaskID[64];    //Historical video task ID, from video task dispatch
-	DWORD dwAIOPDataSize;	//AIOP data size
-	DWORD dwPictureSize;	//Correspondence analysis image length
-	char szMPID[64]; /*The ID of the detection model package is used to match the detection data analysis of aiop;
-					 the label description information of the model package loaded by the current device can be obtained through the
-					 URI (get / ISAPI / intelligent / aiopenplatform / algorithmmodel / management? Format = JSON);*/
-	BYTE *pBufferAIOPData;//AIOPDdata
-	BYTE *pBufferPicture;//Correspondence analysis image data
-	BYTE  byPictureMode;/*Picture data transmission mode 0-binary, 1-wuhan cloud storage. When bypicturemode is 0,
-						pbufferpicture is binary data, when bypicturemode is 1, pbufferpicture is Wuhan cloud URL*/
-	BYTE  byRes[183];
-}NET_AIOP_HISTORY_VIDEO_HEAD, *LPNET_AIOP_HISTORY_VIDEO_HEAD;
-
 typedef struct _NET_AIOP_POLLING_SNAP_HEAD_
 {
     DWORD dwSize;        //dwSize = sizeof(NET_AIOP_POLLING_SNAP_HEAD)		
@@ -49947,9 +48831,7 @@ typedef struct _NET_AIOP_POLLING_SNAP_HEAD_
     BYTE  byPictureMode;//Picture data transmission mode is 0-binary, 1-Wuhan cloud storage, pBuffer Picture is binary when byPicture Mode is 0, pBuffer Picture is Wuhan cloud URL when byPicture Mode is 1.
     BYTE  byRes2[3];//
     DWORD dwPresetIndex; //
-	DWORD dwAddInfoPictureSize;	//
-	BYTE *pAddInfoPictureBuffer;//
-	BYTE  byRes[168];
+    BYTE byRes[176];
 } NET_AIOP_POLLING_SNAP_HEAD, *LPNET_AIOP_POLLING_SNAP_HEAD;
 
 typedef struct tagNET_DVR_AI_ALGORITHM_MODEL
@@ -50118,32 +49000,6 @@ typedef struct  tagNET_DVR_OPEN_EZVIZ_USER_LOGIN_INFO
     BYTE byRes3[512];
 }NET_DVR_OPEN_EZVIZ_USER_LOGIN_INFO, *LPNET_DVR_OPEN_EZVIZ_USER_LOGIN_INFO;
 
-#define MAX_ERROR_MSG_LEN                  256  
-
-typedef enum tagALARM_EXCEPTION_ERROR_ENUM
-{    
-    ENUM_AEE_PARAM_ERROR        = 1,   
-    ENUM_AEE_LENS_ERROR         = 2,   
-    ENUM_AEE_PIC_LENS_ERROR     = 3,  
-    ENUM_AEE_DEVID_LENS_ERROR   = 4,   
-    ENUM_AEE_NEW_ALLOC_ERROR    = 5,   
-    ENUM_AEE_JSON_FORMAT_ERROR  = 6,   
-    ENUM_AEE_XML_FORMAT_ERROR   = 7,  
-    ENUM_AEE_BINARY_PIC_ERROR   = 8,   
-    ENUM_AEE_PIC_NUM_ERROR      = 9,  
-    ENUM_AEE_GET_BOUNDARY_ERROR = 10,  
-    ENUM_AEE_BOUNDARY_NUM_ERROR = 11,  
-}ALARM_EXCEPTION_ERROR_ENUM;
-
-typedef struct tagNET_ALARM_EXCEPTION
-{
-    DWORD dwAlarmType;                    
-    BYTE byExceptionType;                 
-    BYTE byRes[3];                        
-    char szErrMsg[MAX_ERROR_MSG_LEN];     
-    BYTE byRes1[248];                    
-}NET_ALARM_EXCEPTION, *LPNET_ALARM_EXCEPTION;
-
 enum ADDITIONAL_LIB 
 {
     PLAYCTRL = 0,  
@@ -50161,31 +49017,6 @@ enum ADDITIONAL_LIB
     NPQ_LIB,  
     LOAD_DLL_COUNT,  
 };
-
-typedef struct tagNET_DVR_AUTOTEST_CFG_HEAD
-{
-    DWORD   dwSize;
-    DWORD   dwInfoType;          //1-VideoÂ£Â¬3-Audio
-    DWORD   dwRetResult;
-    DWORD   dwDataBodySize;     //Structure address size followed 
-    void*   lpDataBody;         //Structure address followed 
-    BYTE    byRes[32];
-}NET_DVR_AUTOTEST_CFG_HEAD,*LPNET_DVR_AUTOTEST_CFG_HEAD;
-
-//Video
-typedef struct tagNET_DVR_AUTOTEST_VIDEO_CFG
-{
-    DWORD  dwSplitScreenNums;   //Number of split screens, support 1,4,9
-    DWORD  dwVoCh;
-    DWORD  dwInterface;         //1-CVBS,2-HDMI,3-VGA,4-Auxiliary port HDMI
-}NET_DVR_AUTOTEST_VIDEO_CFG,*LPNET_DVR_AUTOTEST_VIDEO_CFG;
-
-//Audio
-typedef struct tagNET_DVR_AUTOTEST_AUDIO_CFG
-{
-    DWORD  dwVoCh;
-    DWORD  dwOpen;             //1-enableÂ£Â¬0-disable
-}NET_DVR_AUTOTEST_AUDIO_CFG, *LPNET_DVR_AUTOTEST_AUDIO_CFG;
 
 #if ((defined __linux__) || (defined _WIN64))
 typedef struct _NET_DVR_AUDIOENCInfo  
@@ -50306,7 +49137,6 @@ NET_DVR_API BOOL __stdcall NET_DVR_Login_Check(char *sDVRIP, WORD wDVRPort, char
 NET_DVR_API BOOL __stdcall NET_DVR_Logout(LONG lUserID);
 NET_DVR_API BOOL __stdcall NET_DVR_Logout_V30(LONG lUserID);
 NET_DVR_API DWORD __stdcall NET_DVR_GetLastError();
-NET_DVR_API void __stdcall NET_DVR_GetLastErrorModelCode(DWORD *pModelCode, DWORD *pMErrDevSelfEx);
 NET_DVR_API char* __stdcall NET_DVR_GetErrorMsg(LONG *pErrorNo = NULL);
 NET_DVR_API BOOL __stdcall NET_DVR_SetShowMode(DWORD dwShowType,COLORREF colorKey);
 NET_DVR_API BOOL __stdcall NET_DVR_GetDVRIPByResolveSvr(char *sServerIP, WORD wServerPort, BYTE *sDVRName,WORD wDVRNameLen,BYTE *sDVRSerialNumber,WORD wDVRSerialLen,char* sGetIP);
@@ -50323,7 +49153,6 @@ typedef void (CALLBACK *REALDATACALLBACK) (LONG lPlayHandle, DWORD dwDataType, B
 
 NET_DVR_API LONG __stdcall NET_DVR_RealPlay_V40(LONG lUserID, LPNET_DVR_PREVIEWINFO lpPreviewInfo, REALDATACALLBACK fRealDataCallBack_V30 = NULL, void* pUser = NULL);
 NET_DVR_API LONG __stdcall NET_DVR_RealPlaySpecial(LONG lUserID, LPNET_DVR_PREVIEWINFO_SPECIAL lpPreviewInfo, REALDATACALLBACK fRealDataCallBack_V30 = NULL, void* pUser = NULL);
-NET_DVR_API BOOL __stdcall NET_DVR_GetLinkAddr(LONG lLinkHandle, NET_DVR_LINK_KIND enumLinkKind, LPNET_DVR_LINK_ADDR lpLinkAddr);
 
 NET_DVR_API BOOL __stdcall NET_DVR_StopRealPlay(LONG lRealHandle);
 NET_DVR_API BOOL __stdcall NET_DVR_StopPlayDirect(LONG lRealHandle);
@@ -51016,13 +49845,13 @@ NET_DVR_API BOOL __stdcall NET_DVR_MatrixTrunkStatusQuery(LONG lUserID, DWORD dw
 NET_DVR_API BOOL __stdcall NET_DVR_FindBackgroundPic(LONG lUserID, DWORD dwPicID, BYTE *pPicBuffer, DWORD *lpPicLen);
 NET_DVR_API BOOL __stdcall NET_DVR_DetectImage(LONG lUserID, LPNET_VCA_FD_PROCIMG_CFG lpFDProcImg,LPNET_VCA_FD_PROCIMG_RESULT lpOutBuf);
 NET_DVR_API BOOL __stdcall NET_DVR_GetPictureModel(LONG lUserID, LPNET_VCA_REGISTER_PIC lpInBuf, LPNET_VCA_PICMODEL_RESULT lpOutBuf);
-NET_DVR_API BOOL __stdcall NET_DVR_AddBlockList(LONG lUserID,LONG lChannel,LPNET_VCA_BLOCKLIST_PARA lpInter);
-NET_DVR_API LONG __stdcall NET_DVR_FindBlockList(LONG lUserID, LPNET_VCA_BLOCKLIST_COND lpBlockListCond);
-NET_DVR_API LONG __stdcall NET_DVR_FindNextBlockList(LONG lFindHandle,LPNET_VCA_BLOCKLIST_INFO lpFindData);
-NET_DVR_API BOOL __stdcall NET_DVR_FindBlockListClose(LONG lFindHandle);
-NET_DVR_API BOOL __stdcall NET_DVR_GetBlockListPicture(LONG lUserID, DWORD dwRegisterID, LPNET_VCA_BLOCKLIST_PIC lpOutBuffer);
-NET_DVR_API BOOL __stdcall NET_DVR_UpdateBlockList(LONG lUserID,LONG lChannel, LPNET_VCA_BLOCKLIST_PARA lpInter);
-NET_DVR_API BOOL __stdcall NET_DVR_DelBlockList(LONG lUserID,LONG lChannel, DWORD dwRegisterID);
+NET_DVR_API BOOL __stdcall NET_DVR_AddBlackList(LONG lUserID,LONG lChannel,LPNET_VCA_BLACKLIST_PARA lpInter);
+NET_DVR_API LONG __stdcall NET_DVR_FindBlackList(LONG lUserID, LPNET_VCA_BLACKLIST_COND lpBlackListCond);
+NET_DVR_API LONG __stdcall NET_DVR_FindNextBlackList(LONG lFindHandle,LPNET_VCA_BLACKLIST_INFO lpFindData);
+NET_DVR_API BOOL __stdcall NET_DVR_FindBlackListClose(LONG lFindHandle);
+NET_DVR_API BOOL __stdcall NET_DVR_GetBlackListPicture(LONG lUserID, DWORD dwRegisterID, LPNET_VCA_BLACKLIST_PIC lpOutBuffer);
+NET_DVR_API BOOL __stdcall NET_DVR_UpdateBlackList(LONG lUserID,LONG lChannel, LPNET_VCA_BLACKLIST_PARA lpInter);
+NET_DVR_API BOOL __stdcall NET_DVR_DelBlackList(LONG lUserID,LONG lChannel, DWORD dwRegisterID);
 NET_DVR_API LONG __stdcall NET_DVR_FindSnapPicture(LONG lUserID, LPNET_VCA_FIND_PICTURECOND lpFindParam);
 NET_DVR_API LONG __stdcall NET_DVR_FindNextSnapPic(LONG lFindHandle,LPNET_VCA_SUB_SNAPPIC_DATA lpFindData);
 NET_DVR_API BOOL __stdcall NET_DVR_FindSnapPicClose(LONG lFindHandle);
@@ -51031,7 +49860,7 @@ NET_DVR_API LONG __stdcall NET_DVR_FindFaceMatchAlarm(LONG lUserID, LPNET_VCA_FI
 NET_DVR_API LONG __stdcall NET_DVR_FindNextFaceMatchAlarm(LONG lFindHandle, LPNET_VCA_FACESNAP_MATCH_ALARM_LOG lpFaceMatchAlarmLog);
 NET_DVR_API BOOL __stdcall NET_DVR_FindFaceMatchAlarmClose(LONG lFindHandle);
 NET_DVR_API BOOL __stdcall NET_DVR_GetFaceMatchPic(LONG lUserID, LPNET_VCA_FACEMATCH_PICCOND lpMatchCond, LPNET_VCA_FACEMATCH_PICTURE lpMatchPic);
-NET_DVR_API BOOL __stdcall NET_DVR_FastAddBlockList(LONG lUserID,LONG lChannel,LPNET_VCA_BLOCKLIST_FASTREGISTER_PARA lpInter);
+NET_DVR_API BOOL __stdcall NET_DVR_FastAddBlackList(LONG lUserID,LONG lChannel,LPNET_VCA_BLACKLIST_FASTREGISTER_PARA lpInter);
 NET_DVR_API BOOL __stdcall NET_DVR_MatrixSetRemotePlay_V41(LONG lUserID, DWORD dwDecChanNum, LPNET_DVR_MATRIX_DEC_REMOTE_PLAY_V41 lpInter);
 NET_DVR_API BOOL __stdcall NET_DVR_MatrixGetDisplayCfg_V41(LONG lUserID, DWORD dwDispChanNum, LPNET_DVR_MATRIX_VOUTCFG lpVoutCfg);
 NET_DVR_API BOOL __stdcall NET_DVR_MatrixSetDisplayCfg_V41(LONG lUserID, DWORD dwDispChanNum, LPNET_DVR_MATRIX_VOUTCFG lpDisplayCfg);
@@ -51275,8 +50104,6 @@ NET_DVR_API BOOL __stdcall NET_DVR_ChangeWndResolution(LONG iRealHandle);
 NET_DVR_API LONG __stdcall  NET_DVR_SDKChannelToISAPI(LONG lUserID, LONG lInChannel, BOOL bSDKToISAPI);
 
 NET_DVR_API BOOL __stdcall NET_DVR_STDXMLConfig_Conv(LONG lUserID, NET_DVR_XML_CONFIG_INPUT* lpInputParam, NET_DVR_XML_CONFIG_OUTPUT* lpOutputParam);
-
-NET_DVR_API BOOL __stdcall NET_DVR_SetDevXmlLen(LONG lUserID, const WORD wDevXmlLen);
 
 NET_DVR_API LONG __stdcall NET_DVR_SetupAlarmChan_V50(LONG iUserID, LPNET_DVR_SETUPALARM_PARAM_V50 lpSetupParam, char *pSub, DWORD dwSubSize);
 

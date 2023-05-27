@@ -14,7 +14,6 @@ URL:            https://github.com/surfzoid/QtVsPlayer
 Source0:        https://github.com/surfzoid/QtVsPlayer/archive/%{version}/%{name}-%{version}.tar.gz
 # List of additional build dependencies
 BuildRequires:  pkgconfig(Qt5Network)
-BuildRequires:  pkgconfig(Qt5NetworkAuth)
 %if 0%{?mageia}
 BuildRequires:  qtbase5-common-devel
 %else
@@ -32,7 +31,6 @@ BuildRequires:  pkgconfig(openal)
 
 BuildRequires: chrpath
 Requires: lib64qt5network5
-Requires: lib64qt5networkauth5
 Requires: qtbase5-common
 Requires: lib64openal1
  
