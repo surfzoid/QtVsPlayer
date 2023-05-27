@@ -47,13 +47,13 @@ typedef unsigned int   COLORKEY;
 //typedef unsigned int   COLORREF;
 
 
-typedef unsigned int  HWND;//was "void*" and break compil
+/*typedef unsigned int  HWND;*///was "void*" and break compil
 
 
-#ifndef __HDC_defined
-#define __HDC_defined
-typedef void* HDC;
-#endif
+//#ifndef __HDC_defined
+//#define __HDC_defined
+//typedef void* HDC;
+//#endif
 
 typedef struct tagInitInfo
 {
