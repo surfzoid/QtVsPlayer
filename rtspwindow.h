@@ -9,6 +9,7 @@
 #include <QXmlStreamReader>
 #include <QComboBox>
 #include <pantilcmd.h>
+#include <QtGui>
 
 #if defined(_WIN32)
 #pragma warning( disable : 4996)
@@ -142,10 +143,10 @@ private:
     NET_DVR_CLIENTINFO ClientInfo = {0};
     NET_DVR_PREVIEWINFO struPlayInfo = {0};
     NET_DVR_DEVICEINFO_V30 struDeviceInfo;
-    LONG lRealPlayHandle;
-    LONG lUserID;
-    static LONG lPort; //Global Player port NO.
-    static HWND hWnd;
+    int lRealPlayHandle;
+    int lUserID;
+    static int lPort; //Global Player port NO.
+    static int hWnd;
 
     //device data
 
@@ -172,10 +173,10 @@ private:
     //×ÓÊôÐÔÍ¨µÀ½ÚµãÁÐ±í£¬ÆäÄÚÈÝÒ²Òª´æÈëÎÄ¼þ£»
     //QList<ChannelData> m_qlistchanneldata;
 
-    void __stdcall  RealDataCallBack(LONG lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser);
-    static void __stdcall g_ExceptionCallBack(int dwType, LONG lUserID, LONG lHandle, void *pUser);
+    void __stdcall  RealDataCallBack(int lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser);
+    static void __stdcall g_ExceptionCallBack(int dwType, int lUserID, int lHandle, void *pUser);
     static void CALLBACK SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2);
-    static void CALLBACK g_RealDataCallBack_V30(LONG lRealHandle, int dwDataType, BYTE *pBuffer,int dwBufSize,void* dwUser);
+    static void CALLBACK g_RealDataCallBack_V30(int lRealHandle, int dwDataType, BYTE *pBuffer,int dwBufSize,void* dwUser);
     /*******HCNetSDK**************/
 
 public slots:

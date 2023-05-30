@@ -32,8 +32,8 @@ PanTilCmd *RtspWindow::PTCmd;
 QNetworkAccessManager *RtspWindow::manager;
 
 /****HIKNETSDK****/
-LONG RtspWindow::lPort; //Global Player port NO.
-HWND RtspWindow::hWnd;
+int RtspWindow::lPort; //Global Player port NO.
+int RtspWindow::hWnd;
 /****HIKNETSDK****/
 
 RtspWindow::RtspWindow(QWidget *parent) :
@@ -930,16 +930,16 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     return;
 }
 
-/**  @fn  void __stdcall  RealDataCallBack(LONG lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser)
+/**  @fn  void __stdcall  RealDataCallBack(int lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser)
  *   @brief data callback funtion
- *   @param (OUT) LONG lRealHandle
+ *   @param (OUT) int lRealHandle
  *   @param (OUT) int dwDataType
  *   @param (OUT) BYTE *pBuffer
  *   @param (OUT) int  dwBufSize
  *   @param (OUT) void* dwUser
  *   @return none
  */
-void __stdcall  RtspWindow::RealDataCallBack(LONG lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser)
+void __stdcall  RtspWindow::RealDataCallBack(int lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser)
 {
     //qDebug() << "pBuffer" << pBuffer;
     if (dwUser != NULL)
@@ -952,7 +952,7 @@ void __stdcall  RtspWindow::RealDataCallBack(LONG lRealHandle,int dwDataType,BYT
     }
 }
 
-void __stdcall RtspWindow::g_ExceptionCallBack(int dwType, LONG lUserID, LONG lHandle, void *pUser)
+void __stdcall RtspWindow::g_ExceptionCallBack(int dwType, int lUserID, int lHandle, void *pUser)
 {
     switch(dwType)
     {
@@ -1018,7 +1018,7 @@ void CALLBACK RtspWindow::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_I
 
 /*Mode 2 Users theirselves deal with stream data which called back by g_RealDataCallBack_V30.
 Here takes software decoding as an example.*/
-void CALLBACK RtspWindow::g_RealDataCallBack_V30(LONG lRealHandle, int dwDataType, BYTE *pBuffer, int dwBufSize, void* dwUser)
+void CALLBACK RtspWindow::g_RealDataCallBack_V30(int lRealHandle, int dwDataType, BYTE *pBuffer, int dwBufSize, void* dwUser)
 {
     //    QString str;
     //    QByteArray TmpB((char*)pBuffer);
