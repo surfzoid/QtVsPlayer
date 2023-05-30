@@ -431,7 +431,7 @@ void playm4interface::GetMetadatas()
 {
     bool CallBResp = false;
 #if (defined(_WIN32))
-    //CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,long,int,FRAME_INFO*, void*, void*))SetDecCallBack);
+  PlayM4_SetDecCallBack(m_pblocalportnum,(void (CALLBACK* )(int ,char * ,long ,FRAME_INFO * , void* ,void*))SetDecCallBack);
 #elif defined(__linux__)
     CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
 #endif

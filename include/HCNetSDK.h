@@ -28,7 +28,7 @@ typedef struct __PLAYRECT
 }PLAYRECT;
 #endif
 
-#if (defined(_WIN32)) //windows
+#if (defined(_WIN32) || defined(_WIN64)) //windows
 #define NET_DVR_API  extern "C" __declspec(dllimport)
 typedef  unsigned __int64   UINT64;
 typedef  signed   __int64   INT64;

@@ -260,7 +260,7 @@ void RtspWindow::on_action_Streaming_Channels_3_triggered()
 void RtspWindow::on_actionMetadata_triggered()
 {
 #if (defined(_WIN32))
-    //CallBResp = PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,long,int,FRAME_INFO*, void*, void*))SetDecCallBack);
+  PlayM4_SetDecCallBack(lPort,(void (CALLBACK* )(int ,char * ,long ,FRAME_INFO * , void* ,void*))SetDecCallBack);
 #elif defined(__linux__)
   PlayM4_SetDecCallBack(lPort, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
 #endif
