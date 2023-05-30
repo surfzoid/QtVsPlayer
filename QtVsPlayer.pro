@@ -152,12 +152,9 @@ DISTFILES += \
     install-mac.md \
     install-win.md
 
-
-
-
 win32: {
-CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64 -lPlayCtrl -lAudioRender -lSuperRender
-else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64 -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
+CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
 INCLUDEPATH += $$PWD/lib/w86_64
 DEPENDPATH += $$PWD/lib/w86_64
 }
