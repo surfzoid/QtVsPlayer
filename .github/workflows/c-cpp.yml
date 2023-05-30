@@ -334,11 +334,11 @@ jobs:
             #sed -i ':a;N;$!ba;s/\n\n/\n/g' Makefile.Release
             #sed -i ':a;N;$!ba;s/-Wextra -Wextra/-Wextra/g' Makefile.Release
             #cat Makefile.Release
-            make
+            make --debug
             dir debug
             dir release
             mkdir application
-            cp release/QtVsPlayer.exe application/
+            cp debug/QtVsPlayer.exe application/
             cp lib/w86_64/* application/
             cp install-win.md application/README.TXT
             cp README.md application/
