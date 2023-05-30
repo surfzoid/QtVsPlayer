@@ -326,7 +326,7 @@ jobs:
       - name: qmake
         run: |
             #setx QMAKESPEC="%QTDIR%\mkspecs\/win64-g++" /M
-            qmake -Wnone -spec linux-g++ CONFIG+=debug CONFIG+=force_debug_info
+            qmake -Wnone -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
 
       - name: make & install
         run: |
