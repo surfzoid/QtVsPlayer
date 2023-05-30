@@ -915,7 +915,7 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     RTSP, 5- RTP over HTTP */
     ClientInfo.sMultiCastIP = NULL;
     //Multicast IP. Please set when require to preview in multicast mode.
-    BOOL bPreviewBlock = false;
+    int bPreviewBlock = false;
     //whether blocked when requiring a stream connection, 0 means unblocked, 1 means blocked
     lRealPlayHandle = NET_DVR_RealPlay_V30(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL, 0);
     if (lRealPlayHandle < 0)
@@ -930,16 +930,16 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     return;
 }
 
-/**  @fn  void __stdcall  RealDataCallBack(int lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser)
+/**  @fn  void __stdcall  RealDataCallBack(int lRealHandle,int dwDataType,unsigned char *pBuffer,int  dwBufSize, void* dwUser)
  *   @brief data callback funtion
  *   @param (OUT) int lRealHandle
  *   @param (OUT) int dwDataType
- *   @param (OUT) BYTE *pBuffer
+ *   @param (OUT) unsigned char *pBuffer
  *   @param (OUT) int  dwBufSize
  *   @param (OUT) void* dwUser
  *   @return none
  */
-void __stdcall  RtspWindow::RealDataCallBack(int lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser)
+void __stdcall  RtspWindow::RealDataCallBack(int lRealHandle,int dwDataType,unsigned char *pBuffer,int  dwBufSize, void* dwUser)
 {
     //qDebug() << "pBuffer" << pBuffer;
     if (dwUser != NULL)
@@ -1018,7 +1018,7 @@ void CALLBACK RtspWindow::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_I
 
 /*Mode 2 Users theirselves deal with stream data which called back by g_RealDataCallBack_V30.
 Here takes software decoding as an example.*/
-void CALLBACK RtspWindow::g_RealDataCallBack_V30(int lRealHandle, int dwDataType, BYTE *pBuffer, int dwBufSize, void* dwUser)
+void CALLBACK RtspWindow::g_RealDataCallBack_V30(int lRealHandle, int dwDataType, unsigned char *pBuffer, int dwBufSize, void* dwUser)
 {
     //    QString str;
     //    QByteArray TmpB((char*)pBuffer);

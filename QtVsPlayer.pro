@@ -111,9 +111,7 @@ HEADERS += \
     filesliste.h \
     include/ApplePlayM4.h \
     include/HCNetSDK.h \
-    include/HCNetSDKwin.h \
     include/LinuxPlayM4.h \
-    include/NetSdk.h \
     include/PlayM4.h \
     include/WindowsPlayM4.h \
     infos.h \

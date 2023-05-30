@@ -16,7 +16,7 @@
 #else
 #endif
 
-#include "include/NetSdk.h"
+#include "include/HCNetSDK.h"
 #include "include/PlayM4.h"
 
 class QVideoProbe;
@@ -173,10 +173,10 @@ private:
     //×ÓÊôÐÔÍ¨µÀ½ÚµãÁÐ±í£¬ÆäÄÚÈÝÒ²Òª´æÈëÎÄ¼þ£»
     //QList<ChannelData> m_qlistchanneldata;
 
-    void __stdcall  RealDataCallBack(int lRealHandle,int dwDataType,BYTE *pBuffer,int  dwBufSize, void* dwUser);
+    void __stdcall  RealDataCallBack(int lRealHandle,int dwDataType,unsigned char *pBuffer,int  dwBufSize, void* dwUser);
     static void __stdcall g_ExceptionCallBack(int dwType, int lUserID, int lHandle, void *pUser);
     static void CALLBACK SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2);
-    static void CALLBACK g_RealDataCallBack_V30(int lRealHandle, int dwDataType, BYTE *pBuffer,int dwBufSize,void* dwUser);
+    static void CALLBACK g_RealDataCallBack_V30(int lRealHandle, int dwDataType, unsigned char *pBuffer,int dwBufSize,void* dwUser);
     /*******HCNetSDK**************/
 
 public slots:
