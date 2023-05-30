@@ -334,7 +334,7 @@ jobs:
             #sed -i ':a;N;$!ba;s/\n\n/\n/g' Makefile.Release
             #sed -i ':a;N;$!ba;s/-Wextra -Wextra/-Wextra/g' Makefile.Release
             #cat Makefile.Release
-            make --debug
+            make -debug
             dir debug
             dir release
             mkdir application
