@@ -326,7 +326,7 @@ jobs:
       - name: qmake
         run: |
             #setx QMAKESPEC="%QTDIR%\mkspecs\/win64-g++" /M
-            qmake -Wnone
+            qmake -Wnone -spec linux-g++ CONFIG+=debug CONFIG+=force_debug_info
 
       - name: make & install
         run: |
@@ -334,7 +334,7 @@ jobs:
             #sed -i ':a;N;$!ba;s/\n\n/\n/g' Makefile.Release
             #sed -i ':a;N;$!ba;s/-Wextra -Wextra/-Wextra/g' Makefile.Release
             #cat Makefile.Release
-            make -debug
+            make --debug
             dir debug
             dir release
             mkdir application
