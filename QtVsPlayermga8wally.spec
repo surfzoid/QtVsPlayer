@@ -20,6 +20,7 @@ BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5NetworkAuth)
+BuildRequires:  pkgconfig(Qt5Widgets)
 %else
 %if 0%{?suse_version}
 BuildRequires:  libqt5-qtbase-devel
