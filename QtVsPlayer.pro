@@ -1,6 +1,6 @@
 VERSION = 1.0.43
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
-QT       += core gui network
+QT       += core gui network widgets
 !android:QT       += dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -153,7 +153,7 @@ DISTFILES += \
     install-win.md
 
 win32: {
-CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lPlayCtrl -lAudioRender -lSuperRender
+CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
 INCLUDEPATH += $$PWD/lib/w86_64
 DEPENDPATH += $$PWD/lib/w86_64

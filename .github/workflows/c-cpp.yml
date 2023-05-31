@@ -326,7 +326,8 @@ jobs:
       - name: qmake
         run: |
             #setx QMAKESPEC="%QTDIR%\mkspecs\/win64-g++" /M
-            qmake -Wnone -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
+            #qmake -Wnone -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
+            qmake -Wnone -spec win32-g++ "CONFIG+=release" "CONFIG+=qml_debug"
 
       - name: make & install
         run: |
@@ -334,11 +335,12 @@ jobs:
             #sed -i ':a;N;$!ba;s/\n\n/\n/g' Makefile.Release
             #sed -i ':a;N;$!ba;s/-Wextra -Wextra/-Wextra/g' Makefile.Release
             #cat Makefile.Release
-            make --debug
+            #make --debug
+            make
             dir debug
             dir release
             mkdir application
-            cp debug/QtVsPlayer.exe application/
+            cp release/QtVsPlayer.exe application/
             cp lib/w86_64/* application/
             cp install-win.md application/README.TXT
             cp README.md application/
