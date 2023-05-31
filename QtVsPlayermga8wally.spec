@@ -16,6 +16,10 @@ Source0:        https://github.com/surfzoid/QtVsPlayer/archive/%{version}/%{name
 BuildRequires:  pkgconfig(Qt5Network)
 %if 0%{?mageia}
 BuildRequires:  qtbase5-common-devel
+BuildRequires:  pkgconfig(Qt5Gui)
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5DBus)
+BuildRequires:  pkgconfig(Qt5NetworkAuth)
 %else
 %if 0%{?suse_version}
 BuildRequires:  libqt5-qtbase-devel

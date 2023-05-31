@@ -1,6 +1,6 @@
 VERSION = 1.0.43
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
-QT       += core gui network widgets
+QT       += core gui network
 !android:QT       += dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
