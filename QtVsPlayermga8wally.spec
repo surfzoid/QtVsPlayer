@@ -1,8 +1,8 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.43
+Version:        1.0.44
 
-%global Rel 7
+%global Rel 1
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -109,6 +109,9 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/*
 
 %changelog
+* Thu Jun 1 2023 surfzoid@gmail.com
++ Live view, devel in progress.
+
 * Wed May 24 2023 surfzoid@gmail.com
 + Live view use Hikvision network SDK, no more Qtmultimedia.
 
