@@ -36,11 +36,11 @@ jobs:
             fi
             ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer
 
-            cat <<'EOS' > /etc/ld.so.conf.d/QtVsPlayer.conf
+            cat <<'EOT' > /etc/ld.so.conf.d/QtVsPlayer.conf
             /usr/lib64/QtVsPlayer/
             /usr/lib64/QtVsPlayer/HCNetSDKCom/
 
-            EOS
+            EOT
 
             /sbin/ldconfig
             /sbin/ldconfig /usr/lib64/QtVsPlayer/
@@ -201,11 +201,11 @@ jobs:
             fi
             ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer
 
-            cat <<'EOS' > /etc/ld.so.conf.d/QtVsPlayer.conf
+            cat <<'EOT' > /etc/ld.so.conf.d/QtVsPlayer.conf
             /usr/lib64/QtVsPlayer/
             /usr/lib64/QtVsPlayer/HCNetSDKCom/
 
-            EOS
+            EOT
 
             /sbin/ldconfig
             /sbin/ldconfig /usr/lib64/QtVsPlayer/
