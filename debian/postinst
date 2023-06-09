@@ -9,5 +9,12 @@ then
 fi
 ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer
 
+
+cat << 'EOF' > /etc/ld.so.conf.d/QtVsPlayer.conf
+            /usr/lib64/QtVsPlayer/
+            /usr/lib64/QtVsPlayer/HCNetSDKCom/
+
+            EOF
+
+/sbin/ldconfig
 /sbin/ldconfig /usr/lib64/QtVsPlayer/
-/sbin/ldconfig /usr/lib64/QtVsPlayer/HCNetSDKCom/
