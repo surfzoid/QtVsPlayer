@@ -24,7 +24,7 @@ jobs:
             mkdir -p .debpkg
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
-            cat <<'EOF' > .debpkg/DEBIAN/postinst
+            cat <<'EOF'
             if [ ! -d "/usr/lib64/QtVsPlayer" ];
             then
               ln -s /usr/lib64/QtVsPlayer /usr/lib/
@@ -36,23 +36,23 @@ jobs:
             fi
             ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer
 
-            cat << 'EOF' > /etc/ld.so.conf.d/QtVsPlayer.conf
+            cat <<'EOF'
             /usr/lib64/QtVsPlayer/
             /usr/lib64/QtVsPlayer/HCNetSDKCom/
 
-            EOF
+            EOF > /etc/ld.so.conf.d/QtVsPlayer.conf
 
             /sbin/ldconfig
             /sbin/ldconfig /usr/lib64/QtVsPlayer/
 
             add-apt-repository ppa:surfzoid/hikvision -y
-            EOF
-            cat <<'EOF' > .debpkg/DEBIAN/prerm
+            EOF > .debpkg/DEBIAN/postinst
+            cat <<'EOF'
             if [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
             then
                 rm -fr /usr/lib64/QtVsPlayer/libopenal.so.1
             fi
-            EOF
+            EOF > .debpkg/DEBIAN/prerm
             chmod +x .debpkg/DEBIAN/postinst
             chmod +x .debpkg/DEBIAN/prerm
             echo -e "Automatic build from GitHub action, see QtVsPlayermga8wally.spec for change log" > CHANGELOG
@@ -189,7 +189,7 @@ jobs:
         run: |           
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
-            cat <<'EOF' > .debpkg/DEBIAN/postinst
+            cat <<'EOF'
             if [ ! -d "/usr/lib64/QtVsPlayer" ];
             then
               ln -s /usr/lib64/QtVsPlayer /usr/lib/
@@ -201,23 +201,23 @@ jobs:
             fi
             ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer
 
-            cat << 'EOF' > /etc/ld.so.conf.d/QtVsPlayer.conf
+            cat <<'EOF'
             /usr/lib64/QtVsPlayer/
             /usr/lib64/QtVsPlayer/HCNetSDKCom/
 
-            EOF
+            EOF > /etc/ld.so.conf.d/QtVsPlayer.conf
 
             /sbin/ldconfig
             /sbin/ldconfig /usr/lib64/QtVsPlayer/
 
             add-apt-repository ppa:surfzoid/hikvision -y
-            EOF
-            cat <<'EOF' > .debpkg/DEBIAN/prerm
+            EOF > .debpkg/DEBIAN/postinst
+            cat <<'EOF'
             if [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
             then
                 rm -fr /usr/lib64/QtVsPlayer/libopenal.so.1
             fi
-            EOF
+            EOF > .debpkg/DEBIAN/prerm
             chmod +x .debpkg/DEBIAN/postinst
             chmod +x .debpkg/DEBIAN/prerm
             echo -e "Automatic build from GitHub action, see QtVsPlayermga8wally.spec for change log" > CHANGELOG
