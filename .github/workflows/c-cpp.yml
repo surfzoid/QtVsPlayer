@@ -186,8 +186,7 @@ jobs:
         id: version
 
       - name: Prepare install dir
-        run: |
-            mkdir -p .debpkg
+        run: |           
             # create DEBIAN directory if you want to add other pre/post scripts
             mkdir -p .debpkg/DEBIAN
             cat <<'EOF' > .debpkg/DEBIAN/postinst
@@ -222,7 +221,6 @@ jobs:
             chmod +x .debpkg/DEBIAN/postinst
             chmod +x .debpkg/DEBIAN/prerm
             echo -e "Automatic build from GitHub action, see QtVsPlayermga8wally.spec for change log" > CHANGELOG
-            #perl -i -pe 's/licenses\/QtVsPlayer/licenses\/QtVsPlayer-\$\$VERSION/g;' QtVsPlayer.pro
 
       - name: qmake
         run: PREFIX=.debpkg/usr/share; qmake
