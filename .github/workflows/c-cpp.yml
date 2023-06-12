@@ -425,7 +425,7 @@ jobs:
             pip3 install wheel
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@vv3.2.1
+        uses: jurplel/install-qt-action@v3.2.1
         with:
           version: '5.15.2'
           dir: 'qt'
