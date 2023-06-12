@@ -362,7 +362,7 @@ jobs:
             dir release
             mkdir application
             cp release/QtVsPlayer.exe application/
-            cp lib/w86_64/* application/
+            cp -r lib/w86_64/* application/
             cp install-win.md application/README.TXT
             cp README.md application/
             cp QtVsPlayer_fr_FR.qm application/

@@ -897,6 +897,10 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
         NET_DVR_Cleanup();
         return;
     }
+    //EncryptState
+    int *IsCrypted = nullptr;
+    NET_DVR_InquestStreamEncrypt(lUserID, ClientInfo.lChannel, 1);
+    NET_DVR_InquestGetEncryptState(lUserID,ClientInfo.lChannel,IsCrypted);
     //---------------------------------------
     //Set exception callback function
     NET_DVR_SetExceptionCallBack_V30(0, NULL,g_ExceptionCallBack, NULL);
