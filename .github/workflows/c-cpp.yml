@@ -15,7 +15,7 @@ jobs:
       - name: Setup C++ environment
         uses: kurocha/setup-cpp@v1
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.14.0
+        uses: jurplel/install-qt-action@v3.2.1
 
       - name: Prepare install dir
         run: | 
@@ -334,7 +334,7 @@ jobs:
         run: echo ${{ steps.version.outputs.version }}
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3.0.0
+        uses: jurplel/install-qt-action@v3.2.1
         with:
           version: '5.15.2'
           #host: 'windows'
@@ -424,7 +424,7 @@ jobs:
             pip3 install wheel
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3.0.0
+        uses: jurplel/install-qt-action@v3.2.1
         with:
           version: '5.15.2'
           dir: 'qt'
