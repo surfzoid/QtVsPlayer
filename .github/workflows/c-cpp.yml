@@ -15,7 +15,7 @@ jobs:
       - name: Setup C++ environment
         uses: kurocha/setup-cpp@v1
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.14.0
+        uses: jurplel/install-qt-action@v3.2.1
 
       - name: Prepare install dir
         run: | 
@@ -334,7 +334,7 @@ jobs:
         run: echo ${{ steps.version.outputs.version }}
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.14.0
+        uses: jurplel/install-qt-action@v3.2.1
         with:
           version: '5.15.2'
           #host: 'windows'
@@ -358,12 +358,13 @@ jobs:
             #cat Makefile.Release
             #make --debug
             make
-            dir debug
-            dir release
+            #dir debug
+            #dir release
             mkdir application
             cp release/QtVsPlayer.exe application/
             cp lib/w86_64/* application/
-            cp -r lib/w86_64/HCNetSDKCom application/
+            dir application/
+            cp lib/w86_64/HCNetSDKCom/* application/HCNetSDKCom/
             cp install-win.md application/README.TXT
             cp README.md application/
             cp QtVsPlayer_fr_FR.qm application/
@@ -424,7 +425,7 @@ jobs:
             pip3 install wheel
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.14.0
+        uses: jurplel/install-qt-action@vv3.2.1
         with:
           version: '5.15.2'
           dir: 'qt'
