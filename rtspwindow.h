@@ -87,6 +87,8 @@ private slots:
 
     void on_actionsub_stream_triggered();
 
+    void on_actionClose_triggered();
+
 private:
     Ui::RtspWindow *ui;
     bool IsShown = false;

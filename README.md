@@ -78,10 +78,11 @@ use https://github.com/surfzoid/HikNetExtractor in an shelde task to automatical
 
 PI P400 raspian 64 bit, PcmanFm and thunar don't respect the %U in the desktop file but nautillus do it.  
 
-To debug, open a terminal and :  
+To debug, modify qtloggin.ini like that :  
 ```
-export QT_LOGGING_RULES=*.debug=true  
-QtVsPlayer  
+[Rules]
+*.debug=true 
+qt.*.debug=false     
 ```
 
 # Depandancys  
@@ -95,13 +96,7 @@ ldd ./QtVsPlayer|grep -i found
 ```
 
 Qt5 runtime  
-Developper package qtmultimedia5-dev   lib64qt5opengl-devel  
-```
-sudo apt-get install qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia5-plugins libqt5multimedia5  
-```
-or  
-```
-sudo urpmi qtmultimedia5 lib64qt5multimediawidgets-devel lib64qt5multimedia5 libqt5multimedia-devel 
+Developper package lib64qt5opengl-devel   
 ```
 
 Qt use platform tool, so qtmultimedia can use Gstreamer, ffmpeg and so on, it could be necessary to install :  

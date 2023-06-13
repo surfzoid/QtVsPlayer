@@ -362,6 +362,7 @@
     </widget>
     <addaction name="menuchannel"/>
     <addaction name="actionMetadata"/>
+    <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuPTZ">
     <property name="tabletTracking">
@@ -516,6 +517,11 @@
    </property>
    <property name="autoRepeat">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
    </property>
   </action>
  </widget>

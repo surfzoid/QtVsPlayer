@@ -1096,3 +1096,9 @@ void RtspWindow::on_actionsub_stream_triggered()
         LoginInfo(CamPortSdk,CamIp,CamUser,CamPass,true);
     }
 }
+
+void RtspWindow::on_actionClose_triggered()
+{
+    //under windoze, there isn't the standard win cmd
+    close();
+}

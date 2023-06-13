@@ -3,14 +3,6 @@
  <author>Eric Petit</author>
  <class>QtVsPlayer</class>
  <widget class="QMainWindow" name="QtVsPlayer">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>565</width>
-    <height>598</height>
-   </rect>
-  </property>
   <property name="mouseTracking">
    <bool>true</bool>
   </property>
@@ -234,8 +226,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>565</width>
-     <height>34</height>
+     <width>416</width>
+     <height>29</height>
     </rect>
    </property>
    <property name="mouseTracking">

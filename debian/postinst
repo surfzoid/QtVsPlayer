@@ -9,6 +9,18 @@ then
 fi
 ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer
 
+if [ -f "/usr/lib64/QtVsPlayer/libssl.so.1.1" ];
+then
+    rm -fr /usr/lib64/QtVsPlayer/libssl.so.1.1
+fi
+ln -s $(whereis "libssl.so.1.1" | sed "s|.* \(.*libssl.so.1.1\).*|\1|") /usr/lib64/QtVsPlayer
+
+if [ -f "/usr/lib64/QtVsPlayer/libssl.so" ];
+then
+    rm -fr /usr/lib64/QtVsPlayer/libssl.so
+fi
+ln -s $(whereis "libssl.so" | sed "s|.* \(.*libssl.so\).*|\1|") /usr/lib64/QtVsPlayer
+
 
 cat << 'EOF' > /etc/ld.so.conf.d/QtVsPlayer.conf
             /usr/lib64/QtVsPlayer/
