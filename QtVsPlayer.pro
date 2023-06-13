@@ -159,5 +159,4 @@ INCLUDEPATH += $$PWD/lib/w86_64
 DEPENDPATH += $$PWD/lib/w86_64
 }
 
-unix: CONFIG += link_pkgconfig
-unix: PKGCONFIG += openal
+unix:!macx: LIBS += -lopenal
