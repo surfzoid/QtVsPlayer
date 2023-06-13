@@ -12,7 +12,6 @@ usr/lib64/QtVsPlayer/libcrypto.so.1.1
 usr/lib64/QtVsPlayer/libHCCore.so
 usr/lib64/QtVsPlayer/libhcnetsdk.so
 usr/lib64/QtVsPlayer/libhpr.so
-usr/lib64/QtVsPlayer/libopenal.so.1
 usr/lib64/QtVsPlayer/libPlayCtrl.so
 usr/lib64/QtVsPlayer/libSuperRender.so
 usr/lib64/QtVsPlayer/libz.so
