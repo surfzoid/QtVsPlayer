@@ -5,5 +5,8 @@ usr/bin/QtVsPlayer
 usr/share/applications/QtVsPlayer.desktop
 usr/share/icons/QtVsPlayer.png
 usr/share/QtVsPlayer/
+usr/lib64/QtVsPlayer/libAudioRender.so
+usr/lib64/QtVsPlayer/libSuperRender.so
+usr/lib64/QtVsPlayer/libhpr.so
 usr/lib64/QtVsPlayer/
 usr/lib64/QtVsPlayer/HCNetSDKCom/

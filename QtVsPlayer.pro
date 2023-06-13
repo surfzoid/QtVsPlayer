@@ -158,3 +158,6 @@ else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=l
 INCLUDEPATH += $$PWD/lib/w86_64
 DEPENDPATH += $$PWD/lib/w86_64
 }
+
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += openal
