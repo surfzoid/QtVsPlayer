@@ -19,7 +19,7 @@ if [ -f "/usr/lib64/QtVsPlayer/libiconv2.so" ];
 then
     rm -fr /usr/lib64/QtVsPlayer/libiconv2.so
 fi
-ln -s /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv2.so /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv2.so
+ln -s /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv.so.2 /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv2.so
 
 if [ -f "/usr/lib64/QtVsPlayer/libcrypto.so.1.1" ];
 then
