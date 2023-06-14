@@ -1,4 +1,4 @@
-if [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
+if [ -d "/usr/lib64/QtVsPlayer" ];
 then
-    rm -fr /usr/lib64/QtVsPlayer/libopenal.so.1
+    rm -fr /usr/lib64/QtVsPlayer
 fi

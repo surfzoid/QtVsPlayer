@@ -87,6 +87,11 @@ cat << 'EOF' > %{buildroot}/etc/ld.so.conf.d/QtVsPlayer.conf
 %post
 /sbin/ldconfig
 
+%preun
+if [ -d "/usr/lib64/QtVsPlayer" ];
+then
+    rm -fr /usr/lib64/QtVsPlayer
+fi
 
 %clean
 rm -rf %buildroot
