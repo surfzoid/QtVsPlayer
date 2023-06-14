@@ -21,6 +21,11 @@ then
 fi
 ln -s $(whereis "libssl.so" | sed "s|.* \(.*libssl.so\).*|\1|") /usr/lib64/QtVsPlayer
 
+if [ -f "/usr/lib64/QtVsPlayer/libcrypto.so.1.1" ];
+then
+    rm -fr /usr/lib64/QtVsPlayer/libcrypto.so.1.1
+fi
+ln -s $(whereis "libcrypto.so.1.1" | sed "s|.* \(.*libcrypto.so.1.1\).*|\1|") /usr/lib64/QtVsPlayer
 
 cat << 'EOF' > /etc/ld.so.conf.d/QtVsPlayer.conf
             /usr/lib64/QtVsPlayer/
