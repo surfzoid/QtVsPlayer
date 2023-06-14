@@ -2,7 +2,7 @@ Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
 Version:        1.0.45
 
-%global Rel 1
+%global Rel 2
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -75,7 +75,9 @@ chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so*
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
 ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
 ln -s %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
+ln -s %{_libdir}/libcrypto.so %{buildroot}%{_libdir}/QtVsPlayer/
 ln -s %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
+ln -s %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/
 ln -s %{_libdir}/libz.so %{buildroot}%{_libdir}/QtVsPlayer/libz.so.1
 
 mkdir -p %{buildroot}/etc/ld.so.conf.d
@@ -88,7 +90,7 @@ cat << 'EOF' > %{buildroot}/etc/ld.so.conf.d/QtVsPlayer.conf
 %post
 /sbin/ldconfig
 
-%preun
+%postun
 if [ -d "/usr/lib64/QtVsPlayer" ];
 then
     rm -fr /usr/lib64/QtVsPlayer
