@@ -15,11 +15,11 @@ then
 fi
 ln -s $(whereis "libssl.so.1.1" | sed "s|.* \(.*libssl.so.1.1\).*|\1|") /usr/lib64/QtVsPlayer
 
-if [ -f "/usr/lib64/QtVsPlayer/libssl.so" ];
+if [ -f "/usr/lib64/QtVsPlayer/libiconv2.so" ];
 then
-    rm -fr /usr/lib64/QtVsPlayer/libssl.so
+    rm -fr /usr/lib64/QtVsPlayer/libiconv2.so
 fi
-ln -s $(whereis "libssl.so" | sed "s|.* \(.*libssl.so\).*|\1|") /usr/lib64/QtVsPlayer
+ln -s /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv2.so /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv2.so
 
 if [ -f "/usr/lib64/QtVsPlayer/libcrypto.so.1.1" ];
 then
@@ -31,7 +31,7 @@ if [ -f "/usr/lib64/QtVsPlayer/libz.so.1" ];
 then
     rm -fr /usr/lib64/QtVsPlayer/libz.so.1
 fi
-ln -s $(whereis "libz.so.1" | sed "s|.* \(.*libz.so.1\).*|\1|") /usr/lib64/QtVsPlayer
+ln -s $(whereis "libz.so" | sed "s|.* \(.*libz.so\).*|\1|") /usr/lib64/QtVsPlayer
 
 cat << 'EOF' > /etc/ld.so.conf.d/QtVsPlayer.conf
             /usr/lib64/QtVsPlayer/
