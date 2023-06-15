@@ -71,7 +71,7 @@ LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer -lhcnets
 }
 
 macx: {
-LIBS += -L$$PWD/lib/macX86_64/ -Wl,@rpathlib/macX86_64:/HCNetSDKCom:./ -lhcnetsdk -lPlayCtrl -lSuperRender
+LIBS += -L$$PWD/lib/macX86_64/ -Wl, -lhcnetsdk -lPlayCtrl -lSuperRender
 
 INCLUDEPATH += $$PWD/lib/macX86_64/
 DEPENDPATH += $$PWD/lib/macX86_64/
