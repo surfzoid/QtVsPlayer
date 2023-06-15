@@ -448,7 +448,7 @@ jobs:
       - name: make install
         run: |
             cp lib/macX86_64/*.dylib qtvsplayer.app/Contents/MacOS/
-            mv qtvsplayer.app/Contents qtvsplayer.app/QtVsPlayer
+            #mv qtvsplayer.app/Contents qtvsplayer.app/QtVsPlayer
             #mkdir macbuild
             #mv qtvsplayer.app macbuild/
             #cd macbuild/
