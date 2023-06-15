@@ -20,3 +20,9 @@ cd QtVsPlayer.app/Contents/MacOS/
 
 
 QtVsPlayer use D-Bus to manage single instance.  
+
+Now QtVsPlayer use HCNetSDK you need
+```
+install_name_tool -change /usr/local/lib/libSystemTranform.dylib ./libSystemTransform.dylib ./QtVsPlayer
+install_name_tool -change /usr/local/lib/libSystemTranform.dylib ./libSystemTransform.dylib ./libHCNetSDK.dylib
+```
