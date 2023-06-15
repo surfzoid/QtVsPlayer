@@ -448,7 +448,7 @@ jobs:
       - name: make install
         run: |
             cp lib/macX86_64/*.dylib qtvsplayer.app/Contents/MacOS/
-            #mv qtvsplayer.app/Contents qtvsplayer.app/QtVsPlayer
+            install_name_tool -change /usr/local/lib/libSystemTranform.dylib qtvsplayer.app/Contents/MacOS/libSystemTransform.dylib qtvsplayer.app/Contents/MacOS/libHCNetSDK.dylib
             #mkdir macbuild
             #mv qtvsplayer.app macbuild/
             #cd macbuild/
