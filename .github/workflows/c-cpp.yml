@@ -452,7 +452,7 @@ jobs:
             #mkdir macbuild
             #mv qtvsplayer.app macbuild/
             #cd macbuild/
-            pkgbuild --root ./qtvsplayer.app --version ${{ steps.MacVersion.outputs.version }} --identifier com.github.QtVsPlayer.app --install-location /Applications QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.pkg
+            pkgbuild --root ./qtvsplayer.app --version ${{ steps.version.outputs.version }} --identifier com.github.QtVsPlayer.app --install-location /Applications QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.pkg
             macdeployqt "QtVsPlayer.app" -dmg -always-overwrite
             mv QtVsPlayer.dmg QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.dmg
             tar -czf QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.tgz qtvsplayer.app
