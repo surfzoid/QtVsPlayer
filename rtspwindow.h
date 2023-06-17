@@ -91,8 +91,6 @@ private slots:
 
     void on_actionConfigure_triggered();
 
-    void on_spinBoxChannel_valueChanged(int arg1);
-
 private:
     Ui::RtspWindow *ui;
     bool IsShown = false;
@@ -148,7 +146,7 @@ private:
 
     NET_DVR_CLIENTINFO ClientInfo = {0};
     NET_DVR_PREVIEWINFO struPlayInfo = {0};
-    NET_DVR_DEVICEINFO_V30 struDeviceInfo;
+    NET_DVR_DEVICEINFO_V40 struDeviceInfo = {0};
     int lRealPlayHandle;
     static int lUserID;
     static int lChannel;

@@ -890,8 +890,20 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     NET_DVR_SetReconnect(10000, true);
     //---------------------------------------
     // Login
-    NET_DVR_DEVICEINFO_V30 struDeviceInfo;
-    lUserID = NET_DVR_Login_V30(sDeviceAddress.toUtf8().data(), Port, sUserName.toUtf8().data(), sPassword.toUtf8().data(), &struDeviceInfo);
+//    NET_DVR_DEVICEINFO_V30 struDeviceInfo;
+//    lUserID = NET_DVR_Login_V30(sDeviceAddress.toUtf8().data(), Port, sUserName.toUtf8().data(), sPassword.toUtf8().data(), &struDeviceInfo);
+        NET_DVR_DEVICEINFO_V40 struDeviceInfo = {0};
+        NET_DVR_USER_LOGIN_INFO pLoginInfo = {0};
+//        pLoginInfo->sDeviceAddress = sDeviceAddress.toUtf8().data();
+//        pLoginInfo->pUser = sUserName.toUtf8().data();
+
+        pLoginInfo.bUseAsynLogin = false;
+        memcpy((pLoginInfo.sDeviceAddress), (sDeviceAddress.toUtf8().data()), sDeviceAddress.length());
+        pLoginInfo.wPort = Port;
+        memcpy((pLoginInfo.sUserName), (sUserName.toUtf8().data()), sUserName.length());
+        memcpy((pLoginInfo.sPassword), (sPassword.toUtf8().data()), sPassword.length());
+
+        lUserID =  NET_DVR_Login_V40(&pLoginInfo, &struDeviceInfo);
     if (lUserID < 0)
     {
         printf("Login error, %d\n", NET_DVR_GetLastError());
@@ -900,10 +912,14 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
         NET_DVR_Cleanup();
         return;
     }
+    else
+    {
+        displayErrorMessage("Conected.");
+    }
 
     //EncryptState
     //    int *IsCrypted = nullptr;
-    //    NET_DVR_InquestStreamEncrypt(lUserID, ClientInfo.lChannel, 1);
+        NET_DVR_InquestStreamEncrypt(lUserID, ClientInfo.lChannel, 0);
     //    NET_DVR_InquestGetEncryptState(lUserID,ClientInfo.lChannel,IsCrypted);
 
     //---------------------------------------
@@ -916,15 +932,20 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     //If need to decode, please set it valid. If want to get stream data only, we can set to NULL
     /*ClientInfo.lChannel = 1;*/ //Preview channel NO.cam=1,nvr=33
 
-    if (struDeviceInfo.byStartDChan > 0)
+    if (struDeviceInfo.struDeviceV30.byStartDChan > 0)
     {
-        ClientInfo.lChannel = struDeviceInfo.byStartDChan;
-//        ClientInfo.byProtoType = 1;
+        ClientInfo.lChannel = struDeviceInfo.struDeviceV30.byStartDChan;
+
     }
     else
     {
-        ClientInfo.lChannel = struDeviceInfo.byChanNum;
+        ClientInfo.lChannel = struDeviceInfo.struDeviceV30.byChanNum;
     }
+
+//    if (struDeviceInfo.byCharEncodeType == 6) {
+//        memcpy(&(struDeviceInfo.bySupportStreamEncrypt), (sPassword.toUtf8().data()), sPassword.length());
+//    }
+
 lChannel = ClientInfo.lChannel;
     if (StreamChoice) {
         ClientInfo.lLinkMode |= (1u << 31);
@@ -937,8 +958,9 @@ lChannel = ClientInfo.lChannel;
     //Multicast IP. Please set when require to preview in multicast mode.
     int bPreviewBlock = false;
     //whether blocked when requiring a stream connection, 0 means unblocked, 1 means blocked
+//    lRealPlayHandle = NET_DVR_RealPlay_V30(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL, 0);
+tagNET_DVR_MATRIX_DEC_REMOTE_PLAY_V50 RemotePlayV50;
     lRealPlayHandle = NET_DVR_RealPlay_V30(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL, 0);
-
 //    lRealPlayHandle = NET_DVR_RealPlay_V40(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL);
     if (lRealPlayHandle < 0)
     {
@@ -1166,13 +1188,4 @@ void RtspWindow::on_actionConfigure_triggered()
             iRet = NET_DVR_SetDVRConfig(lUserID, NET_DVR_SET_PICCFG_V30, lChannel,&struPictureParams, sizeof(NET_DVR_PICCFG_V30));
         }
     }
-}
-
-void RtspWindow::on_spinBoxChannel_valueChanged(int arg1)
-{
-    NET_DVR_StopRealPlay(lRealPlayHandle);
-//    ClientInfo.lChannel = arg1;
-//    ClientInfo.byProtoType = struDeviceInfo.byMultiStreamProto;
-    ClientInfo.byProtoType = arg1;
-    NET_DVR_RealPlay(lUserID,&ClientInfo);
 }
