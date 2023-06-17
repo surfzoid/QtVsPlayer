@@ -7,7 +7,10 @@ Infos::Infos(QWidget *parent) :
     ui(new Ui::Infos)
 {
     ui->setupUi(this);
+    this->setAccessibleName("Infos");
+    this->setWindowTitle("Infos");
 }
+
 
 void Infos::showEvent(QShowEvent *event)
 {
@@ -17,9 +20,4 @@ void Infos::showEvent(QShowEvent *event)
 Infos::~Infos()
 {
     delete ui;
-}
-
-void Infos::on_pushButton_released()
-{
-    close();
 }

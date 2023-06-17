@@ -89,6 +89,8 @@ private slots:
 
     void on_actionClose_triggered();
 
+    void on_actionConfigure_triggered();
+
 private:
     Ui::RtspWindow *ui;
     bool IsShown = false;
@@ -146,7 +148,8 @@ private:
     NET_DVR_PREVIEWINFO struPlayInfo = {0};
     NET_DVR_DEVICEINFO_V30 struDeviceInfo;
     int lRealPlayHandle;
-    int lUserID;
+    static int lUserID;
+    static int lChannel;
     static int lPort; //Global Player port NO.
     static int hWnd;
 

@@ -1,6 +1,7 @@
 #include "rtspwindow.h"
 #include "ui_rtspwindow.h"
 #include "infos.h"
+#include "cfgdialog.h"
 #include <QWidgetAction>
 #include <QVBoxLayout>
 #include <QTime>
@@ -34,6 +35,8 @@ QNetworkAccessManager *RtspWindow::manager;
 /****HIKNETSDK****/
 int RtspWindow::lPort; //Global Player port NO.
 int RtspWindow::hWnd;
+int RtspWindow::lUserID;
+int RtspWindow::lChannel;
 /****HIKNETSDK****/
 
 RtspWindow::RtspWindow(QWidget *parent) :
@@ -260,9 +263,9 @@ void RtspWindow::on_action_Streaming_Channels_3_triggered()
 void RtspWindow::on_actionMetadata_triggered()
 {
 #if (defined(_WIN32))
-  PlayM4_SetDecCallBack(lPort,(void (CALLBACK* )(int ,char * ,long ,FRAME_INFO * , void* ,void*))SetDecCallBack);
+    PlayM4_SetDecCallBack(lPort,(void (CALLBACK* )(int ,char * ,long ,FRAME_INFO * , void* ,void*))SetDecCallBack);
 #elif defined(__linux__)
-  PlayM4_SetDecCallBack(lPort, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
+    PlayM4_SetDecCallBack(lPort, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))SetDecCallBack);
 #endif
 }
 
@@ -901,6 +904,7 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     int *IsCrypted = nullptr;
     NET_DVR_InquestStreamEncrypt(lUserID, ClientInfo.lChannel, 1);
     NET_DVR_InquestGetEncryptState(lUserID,ClientInfo.lChannel,IsCrypted);
+    lChannel = ClientInfo.lChannel;
     //---------------------------------------
     //Set exception callback function
     NET_DVR_SetExceptionCallBack_V30(0, NULL,g_ExceptionCallBack, NULL);
@@ -977,11 +981,11 @@ void CALLBACK RtspWindow::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_I
     InfDialog->InfoData = "";
     //printf("SetDecCallBack---%l:%l\n\r",nPort, nSize);
     //qDebug() <<  pFrameInfo;
-//    pFRAME_INFO = pFrameInfo;
+    //    pFRAME_INFO = pFrameInfo;
 
-//    if ((pFrameInfo->nType == T_AUDIO16 | pFrameInfo->nType == T_AUDIO8) && !isound) {
-//        PlaySound();
-//    }
+    //    if ((pFrameInfo->nType == T_AUDIO16 | pFrameInfo->nType == T_AUDIO8) && !isound) {
+    //        PlaySound();
+    //    }
 
     if (pFrameInfo) {
         qDebug() << "FrameNum : " <<pFrameInfo->dwFrameNum;
@@ -1017,6 +1021,21 @@ void CALLBACK RtspWindow::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_I
 #elif defined(__linux__)
     PlayM4_SetDecCallBack(lPort, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))NULL);
 #endif
+
+    NET_DVR_PICCFG_V30 struPictureParams;
+    int iRet;
+    unsigned int uiRetParamsLen;
+
+    //»ñÈ¡Í¼Ïñ²ÎÊý
+    iRet = NET_DVR_GetDVRConfig(lUserID,
+                                NET_DVR_GET_PICCFG_V30,
+                                lChannel,
+                                &struPictureParams,
+                                sizeof(NET_DVR_PICCFG_V30),
+                                &uiRetParamsLen);
+
+    InfDialog->InfoData.append("\nChannel name: " +  QString::fromUtf8((char*)struPictureParams.sChanName));
+    InfDialog->InfoData.append("\nShow channel name on video: " +  QString::number(struPictureParams.dwShowChanName));
     InfDialog->show();
 }
 
@@ -1101,4 +1120,32 @@ void RtspWindow::on_actionClose_triggered()
 {
     //under windoze, there isn't the standard win cmd
     close();
+}
+
+void RtspWindow::on_actionConfigure_triggered()
+{
+
+    NET_DVR_PICCFG_V30 struPictureParams;
+    int iRet;
+    unsigned int uiRetParamsLen;
+
+    //»ñÈ¡Í¼Ïñ²ÎÊý
+    iRet = NET_DVR_GetDVRConfig(lUserID,
+                                NET_DVR_GET_PICCFG_V30,
+                                lChannel,
+                                &struPictureParams,
+                                sizeof(NET_DVR_PICCFG_V30),
+                                &uiRetParamsLen);
+    CfgDialog *cfgui = new CfgDialog();
+    cfgui->ShowChannel = struPictureParams.dwShowChanName;
+    cfgui->ChannelName = QString::fromUtf8((char*)struPictureParams.sChanName);
+    cfgui->exec();
+
+
+    if (cfgui->SaveParam) {
+        struPictureParams.dwShowChanName = cfgui->ShowChannel;
+        unsigned char *str_uchar = (unsigned char*)cfgui->ChannelName.toUtf8().data();
+        memcpy(&(struPictureParams.sChanName), (str_uchar), 32);
+        iRet = NET_DVR_SetDVRConfig(lUserID, NET_DVR_SET_PICCFG_V30, lChannel,&struPictureParams, sizeof(NET_DVR_PICCFG_V30));
+    }
 }

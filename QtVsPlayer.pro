@@ -94,6 +94,7 @@ ICON = $$PWD/images/QtVsPlayer.png
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    cfgdialog.cpp \
     errormanager.cpp \
     filesliste.cpp \
     infos.cpp \
@@ -107,6 +108,7 @@ SOURCES += \
     videoctrls.cpp
 
 HEADERS += \
+    cfgdialog.h \
     errormanager.h \
     filesliste.h \
     include/ApplePlayM4.h \
@@ -124,6 +126,7 @@ HEADERS += \
     videoctrls.h
 
 FORMS += \
+    cfgdialog.ui \
     filesliste.ui \
     infos.ui \
     pantilcmd.ui \

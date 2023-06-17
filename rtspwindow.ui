@@ -318,7 +318,7 @@
      <x>0</x>
      <y>0</y>
      <width>1451</width>
-     <height>34</height>
+     <height>29</height>
     </rect>
    </property>
    <property name="tabletTracking">
@@ -384,8 +384,15 @@
     <addaction name="menusave"/>
     <addaction name="actionReboot"/>
    </widget>
+   <widget class="QMenu" name="menuDevice">
+    <property name="title">
+     <string>Device</string>
+    </property>
+    <addaction name="actionConfigure"/>
+   </widget>
    <addaction name="menuVideo"/>
    <addaction name="menuPTZ"/>
+   <addaction name="menuDevice"/>
   </widget>
   <widget class="QStatusBar" name="statusbar">
    <property name="mouseTracking">
@@ -522,6 +529,11 @@
   <action name="actionClose">
    <property name="text">
     <string>Close</string>
+   </property>
+  </action>
+  <action name="actionConfigure">
+   <property name="text">
+    <string>Configure</string>
    </property>
   </action>
  </widget>

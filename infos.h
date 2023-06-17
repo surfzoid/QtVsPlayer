@@ -17,7 +17,6 @@ public:
     static QString InfoData;
 
 private slots:
-    void on_pushButton_released();
 
 private:
     Ui::Infos *ui;
