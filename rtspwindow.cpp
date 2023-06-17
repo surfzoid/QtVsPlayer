@@ -113,7 +113,7 @@ void RtspWindow::showEvent(QShowEvent *event)
     //    there is a ghost widget!!!!!!
     QList<QWidget *> widgets = RtspWindow::findChildren<QWidget *>();
     foreach (QWidget *var, widgets) {
-        qDebug() << var->objectName() << var->hasMouseTracking() << var->size();
+        //        qDebug() << var->objectName() << var->hasMouseTracking() << var->size();
         if(event and var->size() == centralWidget()->size())
             var->setMouseTracking(true);
     }
@@ -278,7 +278,7 @@ auxiliaire
 /doc/index.html#/preview
 */
     RtspWindow::Chanel = "104";
-    struPlayInfo.dwStreamType = 3;
+//    struPlayInfo.dwStreamType = 3;
     QString AdPath = "/ISAPI/Streaming/Channels/" + RtspWindow::Chanel;
     QUrl Adresse("rtsp://" + CamUser + ":" + CamPass +
                  "@" +  CamIp + ":" + CamPort + AdPath);
@@ -900,11 +900,12 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
         NET_DVR_Cleanup();
         return;
     }
+
     //EncryptState
-    int *IsCrypted = nullptr;
-    NET_DVR_InquestStreamEncrypt(lUserID, ClientInfo.lChannel, 1);
-    NET_DVR_InquestGetEncryptState(lUserID,ClientInfo.lChannel,IsCrypted);
-    lChannel = ClientInfo.lChannel;
+    //    int *IsCrypted = nullptr;
+    //    NET_DVR_InquestStreamEncrypt(lUserID, ClientInfo.lChannel, 1);
+    //    NET_DVR_InquestGetEncryptState(lUserID,ClientInfo.lChannel,IsCrypted);
+
     //---------------------------------------
     //Set exception callback function
     NET_DVR_SetExceptionCallBack_V30(0, NULL,g_ExceptionCallBack, NULL);
@@ -913,7 +914,18 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     NET_DVR_CLIENTINFO ClientInfo = {0};
     ClientInfo.hPlayWnd = NULL;
     //If need to decode, please set it valid. If want to get stream data only, we can set to NULL
-    ClientInfo.lChannel = 1; //Preview channel NO.cam=1,nvr=33
+    /*ClientInfo.lChannel = 1;*/ //Preview channel NO.cam=1,nvr=33
+
+    if (struDeviceInfo.byStartDChan > 0)
+    {
+        ClientInfo.lChannel = struDeviceInfo.byStartDChan;
+//        ClientInfo.byProtoType = 1;
+    }
+    else
+    {
+        ClientInfo.lChannel = struDeviceInfo.byChanNum;
+    }
+lChannel = ClientInfo.lChannel;
     if (StreamChoice) {
         ClientInfo.lLinkMode |= (1u << 31);
     }else {
@@ -926,6 +938,8 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     int bPreviewBlock = false;
     //whether blocked when requiring a stream connection, 0 means unblocked, 1 means blocked
     lRealPlayHandle = NET_DVR_RealPlay_V30(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL, 0);
+
+//    lRealPlayHandle = NET_DVR_RealPlay_V40(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL);
     if (lRealPlayHandle < 0)
     {
         printf("NET_DVR_RealPlay_V30 error\n");
@@ -971,6 +985,7 @@ void __stdcall RtspWindow::g_ExceptionCallBack(int dwType, int lUserID, int lHan
     default:
         int err = NET_DVR_GetLastError();
         qDebug()<< NET_DVR_GetErrorMsg(&err);
+//        displayErrorMessage(err);
         break;
     }
 }
@@ -1044,7 +1059,7 @@ Here takes software decoding as an example.*/
 void CALLBACK RtspWindow::g_RealDataCallBack_V30(int lRealHandle, int dwDataType, unsigned char *pBuffer, int dwBufSize, void* dwUser)
 {
     //    QString str;
-    //    QByteArray TmpB((char*)pBuffer);
+        QByteArray TmpB((char*)pBuffer);
     //    qDebug() << "dwDataType" << dwDataType;
     switch (dwDataType)
     {
@@ -1082,6 +1097,7 @@ assign this port to global port, and it will be used to play in next callback */
             {
                 qDebug() << PlayM4_GetLastError(0);
             }
+
         }
         break;
     case 2://NET_DVR_STREAMDATA Stream data
@@ -1136,16 +1152,27 @@ void RtspWindow::on_actionConfigure_triggered()
                                 &struPictureParams,
                                 sizeof(NET_DVR_PICCFG_V30),
                                 &uiRetParamsLen);
-    CfgDialog *cfgui = new CfgDialog();
-    cfgui->ShowChannel = struPictureParams.dwShowChanName;
-    cfgui->ChannelName = QString::fromUtf8((char*)struPictureParams.sChanName);
-    cfgui->exec();
 
+    if (iRet == 1) {
+        CfgDialog *cfgui = new CfgDialog();
+        cfgui->ShowChannel = struPictureParams.dwShowChanName;
+        cfgui->ChannelName = QString::fromUtf8((char*)struPictureParams.sChanName);
+        cfgui->exec();
 
-    if (cfgui->SaveParam) {
-        struPictureParams.dwShowChanName = cfgui->ShowChannel;
-        unsigned char *str_uchar = (unsigned char*)cfgui->ChannelName.toUtf8().data();
-        memcpy(&(struPictureParams.sChanName), (str_uchar), 32);
-        iRet = NET_DVR_SetDVRConfig(lUserID, NET_DVR_SET_PICCFG_V30, lChannel,&struPictureParams, sizeof(NET_DVR_PICCFG_V30));
+        if (cfgui->SaveParam) {
+            struPictureParams.dwShowChanName = cfgui->ShowChannel;
+            unsigned char *str_uchar = (unsigned char*)cfgui->ChannelName.toUtf8().data();
+            memcpy(&(struPictureParams.sChanName), (str_uchar), 32);
+            iRet = NET_DVR_SetDVRConfig(lUserID, NET_DVR_SET_PICCFG_V30, lChannel,&struPictureParams, sizeof(NET_DVR_PICCFG_V30));
+        }
     }
+}
+
+void RtspWindow::on_spinBoxChannel_valueChanged(int arg1)
+{
+    NET_DVR_StopRealPlay(lRealPlayHandle);
+//    ClientInfo.lChannel = arg1;
+//    ClientInfo.byProtoType = struDeviceInfo.byMultiStreamProto;
+    ClientInfo.byProtoType = arg1;
+    NET_DVR_RealPlay(lUserID,&ClientInfo);
 }

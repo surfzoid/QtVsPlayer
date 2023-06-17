@@ -91,6 +91,8 @@ private slots:
 
     void on_actionConfigure_triggered();
 
+    void on_spinBoxChannel_valueChanged(int arg1);
+
 private:
     Ui::RtspWindow *ui;
     bool IsShown = false;

@@ -95,6 +95,13 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
+      <widget class="QSpinBox" name="spinBoxChannel">
+       <property name="maximum">
+        <number>999</number>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="PauseBtn">
        <property name="enabled">
         <bool>false</bool>
@@ -382,13 +389,13 @@
      <addaction name="actionPatrol"/>
     </widget>
     <addaction name="menusave"/>
-    <addaction name="actionReboot"/>
    </widget>
    <widget class="QMenu" name="menuDevice">
     <property name="title">
      <string>Device</string>
     </property>
     <addaction name="actionConfigure"/>
+    <addaction name="actionReboot"/>
    </widget>
    <addaction name="menuVideo"/>
    <addaction name="menuPTZ"/>
