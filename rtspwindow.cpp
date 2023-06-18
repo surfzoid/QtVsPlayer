@@ -37,6 +37,7 @@ int RtspWindow::lPort; //Global Player port NO.
 int RtspWindow::hWnd;
 int RtspWindow::lUserID;
 int RtspWindow::lChannel;
+bool RtspWindow::IsNVR = false;
 /****HIKNETSDK****/
 
 RtspWindow::RtspWindow(QWidget *parent) :
@@ -278,7 +279,7 @@ auxiliaire
 /doc/index.html#/preview
 */
     RtspWindow::Chanel = "104";
-//    struPlayInfo.dwStreamType = 3;
+    //    struPlayInfo.dwStreamType = 3;
     QString AdPath = "/ISAPI/Streaming/Channels/" + RtspWindow::Chanel;
     QUrl Adresse("rtsp://" + CamUser + ":" + CamPass +
                  "@" +  CamIp + ":" + CamPort + AdPath);
@@ -428,14 +429,19 @@ void RtspWindow::authenticationRequired(QNetworkReply *reply, QAuthenticator *au
 
 void RtspWindow::CallPresset(int Presset)
 {
-
+    // /ISAPI/ContentMgmt/PTZCtrlProxy/channels/1/presets/1/goto
     QString AdPath = ("/PTZ/channels/1/PTZControl?command=GOTO_PRESET&presetNo=" +
                       QString::number(Presset) + "&speed=" +
                       QString::number(PtzSpeed) + "&mode=start").toUtf8();
+    if (IsNVR)
+        AdPath = ("/ISAPI/ContentMgmt/PTZCtrlProxy/channels/1/presets/" + QString::number(Presset) + "/goto");
+
+    QString FakeXml =" ";
+
     QUrl Adresse("http://" + CamUser + ":" + CamPass +
                  "@" +  CamIp + ":" + CamPortHttp + AdPath);
 
-    manager->get((QNetworkRequest)Adresse);
+    manager->put((QNetworkRequest)Adresse,FakeXml.toUtf8().data());
 }
 
 void RtspWindow::on_SnapshotBtn_pressed()
@@ -825,9 +831,13 @@ void RtspWindow::PanTilLeft_pressed()
 
 void RtspWindow::SendPTZ(int pan, int tilt, int zoom)
 {
-    QUrl PanTilAdresse("http://" + CamUser + ":" + CamPass +
-                       "@" + CamIp + ":" + CamPortHttp +
-                       "/ISAPI/PTZCtrl/channels/1/Momentary");
+    QUrl PanTilAdresse("http://" + CamUser + ":" + CamPass + "@" + CamIp + ":" + CamPortHttp + "/ISAPI/PTZCtrl/channels/1/Momentary");
+
+    //    /ISAPI/ContentMgmt/PTZCtrlProxy/channels/1/continuous
+    //    /ISAPI/ContentMgmt/PTZCtrlProxy/channels/<ID>/momentary
+    if (IsNVR)
+        PanTilAdresse = QUrl ("http://" + CamUser + ":" + CamPass + "@" + CamIp + ":" + CamPortHttp + "/ISAPI/ContentMgmt/PTZCtrlProxy/channels/1/momentary");
+
     manager->put((QNetworkRequest)PanTilAdresse,
                  SetXMLReq(pan,tilt,zoom).toUtf8());
 
@@ -843,21 +853,44 @@ void RtspWindow::SendPTZ(int pan, int tilt, int zoom)
     <duration>1000</duration> # Durée du mouvement en millisecondes
     </Momentary>
     </PTZData>'
+
+    NVR
+<?xml version="1.0" encoding="utf-8"?>
+<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">
+<pan><!--optional, xs:integer, panning range: [-100,100]--></pan>
+<tilt><!--optional, xs:integer, tilting range: [-100,100]--></tilt>
+<zoom><!--optional, xs:integer, zooming range: [-100,100]--></zoom>
+<Momentary>
+<duration><!--optional, xs:integer, unit: millisecond--></duration>
+</Momentary>
+</PTZData>
 ***************************************************/
 QString RtspWindow::SetXMLReq(int pan,int tilt,int zoom)
 {
     int Duration = PtzSpeed * 100;
 
-    QString XmlData = "<PTZData>\r\n\
-<pan>" + QString::number(pan) + "</pan>\r\n\
-            <tilt>" + QString::number(tilt) + "</tilt>\r\n\
-            <zoom>" + QString::number(zoom) + "</zoom>\r\n\
-            <Momentary>\r\n\
-            <duration>" +
-                      QString::number(Duration) + "</duration>\r\n\
-            </Momentary>\r\n\
-            </PTZData>";
+//    QString XmlData = "<PTZData>\r\n\
+//<pan>" + QString::number(pan) + "</pan>\r\n\
+//            <tilt>" + QString::number(tilt) + "</tilt>\r\n\
+//            <zoom>" + QString::number(zoom) + "</zoom>\r\n\
+//            <Momentary>\r\n\
+//            <duration>" +
+//                      QString::number(Duration) + "</duration>\r\n\
+//            </Momentary>\r\n\
+//            </PTZData>";
 
+//    if (IsNVR)
+            QString IsZoom;
+    if (zoom != 0)
+        IsZoom = "<zoom>" + QString::number(zoom) + "</zoom>\r\n";
+
+            QString XmlData = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<PTZData version=\"2.0\" xmlns=\"http://www.isapi.org/ver20/XMLSchema\">\r\n\
+            <pan>" + QString::number(pan) + "</pan>\r\n\
+            <tilt>" + QString::number(tilt) + "</tilt>\r\n" + IsZoom +
+            "<Momentary>\r\n\
+            <duration>" +  QString::number(Duration) + "</duration>\r\n\
+</Momentary>\r\n\
+            </PTZData>";
         return XmlData;
 }
 
@@ -886,24 +919,24 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     }
     //---------------------------------------
     //Set connection time and reconnection time
-    NET_DVR_SetConnectTime(2000, 1);
+    NET_DVR_SetConnectTime(5000, 3);
     NET_DVR_SetReconnect(10000, true);
     //---------------------------------------
     // Login
-//    NET_DVR_DEVICEINFO_V30 struDeviceInfo;
-//    lUserID = NET_DVR_Login_V30(sDeviceAddress.toUtf8().data(), Port, sUserName.toUtf8().data(), sPassword.toUtf8().data(), &struDeviceInfo);
-        NET_DVR_DEVICEINFO_V40 struDeviceInfo = {0};
-        NET_DVR_USER_LOGIN_INFO pLoginInfo = {0};
-//        pLoginInfo->sDeviceAddress = sDeviceAddress.toUtf8().data();
-//        pLoginInfo->pUser = sUserName.toUtf8().data();
+    //    NET_DVR_DEVICEINFO_V30 struDeviceInfo;
+    //    lUserID = NET_DVR_Login_V30(sDeviceAddress.toUtf8().data(), Port, sUserName.toUtf8().data(), sPassword.toUtf8().data(), &struDeviceInfo);
+    NET_DVR_DEVICEINFO_V40 struDeviceInfo = {0};
+    NET_DVR_USER_LOGIN_INFO pLoginInfo = {0};
+    //        pLoginInfo->sDeviceAddress = sDeviceAddress.toUtf8().data();
+    //        pLoginInfo->pUser = sUserName.toUtf8().data();
 
-        pLoginInfo.bUseAsynLogin = false;
-        memcpy((pLoginInfo.sDeviceAddress), (sDeviceAddress.toUtf8().data()), sDeviceAddress.length());
-        pLoginInfo.wPort = Port;
-        memcpy((pLoginInfo.sUserName), (sUserName.toUtf8().data()), sUserName.length());
-        memcpy((pLoginInfo.sPassword), (sPassword.toUtf8().data()), sPassword.length());
+    pLoginInfo.bUseAsynLogin = false;
+    memcpy((pLoginInfo.sDeviceAddress), (sDeviceAddress.toUtf8().data()), sDeviceAddress.length());
+    pLoginInfo.wPort = Port;
+    memcpy((pLoginInfo.sUserName), (sUserName.toUtf8().data()), sUserName.length());
+    memcpy((pLoginInfo.sPassword), (sPassword.toUtf8().data()), sPassword.length());
 
-        lUserID =  NET_DVR_Login_V40(&pLoginInfo, &struDeviceInfo);
+    lUserID =  NET_DVR_Login_V40(&pLoginInfo, &struDeviceInfo);
     if (lUserID < 0)
     {
         printf("Login error, %d\n", NET_DVR_GetLastError());
@@ -917,10 +950,6 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
         displayErrorMessage("Conected.");
     }
 
-    //EncryptState
-    //    int *IsCrypted = nullptr;
-        NET_DVR_InquestStreamEncrypt(lUserID, ClientInfo.lChannel, 0);
-    //    NET_DVR_InquestGetEncryptState(lUserID,ClientInfo.lChannel,IsCrypted);
 
     //---------------------------------------
     //Set exception callback function
@@ -932,21 +961,28 @@ void RtspWindow::LoginInfo(qint16 Port,QString sDeviceAddress,QString sUserName,
     //If need to decode, please set it valid. If want to get stream data only, we can set to NULL
     /*ClientInfo.lChannel = 1;*/ //Preview channel NO.cam=1,nvr=33
 
-    if (struDeviceInfo.struDeviceV30.byStartDChan > 0)
+    //EncryptState
+    int *IsCrypted = nullptr;
+    NET_DVR_InquestGetEncryptState(lUserID,ClientInfo.lChannel,IsCrypted);
+    NET_DVR_InquestStreamEncrypt(lUserID, ClientInfo.lChannel, 0);
+    NET_DVR_InquestGetEncryptState(lUserID,ClientInfo.lChannel,IsCrypted);
+
+    if (struDeviceInfo.struDeviceV30.byChanNum == 0)
     {
         ClientInfo.lChannel = struDeviceInfo.struDeviceV30.byStartDChan;
-
+        IsNVR = true;
     }
     else
     {
         ClientInfo.lChannel = struDeviceInfo.struDeviceV30.byChanNum;
+        IsNVR = false;
     }
 
-//    if (struDeviceInfo.byCharEncodeType == 6) {
-//        memcpy(&(struDeviceInfo.bySupportStreamEncrypt), (sPassword.toUtf8().data()), sPassword.length());
-//    }
+    //    if (struDeviceInfo.byCharEncodeType == 6) {
+    //        memcpy(&(struDeviceInfo.bySupportStreamEncrypt), (sPassword.toUtf8().data()), sPassword.length());
+    //    }
 
-lChannel = ClientInfo.lChannel;
+    lChannel = ClientInfo.lChannel;
     if (StreamChoice) {
         ClientInfo.lLinkMode |= (1u << 31);
     }else {
@@ -958,10 +994,12 @@ lChannel = ClientInfo.lChannel;
     //Multicast IP. Please set when require to preview in multicast mode.
     int bPreviewBlock = false;
     //whether blocked when requiring a stream connection, 0 means unblocked, 1 means blocked
-//    lRealPlayHandle = NET_DVR_RealPlay_V30(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL, 0);
-tagNET_DVR_MATRIX_DEC_REMOTE_PLAY_V50 RemotePlayV50;
+
+    int DecryptStatus = PlayM4_SetSecretKey(lPort, 0, CamPass.toUtf8().data(), CamPass.length());
     lRealPlayHandle = NET_DVR_RealPlay_V30(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL, 0);
-//    lRealPlayHandle = NET_DVR_RealPlay_V40(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL);
+    //tagNET_DVR_MATRIX_DEC_REMOTE_PLAY_V50 RemotePlayV50;
+    //    lRealPlayHandle = NET_DVR_RealPlay_V30(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL, 0);
+    //    lRealPlayHandle = NET_DVR_RealPlay_V40(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL);
     if (lRealPlayHandle < 0)
     {
         printf("NET_DVR_RealPlay_V30 error\n");
@@ -971,7 +1009,14 @@ tagNET_DVR_MATRIX_DEC_REMOTE_PLAY_V50 RemotePlayV50;
         NET_DVR_Cleanup();
         return;
     }
+
+
     return;
+}
+
+void CALLBACK  RtspWindow::EncryptTypeCBFun(int nPort, ENCRYPT_INFO* pEncryptInfo, void* nUser, int nReserved2)
+{
+    qDebug() << pEncryptInfo->nVideoEncryptType;
 }
 
 /**  @fn  void __stdcall  RealDataCallBack(int lRealHandle,int dwDataType,unsigned char *pBuffer,int  dwBufSize, void* dwUser)
@@ -1007,7 +1052,7 @@ void __stdcall RtspWindow::g_ExceptionCallBack(int dwType, int lUserID, int lHan
     default:
         int err = NET_DVR_GetLastError();
         qDebug()<< NET_DVR_GetErrorMsg(&err);
-//        displayErrorMessage(err);
+        //        displayErrorMessage(err);
         break;
     }
 }
@@ -1081,7 +1126,7 @@ Here takes software decoding as an example.*/
 void CALLBACK RtspWindow::g_RealDataCallBack_V30(int lRealHandle, int dwDataType, unsigned char *pBuffer, int dwBufSize, void* dwUser)
 {
     //    QString str;
-        QByteArray TmpB((char*)pBuffer);
+    QByteArray TmpB((char*)pBuffer);
     //    qDebug() << "dwDataType" << dwDataType;
     switch (dwDataType)
     {
@@ -1102,6 +1147,19 @@ assign this port to global port, and it will be used to play in next callback */
             {
                 break;
             }
+
+            // Encryption stream callback, nType=0: Call back when the stream encryption mark changed. nType=1: The encryption bit of the stream is called back
+            int  EncryptTypeCallBack = PlayM4_SetEncryptTypeCallBack(lPort, 0, EncryptTypeCBFun, NULL);
+            if (EncryptTypeCallBack < 0)
+            {
+                printf("EncryptTypeCallBack error\n");
+                int err = NET_DVR_GetLastError();
+                //                displayErrorMessage(NET_DVR_GetErrorMsg(&err));
+                NET_DVR_Logout(lUserID);
+                NET_DVR_Cleanup();
+                return;
+            }
+
             if (!PlayM4_OpenStream(lPort, pBuffer, dwBufSize, 1024*1024))
                 //Open stream
             {

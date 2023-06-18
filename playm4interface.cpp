@@ -54,6 +54,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         qDebug() <<  PlayM4_GetDecodeEngine(m_pblocalportnum);*/
     }
 
+//    int DecryptStatus = PlayM4_SetSecretKey(m_pblocalportnum, 0, "paassww", 11);
 
     FsOpened= PlayM4_OpenFile(m_pblocalportnum, m_pblocalfilepath.toUtf8().data());
     InitCallback(1,360);

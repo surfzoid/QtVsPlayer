@@ -106,9 +106,6 @@ private:
     static QString CamUser;
     static QString CamPass;
     static QString CamPortHttp;
-    /*******HCNetSDK**************/
-    static qint16 CamPortSdk;
-    /*******HCNetSDK**************/
     static QString Chanel;
     static unsigned int PtzSpeed;
 
@@ -123,6 +120,7 @@ private:
     void HikRtsp(unsigned char *pBuffer,unsigned int dwBufSize);
     static void DisplayError(QString Source, unsigned int  ErrMess);
     static void CALLBACK RemoteDisplayCBFun(int nPort, char *pBuf, int size, int width, int height,int stamp, int type, int reserved);
+    static void CALLBACK  EncryptTypeCBFun(int nPort, ENCRYPT_INFO* pEncryptInfo, void* nUser, int nReserved2);
 
     //QVideoProbe *m_videoProbe = nullptr;
     QSettings settings;
@@ -143,6 +141,8 @@ private:
 
 
     /*******HCNetSDK**************/
+    static qint16 CamPortSdk;
+    static bool IsNVR;
 
     NET_DVR_CLIENTINFO ClientInfo = {0};
     NET_DVR_PREVIEWINFO struPlayInfo = {0};

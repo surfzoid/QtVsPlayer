@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>511</width>
+    <width>559</width>
     <height>80</height>
    </rect>
   </property>
@@ -926,8 +926,8 @@
     <rect>
      <x>410</x>
      <y>0</y>
-     <width>76</width>
-     <height>51</height>
+     <width>121</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="palette">
@@ -1058,7 +1058,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00:00:00&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00:00:00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -1070,7 +1070,7 @@
   <widget class="QSlider" name="SoudVolume">
    <property name="geometry">
     <rect>
-     <x>490</x>
+     <x>540</x>
      <y>0</y>
      <width>20</width>
      <height>80</height>

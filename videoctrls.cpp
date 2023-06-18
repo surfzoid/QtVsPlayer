@@ -227,8 +227,8 @@ void VideoCtrls::updatelocalprocess()
                 ui->TimeSlider->setValue(currentpos);
 
                 unsigned int PlayedTime = PlayM4_GetPlayedTime(HikNumPort);
-                QString CurTime = QDateTime::fromSecsSinceEpoch((int)(PlayedTime)).toUTC().toString("mm:ss");
-                QString TotTime = QDateTime::fromSecsSinceEpoch((int)(Duration)).toUTC().toString("mm:ss");
+                QString CurTime = QDateTime::fromSecsSinceEpoch((int)(PlayedTime)).toUTC().toString("hh:mm:ss");
+                QString TotTime = QDateTime::fromSecsSinceEpoch((int)(Duration)).toUTC().toString("hh:mm:ss");
                 ui->LblDuration->setText(CurTime +  "\n\r" + TotTime );
 
                 //ui->LblDuration->setText(QString::number((Duration/60)*pos, 'f', 2) +  " / " + QString::number(Duration/60, 'f', 2) );
