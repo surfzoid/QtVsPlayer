@@ -351,22 +351,9 @@
      <property name="separatorsCollapsible">
       <bool>true</bool>
      </property>
-     <widget class="QMenu" name="menuNVR">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="tabletTracking">
-       <bool>true</bool>
-      </property>
-      <property name="title">
-       <string>NVR</string>
-      </property>
-      <addaction name="action_ISAPI_Streaming_channels_101"/>
-     </widget>
      <addaction name="action_Streaming_Channels_1"/>
      <addaction name="action_Streaming_Channels_2"/>
      <addaction name="action_Streaming_Channels_3"/>
-     <addaction name="menuNVR"/>
      <addaction name="actionmain_stream"/>
      <addaction name="actionsub_stream"/>
     </widget>
@@ -482,7 +469,7 @@
     <string>Metadata</string>
    </property>
   </action>
-  <action name="action_ISAPI_Streaming_channels_101">
+  <action name="action">
    <property name="enabled">
     <bool>true</bool>
    </property>

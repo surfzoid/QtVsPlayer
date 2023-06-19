@@ -544,8 +544,15 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
         int width = 0, height = 0;
         PlayM4_GetPictureSize(playm4interface::m_pblocalportnum,&width,&height);
         qDebug()  << width << "x" << height << " <- PlayM4_GetPictureSize()" ;
-        InfDialog->InfoData.append("\nVideo resolution:  : " + QString::number(width) + "x" + QString::number(height));
+        InfDialog->InfoData.append("\nVideo resolution : " + QString::number(width) + "x" + QString::number(height));
     }
+
+//    if (PlayM4_GetDecodeEngine(m_pblocalportnum)) {
+//        InfDialog->InfoData.append("\nUsing hardware decoding");
+//    }else
+//    {
+//       InfDialog->InfoData.append("\nUsing software  decoding");
+//    }
 
 #if (defined(_WIN32))
     //PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,long,int,FRAME_INFO*, void*, void*))NULL);

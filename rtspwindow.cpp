@@ -49,18 +49,6 @@ RtspWindow::RtspWindow(QWidget *parent) :
 
     PTCmd = new PanTilCmd(this);
 
-    //    connect(player, SIGNAL(positionChanged(qint64)),
-    //            this, SLOT(positionChanged(qint64)));
-
-
-    //    connect(player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
-    //            this, SLOT(onPlayStatusChanged(QMediaPlayer::MediaStatus)));
-    //    connect(player, SIGNAL(error(QMediaPlayer::Error)),
-    //            this, SLOT(onPlayError(QMediaPlayer::Error)));
-    //    connect(player, SIGNAL(stateChanged(QMediaPlayer::State)),
-    //            this, SLOT(onPlayStateChanged(QMediaPlayer::State)));
-    //    //connect(player, SIGNAL(bufferStatusChanged(int)),this, SLOT(onbufferStatusChanged(int)));
-    //    connect(player, &QMediaPlayer::bufferStatusChanged, this, &RtspWindow::onbufferStatusChanged);
     ui->setupUi(this);
 
 
@@ -84,11 +72,6 @@ RtspWindow::RtspWindow(QWidget *parent) :
     }
 
     settings.endGroup();
-
-
-    /*m_videoProbe = new QVideoProbe(this);
-    connect(m_videoProbe, &QVideoProbe::videoFrameProbed, this, &RtspWindow::processFrame);
-    m_videoProbe->setSource(player);*/
 
     ShowHideTimer = new QTimer(this);
     ShowHideTimer->setTimerType(Qt::PreciseTimer);
@@ -559,13 +542,6 @@ void RtspWindow::LoadPatrol()
     }
 
 }
-
-void RtspWindow::GetMetaData()
-{
-
-}
-
-
 
 void RtspWindow::on_comboBxPresset_textActivated(const QString &arg1)
 {
@@ -1069,6 +1045,20 @@ void CALLBACK RtspWindow::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_I
     //        PlaySound();
     //    }
 
+    NET_DVR_PICCFG_V30 struPictureParams;
+    int iRet;
+    unsigned int uiRetParamsLen;
+
+    iRet = NET_DVR_GetDVRConfig(lUserID,
+                                NET_DVR_GET_PICCFG_V30,
+                                lChannel,
+                                &struPictureParams,
+                                sizeof(NET_DVR_PICCFG_V30),
+                                &uiRetParamsLen);
+
+    InfDialog->InfoData.append("\nChannel name: " +  QString::fromUtf8((char*)struPictureParams.sChanName));
+    InfDialog->InfoData.append("\nShow channel name on video: " +  QString::number(struPictureParams.dwShowChanName));
+
     if (pFrameInfo) {
         qDebug() << "FrameNum : " <<pFrameInfo->dwFrameNum;
         InfDialog->InfoData.append("\nFrameNum : " + QString::number(pFrameInfo->dwFrameNum));
@@ -1104,20 +1094,6 @@ void CALLBACK RtspWindow::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_I
     PlayM4_SetDecCallBack(lPort, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))NULL);
 #endif
 
-    NET_DVR_PICCFG_V30 struPictureParams;
-    int iRet;
-    unsigned int uiRetParamsLen;
-
-    //»ñÈ¡Í¼Ïñ²ÎÊý
-    iRet = NET_DVR_GetDVRConfig(lUserID,
-                                NET_DVR_GET_PICCFG_V30,
-                                lChannel,
-                                &struPictureParams,
-                                sizeof(NET_DVR_PICCFG_V30),
-                                &uiRetParamsLen);
-
-    InfDialog->InfoData.append("\nChannel name: " +  QString::fromUtf8((char*)struPictureParams.sChanName));
-    InfDialog->InfoData.append("\nShow channel name on video: " +  QString::number(struPictureParams.dwShowChanName));
     InfDialog->show();
 }
 

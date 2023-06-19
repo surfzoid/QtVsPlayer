@@ -113,7 +113,6 @@ private:
     void LoadPatrol();
 
     static QString SetXMLReq(int pan,int tilt,int zoom);
-    void GetMetaData();
     void setStatusInfo(const QString &info);
     void displayErrorMessage(QString Err);
     void SetmediaRecorder();
