@@ -430,7 +430,7 @@ PLAYM4_API BOOL __stdcall PlayM4_SkipErrorData(int nPort, BOOL bSkip);
 PLAYM4_API BOOL __stdcall PlayM4_SetDecCallBackMend(int nPort,void (CALLBACK* DecCBFun)(int nPort,char * pBuf,long nSize,FRAME_INFO * pFrameInfo, void* nUser,void* nReserved2), void* nUser);
 PLAYM4_API BOOL __stdcall PlayM4_SetDecCallBackExMend(int nPort, void (CALLBACK* DecCBFun)(int nPort, char* pBuf, long nSize, FRAME_INFO* pFrameInfo, void* nUser, void* nReserved2), char* pDest, long nDestSize, void* nUser);
 // Encrypted Stream Callback, nType=0 indicates that callback when the stream encryption sign position is changed, nType=1 indicates that callback if there is the stream encryption sign position.
-PLAYM4_API BOOL __stdcall PlayM4_SetEncryptTypeCallBack(int nPort, DWORD nType, void (CALLBACK* EncryptTypeCBFun)(int nPort, ENCRYPT_INFO* pEncryptInfo, void* nUser, long nReserved2), void* nUser);
+PLAYM4_API BOOL __stdcall PlayM4_SetEncryptTypeCallBack(int nPort, DWORD nType, void (CALLBACK* EncryptTypeCBFun)(int nPort, ENCRYPT_INFO* pEncryptInfo, void* nUser, int nReserved2), void* nUser);
 
 ///<Display
 PLAYM4_API BOOL __stdcall PlayM4_SetDisplayRegion(int nPort,DWORD nRegionNum, RECT *pSrcRect, int hDestWnd, BOOL bEnable);///<Digital Zoom

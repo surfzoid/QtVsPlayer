@@ -810,7 +810,7 @@ int PlayM4_RenderPrivateData(int nPort, int nIntelType, BOOL bTrue);
 
 int PlayM4_RenderPrivateDataEx(int nPort, int nIntelType, int nSubType, BOOL bTrue);
 
-int PlayM4_SetEncryptTypeCallBack(int nPort,void (CALLBACK* EncryptTypeCBFun)(int nPort, ENCRYPT_INFO* pEncryptInfo, int nReserved));
+int  PlayM4_SetEncryptTypeCallBack(int nPort, unsigned int nType, void (CALLBACK* EncryptTypeCBFun)(int nPort, ENCRYPT_INFO* pEncryptInfo, void* nUser, int nReserved2), void* nUser);
 
 int PlayM4_GetStreamAdditionalInfo(int nPort, int lType, unsigned char* pInfo, int* plLen);
 
