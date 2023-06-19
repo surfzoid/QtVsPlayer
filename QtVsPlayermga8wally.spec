@@ -115,7 +115,7 @@ chmod -R ug+rw %{_srcrpmdir}
 %dir %{_libdir}/QtVsPlayer/
 %{_sysconfdir}/ld.so.conf.d/QtVsPlayer.conf
 %{_libdir}/QtVsPlayer/*
-x86_64V7.4.0.41
+
 %changelog
 * Mon Jun 19 2023 surfzoid@gmail.com
 + PlayCtrl x86_64V7.4.0.41.
