@@ -1,8 +1,8 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.45
+Version:        1.0.46
 
-%global Rel 2
+%global Rel 1
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -115,8 +115,14 @@ chmod -R ug+rw %{_srcrpmdir}
 %dir %{_libdir}/QtVsPlayer/
 %{_sysconfdir}/ld.so.conf.d/QtVsPlayer.conf
 %{_libdir}/QtVsPlayer/*
-
+x86_64V7.4.0.41
 %changelog
+* Mon Jun 19 2023 surfzoid@gmail.com
++ PlayCtrl x86_64V7.4.0.41.
++ Live view Manage channel name and display.
++ NVR can now PTZ, NVR live view is ok.
++ Live view Force disable stream encrypt.
+
 * Thu Jun 1 2023 surfzoid@gmail.com
 + Live view, devel in progress.
 
