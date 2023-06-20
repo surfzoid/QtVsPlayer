@@ -49,13 +49,17 @@ password :
 dnf install QtVsPlayer  
 ```
 
-## For Linux DEB users.  
+## For Linux DEB users. 
+For latest Ubuntu version:
 
 ```
 sudo add-apt-repository ppa:surfzoid/hikvision
 sudo apt update 
 sudo apt install qtvsplayer   
 ```
+else, use launchpad ubuntu version selector :
+https://launchpad.net/~surfzoid/+archive/ubuntu/hikvision/+index#  
+then click on "Technical details about this PPA"
 
 ## To compil and install manually
 ```
