@@ -2,7 +2,7 @@ Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
 Version:        1.0.46
 
-%global Rel 1
+%global Rel 2
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -90,7 +90,7 @@ cat << 'EOF' > %{buildroot}/etc/ld.so.conf.d/QtVsPlayer.conf
 %post
 /sbin/ldconfig
 
-%postun
+%preun
 if [ -d "/usr/lib64/QtVsPlayer" ];
 then
     rm -fr /usr/lib64/QtVsPlayer
