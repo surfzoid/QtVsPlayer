@@ -229,7 +229,7 @@ void VideoCtrls::updatelocalprocess()
                 unsigned int PlayedTime = PlayM4_GetPlayedTime(HikNumPort);
                 QString CurTime = QDateTime::fromSecsSinceEpoch((int)(PlayedTime)).toUTC().toString("hh:mm:ss");
                 QString TotTime = QDateTime::fromSecsSinceEpoch((int)(Duration)).toUTC().toString("hh:mm:ss");
-                ui->LblDuration->setText(CurTime +  "\n\r" + TotTime );
+                ui->LblDuration->setText(CurTime +  "\r\n" + TotTime );
 
                 //ui->LblDuration->setText(QString::number((Duration/60)*pos, 'f', 2) +  " / " + QString::number(Duration/60, 'f', 2) );
                 //ui->TimeSlider->statusTip(currentpos).fromUtf8();
@@ -238,7 +238,7 @@ void VideoCtrls::updatelocalprocess()
                     //PlayM4_CloseFile(playm4interface::m_pblocalportnum);
                     QThreadPool::globalInstance()->releaseThread();
                     QThreadPool::globalInstance()->clear();
-                    printf("---activeThreadCount:%d\n\r",QThreadPool::globalInstance()->activeThreadCount());
+                    printf("---activeThreadCount:%d\r\n",QThreadPool::globalInstance()->activeThreadCount());
 
                     QtVsPlayer::PlayNextFile(false,0);
 
@@ -248,7 +248,7 @@ void VideoCtrls::updatelocalprocess()
                     }
                 }
             }  catch (QException e ) {
-                printf("---Hik SDK Exception:%s\n\r",e.what());
+                printf("---Hik SDK Exception:%s\r\n",e.what());
             }
 
 

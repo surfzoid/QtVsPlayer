@@ -40,8 +40,8 @@ public:
             // storing exponential value
             countval = countval * 10;
             deciNum /= 8;
-            printf("%x <- Caps()\n\r",deciNum);
-            printf("%x <- Caps()\n\r",octalNum);
+            printf("%x <- Caps()\r\n",deciNum);
+            printf("%x <- Caps()\r\n",octalNum);
         }
         return;
     }

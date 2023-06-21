@@ -33,7 +33,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     //initval();
     m_pblocalfilepath = fileName;
 
-    printf("---File name:%s\n\r",m_pblocalfilepath.toUtf8().data());
+    printf("---File name:%s\r\n",m_pblocalfilepath.toUtf8().data());
 
     if (FsOpened == true) {
 
@@ -181,7 +181,7 @@ void playm4interface::DisplayError(QString Source, unsigned int  ErrMess)
 
     QString QerrMess=ErrorManager::error_codes(Source, ErrMess);
 
-    //printf("---Hik Sdk error response :from %s : %s\n\r", Source.toUtf8().data(), QerrMess.toUtf8().data());
+    //printf("---Hik Sdk error response :from %s : %s\r\n", Source.toUtf8().data(), QerrMess.toUtf8().data());
 
     return;
 
@@ -195,10 +195,10 @@ void playm4interface::SetPort()
         //from qtdemo//////
         unsigned int dwVersion = PlayM4_GetSdkVersion();
         QString strPlaySDKVersion;
-        printf("PlayCtrl V%d.%d.%d.%d\n\r", (0xff000000 & dwVersion)>>24, (0x00ff0000 & dwVersion)>>16,\
+        printf("PlayCtrl V%d.%d.%d.%d\r\n", (0xff000000 & dwVersion)>>24, (0x00ff0000 & dwVersion)>>16,\
                (0x0000ff00 & dwVersion)>>8, (0x000000ff & dwVersion));
         //ui.m_labelPlayerSDKVersion->setText(strPlaySDKVersion);
-        //printf("\n\r%.8x <- PlayM4_GetSdkVersion()\n\r",PlayM4_GetSdkVersion());
+        //printf("\r\n%.8x <- PlayM4_GetSdkVersion()\r\n",PlayM4_GetSdkVersion());
 
 
         GetCap(PlayM4_GetCaps());
@@ -208,7 +208,7 @@ void playm4interface::SetPort()
         {
             DisplayError("PlayM4_GetPort", PlayM4_GetLastError(m_pblocalportnum));
         }
-        printf("Debug---Port:%d\n\r",m_pblocalportnum);
+        printf("Debug---Port:%d\r\n",m_pblocalportnum);
 
         bool CallBResp = false;
 
@@ -424,7 +424,7 @@ void playm4interface::GetCap(int nFlag)
 
     }
 
-    printf("\n\r%s\n\r",csCap.toUtf8().data());
+    printf("\r\n%s\r\n",csCap.toUtf8().data());
 }
 
 
@@ -496,13 +496,13 @@ void CALLBACK playm4interface::SetFileRefCallBack(int nPort,void* nUser)
 
 void CALLBACK playm4interface::SetAudioCallBack(int nPort, char* pAudioBuf, int nSize, int nStamp, int nType, int nUser)
 {
-    printf("SetAudioCallBack---%d:%d\n\r",nPort, nUser);
+    printf("SetAudioCallBack---%d:%d\r\n",nPort, nUser);
 
 }
 
 void CALLBACK playm4interface::SetVerifyCallBack(int nPort, FRAME_POS* pFilePos, unsigned int bIsVideo, unsigned int nUser)
 {
-    printf("SetVerifyCallBack---%d:%d:%d:%u\n\r", nPort,pFilePos->nErrorFrameSize, bIsVideo, nUser);
+    printf("SetVerifyCallBack---%d:%d:%d:%u\r\n", nPort,pFilePos->nErrorFrameSize, bIsVideo, nUser);
 
 }
 
@@ -510,7 +510,7 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
 {
     Infos *InfDialog = new Infos();
     InfDialog->InfoData = "";
-    //printf("SetDecCallBack---%l:%l\n\r",nPort, nSize);
+    //printf("SetDecCallBack---%l:%l\r\n",nPort, nSize);
     //qDebug() <<  pFrameInfo;
     pFRAME_INFO = pFrameInfo;
 

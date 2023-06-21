@@ -282,7 +282,7 @@ void RtspWindow::replyFinished(QNetworkReply *reply)
     if(reply->error())
     {
         qDebug() << "ERROR!";
-        printf("finish : %s\n\r", reply->errorString().toUtf8().data());
+        printf("finish : %s\r\n", reply->errorString().toUtf8().data());
         qDebug() << reply->readAll();
         if (ui->comboBxPresset->count() == 0) {
             for (int i=1; i<16; i++){
@@ -1010,7 +1010,7 @@ void CALLBACK RtspWindow::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_I
 {
     Infos *InfDialog = new Infos();
     InfDialog->InfoData = "";
-    //printf("SetDecCallBack---%l:%l\n\r",nPort, nSize);
+    //printf("SetDecCallBack---%l:%l\r\n",nPort, nSize);
     //qDebug() <<  pFrameInfo;
     //    pFRAME_INFO = pFrameInfo;
 

@@ -54,10 +54,10 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 
     ui->statusbar->addPermanentWidget(ui->SatusLbl,1);
 
-    printf("---QtVsPlayer %s\n\r",APP_VERSION);
+    printf("---QtVsPlayer %s\r\n",APP_VERSION);
 
     QString CpuArch = QSysInfo::buildCpuArchitecture();
-    printf("---buildCpuArchitecture :%s\n\r",CpuArch.toUtf8().data());
+    printf("---buildCpuArchitecture :%s\r\n",CpuArch.toUtf8().data());
 
     //settings//
     QCoreApplication::setOrganizationName("Surfzoid");
@@ -163,13 +163,13 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
     {
         if(obj->objectName() == "VideoView")
         {
-            printf("---WinIdChange :%s\n\r",obj->objectName().toUtf8().data());
+            printf("---WinIdChange :%s\r\n",obj->objectName().toUtf8().data());
             playm4interface::hwnd = VideoView->winId();
             centralWidgetwinId = playm4interface::hwnd;
         }
     }
 
-    /*printf("---Event type %i :%s\n\r", event->type(), QEvent::staticMetaObject
+    /*printf("---Event type %i :%s\r\n", event->type(), QEvent::staticMetaObject
        .enumerator(eventEnumIndex).valueToKey(event->type()));*/
 
     return QObject::eventFilter(obj, event);
@@ -213,8 +213,8 @@ QString QtVsPlayer::GetmimeType( const QString &filePath )
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     QMimeType Mime = QMimeDatabase().mimeTypeForFile(filePath );
-    printf("Debug---File:%s\n\r" , filePath.toUtf8().data());
-    printf("Debug---Mime type:%s\n\r",Mime.name().toUtf8().data());
+    printf("Debug---File:%s\r\n" , filePath.toUtf8().data());
+    printf("Debug---Mime type:%s\r\n",Mime.name().toUtf8().data());
     return Mime.name();
 #endif
     return "";
@@ -242,7 +242,7 @@ QStringList QtVsPlayer::Scandir( const QString &dir2scan )
                 }
             }
         }
-        printf("Debug---Found :%d files\n\r",list.length());
+        printf("Debug---Found :%d files\r\n",list.length());
 
     }
 
@@ -353,7 +353,7 @@ void QtVsPlayer::DisplayFsName(QString Name)
         /*this->ui->statusbar->clearMessage();
     this->ui->statusbar-> showMessage(Name.toUtf8());*/
         SatusLbl->setText(Name.toUtf8());
-        //printf("---currentMessage :%s\n\r",ui->SatusLbl->text().toUtf8().data());
+        //printf("---currentMessage :%s\r\n",ui->SatusLbl->text().toUtf8().data());
 
     }
     return;
@@ -373,7 +373,7 @@ QWidget  *QtVsPlayer::GetWidgetByName(QString Name)
 void QtVsPlayer::on_actionA_propos_triggered()
 {
     QString Vers = APP_VERSION;
-    QMessageBox::about(this, tr("QvSPlayer for Hikvision local records."), tr("QvSPlayer can read local video files of Hikvision and display blue, green an red vector.") +  "\n\r\n\rVersion " + Vers.toUtf8());
+    QMessageBox::about(this, tr("QvSPlayer for Hikvision local records."), tr("QvSPlayer can read local video files of Hikvision and display blue, green an red vector.") +  "\r\n\r\nVersion " + Vers.toUtf8());
     return;
 }
 
@@ -717,12 +717,12 @@ void QtVsPlayer::on_actionRtsp_Play_triggered()
 
 void QtVsPlayer::on_actionBeer_and_Coffee_triggered()
 {
-    QString Paypal = "<a href='https://paypal.me/EricPetit?'>Paypal</a>\n\r";
-    QString Tip = "<a href='https://fr.tipeee.com/eric-utopiste'>Tip</a>\n\r";
+    QString Paypal = "<a href='https://paypal.me/EricPetit?'>Paypal</a>\r\n";
+    QString Tip = "<a href='https://fr.tipeee.com/eric-utopiste'>Tip</a>\r\n";
     QMessageBox::about(this, tr("Enjoy!"),
                        Paypal +
-                       " or \n\r" + Tip +
-                       "\n\r" +
+                       " or \r\n" + Tip +
+                       "\r\n" +
                        tr("If you like my job and be happy to buy me a beer or a coffee, you can do it here."));
 
     return;
@@ -732,7 +732,7 @@ void QtVsPlayer::test()
 {
     foreach (const QAction *Act, ui->menuAide->actions()) {
 
-        printf("menu name :%s\n\r",Act->text().toUtf8().data());
+        printf("menu name :%s\r\n",Act->text().toUtf8().data());
     }
 
 }

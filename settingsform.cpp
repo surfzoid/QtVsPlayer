@@ -113,7 +113,7 @@ void SettingsForm::on_BtPlay_released()
 
 
     int bsucces = __stdcall PlayM4_OpenStreamAdvanced(playm4interface::m_pblocalportnum, PLAYM4_PROTOCOL_RTSP, &SessionInf, 2048);
-    printf("---PlayM4_OpenStreamAdvanced :%d\n\r",bsucces);
+    printf("---PlayM4_OpenStreamAdvanced :%d\r\n",bsucces);
     ErrorManager::error_codes("PlayM4_OpenStreamAdvanced",PlayM4_GetLastError(playm4interface::m_pblocalportnum));*/
 
 }
