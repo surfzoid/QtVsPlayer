@@ -1,8 +1,8 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.46
+Version:        1.0.47
 
-%global Rel 6
+%global Rel 1
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -121,6 +121,11 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/*
 
 %changelog
+* Wed Jun 21 2023 surfzoid@gmail.com
++ Design info dialog.
++ Display time play in hour.
++ Missing lib from PlayCtrl x86_64V7.4.0.41 SDK.
+
 * Mon Jun 19 2023 surfzoid@gmail.com
 + PlayCtrl x86_64V7.4.0.41.
 + Live view Manage channel name and display.
