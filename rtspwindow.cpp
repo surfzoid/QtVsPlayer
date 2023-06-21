@@ -253,33 +253,6 @@ void RtspWindow::on_actionMetadata_triggered()
 #endif
 }
 
-void RtspWindow::on_action_ISAPI_Streaming_channels_101_triggered()
-{
-    /*• rtsp://user:password@192.168.1.64:554/Streaming/Channels/channel_no01/ - Flux
-principal
-• rtsp://user:password@192.168.1.64:554/Streaming/Channels/channel_no02/ - Flux
-auxiliaire
-/doc/index.html#/preview
-*/
-    RtspWindow::Chanel = "104";
-    //    struPlayInfo.dwStreamType = 3;
-    QString AdPath = "/ISAPI/Streaming/Channels/" + RtspWindow::Chanel;
-    QUrl Adresse("rtsp://" + CamUser + ":" + CamPass +
-                 "@" +  CamIp + ":" + CamPort + AdPath);
-    ui->action_Streaming_Channels_1->setChecked(false);
-    ui->action_Streaming_Channels_3->setChecked(false);
-    //    PlayRtsp(Adresse.url());
-    //---------------------------------------
-    // Close preview
-    NET_DVR_StopRealPlay(lRealPlayHandle);
-    // Logout
-    NET_DVR_Logout(lUserID);
-    NET_DVR_Logout_V30(lUserID);
-    // Release SDK resource
-    NET_DVR_Cleanup();
-    //    Play();
-}
-
 void RtspWindow::wheelEvent(QWheelEvent *event)
 {
     QPoint Scroll = event->angleDelta();

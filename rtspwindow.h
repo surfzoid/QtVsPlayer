@@ -59,8 +59,6 @@ private slots:
 
     void on_actionMetadata_triggered();
 
-    void on_action_ISAPI_Streaming_channels_101_triggered();
-
     void on_SnapshotBtn_pressed();
 
     void on_PtzSliderSpeed_valueChanged(int value);
