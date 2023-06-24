@@ -2,7 +2,7 @@ Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
 Version:        1.0.47
 
-%global Rel 1
+%global Rel 2
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -121,6 +121,9 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/*
 
 %changelog
+* Sat Jun 24 2023 surfzoid@gmail.com
++ Show XML response option in console.
+
 * Wed Jun 21 2023 surfzoid@gmail.com
 + Design info dialog.
 + Display time play in hour.
