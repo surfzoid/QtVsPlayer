@@ -23,6 +23,7 @@ public:
     QString CamPortHttp = "800";
     QString CamUser = "admin";
     QString CamPass = "hik12345";
+    bool ShowXML = false;
     /*******HCNetSDK**************/
     qint16 CamPortSdk;
     /*******HCNetSDK**************/

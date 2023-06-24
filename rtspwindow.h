@@ -104,6 +104,7 @@ private:
     static QString CamUser;
     static QString CamPass;
     static QString CamPortHttp;
+    static bool ShowXML;
     static QString Chanel;
     static unsigned int PtzSpeed;
 

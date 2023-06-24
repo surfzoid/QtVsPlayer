@@ -53,6 +53,7 @@ void SettingsForm::on_BtnSave_released()
     /*******HCNetSDK**************/
     settings.setValue("User", ui->UserEd->text());
     settings.setValue("Password",crypto.encryptToString(ui->PassEd->text()) );
+    settings.setValue("ShowXML", ui->ChkBxShowXml->checkState());
 
     settings.endGroup();
     settings.sync();
@@ -66,6 +67,7 @@ void SettingsForm::on_BtnSave_released()
     /*******HCNetSDK**************/
     CamUser = ui->UserEd->text();
     CamPass = ui->PassEd->text();
+    ShowXML = ui->ChkBxShowXml->checkState();
 }
 
 void SettingsForm::on_CamNameEd_currentIndexChanged(const QString &arg1)
@@ -81,6 +83,7 @@ void SettingsForm::on_CamNameEd_currentIndexChanged(const QString &arg1)
     /*******HCNetSDK**************/
     CamUser = settings.value("User", "admin").value<QString>();
     CamPass = crypto.decryptToString(settings.value("Password", "hik12345").value<QString>());
+    ShowXML = settings.value("ShowXML", "0").value<bool>();
     settings.endGroup();
 
     ui->IpEd->setText(CamIp);
@@ -91,6 +94,7 @@ void SettingsForm::on_CamNameEd_currentIndexChanged(const QString &arg1)
     /*******HCNetSDK**************/
     ui->UserEd->setText(CamUser);
     ui->PassEd->setText(CamPass);
+    ui->ChkBxShowXml->setChecked(ShowXML);
 
 }
 

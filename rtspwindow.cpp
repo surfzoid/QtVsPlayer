@@ -24,6 +24,7 @@ QString RtspWindow::CamPort = "554";
 QString RtspWindow::CamUser = "admin";
 QString RtspWindow::CamPass = "hik12345";
 QString RtspWindow::CamPortHttp = "801";
+bool RtspWindow::ShowXML = false;
 QString RtspWindow::Chanel = "101";
 qint16 RtspWindow::CamPortSdk = 8000;
 unsigned int RtspWindow::PtzSpeed = 3;
@@ -139,6 +140,7 @@ void RtspWindow::on_ComboBxCam_currentIndexChanged(const QString &arg1)
     CamPortSdk = settings.value("PortSdk", "8000").value<qint16>();
     CamUser = settings.value("User", "admin").value<QString>();
     CamPass = SetFrm.crypto.decryptToString(settings.value("Password", "hik12345").value<QString>());
+    ShowXML = settings.value("ShowXML", "0").value<bool>();
     settings.endGroup();
 
     RtspUri = "rtsp://" + CamUser + ":" + CamPass +
@@ -327,7 +329,7 @@ void RtspWindow::replyFinished(QNetworkReply *reply)
                 xml.readNext();
                 if (xml.name().contains("patrolName") == true) {
                     xml.readNext();
-                    qDebug() << "patrolName" << xml.text();
+                    //                    qDebug() << "patrolName" << xml.text();
                     xml.readNext();
                 }
                 if (xml.name().contains("presetName") == true) {
@@ -352,7 +354,8 @@ void RtspWindow::replyFinished(QNetworkReply *reply)
                 }
             }
         }
-        qDebug() << Response;
+        if (ShowXML)
+            qDebug() << Response;
     }
 
     reply->deleteLater();
@@ -818,27 +821,27 @@ QString RtspWindow::SetXMLReq(int pan,int tilt,int zoom)
 {
     int Duration = PtzSpeed * 100;
 
-//    QString XmlData = "<PTZData>\r\n\
-//<pan>" + QString::number(pan) + "</pan>\r\n\
-//            <tilt>" + QString::number(tilt) + "</tilt>\r\n\
-//            <zoom>" + QString::number(zoom) + "</zoom>\r\n\
-//            <Momentary>\r\n\
-//            <duration>" +
-//                      QString::number(Duration) + "</duration>\r\n\
-//            </Momentary>\r\n\
-//            </PTZData>";
+    //    QString XmlData = "<PTZData>\r\n\
+    //<pan>" + QString::number(pan) + "</pan>\r\n\
+    //            <tilt>" + QString::number(tilt) + "</tilt>\r\n\
+    //            <zoom>" + QString::number(zoom) + "</zoom>\r\n\
+    //            <Momentary>\r\n\
+    //            <duration>" +
+    //                      QString::number(Duration) + "</duration>\r\n\
+    //            </Momentary>\r\n\
+    //            </PTZData>";
 
-//    if (IsNVR)
-            QString IsZoom;
+    //    if (IsNVR)
+    QString IsZoom;
     if (zoom != 0)
         IsZoom = "<zoom>" + QString::number(zoom) + "</zoom>\r\n";
 
-            QString XmlData = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<PTZData version=\"2.0\" xmlns=\"http://www.isapi.org/ver20/XMLSchema\">\r\n\
+    QString XmlData = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<PTZData version=\"2.0\" xmlns=\"http://www.isapi.org/ver20/XMLSchema\">\r\n\
             <pan>" + QString::number(pan) + "</pan>\r\n\
             <tilt>" + QString::number(tilt) + "</tilt>\r\n" + IsZoom +
             "<Momentary>\r\n\
             <duration>" +  QString::number(Duration) + "</duration>\r\n\
-</Momentary>\r\n\
+            </Momentary>\r\n\
             </PTZData>";
         return XmlData;
 }
