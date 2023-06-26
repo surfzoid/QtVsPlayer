@@ -17,3 +17,16 @@ usr/lib64/QtVsPlayer/libStreamTransClient.so
 usr/lib64/QtVsPlayer/libSuperRender.so
 usr/lib64/QtVsPlayer/libSuperRender.so.1
 usr/lib64/QtVsPlayer/HCNetSDKCom/
+usr/lib64/QtVsPlayer/HCNetSDKCom/libanalyzedata.so
+usr/lib64/QtVsPlayer/HCNetSDKCom/libAudioIntercom.so
+usr/lib64/QtVsPlayer/HCNetSDKCom/libHCAlarm.so
+usr/lib64/QtVsPlayer/HCNetSDKCom/libHCCoreDevCfg.so
+usr/lib64/QtVsPlayer/HCNetSDKCom/libHCDisplay.so
+usr/lib64/QtVsPlayer/HCNetSDKCom/libHCGeneralCfgMgr.so
+usr/lib64/QtVsPlayer/HCNetSDKCom/libHCIndustry.so
+usr/lib64/QtVsPlayer/HCNetSDKCom/libHCPlayBack.so
+usr/lib64/QtVsPlayer/HCNetSDKCom/libHCPreview.so
+usr/lib64/QtVsPlayer/HCNetSDKCom/libHCVoiceTalk.so
+usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv.so.2
+usr/lib64/QtVsPlayer/HCNetSDKCom/libStreamTransClient.so
+usr/lib64/QtVsPlayer/HCNetSDKCom/libSystemTransform.so
