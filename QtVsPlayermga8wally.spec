@@ -1,8 +1,8 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.47
+Version:        1.0.48
 
-%global Rel 3
+%global Rel 1
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
