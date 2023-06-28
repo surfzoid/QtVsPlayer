@@ -27,10 +27,8 @@ win32 { # For Windows
 }
 
 linux { # For Linux
-  QMAKE_CXXFLAGS += -fopenmp
-  QMAKE_LFLAGS += -fopenmp
-  QMAKE_CXXFLAGS += -lm
-  QMAKE_LFLAGS += -lm
+  QMAKE_CXXFLAGS += -lopenmp -lm
+  QMAKE_LFLAGS += -lopenmp -lm
 }
 unix {
     isEmpty(PREFIX) {
