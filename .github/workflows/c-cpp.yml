@@ -139,7 +139,7 @@ jobs:
           allowUpdates: true
           name: ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
-          body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec) for change log"
+          body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec#L123) for change log"
 
 
       - name: clean
@@ -298,7 +298,7 @@ jobs:
           allowUpdates: true
           name: ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
-          body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec) for change log"
+          body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec#L123) for change log"
 
   windoze:
     # The type of runner that the job will run on
@@ -388,7 +388,7 @@ jobs:
           allowUpdates: true
           name: ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
-          body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec) for change log"
+          body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec#L123) for change log"
 
   Mac:
     # The type of runner that the job will run on
@@ -469,4 +469,4 @@ jobs:
           allowUpdates: true
           name: ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
-          body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec) for change log"
+          body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec#L123) for change log"
