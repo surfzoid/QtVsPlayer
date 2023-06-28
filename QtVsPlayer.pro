@@ -69,7 +69,7 @@ debugfiles.files = $${TARGET}.debug
 unix:!macx:!android: {
 INCLUDEPATH += $$PWD/lib/$$QMAKE_HOST.arch/
 DEPENDPATH += $$PWD/lib/$$QMAKE_HOST.arch/
-LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl, -rpath=/usr/lib64/QtVsPlayer -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
+LIBS += -L$$PWD/lib/$$QMAKE_HOST.arch/ -Wl,-rpath=/usr/lib64/QtVsPlayer -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
 }
 
 macx: {
