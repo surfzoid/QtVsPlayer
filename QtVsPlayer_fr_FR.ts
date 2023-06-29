@@ -2,6 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR" sourcelanguage="en_GB">
 <context>
+    <name>CfgDialog</name>
+    <message>
+        <location filename="cfgdialog.ui" line="14"/>
+        <source>Device setup</source>
+        <translation>configuration de l&apos;appareil</translation>
+    </message>
+    <message>
+        <location filename="cfgdialog.ui" line="48"/>
+        <source>Channel name</source>
+        <translation>Nom du canal</translation>
+    </message>
+    <message>
+        <location filename="cfgdialog.ui" line="58"/>
+        <source>Show channel</source>
+        <translation>Afficher le canal</translation>
+    </message>
+</context>
+<context>
     <name>FilesListe</name>
     <message>
         <location filename="filesliste.ui" line="14"/>
@@ -54,6 +72,14 @@
         <location filename="filesliste.ui" line="180"/>
         <source>directory</source>
         <translation>Répertoire</translation>
+    </message>
+</context>
+<context>
+    <name>Infos</name>
+    <message>
+        <location filename="infos.ui" line="20"/>
+        <source>Dialog</source>
+        <translation>Dialogue</translation>
     </message>
 </context>
 <context>
@@ -251,206 +277,211 @@
 <context>
     <name>QtVsPlayer</name>
     <message>
-        <location filename="qtvsplayer.ui" line="21"/>
+        <location filename="qtvsplayer.ui" line="13"/>
         <source>QtVsPlayer</source>
         <translation>QtVsPlayer</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="114"/>
+        <location filename="qtvsplayer.ui" line="106"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;_________________&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <oldsource>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="249"/>
+        <location filename="qtvsplayer.ui" line="241"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="262"/>
+        <location filename="qtvsplayer.ui" line="254"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="379"/>
+        <location filename="qtvsplayer.ui" line="372"/>
         <source>Beer and Coffee</source>
         <translation>Bière et café</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="273"/>
+        <location filename="qtvsplayer.ui" line="266"/>
         <source>Display</source>
         <translation>Affichage</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="280"/>
+        <location filename="qtvsplayer.ui" line="273"/>
         <source>VCA Info Overlay</source>
         <translation>VCA Info Overlay</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="309"/>
+        <location filename="qtvsplayer.ui" line="302"/>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="312"/>
+        <location filename="qtvsplayer.ui" line="305"/>
         <source>F3</source>
         <translation>F3</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="317"/>
+        <location filename="qtvsplayer.ui" line="310"/>
         <source>About</source>
         <translation>A propos</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="325"/>
+        <location filename="qtvsplayer.ui" line="318"/>
         <source>Full screen</source>
         <translation>Plein écran</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="328"/>
+        <location filename="qtvsplayer.ui" line="321"/>
         <source>F11</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="336"/>
+        <location filename="qtvsplayer.ui" line="329"/>
         <source>Hide control</source>
         <oldsource>Masquer les controles</oldsource>
         <translation>Masquer les contrôles</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="339"/>
+        <location filename="qtvsplayer.ui" line="332"/>
         <source>F10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="344"/>
+        <location filename="qtvsplayer.ui" line="337"/>
         <source>Playliste</source>
         <translation>Liste de lecture</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="347"/>
+        <location filename="qtvsplayer.ui" line="340"/>
         <source>F8</source>
         <translation>F8</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="352"/>
+        <location filename="qtvsplayer.ui" line="345"/>
         <source>Folder</source>
         <translation>Répertoire</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="355"/>
+        <location filename="qtvsplayer.ui" line="348"/>
         <source>F4</source>
         <translation>F4</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="360"/>
+        <location filename="qtvsplayer.ui" line="353"/>
         <source>Settings</source>
         <translation>Parametres</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="363"/>
+        <location filename="qtvsplayer.ui" line="356"/>
         <source>F7</source>
         <translation>F7</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="371"/>
+        <location filename="qtvsplayer.ui" line="364"/>
         <source>Rtsp Play</source>
         <translation>Lecteur RTSP</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="374"/>
+        <location filename="qtvsplayer.ui" line="367"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="387"/>
+        <location filename="qtvsplayer.ui" line="380"/>
         <source>Infos</source>
         <translation>Infos</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="390"/>
+        <location filename="qtvsplayer.ui" line="383"/>
         <source>F6</source>
         <translation>F6</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="401"/>
+        <location filename="qtvsplayer.ui" line="394"/>
         <source>Auto hide controls</source>
         <translation>Masque les contrôles auto</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="404"/>
+        <location filename="qtvsplayer.ui" line="397"/>
         <source>F9</source>
         <translation>F9</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="415"/>
+        <location filename="qtvsplayer.ui" line="408"/>
         <source>VCA</source>
         <translation>VCA</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="418"/>
+        <location filename="qtvsplayer.ui" line="411"/>
         <source>F12</source>
         <translation>F12</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="429"/>
+        <location filename="qtvsplayer.ui" line="422"/>
         <source>Motion Detection</source>
         <translation>Détection de mouvements.</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="440"/>
+        <location filename="qtvsplayer.ui" line="433"/>
         <source>POS Text Overlay</source>
         <translation>POS Text Overlay</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="451"/>
+        <location filename="qtvsplayer.ui" line="444"/>
         <source>Temperature</source>
         <translation>Température</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="462"/>
+        <location filename="qtvsplayer.ui" line="455"/>
         <source>Picture Overlay</source>
         <translation>Image Overlay</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="473"/>
+        <location filename="qtvsplayer.ui" line="466"/>
         <source>Fire Source</source>
         <translation>Source de feu</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="487"/>
+        <location filename="qtvsplayer.ui" line="480"/>
         <source>Track</source>
         <translation>Piste</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="501"/>
+        <location filename="qtvsplayer.ui" line="494"/>
         <source>Display Schield Area</source>
         <translation>Affichage zone bouclier</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="506"/>
+        <location filename="qtvsplayer.ui" line="499"/>
         <source>All</source>
         <translation>Tous</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="511"/>
+        <location filename="qtvsplayer.ui" line="504"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="516"/>
+        <location filename="qtvsplayer.ui" line="509"/>
         <source>Online documentation</source>
         <translation>Documentation en ligne</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="519"/>
+        <location filename="qtvsplayer.ui" line="512"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="qtvsplayer.ui" line="524"/>
+        <location filename="qtvsplayer.ui" line="517"/>
         <source>Quit</source>
         <translation>Quitter</translation>
+    </message>
+    <message>
+        <location filename="qtvsplayer.ui" line="525"/>
+        <source>QT Infos</source>
+        <translation>QT Infos</translation>
     </message>
     <message>
         <location filename="qtvsplayer.cpp" line="257"/>
@@ -507,7 +538,6 @@
     </message>
     <message>
         <location filename="rtspwindow.ui" line="72"/>
-        <location filename="rtspwindow.cpp" line="751"/>
         <source>Loading video stream ........</source>
         <translation>Chargement du flux vidéo........</translation>
     </message>
@@ -532,7 +562,7 @@
         <translation>Lance ou arrete l&apos;enregistrement manuel.</translation>
     </message>
     <message>
-        <location filename="rtspwindow.cpp" line="696"/>
+        <location filename="rtspwindow.cpp" line="573"/>
         <source>Record</source>
         <translation>Enregistrer</translation>
     </message>
@@ -563,79 +593,98 @@
         <translation>Selectione un appareil</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="332"/>
+        <location filename="rtspwindow.ui" line="342"/>
         <source>Video</source>
         <translation>Vidéo</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="339"/>
-        <source>Proportions</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="rtspwindow.ui" line="351"/>
+        <location filename="rtspwindow.ui" line="349"/>
         <source>channel</source>
         <translation>Canal</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="361"/>
         <source>NVR</source>
-        <translation>NVR</translation>
+        <translation type="vanished">NVR</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="379"/>
+        <location filename="rtspwindow.ui" line="369"/>
         <source>PTZ</source>
         <translation>PTZ</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="386"/>
+        <location filename="rtspwindow.ui" line="376"/>
         <source>save</source>
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="407"/>
+        <location filename="rtspwindow.ui" line="385"/>
+        <source>Device</source>
+        <translation>Appareil</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.ui" line="404"/>
         <source>Default</source>
         <translation>Défaut</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="412"/>
+        <location filename="rtspwindow.ui" line="409"/>
         <source>IgnoreAspectRatio</source>
         <translation>Ignore l&apos;aspect du ratio</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="417"/>
+        <location filename="rtspwindow.ui" line="414"/>
         <source>KeepAspectRatio</source>
         <translation>Garde l&apos;aspect du ratio</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="422"/>
+        <location filename="rtspwindow.ui" line="419"/>
         <source>KeepAspectRatioByExpanding</source>
         <translation>Garde l&apos;aspect du ratio par extension</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="444"/>
+        <location filename="rtspwindow.ui" line="447"/>
         <source>/Streaming/Channels/102</source>
         <translation>/Streaming/Channels/102</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="452"/>
+        <location filename="rtspwindow.ui" line="461"/>
         <source>/Streaming/Channels/103</source>
         <translation>/Streaming/Channels/103</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="465"/>
+        <location filename="rtspwindow.ui" line="477"/>
         <source>/Streaming/Channels/104</source>
         <translation>/Streaming/Channels/104</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="470"/>
+        <location filename="rtspwindow.ui" line="482"/>
         <source>All Preset localy</source>
         <translation>Toutes les preselections localement</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="475"/>
+        <location filename="rtspwindow.ui" line="487"/>
         <source>All Patrol localy</source>
         <translation>Toutes les patrouilles localement</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.ui" line="503"/>
+        <source>main stream</source>
+        <translation>Flux principal</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.ui" line="520"/>
+        <source>sub stream</source>
+        <translation>sous-flux</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.ui" line="528"/>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.ui" line="533"/>
+        <source>Configure</source>
+        <translation>Configurer</translation>
     </message>
     <message>
         <source>Preset</source>
@@ -646,7 +695,7 @@
         <translation type="vanished">Patrouille</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="480"/>
+        <location filename="rtspwindow.ui" line="492"/>
         <source>Reboot</source>
         <translation>Redémarrage</translation>
     </message>
@@ -663,55 +712,50 @@
         <translation type="vanished">/Streaming/Channels/3</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="457"/>
+        <location filename="rtspwindow.ui" line="469"/>
         <source>Metadata</source>
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="433"/>
+        <location filename="rtspwindow.ui" line="430"/>
         <source>/Streaming/Channels/101</source>
         <oldsource>/ISAPI/Streaming/channels/101</oldsource>
         <translation>/ISAPI/Streaming/channels/101</translation>
     </message>
     <message>
-        <location filename="rtspwindow.cpp" line="410"/>
+        <location filename="rtspwindow.cpp" line="311"/>
         <source>Save as</source>
         <translation>Enregistrer sous</translation>
     </message>
     <message>
-        <location filename="rtspwindow.cpp" line="413"/>
+        <location filename="rtspwindow.cpp" line="314"/>
         <source>Pictures Files (*.jpg *.jpeg)</source>
         <translation>Fichiers images (*.jpg *.jpeg)</translation>
     </message>
     <message>
-        <location filename="rtspwindow.cpp" line="684"/>
+        <location filename="rtspwindow.cpp" line="561"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="rtspwindow.cpp" line="716"/>
         <source>Paused</source>
-        <translation>en pause</translation>
+        <translation type="vanished">en pause</translation>
     </message>
     <message>
-        <location filename="rtspwindow.cpp" line="719"/>
         <source>Playing</source>
-        <translation>en lecture</translation>
+        <translation type="vanished">en lecture</translation>
     </message>
     <message>
-        <location filename="rtspwindow.cpp" line="722"/>
         <source>Stopped</source>
-        <translation>A l&apos;arret</translation>
+        <translation type="vanished">A l&apos;arret</translation>
     </message>
     <message>
-        <location filename="rtspwindow.cpp" line="746"/>
         <source>Loading...</source>
-        <translation>Chargement...</translation>
+        <translation type="vanished">Chargement...</translation>
     </message>
     <message>
-        <location filename="rtspwindow.cpp" line="754"/>
         <source>Stalled %1%</source>
-        <translation>Bloqué</translation>
+        <translation type="vanished">Bloqué</translation>
     </message>
 </context>
 <context>
@@ -722,132 +766,148 @@
         <translation>Parametres</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="36"/>
+        <location filename="settingsform.ui" line="94"/>
         <source>the ip or domain name of the device</source>
         <translation>L&apos;IP ou le nom de domaine du périphérique</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="39"/>
+        <location filename="settingsform.ui" line="97"/>
         <source>192.168.</source>
         <translation>192.168.</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="52"/>
+        <location filename="settingsform.ui" line="144"/>
         <source>Pass</source>
         <translation>Pass</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="65"/>
+        <location filename="settingsform.ui" line="121"/>
         <source>Enter the user name</source>
         <translation>Entrez le nom utilisateurr</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="68"/>
+        <location filename="settingsform.ui" line="124"/>
         <source>admin</source>
         <translation>admin</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="81"/>
+        <location filename="settingsform.ui" line="151"/>
+        <source>Show XML</source>
+        <translation>Afficher XML</translation>
+    </message>
+    <message>
+        <location filename="settingsform.ui" line="228"/>
+        <source>Sdk</source>
+        <translation>Sdk</translation>
+    </message>
+    <message>
+        <location filename="settingsform.ui" line="238"/>
+        <source>8001</source>
+        <translation>8001</translation>
+    </message>
+    <message>
+        <location filename="settingsform.ui" line="267"/>
         <source>Close without saving</source>
         <translation>Ferme sans enregistrer</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="84"/>
+        <location filename="settingsform.ui" line="270"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="97"/>
+        <location filename="settingsform.ui" line="131"/>
         <source>Enter the user password</source>
         <translation>Entrez le mot de passe</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="100"/>
+        <location filename="settingsform.ui" line="134"/>
         <source>pass</source>
         <translation>pass</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="116"/>
+        <location filename="settingsform.ui" line="104"/>
         <source>Ip</source>
         <translation>Ip</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="129"/>
+        <location filename="settingsform.ui" line="111"/>
         <source>User</source>
         <translation>Utilisateur</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="142"/>
+        <location filename="settingsform.ui" line="257"/>
         <source>Save and lose</source>
         <translation>Enregistre et ferme</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="145"/>
+        <location filename="settingsform.ui" line="260"/>
         <source>Save</source>
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="158"/>
+        <location filename="settingsform.ui" line="211"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="171"/>
+        <location filename="settingsform.ui" line="191"/>
         <source>Enter the port number for rtsp conection</source>
         <translation>Entrez le numéro de port pour la connection RTSP</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="174"/>
+        <location filename="settingsform.ui" line="194"/>
         <source>554</source>
         <translation>554</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="187"/>
+        <location filename="settingsform.ui" line="84"/>
         <source>The name of the device</source>
         <translation>Le nom du périphérique</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="203"/>
+        <location filename="settingsform.ui" line="74"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="216"/>
+        <location filename="settingsform.ui" line="218"/>
         <source>Delete imediatly this device</source>
         <translation>Suprime imediatement le périphérique</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="219"/>
+        <location filename="settingsform.ui" line="221"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="238"/>
+        <location filename="settingsform.ui" line="42"/>
         <source>The file where settings are saved inside</source>
         <translation>Le fichier al&apos;interieur duquels sont enregistré les parametres</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="254"/>
+        <location filename="settingsform.ui" line="58"/>
         <source>Play</source>
         <translation>Lecture</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="267"/>
+        <location filename="settingsform.ui" line="201"/>
+        <location filename="settingsform.ui" line="235"/>
         <source>Enter the http port for ISAPI</source>
         <translation>Entrez le port Http pour ISAPI</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="270"/>
+        <location filename="settingsform.ui" line="204"/>
         <source>800</source>
         <translation>800</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="283"/>
+        <location filename="settingsform.ui" line="184"/>
         <source>Http</source>
         <translation>Http</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="296"/>
+        <location filename="settingsform.ui" line="177"/>
         <source>Rtsp</source>
         <translation>Rtsp</translation>
     </message>
@@ -957,8 +1017,9 @@
     </message>
     <message>
         <location filename="videoctrls.ui" line="1061"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00:00:00&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00:00:00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <oldsource>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00:00:00&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00:00:00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="videoctrls.cpp" line="363"/>
@@ -971,7 +1032,7 @@
         <translation>succès de la capture d&apos;image </translation>
     </message>
     <message>
-        <location filename="videoctrls.cpp" line="374"/>
+        <location filename="videoctrls.cpp" line="375"/>
         <source>Sound </source>
         <translatorcomment>Son </translatorcomment>
         <translation>Son </translation>

@@ -121,6 +121,10 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/*
 
 %changelog
+* Mon Jun xx 2023 surfzoid@gmail.com
++ Missing translation.
++ Settings form cosmetic.
+
 * Mon Jun 26 2023 surfzoid@gmail.com
 + PlayCtrl_V7.4.0.45_10252_Arm64_Build20221221
 

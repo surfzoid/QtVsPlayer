@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Configuration device</string>
+   <string>Device setup</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">

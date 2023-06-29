@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>570</width>
-    <height>382</height>
+    <width>590</width>
+    <height>352</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,8 +26,8 @@
   <widget class="QLineEdit" name="ConfFsPath">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>260</y>
+     <x>30</x>
+     <y>290</y>
      <width>511</width>
      <height>27</height>
     </rect>
@@ -48,7 +48,7 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>570</x>
+     <x>590</x>
      <y>10</y>
      <width>51</width>
      <height>27</height>
@@ -61,8 +61,8 @@
   <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
+     <x>20</x>
+     <y>20</y>
      <width>301</width>
      <height>188</height>
     </rect>
@@ -164,8 +164,8 @@
   <widget class="QWidget" name="formLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>330</x>
-     <y>0</y>
+     <x>350</x>
+     <y>20</y>
      <width>221</width>
      <height>181</height>
     </rect>
@@ -244,13 +244,25 @@
   <widget class="QWidget" name="formLayoutWidget_3">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>180</y>
-     <width>521</width>
-     <height>51</height>
+     <x>210</x>
+     <y>230</y>
+     <width>231</width>
+     <height>41</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout_3">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMaximumSize</enum>
+    </property>
+    <property name="fieldGrowthPolicy">
+     <enum>QFormLayout::ExpandingFieldsGrow</enum>
+    </property>
+    <property name="labelAlignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="formAlignment">
+     <set>Qt::AlignCenter</set>
+    </property>
     <item row="0" column="0">
      <widget class="QPushButton" name="BtnSave">
       <property name="toolTip">
