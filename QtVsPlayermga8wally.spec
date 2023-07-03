@@ -121,7 +121,7 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/*
 
 %changelog
-* Mon Jun xx 2023 surfzoid@gmail.com
+* Mon Jul 03 2023 surfzoid@gmail.com
 + Missing translation.
 + Settings form cosmetic.
 + Set OSD position.
