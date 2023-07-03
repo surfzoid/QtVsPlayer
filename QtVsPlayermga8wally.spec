@@ -1,6 +1,6 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.48
+Version:        1.0.49
 
 %global Rel 1
 %if 0%{?mageia}
@@ -124,6 +124,9 @@ chmod -R ug+rw %{_srcrpmdir}
 * Mon Jun xx 2023 surfzoid@gmail.com
 + Missing translation.
 + Settings form cosmetic.
++ Set OSD position.
++ Play/Pause live view.
+- windows compatibility issue.
 
 * Mon Jun 26 2023 surfzoid@gmail.com
 + PlayCtrl_V7.4.0.45_10252_Arm64_Build20221221
