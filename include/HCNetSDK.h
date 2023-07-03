@@ -50575,7 +50575,7 @@ NET_DVR_API int __stdcall NET_DVR_CaptureJPEGPicture_WithAppendData(int lUserID,
 
 NET_DVR_API int __stdcall NET_DVR_GetRealPlayOsdTime(int iRealHandle, LPNET_DVR_TIME lpOsdTime);
 NET_DVR_API int __stdcall NET_DVR_RealPlayPause(int iRealHandle);
-NET_DVR_API int __stdcall NET_DVR_RealPlayRestart(int iRealHandle, HWND hPlayWnd);
+NET_DVR_API int __stdcall NET_DVR_RealPlayRestart(int iRealHandle, int hPlayWnd);
 
 //2006-02-16
 NET_DVR_API int __stdcall NET_DVR_GetRealPlayerIndex(int lRealHandle);
