@@ -89,6 +89,8 @@ private slots:
 
     void on_actionConfigure_triggered();
 
+    void on_PauseBtn_toggled(bool checked);
+
 private:
     Ui::RtspWindow *ui;
     bool IsShown = false;

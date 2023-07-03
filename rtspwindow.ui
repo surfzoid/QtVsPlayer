@@ -96,9 +96,6 @@
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QPushButton" name="PauseBtn">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="mouseTracking">
         <bool>true</bool>
        </property>
@@ -107,6 +104,14 @@
        </property>
        <property name="text">
         <string>Pause</string>
+       </property>
+       <property name="icon">
+        <iconset resource="ressources.qrc">
+         <normaloff>:/images/images/control-pause.png</normaloff>
+         <normalon>:/images/images/control.png</normalon>:/images/images/control-pause.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

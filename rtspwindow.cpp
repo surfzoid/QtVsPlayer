@@ -1189,13 +1189,31 @@ void RtspWindow::on_actionConfigure_triggered()
         CfgDialog *cfgui = new CfgDialog();
         cfgui->ShowChannel = struPictureParams.dwShowChanName;
         cfgui->ChannelName = QString::fromUtf8((char*)struPictureParams.sChanName);
+        cfgui->ChannelX = struPictureParams.wShowNameTopLeftX;
+        cfgui->ChannelY = struPictureParams.wShowNameTopLeftY;
+        cfgui->wOSDTopLeftX = struPictureParams.wOSDTopLeftX;
+        cfgui->wOSDTopLeftY = struPictureParams.wOSDTopLeftY;
         cfgui->exec();
 
         if (cfgui->SaveParam) {
             struPictureParams.dwShowChanName = cfgui->ShowChannel;
             unsigned char *str_uchar = (unsigned char*)cfgui->ChannelName.toUtf8().data();
             memcpy(&(struPictureParams.sChanName), (str_uchar), 32);
+            struPictureParams.wShowNameTopLeftX = cfgui->ChannelX;
+            struPictureParams.wShowNameTopLeftY = cfgui->ChannelY;
+            struPictureParams.wOSDTopLeftX = cfgui->wOSDTopLeftX;
+            struPictureParams.wOSDTopLeftY = cfgui->wOSDTopLeftY;
             iRet = NET_DVR_SetDVRConfig(lUserID, NET_DVR_SET_PICCFG_V30, lChannel,&struPictureParams, sizeof(NET_DVR_PICCFG_V30));
         }
+    }
+}
+
+void RtspWindow::on_PauseBtn_toggled(bool checked)
+{
+    if (checked) {
+        NET_DVR_RealPlayPause( lRealPlayHandle);
+    }else
+    {
+        NET_DVR_RealPlayRestart(lRealPlayHandle, hWnd);
     }
 }

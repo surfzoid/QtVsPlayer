@@ -17,6 +17,11 @@ public:
     QString ChannelName;
     bool ShowChannel=false;
     bool SaveParam=false;
+    int ChannelX = 0;
+    int ChannelY = 0;
+    int wOSDTopLeftX = 0;
+    int wOSDTopLeftY = 0;
+
 
 private slots:
     void on_buttonBox_accepted();
