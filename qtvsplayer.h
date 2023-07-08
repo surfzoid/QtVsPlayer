@@ -40,6 +40,8 @@ public:
 
     static void LoadCursor(bool Loading);
 
+    static void VCAScreenshot(QString PicName);
+
 private slots:
     void on_actionOuvrir_triggered();
 

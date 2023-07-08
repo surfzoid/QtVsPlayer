@@ -360,6 +360,8 @@ void VideoCtrls::on_SnapshotButton_released()
     suc = PlayM4_GetBMP(HikNumPort,res, 4608000,buffSize);*/
     //end test
 
+    QtVsPlayer::VCAScreenshot(picturepath + "VCA-" + QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss") + ".png");
+
     QString picturepathname(tr("Capture Picture succes to "));
     picturepathname.append(picturepath);
 

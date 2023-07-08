@@ -966,3 +966,10 @@ void QtVsPlayer::on_actionQT_Infos_triggered()
 {
     QApplication::aboutQt();
 }
+
+void QtVsPlayer::VCAScreenshot(QString PicName)
+{
+    QPixmap originalPixmap;
+    originalPixmap = VideoView->screen()->grabWindow(VideoView->winId());
+    originalPixmap.save(PicName, "png", 100);
+}
