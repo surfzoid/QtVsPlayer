@@ -82,7 +82,7 @@ use https://github.com/surfzoid/HikNetExtractor in an shelde task to automatical
 
 PI P400 raspian 64 bit, PcmanFm and thunar don't respect the %U in the desktop file but nautillus do it.  
 
-To debug, modify qtloggin.ini like that :  
+To debug, modify qtloggin.ini, often in /usr/share/qt5 like that :  
 ```
 [Rules]
 *.debug=true 

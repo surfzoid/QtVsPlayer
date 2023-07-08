@@ -1,55 +1,55 @@
-if [ ! -d "/usr/lib64/QtVsPlayer" ];
+
+ [ ! -d "/usr/lib64/QtVsPlayer" ];
 then
   ln -s /usr/lib64/QtVsPlayer /usr/lib/
 fi
 
-if [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
+ [ -f "/usr/lib64/QtVsPlayer/libopenal.so.1" ];
 then
     rm -fr /usr/lib64/QtVsPlayer/libopenal.so.1
 fi
 ln -s $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer
 
-if [ -f "/usr/lib64/QtVsPlayer/libssl.so.1.1" ];
+ [ -f "/usr/lib64/QtVsPlayer/libssl.so.1.1" ];
 then
     rm -fr /usr/lib64/QtVsPlayer/libssl.so.1.1
 fi
 ln -s $(whereis "libssl.so.1.1" | sed "s|.* \(.*libssl.so.1.1\).*|\1|") /usr/lib64/QtVsPlayer
 
-if [ -f "/usr/lib64/QtVsPlayer/libssl.so" ];
+ [ -f "/usr/lib64/QtVsPlayer/libssl.so" ];
 then
     rm -fr /usr/lib64/QtVsPlayer/libssl.so
 fi
 ln -s $(whereis "libssl.so" | sed "s|.* \(.*libssl.so\).*|\1|") /usr/lib64/QtVsPlayer
 
-if [ -f "/usr/lib64/QtVsPlayer/libiconv2.so" ];
+ [ -f "/usr/lib64/QtVsPlayer/libiconv2.so" ];
 then
     rm -fr /usr/lib64/QtVsPlayer/libiconv2.so
 fi
 ln -s /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv.so.2 /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv2.so
 
-if [ -f "/usr/lib64/QtVsPlayer/libcrypto.so.1.1" ];
+ [ -f "/usr/lib64/QtVsPlayer/libcrypto.so.1.1" ];
 then
     rm -fr /usr/lib64/QtVsPlayer/libcrypto.so.1.1
 fi
 ln -s $(whereis "libcrypto.so.1.1" | sed "s|.* \(.*libcrypto.so.1.1\).*|\1|") /usr/lib64/QtVsPlayer
 
-if [ -f "/usr/lib64/QtVsPlayer/libcrypto.so" ];
+ [ -f "/usr/lib64/QtVsPlayer/libcrypto.so" ];
 then
     rm -fr /usr/lib64/QtVsPlayer/libcrypto.so
 fi
 ln -s $(whereis "libcrypto.so" | sed "s|.* \(.*libcrypto.so\).*|\1|") /usr/lib64/QtVsPlayer
 
-if [ -f "/usr/lib64/QtVsPlayer/libz.so.1" ];
+ [ -f "/usr/lib64/QtVsPlayer/libz.so.1" ];
 then
     rm -fr /usr/lib64/QtVsPlayer/libz.so.1
 fi
 ln -s $(whereis "libz.so" | sed "s|.* \(.*libz.so\).*|\1|") /usr/lib64/QtVsPlayer
 
 cat << 'EOF' > /etc/ld.so.conf.d/QtVsPlayer.conf
-            /usr/lib64/QtVsPlayer/
-            /usr/lib64/QtVsPlayer/HCNetSDKCom/
-
-            EOF
+/usr/lib64/QtVsPlayer/
+/usr/lb64/QtVsPlayer/HCNetSDKCom/
+EOF
 
 /sbin/ldconfig
 /sbin/ldconfig /usr/lib64/QtVsPlayer/
