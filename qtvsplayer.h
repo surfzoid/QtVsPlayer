@@ -120,7 +120,7 @@ private:
 
     static QWidget  *GetWidgetByName(QString Name);
 
-/*signals:
+    /*signals:
 static void  FsChanged();*/
     void VCASwitch(QString Name, int Info, bool IsActive);
     void enumerateMenu(QMenu *menu, bool ChkState);

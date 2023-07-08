@@ -326,6 +326,16 @@
      </rect>
     </property>
    </widget>
+   <widget class="QMdiArea" name="mdiArea">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>500</y>
+      <width>245</width>
+      <height>160</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -390,6 +400,7 @@
      <string>Device</string>
     </property>
     <addaction name="actionConfigure"/>
+    <addaction name="actionReconnect"/>
     <addaction name="actionReboot"/>
    </widget>
    <addaction name="menuVideo"/>
@@ -536,6 +547,11 @@
   <action name="actionConfigure">
    <property name="text">
     <string>Configure</string>
+   </property>
+  </action>
+  <action name="actionReconnect">
+   <property name="text">
+    <string>Reconnect</string>
    </property>
   </action>
  </widget>

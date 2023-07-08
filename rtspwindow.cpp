@@ -1217,3 +1217,11 @@ void RtspWindow::on_PauseBtn_toggled(bool checked)
         NET_DVR_RealPlayRestart(lRealPlayHandle, hWnd);
     }
 }
+
+void RtspWindow::on_actionReconnect_triggered()
+{
+    LoginInfo(CamPortSdk,CamIp,CamUser,CamPass,!ui->actionsub_stream->isEnabled());
+    /****HIKNETSDK****/
+    LoadPreset();
+    LoadPatrol();
+}

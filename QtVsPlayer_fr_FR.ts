@@ -18,6 +18,26 @@
         <source>Show channel</source>
         <translation>Afficher le canal</translation>
     </message>
+    <message>
+        <location filename="cfgdialog.ui" line="72"/>
+        <source>Show Name TopLeft X</source>
+        <translation>Montrer le nom Haut gauche X</translation>
+    </message>
+    <message>
+        <location filename="cfgdialog.ui" line="86"/>
+        <source>Show Name TopLeft Y</source>
+        <translation>Montrer le nom Haut gauche Y</translation>
+    </message>
+    <message>
+        <location filename="cfgdialog.ui" line="100"/>
+        <source>OSD TopLeft X</source>
+        <translation>OSD Haut gauche X</translation>
+    </message>
+    <message>
+        <location filename="cfgdialog.ui" line="114"/>
+        <source>OSD TopLeft Y</source>
+        <translation>OSD Haut gauche Y</translation>
+    </message>
 </context>
 <context>
     <name>FilesListe</name>
@@ -532,7 +552,7 @@
         <translation type="vanished">4</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="221"/>
+        <location filename="rtspwindow.ui" line="226"/>
         <source>Snap</source>
         <translation>Capture</translation>
     </message>
@@ -542,22 +562,22 @@
         <translation>Chargement du flux vidéo........</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="109"/>
+        <location filename="rtspwindow.ui" line="106"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="128"/>
+        <location filename="rtspwindow.ui" line="133"/>
         <source>Change PTZ speed</source>
         <translation>Vitesse PTZ</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="131"/>
+        <location filename="rtspwindow.ui" line="136"/>
         <source>3</source>
         <translation>3</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="199"/>
+        <location filename="rtspwindow.ui" line="204"/>
         <source>Start or stop manual record in the device.</source>
         <translation>Lance ou arrete l&apos;enregistrement manuel.</translation>
     </message>
@@ -567,38 +587,38 @@
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="202"/>
+        <location filename="rtspwindow.ui" line="207"/>
         <source>Rec</source>
         <comment>Record</comment>
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="218"/>
+        <location filename="rtspwindow.ui" line="223"/>
         <source>Take a snapshot.</source>
         <translation>Prendre une capture</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="234"/>
+        <location filename="rtspwindow.ui" line="239"/>
         <source>Select and start a patrol.</source>
         <translation>Selectione et lance une patrouille</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="277"/>
+        <location filename="rtspwindow.ui" line="282"/>
         <source>Select a presset to call and edit it.</source>
         <translation>Selectione et lance une preselection</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="308"/>
+        <location filename="rtspwindow.ui" line="313"/>
         <source>Select a device.</source>
         <translation>Selectione un appareil</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="342"/>
+        <location filename="rtspwindow.ui" line="357"/>
         <source>Video</source>
         <translation>Vidéo</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="349"/>
+        <location filename="rtspwindow.ui" line="364"/>
         <source>channel</source>
         <translation>Canal</translation>
     </message>
@@ -607,84 +627,89 @@
         <translation type="vanished">NVR</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="369"/>
+        <location filename="rtspwindow.ui" line="384"/>
         <source>PTZ</source>
         <translation>PTZ</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="376"/>
+        <location filename="rtspwindow.ui" line="391"/>
         <source>save</source>
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="385"/>
+        <location filename="rtspwindow.ui" line="400"/>
         <source>Device</source>
         <translation>Appareil</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="404"/>
+        <location filename="rtspwindow.ui" line="420"/>
         <source>Default</source>
         <translation>Défaut</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="409"/>
+        <location filename="rtspwindow.ui" line="425"/>
         <source>IgnoreAspectRatio</source>
         <translation>Ignore l&apos;aspect du ratio</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="414"/>
+        <location filename="rtspwindow.ui" line="430"/>
         <source>KeepAspectRatio</source>
         <translation>Garde l&apos;aspect du ratio</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="419"/>
+        <location filename="rtspwindow.ui" line="435"/>
         <source>KeepAspectRatioByExpanding</source>
         <translation>Garde l&apos;aspect du ratio par extension</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="447"/>
+        <location filename="rtspwindow.ui" line="463"/>
         <source>/Streaming/Channels/102</source>
         <translation>/Streaming/Channels/102</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="461"/>
+        <location filename="rtspwindow.ui" line="477"/>
         <source>/Streaming/Channels/103</source>
         <translation>/Streaming/Channels/103</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="477"/>
+        <location filename="rtspwindow.ui" line="493"/>
         <source>/Streaming/Channels/104</source>
         <translation>/Streaming/Channels/104</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="482"/>
+        <location filename="rtspwindow.ui" line="498"/>
         <source>All Preset localy</source>
         <translation>Toutes les preselections localement</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="487"/>
+        <location filename="rtspwindow.ui" line="503"/>
         <source>All Patrol localy</source>
         <translation>Toutes les patrouilles localement</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="503"/>
+        <location filename="rtspwindow.ui" line="519"/>
         <source>main stream</source>
         <translation>Flux principal</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="520"/>
+        <location filename="rtspwindow.ui" line="536"/>
         <source>sub stream</source>
         <translation>sous-flux</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="528"/>
+        <location filename="rtspwindow.ui" line="544"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="533"/>
+        <location filename="rtspwindow.ui" line="549"/>
         <source>Configure</source>
         <translation>Configurer</translation>
+    </message>
+    <message>
+        <location filename="rtspwindow.ui" line="554"/>
+        <source>Reconnect</source>
+        <translation>Reconnecter</translation>
     </message>
     <message>
         <source>Preset</source>
@@ -695,7 +720,7 @@
         <translation type="vanished">Patrouille</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="492"/>
+        <location filename="rtspwindow.ui" line="508"/>
         <source>Reboot</source>
         <translation>Redémarrage</translation>
     </message>
@@ -712,12 +737,12 @@
         <translation type="vanished">/Streaming/Channels/3</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="469"/>
+        <location filename="rtspwindow.ui" line="485"/>
         <source>Metadata</source>
         <translation>Metadata</translation>
     </message>
     <message>
-        <location filename="rtspwindow.ui" line="430"/>
+        <location filename="rtspwindow.ui" line="446"/>
         <source>/Streaming/Channels/101</source>
         <oldsource>/ISAPI/Streaming/channels/101</oldsource>
         <translation>/ISAPI/Streaming/channels/101</translation>
@@ -806,12 +831,12 @@
         <translation>8001</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="267"/>
+        <location filename="settingsform.ui" line="279"/>
         <source>Close without saving</source>
         <translation>Ferme sans enregistrer</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="270"/>
+        <location filename="settingsform.ui" line="282"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -836,12 +861,12 @@
         <translation>Utilisateur</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="257"/>
+        <location filename="settingsform.ui" line="269"/>
         <source>Save and lose</source>
         <translation>Enregistre et ferme</translation>
     </message>
     <message>
-        <location filename="settingsform.ui" line="260"/>
+        <location filename="settingsform.ui" line="272"/>
         <source>Save</source>
         <translation>Enregistrer</translation>
     </message>
@@ -1022,17 +1047,17 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00:00:00&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;00:00:00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="videoctrls.cpp" line="363"/>
+        <location filename="videoctrls.cpp" line="365"/>
         <source>Capture Picture succes to </source>
         <translation>Images capturées avec succès vers </translation>
     </message>
     <message>
-        <location filename="videoctrls.cpp" line="366"/>
+        <location filename="videoctrls.cpp" line="368"/>
         <source>Capture Picture succes </source>
         <translation>succès de la capture d&apos;image </translation>
     </message>
     <message>
-        <location filename="videoctrls.cpp" line="375"/>
+        <location filename="videoctrls.cpp" line="377"/>
         <source>Sound </source>
         <translatorcomment>Son </translatorcomment>
         <translation>Son </translation>
