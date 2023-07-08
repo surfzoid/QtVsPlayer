@@ -326,14 +326,17 @@
      </rect>
     </property>
    </widget>
-   <widget class="QMdiArea" name="mdiArea">
+   <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>500</y>
-      <width>245</width>
-      <height>160</height>
+      <x>560</x>
+      <y>390</y>
+      <width>126</width>
+      <height>33</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
     </property>
    </widget>
   </widget>
