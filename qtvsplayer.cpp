@@ -4,7 +4,6 @@
 #include "playm4interface.h"
 #include "settingsform.h"
 #include "rtspwindow.h"
-#include <QFileDialog>
 #include <QtWidgets>
 #include <QKeyEvent>
 #include <QMouseEvent>
