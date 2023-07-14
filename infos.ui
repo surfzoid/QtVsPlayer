@@ -22,14 +22,13 @@
   <property name="locale">
    <locale language="English" country="UnitedKingdom"/>
   </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QFormLayout" name="formLayout_2">
-   <item row="0" column="0">
-    <layout class="QFormLayout" name="formLayout"/>
-   </item>
-  </layout>
+  <layout class="QFormLayout"/>
  </widget>
  <resources/>
  <connections/>

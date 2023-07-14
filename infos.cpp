@@ -27,12 +27,19 @@ void Infos::showEvent(QShowEvent *event)
 //        Name->setParent(ui->formLayout);
         QLineEdit *Value =  new  (QLineEdit);
         Value->setText(Data.at(1));
+        Value->setReadOnly(false);
+        Value->setDragEnabled(true);
+        Value->setEnabled(true);
+        Value->setMouseTracking(true);
+        Value->setAcceptDrops(true);
+        Value->setDisabled(false);
 //        Value->setParent(ui->formLayoutWidget);
-        ui->formLayout_2->addRow(Name,Value);
+        ui->formLayout->addRow(Name,Value);
         Name->setVisible(true);
         Value->setVisible(true);
     }
-    resize(ui->formLayout_2->sizeHint());
+    ui->formLayout->setEnabled(true);
+    resize(ui->formLayout->sizeHint());
 }
 
 void Infos::resizeEvent(QResizeEvent *event)
