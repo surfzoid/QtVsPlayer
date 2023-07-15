@@ -1070,7 +1070,7 @@ void CALLBACK RtspWindow::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_I
     PlayM4_SetDecCallBack(lPort, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))NULL);
 #endif
 
-    InfDialog->show();
+    InfDialog->exec();
 }
 
 /*Mode 2 Users theirselves deal with stream data which called back by g_RealDataCallBack_V30.

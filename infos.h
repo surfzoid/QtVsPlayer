@@ -18,12 +18,13 @@ public:
 
 private slots:
 
+public slots:
+
 private:
     Ui::Infos *ui;
 
 protected:
     void showEvent(QShowEvent *event) override;
-    void resizeEvent(QResizeEvent *event) override;
 };
 
 #endif // INFOS_H

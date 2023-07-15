@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>CfgDialog</class>
  <widget class="QDialog" name="CfgDialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -12,6 +15,12 @@
   </property>
   <property name="windowTitle">
    <string>Device setup</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">

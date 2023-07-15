@@ -559,7 +559,7 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
 #elif defined(__linux__)
     PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,int,FRAME_INFO *, void*,int))NULL);
 #endif
-    InfDialog->show();
+    InfDialog->exec();
 }
 
 void CALLBACK playm4interface::SetRunTimeInfoCBFun(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser)
