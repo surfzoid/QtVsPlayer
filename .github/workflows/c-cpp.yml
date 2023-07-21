@@ -73,8 +73,8 @@ jobs:
 
       - name: Version
         run: |
-          Vers=$(grep Version ./QtVsPlayer.spec | tac -s' ' | head -1)
-          Rel=$(grep "%global Rel" ./QtVsPlayer.spec | tac -s' ' | head -1)
+          Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
+          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
           echo "::set-output name=version::$Vers-$Rel"
         id: version
 
@@ -186,8 +186,8 @@ jobs:
 
       - name: Version
         run: |
-          Vers=$(grep Version ./QtVsPlayer.spec | tac -s' ' | head -1)
-          Rel=$(grep "%global Rel" ./QtVsPlayer.spec | tac -s' ' | head -1)
+          Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
+          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
           echo "::set-output name=version::$Vers-$Rel"
         id: version
 
@@ -334,8 +334,8 @@ jobs:
 
       - name: Version
         run: |
-          Vers=$(grep Version ./QtVsPlayer.spec | tac -s' ' | head -1)
-          Rel=$(grep "%global Rel" ./QtVsPlayer.spec | tac -s' ' | head -1)
+          Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
+          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
           echo "::set-output name=version::$Vers-$Rel"
         id: version
 
@@ -418,8 +418,8 @@ jobs:
 
       - name: Version
         run: |
-          Vers=$(grep Version ./QtVsPlayer.spec | tac -s' ' | head -1)
-          Rel=$(grep "%global Rel" ./QtVsPlayer.spec | tac -s' ' | head -1)
+          Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
+          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
           echo "::set-output name=version::$Vers-$Rel"
         id: version
 
