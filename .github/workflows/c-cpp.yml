@@ -267,6 +267,16 @@ jobs:
 
       - name: Build RPM package
         run: |
+          echo "::set-output name=version::$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)"
+Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
+          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
+          echo "::set-output name=version::$Vers-$Rel"
+Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
+          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
+          echo "::set-output name=version::$Vers-$Rel"
+Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
+          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
+          echo "::set-output name=version::$Vers-$Rel"
             set -x
             rm -fr /tmp/work
             mkdir /tmp/work
@@ -277,7 +287,7 @@ jobs:
             cp -pf QtVsPlayermga8wally.spec ~/rpmbuild/SPECS
             cp -pf QtVsPlayer-fix.patch ~/rpmbuild/SPECS
             sed -i 's/\(Source0:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
-            sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            # sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
