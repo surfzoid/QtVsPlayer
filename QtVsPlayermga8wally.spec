@@ -14,7 +14,7 @@ Release:        %{Rel}.surf.mlo
 License:        GPLv3
 Group:          Video/Players
 URL:            https://github.com/surfzoid/QtVsPlayer
-Source0:        https://github.com/surfzoid/QtVsPlayer/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/surfzoid/QtVsPlayer/archive/%{version}-%{Rel}/%{name}-%{version}-%{Rel}.tar.gz
 # List of additional build dependencies
 BuildRequires:  pkgconfig(Qt5Network)
 %if 0%{?mageia}
