@@ -99,9 +99,9 @@ jobs:
             set -x
             rm -fr /tmp/work
             mkdir /tmp/work
-            mv .debpkg/usr/share/doc/QtVsPlayer .debpkg/usr/share/doc/QtVsPlayer-${{ steps.version.outputs.version }}
-            mv .debpkg/usr/share/licenses/QtVsPlayer .debpkg/usr/share/licenses/QtVsPlayer-${{ steps.version.outputs.version }}
-            cp -rp .debpkg /tmp/work/QtVsPlayer-${{ steps.version.outputs.version }}
+            mv .debpkg/usr/share/doc/QtVsPlayer .debpkg/usr/share/doc/QtVsPlayer-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
+            mv .debpkg/usr/share/licenses/QtVsPlayer .debpkg/usr/share/licenses/QtVsPlayer-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
+            cp -rp .debpkg /tmp/work/QtVsPlayer-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
             mkdir -p ~/rpmbuild/{SRPMS,SOURCES,SPECS,tmp}
             cp -pf QtVsPlayermga8wally.spec ~/rpmbuild/SPECS
             cp -pf QtVsPlayer-fix.patch ~/rpmbuild/SPECS
@@ -118,7 +118,7 @@ jobs:
             sed -ir '/\%post/adnf copr enable surfzoid/HikNetExtractor' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -ir '/\%post/adnf copr enable surfzoid/QtVsPlayer' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             cd /tmp/work
-            tar czf tmp.tar.gz QtVsPlayer-${{ steps.version.outputs.version }}/
+            tar czf tmp.tar.gz QtVsPlayer-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}/
             mv tmp.tar.gz ~/rpmbuild/SOURCES
             rpmbuild -ba ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             cp -f ~/rpmbuild/RPMS/x86_64/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
@@ -273,14 +273,14 @@ jobs:
             set -x
             rm -fr /tmp/work
             mkdir /tmp/work
-            mv .debpkg/usr/share/doc/QtVsPlayer .debpkg/usr/share/doc/QtVsPlayer-${{ steps.version.outputs.version }}
-            mv .debpkg/usr/share/licenses/QtVsPlayer .debpkg/usr/share/licenses/QtVsPlayer-${{ steps.version.outputs.version }}
-            cp -rp .debpkg /tmp/work/QtVsPlayer-${{ steps.version.outputs.version }}
+            mv .debpkg/usr/share/doc/QtVsPlayer .debpkg/usr/share/doc/QtVsPlayer-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
+            mv .debpkg/usr/share/licenses/QtVsPlayer .debpkg/usr/share/licenses/QtVsPlayer-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
+            cp -rp .debpkg /tmp/work/QtVsPlayer-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
             mkdir -p ~/rpmbuild/{SRPMS,SOURCES,SPECS,tmp}
             cp -pf QtVsPlayermga8wally.spec ~/rpmbuild/SPECS
             cp -pf QtVsPlayer-fix.patch ~/rpmbuild/SPECS
             sed -i 's/\(Source0:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
-            sed -i 's/"%autosetup -n %{name}-%{version}-%{Rel}"/"%autosetup -n %{name}-%{version}"/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            # sed -i 's/"%autosetup -n %{name}-%{version}-%{Rel}"/"%autosetup -n %{name}-%{version}"/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             # sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
@@ -292,7 +292,7 @@ jobs:
             sed -ir '/\%post/adnf copr enable surfzoid/HikNetExtractor' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -ir '/\%post/adnf copr enable surfzoid/QtVsPlayer' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             cd /tmp/work
-            tar czf tmp.tar.gz QtVsPlayer-${{ steps.version.outputs.version }}/
+            tar czf tmp.tar.gz QtVsPlayer-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}/
             mv tmp.tar.gz ~/rpmbuild/SOURCES
             rpmbuild -ba ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             cp -f ~/rpmbuild/RPMS/aarch64/QtVsPlayer-${{ steps.version.outputs.version }}* ${{ github.workspace }}
