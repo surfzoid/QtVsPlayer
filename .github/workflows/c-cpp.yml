@@ -76,7 +76,7 @@ jobs:
         id: version
 
       - name: Rel
-        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayer.spec | tac -s' ' | head -1)"
+        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)"
         id: rel
 
       - name: build-deb-action
@@ -189,6 +189,10 @@ jobs:
         run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
         id: version
 
+      - name: Rel
+        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)"
+        id: rel
+
       - name: Prepare install dir
         run: |           
             # create DEBIAN directory if you want to add other pre/post scripts
@@ -258,7 +262,7 @@ jobs:
 
       - name: Build debian package
         run: |
-            dpkg-deb -b .debpkg QtVsPlayer_${{ steps.version.outputs.version }}_`lsb_release -cs`-arm64.deb
+            dpkg-deb -b .debpkg QtVsPlayer_${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}_`lsb_release -cs`-arm64.deb
 
       - name: del DEBIAN
         run: sudo rm -fr .debpkg/DEBIAN
