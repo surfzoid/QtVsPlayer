@@ -76,7 +76,7 @@ jobs:
         id: version
 
       - name: Rel
-        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)"
+        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | cut -d ' ' -f 3)"
         id: rel
 
       - name: build-deb-action
@@ -190,7 +190,7 @@ jobs:
         id: version
 
       - name: Rel
-        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)"
+        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | cut -d ' ' -f 3)"
         id: rel
 
       - name: Prepare install dir
@@ -339,7 +339,7 @@ jobs:
         id: version
 
       - name: Rel
-        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)"
+        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | cut -d ' ' -f 3)"
         id: rel
 
       - name: Check Version
@@ -424,7 +424,7 @@ jobs:
         id: version
 
       - name: Rel
-        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)"
+        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | cut -d ' ' -f 3)"
         id: rel
 
       - name: MacVersion
