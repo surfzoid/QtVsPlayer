@@ -398,7 +398,7 @@ jobs:
         uses: ncipollo/release-action@v1.11.1
         id: create_release
         with:
-          artifacts: "QtVsPlayer-win64-${{ steps.version.outputs.version }}.zip"
+          artifacts: "QtVsPlayer-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}.zip"
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
@@ -483,7 +483,7 @@ jobs:
         uses: ncipollo/release-action@v1.11.1
         id: create_release
         with:
-          artifacts: "QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.pkg,QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.tgz,QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}.dmg"
+          artifacts: "QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}.pkg,QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}.tgz,QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}.dmg"
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
