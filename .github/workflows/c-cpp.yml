@@ -112,7 +112,7 @@ jobs:
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%make_build/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
-            sed -i 's/\(make_install\).*/\1\ncp -fr %{_builddir}\/QtVsPlayer-${{ steps.version.outputs.version }}\/* %{buildroot}/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i 's/\(make_install\).*/\1\ncp -fr %{_builddir}\/QtVsPlayer-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}\/* %{buildroot}/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%make_install/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^rm -rf %{buildroot}%{_datadir}/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -ir '/\%post/adnf copr enable surfzoid/HikNetExtractor' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
@@ -252,7 +252,7 @@ jobs:
         run: |
             cat << 'EOF' > .debpkg/DEBIAN/control
             Package: QtVsPlayer
-            Version: ${{ steps.version.outputs.version }}
+            Version: ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
             Installed-Size: ${{ steps.installed.outputs.size }}
             Architecture: arm64
             Maintainer: surfzoid
@@ -286,7 +286,7 @@ jobs:
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%make_build/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
-            sed -i 's/\(make_install\).*/\1\ncp -fr %{_builddir}\/QtVsPlayer-${{ steps.version.outputs.version }}\/* %{buildroot}/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i 's/\(make_install\).*/\1\ncp -fr %{_builddir}\/QtVsPlayer-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}\/* %{buildroot}/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%make_install/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^rm -rf %{buildroot}%{_datadir}/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -ir '/\%post/adnf copr enable surfzoid/HikNetExtractor' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
@@ -345,7 +345,7 @@ jobs:
         id: rel
 
       - name: Check Version
-        run: echo ${{ steps.version.outputs.version }}
+        run: echo ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3.2.1
@@ -434,7 +434,7 @@ jobs:
         id: MacVersion
 
       - name: Check Version
-        run: echo ${{ steps.version.outputs.version }}
+        run: echo ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
 
       - name: py setup
         run: |
