@@ -2,7 +2,7 @@ Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
 Version:        1.0.49
 
-%global Rel 5
+%global Rel 6
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -57,7 +57,7 @@ https://www.hikvision.com/content/dam/hikvision/en/support/download/sdk/device-n
 Licences are in the doc dir.
  
 %prep
-%autosetup -n %{name}-%{version}
+%autosetup -n %{name}-%{version}-%{Rel}
  
 %build
 %if 0%{?suse_version}
