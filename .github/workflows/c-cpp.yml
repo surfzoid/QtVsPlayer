@@ -106,6 +106,7 @@ jobs:
             cp -pf QtVsPlayermga8wally.spec ~/rpmbuild/SPECS
             cp -pf QtVsPlayer-fix.patch ~/rpmbuild/SPECS
             sed -i 's/\(Source0:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i 's/"%autosetup -n %{name}-%{version}-%{Rel}"/"%autosetup -n %{name}-%{version}"/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             # sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
@@ -279,6 +280,7 @@ jobs:
             cp -pf QtVsPlayermga8wally.spec ~/rpmbuild/SPECS
             cp -pf QtVsPlayer-fix.patch ~/rpmbuild/SPECS
             sed -i 's/\(Source0:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i 's/"%autosetup -n %{name}-%{version}-%{Rel}"/"%autosetup -n %{name}-%{version}"/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             # sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
