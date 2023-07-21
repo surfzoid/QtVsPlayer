@@ -141,8 +141,8 @@ jobs:
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
-          name: ${{ steps.version.outputs.version }}
-          tag: ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
+          tag: ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
           body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec#L123) for change log"
 
 
@@ -304,8 +304,8 @@ jobs:
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
-          name: ${{ steps.version.outputs.version }}
-          tag: ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
+          tag: ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
           body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec#L123) for change log"
 
   windoze:
@@ -337,6 +337,10 @@ jobs:
       - name: Version
         run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
         id: version
+
+      - name: Rel
+        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)"
+        id: rel
 
       - name: Check Version
         run: echo ${{ steps.version.outputs.version }}
@@ -394,8 +398,8 @@ jobs:
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
-          name: ${{ steps.version.outputs.version }}
-          tag: ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
+          tag: ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
           body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec#L123) for change log"
 
   Mac:
@@ -418,6 +422,10 @@ jobs:
       - name: Version
         run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
         id: version
+
+      - name: Rel
+        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)"
+        id: rel
 
       - name: MacVersion
         run: echo "::set-output name=version::$(sw_vers -productVersion)"
@@ -475,6 +483,6 @@ jobs:
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
-          name: ${{ steps.version.outputs.version }}
-          tag: ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
+          tag: ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
           body: "Automatic build from GitHub action, see [QtVsPlayermga8wally.spec](https://github.com/surfzoid/QtVsPlayer/blob/main/QtVsPlayermga8wally.spec#L123) for change log"
