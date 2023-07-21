@@ -72,11 +72,12 @@ jobs:
         run: INSTALL_ROOT=.debpkg/usr/share; make install
 
       - name: Version
-        run: |
-          Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          echo "::set-output name=version::$Vers-$Rel"
+        run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
         id: version
+
+      - name: Rel
+        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayer.spec | tac -s' ' | head -1)"
+        id: rel
 
       - name: build-deb-action
         uses: jiro4989/build-deb-action@v2.1.0
@@ -84,7 +85,7 @@ jobs:
           package: QtVsPlayer
           package_root: .debpkg
           maintainer: surfzoid
-          version: ${{ steps.version.outputs.version }} # ${{ github.ref }} # refs/tags/v*.*.*
+          version: ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }} # ${{ github.ref }} # refs/tags/v*.*.*
           arch: 'amd64'
           depends: 'libqt5multimedia5, libqt5multimediawidgets5' #libc6 (>= 2.2.1),
           desc: 'QtVsPlayer can read local video files of Hikvision and display blue, green and red vector.'
@@ -105,7 +106,7 @@ jobs:
             cp -pf QtVsPlayermga8wally.spec ~/rpmbuild/SPECS
             cp -pf QtVsPlayer-fix.patch ~/rpmbuild/SPECS
             sed -i 's/\(Source0:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
-            sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            # sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
@@ -185,10 +186,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Version
-        run: |
-          Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          echo "::set-output name=version::$Vers-$Rel"
+        run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
         id: version
 
       - name: Prepare install dir
@@ -267,16 +265,6 @@ jobs:
 
       - name: Build RPM package
         run: |
-          echo "::set-output name=version::$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)"
-Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          echo "::set-output name=version::$Vers-$Rel"
-Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          echo "::set-output name=version::$Vers-$Rel"
-Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          echo "::set-output name=version::$Vers-$Rel"
             set -x
             rm -fr /tmp/work
             mkdir /tmp/work
@@ -287,7 +275,7 @@ Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
             cp -pf QtVsPlayermga8wally.spec ~/rpmbuild/SPECS
             cp -pf QtVsPlayer-fix.patch ~/rpmbuild/SPECS
             sed -i 's/\(Source0:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
-            # sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
@@ -343,10 +331,7 @@ Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
       - uses: actions/checkout@v3
 
       - name: Version
-        run: |
-          Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          echo "::set-output name=version::$Vers-$Rel"
+        run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
         id: version
 
       - name: Check Version
@@ -427,10 +412,7 @@ Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
       - uses: actions/checkout@v3
 
       - name: Version
-        run: |
-          Vers=$(grep Version ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          Rel=$(grep "%global Rel" ./QtVsPlayermga8wally.spec | tac -s' ' | head -1)
-          echo "::set-output name=version::$Vers-$Rel"
+        run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
         id: version
 
       - name: MacVersion
