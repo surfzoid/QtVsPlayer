@@ -279,7 +279,7 @@ jobs:
             cp -pf QtVsPlayermga8wally.spec ~/rpmbuild/SPECS
             cp -pf QtVsPlayer-fix.patch ~/rpmbuild/SPECS
             sed -i 's/\(Source0:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
-            sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            # sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
