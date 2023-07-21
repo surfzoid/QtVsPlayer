@@ -81,11 +81,11 @@ ln -sr %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/
 ln -sr %{_libdir}/libz.so %{buildroot}%{_libdir}/QtVsPlayer/libz.so.1
 
 mkdir -p %{buildroot}/etc/ld.so.conf.d
-cat << 'EOF' > %{buildroot}/etc/ld.so.conf.d/QtVsPlayer.conf
-            /usr/lib64/QtVsPlayer/
-            /usr/lib64/QtVsPlayer/HCNetSDKCom/
 
-            EOF
+cat << 'EOF' > %{buildroot}/etc/ld.so.conf.d/QtVsPlayer.conf
+/usr/lib64/QtVsPlayer/
+/usr/lb64/QtVsPlayer/HCNetSDKCom/
+EOF
 
 %post
 /sbin/ldconfig
