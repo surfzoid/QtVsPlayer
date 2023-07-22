@@ -2,7 +2,7 @@ Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
 Version:        1.0.49
 
-%global Rel 9
+%global Rel 10
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -73,12 +73,12 @@ Licences are in the doc dir.
 mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so*
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
-ln -sr %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libcrypto.so %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libz.so %{buildroot}%{_libdir}/QtVsPlayer/libz.so.1
+ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
+ln -s %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
+ln -s %{_libdir}/libcrypto.so %{buildroot}%{_libdir}/QtVsPlayer/
+ln -s %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
+ln -s %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/
+ln -s %{_libdir}/libz.so %{buildroot}%{_libdir}/QtVsPlayer/libz.so.1
 
 mkdir -p %{buildroot}/etc/ld.so.conf.d
 
