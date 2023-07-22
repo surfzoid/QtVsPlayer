@@ -47,7 +47,7 @@ unix {
     #INSTALLS += iconfiles
     #For Mageia, adjust
     libfiles.path = $$(PREFIX)/../lib64/QtVsPlayer
-    libfiles.files += $$PWD/lib/$$QMAKE_HOST.arch/*.so $$PWD/lib/$$QMAKE_HOST.arch/HCNetSDKCom
+    libfiles.files += $$PWD/lib/$$QMAKE_HOST.arch/*.so* $$PWD/lib/$$QMAKE_HOST.arch/HCNetSDKCom
     translationfiles.path = $$(PREFIX)/QtVsPlayer/translations
     translationfiles.files += $$PWD/*.qm
     docfiles.path = $$(PREFIX)/doc/QtVsPlayer
