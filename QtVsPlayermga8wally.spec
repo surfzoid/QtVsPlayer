@@ -44,6 +44,10 @@ Requires: lib64openal1
  
 %global debug_package %{nil}
 
+# don't replace openssl of Mageia
+%global __provides_exclude %{?__provides_exclude:%__provides_exclude|}^libcrypto|^libssl\\.so|^libopenal\\.so*|^libz\\.so*
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^libcrypto|^libssl\\.so|^libopenal\\.so*|^libz\\.so*
+
 %description
 QtVsPlayer can read local video files of Hikvision and display blue, green and red vectors.
 This is the end of an full network backup solution in combination with HikNetExtractor.
@@ -76,10 +80,10 @@ mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so*
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
 ln -sr %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libcrypto.so %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/
+#ln -sr %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
+#ln -sr %{_libdir}/libcrypto.so %{buildroot}%{_libdir}/QtVsPlayer/
+#ln -sr %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
+#ln -sr %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/
 ln -sr %{_libdir}/libz.so %{buildroot}%{_libdir}/QtVsPlayer/libz.so.1
 
 mkdir -p %{buildroot}/etc/ld.so.conf.d
