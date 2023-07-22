@@ -75,18 +75,18 @@ sed -i 's/\(RELEASE = \).*/\1         %{Rel}/' %{_builddir}/%{name}-%{version}-%
 mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so*
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
-ln -s %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
-ln -s %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
-ln -s %{_libdir}/libcrypto.so %{buildroot}%{_libdir}/QtVsPlayer/
-ln -s %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
-ln -s %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/
-ln -s %{_libdir}/libz.so %{buildroot}%{_libdir}/QtVsPlayer/libz.so.1
+ln -sr %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
+ln -sr %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
+ln -sr %{_libdir}/libcrypto.so %{buildroot}%{_libdir}/QtVsPlayer/
+ln -sr %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
+ln -sr %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/
+ln -sr %{_libdir}/libz.so %{buildroot}%{_libdir}/QtVsPlayer/libz.so.1
 
 mkdir -p %{buildroot}/etc/ld.so.conf.d
 
 cat << 'EOF' > %{buildroot}/etc/ld.so.conf.d/QtVsPlayer.conf
 /usr/lib64/QtVsPlayer/
-/usr/lb64/QtVsPlayer/HCNetSDKCom/
+/usr/lib64/QtVsPlayer/HCNetSDKCom/
 EOF
 
 %post
