@@ -57,6 +57,8 @@ https://www.hikvision.com/content/dam/hikvision/en/support/download/sdk/device-n
 Licences are in the doc dir.
  
 %prep
+sed -i 's/\(VERSION = \).*/\1         %{version}/' QtVsPlayer.pro
+sed -i 's/\(RELEASE = \).*/\1         %{Rel}/' QtVsPlayer.pro
 %autosetup -n %{name}-%{version}-%{Rel}
  
 %build
