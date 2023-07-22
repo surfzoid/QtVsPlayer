@@ -33,5 +33,8 @@ override_dh_auto_install:
 	dh_auto_install --destdir=usr/share
 
 override_dh_shlibdeps:
-	dh_shlibdeps -XlibSuperRender
-	dh_shlibdeps -l
+	dh_shlibdeps -XlibSuperRender	
+	dh_shlibdeps -Xlibcrypto.so.1.1
+	dh_shlibdeps -Xlibcrypto.so
+	dh_shlibdeps -Xlibssl.so.1.1
+	dh_shlibdeps -Xlibssl.so
