@@ -17,6 +17,19 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3.2.1
 
+      - name: Version
+        run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
+        id: version
+
+      - name: Rel
+        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | cut -d ' ' -f 3)"
+        id: rel
+
+      - name: Update Version and Release
+        run: |
+            sed -i 's/\(VERSION = \).*/\1         ${{ steps.version.outputs.version }}/' QtVsPlayer.pro
+            sed -i 's/\(RELEASE = \).*/\1         ${{ steps.Rel.outputs.rel }}/' QtVsPlayer.pro
+
       - name: Prepare install dir
         run: | 
             sudo apt update
@@ -71,14 +84,6 @@ jobs:
       - name: make install
         run: INSTALL_ROOT=.debpkg/usr/share; make install
 
-      - name: Version
-        run: echo "::set-output name=version::$(head -n 1 ./QtVsPlayer.pro| cut -d ' ' -f 3)"
-        id: version
-
-      - name: Rel
-        run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | cut -d ' ' -f 3)"
-        id: rel
-
       - name: build-deb-action
         uses: jiro4989/build-deb-action@v2.1.0
         with:
@@ -108,6 +113,8 @@ jobs:
             sed -i 's/\(Source0:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             # sed -i 's/"%autosetup -n %{name}-%{version}-%{Rel}"/"%autosetup -n %{name}-%{version}"/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             # sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i '/VERSION = /d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i '/RELEASE = /d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
@@ -193,6 +200,11 @@ jobs:
       - name: Rel
         run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | cut -d ' ' -f 3)"
         id: rel
+
+      - name: Update Version and Release
+        run: |
+            sed -i 's/\(VERSION = \).*/\1         ${{ steps.version.outputs.version }}/' QtVsPlayer.pro
+            sed -i 's/\(RELEASE = \).*/\1         ${{ steps.Rel.outputs.rel }}/' QtVsPlayer.pro
 
       - name: Prepare install dir
         run: |           
@@ -284,6 +296,8 @@ jobs:
             sed -i 's/\(Source0:\).*/\1         tmp.tar.gz/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             # sed -i 's/"%autosetup -n %{name}-%{version}-%{Rel}"/"%autosetup -n %{name}-%{version}"/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             # sed -i 's/\(Release:\).*/\1         1/' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i '/VERSION = /d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
+            sed -i '/RELEASE = /d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^BuildRequires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^Requires/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
             sed -i '/^%qmake_qt5/d' ~/rpmbuild/SPECS/QtVsPlayermga8wally.spec
@@ -345,6 +359,11 @@ jobs:
       - name: Rel
         run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | cut -d ' ' -f 3)"
         id: rel
+
+      - name: Update Version and Release
+        run: |
+            sed -i 's/\(VERSION = \).*/\1         ${{ steps.version.outputs.version }}/' QtVsPlayer.pro
+            sed -i 's/\(RELEASE = \).*/\1         ${{ steps.Rel.outputs.rel }}/' QtVsPlayer.pro
 
       - name: Check Version
         run: echo ${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
@@ -430,6 +449,11 @@ jobs:
       - name: Rel
         run: echo "::set-output name=rel::$(grep "%global Rel" ./QtVsPlayermga8wally.spec | cut -d ' ' -f 3)"
         id: rel
+
+      - name: Update Version and Release
+        run: |
+            sed -i 's/\(VERSION = \).*/\1         ${{ steps.version.outputs.version }}/' QtVsPlayer.pro
+            sed -i 's/\(RELEASE = \).*/\1         ${{ steps.Rel.outputs.rel }}/' QtVsPlayer.pro
 
       - name: MacVersion
         run: echo "::set-output name=version::$(sw_vers -productVersion)"
