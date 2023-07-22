@@ -2,7 +2,7 @@ Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
 Version:        1.0.50
 
-%global Rel 2
+%global Rel 3
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -41,12 +41,13 @@ BuildRequires: chrpath
 Requires: lib64qt5network5
 Requires: qtbase5-common
 Requires: lib64openal1
- 
+
 %global debug_package %{nil}
 
-# don't replace openssl of Mageia
+# Mageia 9 don't have openssl 1.1 anymore, avoid conflict don't replace openssl of Mageia
 %global __provides_exclude %{?__provides_exclude:%__provides_exclude|}^libcrypto|^libssl\\.so|^libopenal\\.so*|^libz\\.so*
 %global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^libcrypto|^libssl\\.so|^libopenal\\.so*|^libz\\.so*
+
 
 %description
 QtVsPlayer can read local video files of Hikvision and display blue, green and red vectors.
@@ -80,10 +81,14 @@ mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so*
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
 ln -sr %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
-#ln -sr %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
-#ln -sr %{_libdir}/libcrypto.so %{buildroot}%{_libdir}/QtVsPlayer/
-#ln -sr %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
-#ln -sr %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/
+%if 0%{?mageia} < 9
+rm -f %{buildroot}%{_libdir}/QtVsPlayer/libcrypto.so*
+rm -f %{buildroot}%{_libdir}/QtVsPlayer/libssl.so*
+ln -sr %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
+ln -sr %{_libdir}/libcrypto.so %{buildroot}%{_libdir}/QtVsPlayer/
+ln -sr %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
+ln -sr %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/
+%endif
 ln -sr %{_libdir}/libz.so %{buildroot}%{_libdir}/QtVsPlayer/libz.so.1
 
 mkdir -p %{buildroot}/etc/ld.so.conf.d
