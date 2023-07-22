@@ -452,8 +452,8 @@ jobs:
 
       - name: Update Version and Release
         run: |
-            sed -i 's/\(VERSION = \).*/\1         ${{ steps.version.outputs.version }}/' QtVsPlayer.pro
-            sed -i 's/\(RELEASE = \).*/\1         ${{ steps.Rel.outputs.rel }}/' QtVsPlayer.pro
+            sed -ie 's/\(VERSION = \).*/\1         ${{ steps.version.outputs.version }}/' QtVsPlayer.pro
+            sed -ie 's/\(RELEASE = \).*/\1         ${{ steps.Rel.outputs.rel }}/' QtVsPlayer.pro
 
       - name: MacVersion
         run: echo "::set-output name=version::$(sw_vers -productVersion)"
