@@ -34,3 +34,4 @@ override_dh_auto_install:
 
 override_dh_shlibdeps:
 	dh_shlibdeps -XlibSuperRender
+	dh_shlibdeps -l
