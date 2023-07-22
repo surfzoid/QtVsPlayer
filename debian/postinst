@@ -9,17 +9,17 @@ then
 fi
 ln -sr $(whereis "libopenal.so.1" | sed "s|.* \(.*libopenal.so.1\).*|\1|") /usr/lib64/QtVsPlayer
 
-if [ -f "/usr/lib64/QtVsPlayer/libssl.so.1.1" ];
-then
-    rm -fr /usr/lib64/QtVsPlayer/libssl.so.1.1
-fi
-ln -sr $(whereis "libssl.so.1.1" | sed "s|.* \(.*libssl.so.1.1\).*|\1|") /usr/lib64/QtVsPlayer
+#if [ -f "/usr/lib64/QtVsPlayer/libssl.so.1.1" ];
+#then
+#    rm -fr /usr/lib64/QtVsPlayer/libssl.so.1.1
+#fi
+#ln -sr $(whereis "libssl.so.1.1" | sed "s|.* \(.*libssl.so.1.1\).*|\1|") /usr/lib64/QtVsPlayer
 
-if [ -f "/usr/lib64/QtVsPlayer/libssl.so" ];
-then
-    rm -fr /usr/lib64/QtVsPlayer/libssl.so
-fi
-ln -sr $(whereis "libssl.so" | sed "s|.* \(.*libssl.so\).*|\1|") /usr/lib64/QtVsPlayer
+#if [ -f "/usr/lib64/QtVsPlayer/libssl.so" ];
+#then
+#    rm -fr /usr/lib64/QtVsPlayer/libssl.so
+#fi
+#ln -sr $(whereis "libssl.so" | sed "s|.* \(.*libssl.so\).*|\1|") /usr/lib64/QtVsPlayer
 
 if [ -f "/usr/lib64/QtVsPlayer/libiconv2.so" ];
 then
@@ -27,17 +27,17 @@ then
 fi
 #ln -sr /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv.so.2 /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv2.so
 
-if [ -f "/usr/lib64/QtVsPlayer/libcrypto.so.1.1" ];
-then
-    rm -fr /usr/lib64/QtVsPlayer/libcrypto.so.1.1
-fi
-ln -sr $(whereis "libcrypto.so.1.1" | sed "s|.* \(.*libcrypto.so.1.1\).*|\1|") /usr/lib64/QtVsPlayer
+#if [ -f "/usr/lib64/QtVsPlayer/libcrypto.so.1.1" ];
+#then
+#    rm -fr /usr/lib64/QtVsPlayer/libcrypto.so.1.1
+#fi
+#ln -sr $(whereis "libcrypto.so.1.1" | sed "s|.* \(.*libcrypto.so.1.1\).*|\1|") /usr/lib64/QtVsPlayer
 
-if [ -f "/usr/lib64/QtVsPlayer/libcrypto.so" ];
-then
-    rm -fr /usr/lib64/QtVsPlayer/libcrypto.so
-fi
-ln -sr $(whereis "libcrypto.so" | sed "s|.* \(.*libcrypto.so\).*|\1|") /usr/lib64/QtVsPlayer
+#if [ -f "/usr/lib64/QtVsPlayer/libcrypto.so" ];
+#then
+#    rm -fr /usr/lib64/QtVsPlayer/libcrypto.so
+#fi
+#ln -sr $(whereis "libcrypto.so" | sed "s|.* \(.*libcrypto.so\).*|\1|") /usr/lib64/QtVsPlayer
 
 if [ -f "/usr/lib64/QtVsPlayer/libz.so.1" ];
 then
