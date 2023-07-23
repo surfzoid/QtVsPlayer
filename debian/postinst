@@ -16,6 +16,7 @@ fi
 #ln -sr /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv.so.2 /usr/lib64/QtVsPlayer/HCNetSDKCom/libiconv2.so
 
 if [ -f $(whereis "libssl.so.1.1" | sed "s|.* \(.*libssl.so.1.1\).*|\1|") ];
+then
 if [ -f "/usr/lib64/QtVsPlayer/libssl.so.1.1" ];
 then
     rm -fr /usr/lib64/QtVsPlayer/libssl.so.1.1
