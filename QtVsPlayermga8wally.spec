@@ -2,7 +2,7 @@ Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
 Version:        1.0.50
 
-%global Rel 3
+%global Rel 4
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -81,14 +81,18 @@ mkdir -p %{buildroot}%{_libdir}/QtVsPlayer/
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/*.so*
 chrpath -d %{buildroot}%{_libdir}/QtVsPlayer/HCNetSDKCom/*.so*
 ln -sr %{_libdir}/libopenal.so.1 %{buildroot}%{_libdir}/QtVsPlayer/
-%if 0%{?mageia} < 9
-rm -f %{buildroot}%{_libdir}/QtVsPlayer/libcrypto.so*
-rm -f %{buildroot}%{_libdir}/QtVsPlayer/libssl.so*
-ln -sr %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libcrypto.so %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/
-ln -sr %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/
-%endif
+
+if [ -f $(whereis "libssl.so.1.1" | sed "s|.* \(.*libssl.so.1.1\).*|\1|") ];
+then
+    echo -e "there is openssl 1.1, no need to embeded it and use symlink";
+    rm -f %{buildroot}%{_libdir}/QtVsPlayer/libcrypto.so*;
+    rm -f %{buildroot}%{_libdir}/QtVsPlayer/libssl.so*;
+    ln -sr %{_libdir}/libcrypto.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/;
+    ln -sr %{_libdir}/libcrypto.so %{buildroot}%{_libdir}/QtVsPlayer/;
+    ln -sr %{_libdir}/libssl.so.1.1 %{buildroot}%{_libdir}/QtVsPlayer/;
+    ln -sr %{_libdir}/libssl.so %{buildroot}%{_libdir}/QtVsPlayer/;
+fi
+
 ln -sr %{_libdir}/libz.so %{buildroot}%{_libdir}/QtVsPlayer/libz.so.1
 
 mkdir -p %{buildroot}/etc/ld.so.conf.d
