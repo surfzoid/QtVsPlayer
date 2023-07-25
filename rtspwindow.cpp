@@ -388,6 +388,7 @@ void RtspWindow::authenticationRequired(QNetworkReply *reply, QAuthenticator *au
 
 void RtspWindow::CallPresset(int Presset)
 {
+    qDebug() << "Call presset " + QString::number(Presset);
     // /ISAPI/ContentMgmt/PTZCtrlProxy/channels/1/presets/1/goto
     QString AdPath = ("/PTZ/channels/1/PTZControl?command=GOTO_PRESET&presetNo=" +
                       QString::number(Presset) + "&speed=" +
@@ -461,6 +462,7 @@ void RtspWindow::on_comboBxPatrol_editTextChanged(const QString &arg1)
 
 void RtspWindow::LoadPreset()
 {
+    qDebug() << "Load presset list";
     QString AdPath = ("/ISAPI/PTZCtrl/channels/1/presets");
     QUrl Adresse("http://" + CamUser + ":" + CamPass +
                  "@" +  CamIp + ":" + CamPortHttp + AdPath);
@@ -492,6 +494,7 @@ void RtspWindow::LoadPreset()
 
 void RtspWindow::LoadPatrol()
 {
+    qDebug() << "Load patrol list ";
     QString AdPath = ("/ISAPI/PTZCtrl/channels/1/patrols");
     QUrl Adresse("http://" + CamUser + ":" + CamPass +
                  "@" +  CamIp + ":" + CamPortHttp + AdPath);
@@ -521,12 +524,14 @@ void RtspWindow::LoadPatrol()
 
 void RtspWindow::on_comboBxPresset_textActivated(const QString &arg1)
 {
+    qDebug() << "Send presset request " << arg1;
     CallPresset(ui->comboBxPresset->currentIndex() + 1);
     ui->comboBxPresset->setToolTip(arg1);
 }
 
 void RtspWindow::on_comboBxPatrol_textActivated(const QString &arg1)
 {
+    qDebug() << "Send patrol request " << arg1;
     QString AdPath = ("/ISAPI/PTZCtrl/channels/1/patrols/" +
                       QString::number(ui->comboBxPatrol->currentIndex() + 1) + "/start").toUtf8();
     QUrl Adresse("http://" + CamUser + ":" + CamPass +
@@ -538,6 +543,7 @@ void RtspWindow::on_comboBxPatrol_textActivated(const QString &arg1)
 
 void RtspWindow::on_actionReboot_triggered()
 {
+    qDebug() << "Send reboot request ";
     QString AdPath = "/ISAPI/System/reboot";
     QUrl Adresse("http://" + CamUser + ":" + CamPass +
                  "@" + CamIp + ":" + CamPortHttp + AdPath);
@@ -549,7 +555,7 @@ void RtspWindow::on_actionReboot_triggered()
 
 void RtspWindow::on_RecordBtn_toggled(bool checked)
 {
-
+    qDebug() << "Send manual record request ";
     if (checked) {
 
         QString AdPath = "/ISAPI/ContentMgmt/record/control/manual/start/tracks/101"; // + RtspWindow::Chanel;
@@ -819,6 +825,7 @@ void RtspWindow::SendPTZ(int pan, int tilt, int zoom)
 ***************************************************/
 QString RtspWindow::SetXMLReq(int pan,int tilt,int zoom)
 {
+    qDebug() << "Send PTZ request P "  << QString::number(pan) << " T "  << QString::number(tilt) << " Z "  << QString::number(zoom);
     int Duration = PtzSpeed * 100;
 
     //    QString XmlData = "<PTZData>\r\n\
@@ -1148,6 +1155,7 @@ assign this port to global port, and it will be used to play in next callback */
 
 void RtspWindow::on_actionmain_stream_triggered()
 {
+    qDebug() << "Send main stream request ";
     if (IsShown) {
         ui->actionsub_stream->setEnabled(true);
         ui->actionmain_stream->setEnabled(false);
@@ -1157,6 +1165,7 @@ void RtspWindow::on_actionmain_stream_triggered()
 
 void RtspWindow::on_actionsub_stream_triggered()
 {
+    qDebug() << "Send sub stream request ";
     if (IsShown) {
         ui->actionmain_stream->setEnabled(true);
         ui->actionsub_stream->setEnabled(false);
@@ -1210,6 +1219,7 @@ void RtspWindow::on_actionConfigure_triggered()
 
 void RtspWindow::on_PauseBtn_toggled(bool checked)
 {
+    qDebug() << "Send pause request ";
     if (checked) {
         NET_DVR_RealPlayPause( lRealPlayHandle);
     }else
@@ -1220,6 +1230,7 @@ void RtspWindow::on_PauseBtn_toggled(bool checked)
 
 void RtspWindow::on_actionReconnect_triggered()
 {
+    qDebug() << "Send reconnect request ";
     LoginInfo(CamPortSdk,CamIp,CamUser,CamPass,!ui->actionsub_stream->isEnabled());
     /****HIKNETSDK****/
     LoadPreset();
