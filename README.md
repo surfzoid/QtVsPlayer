@@ -1,5 +1,5 @@
 [![CI workflow](https://github.com/surfzoid/QtVsPlayer/workflows/CI/badge.svg)](https://github.com/surfzoid/QtVsPlayer/actions/workflows/c-cpp.yml)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/surfzoid/QtVsPlayer?logo=github&sort=semver)](https://github.com/surfzoid/QtVsPlayer/releases)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/surfzoid/QtVsPlayer?logo=github)](https://github.com/surfzoid/QtVsPlayer/releases)
 [![Download Releases](https://img.shields.io/github/downloads/surfzoid/QtVsPlayer/latest/total.svg?style=plastic)](https://github.com/surfzoid/QtVsPlayer/releases)
 [![Copr build status](https://copr.fedorainfracloud.org/coprs/surfzoid/QtVsPlayer/package/QtVsPlayer/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/surfzoid/QtVsPlayer/package/QtVsPlayer/)  
  
