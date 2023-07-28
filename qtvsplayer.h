@@ -92,6 +92,8 @@ private slots:
 
     void on_actionQT_Infos_triggered();
 
+    void on_actionMultimedia_shortcuts_triggered();
+
 public slots:
 
 signals:

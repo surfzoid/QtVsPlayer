@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtGui>
 #include <QWidget>
+#include <QSettings>
 
 #define CAPTURE_PICTURE_PATH "/QtVsPlayerPlayBackPicture/"
 
@@ -33,6 +34,7 @@ private:
     Ui::VideoCtrls *ui;
     //timer for play-process
     QTimer *m_pbqtimer;
+    QSettings settings;
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;

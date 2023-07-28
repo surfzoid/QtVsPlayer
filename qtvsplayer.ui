@@ -3,6 +3,14 @@
  <author>Eric Petit</author>
  <class>QtVsPlayer</class>
  <widget class="QMainWindow" name="QtVsPlayer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>803</width>
+    <height>637</height>
+   </rect>
+  </property>
   <property name="mouseTracking">
    <bool>true</bool>
   </property>
@@ -226,7 +234,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>416</width>
+     <width>803</width>
      <height>29</height>
     </rect>
    </property>
@@ -288,6 +296,7 @@
     <addaction name="actionAuto_hide_controls"/>
     <addaction name="actionListe_de_lecture"/>
     <addaction name="actionSettings"/>
+    <addaction name="actionMultimedia_shortcuts"/>
     <addaction name="actionInfos"/>
     <addaction name="separator"/>
     <addaction name="menuVCA_Info_Overlay"/>
@@ -523,6 +532,11 @@
   <action name="actionQT_Infos">
    <property name="text">
     <string>QT Infos</string>
+   </property>
+  </action>
+  <action name="actionMultimedia_shortcuts">
+   <property name="text">
+    <string>Multimedia shortcuts</string>
    </property>
   </action>
  </widget>

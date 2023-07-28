@@ -47,18 +47,22 @@ void VideoCtrls::hideEvent(QHideEvent *event)
 {
     if(event)
         return;
-    //Multimedia keys shortcut
-    this->ui->previousButton->setShortcut(0X1000082);
-    this->ui->nextButton->setShortcut(0X1000083);
-    this->ui->playButton->setShortcut(0X1000080);
-    this->ui->pauseButton->setShortcut(0X1000085);
-    this->ui->stopButton->setShortcut(0X1000081);
-    this->ui->SeekLessButton->setShortcut(Qt::Key_Forward);
-    this->ui->SeekMoreButton->setShortcut(Qt::Key_BackForward);
 }
 
 void VideoCtrls::showEvent(QShowEvent *event)
 {
+    //Multimedia keys shortcut
+    settings.beginGroup("Multimedia_shortcuts");
+
+    this->ui->playButton->setShortcut(settings.value("play", "0X1000080").value<int>());
+    this->ui->pauseButton->setShortcut(settings.value("pause", "0X1000085").value<int>());
+    this->ui->stopButton->setShortcut(settings.value("stop", "0X1000081").value<int>());
+    this->ui->previousButton->setShortcut(settings.value("previous", "0X1000082").value<int>());
+    this->ui->nextButton->setShortcut(settings.value("next", "0X1000083").value<int>());
+    this->ui->SeekLessButton->setShortcut(settings.value("SeekLess", "0x01000062").value<int>());
+    this->ui->SeekMoreButton->setShortcut(settings.value("SeekMore", "0x01000061").value<int>());
+
+    settings.endGroup();
     if(event)
         return;
 }
@@ -389,7 +393,9 @@ void VideoCtrls::on_TimeSlider_actionTriggered(int action)
     PlayM4_SetPlayPos(HikNumPort, ((float)value)*0.01);
     pause();
 
-    return;
+
+    if(action)
+        return;
 }
 
 void VideoCtrls::on_TimeSlider_sliderReleased()

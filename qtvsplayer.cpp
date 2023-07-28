@@ -11,6 +11,7 @@
 #include <QSize>
 #include "videoctrls.h"
 #include <QMimeDatabase>
+#include "multimedia_shortcuts.h"
 
 #if (!defined(__ANDROID__))
 #include "qtvsplayer_adaptor.h"
@@ -973,4 +974,11 @@ void QtVsPlayer::VCAScreenshot(QString PicName)
     QPixmap originalPixmap;
     originalPixmap = VideoView->screen()->grabWindow(VideoView->winId());
     originalPixmap.save(PicName, "png", 100);
+}
+
+void QtVsPlayer::on_actionMultimedia_shortcuts_triggered()
+{
+    Multimedia_shortcuts *MulSh = new Multimedia_shortcuts();
+    MulSh->setWindowTitle("Multimedia shortcuts");
+    MulSh->exec();
 }

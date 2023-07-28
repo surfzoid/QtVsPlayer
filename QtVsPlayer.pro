@@ -102,6 +102,7 @@ SOURCES += \
     filesliste.cpp \
     infos.cpp \
     main.cpp \
+    multimedia_shortcuts.cpp \
     pantilcmd.cpp \
     playm4interface.cpp \
     qtvsplayer.cpp \
@@ -120,6 +121,7 @@ HEADERS += \
     include/PlayM4.h \
     include/WindowsPlayM4.h \
     infos.h \
+    multimedia_shortcuts.h \
     pantilcmd.h \
     playm4interface.h \
     qtvsplayer.h \
@@ -132,6 +134,7 @@ FORMS += \
     cfgdialog.ui \
     filesliste.ui \
     infos.ui \
+    multimedia_shortcuts.ui \
     pantilcmd.ui \
     qtvsplayer.ui \
     rtspwindow.ui \
