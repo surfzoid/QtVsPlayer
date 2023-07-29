@@ -414,3 +414,18 @@ void VideoCtrls::on_Audio_released()
 {
     playm4interface::PlaySound();
 }
+
+
+void VideoCtrls::Forward()
+{
+    int value = ui->TimeSlider->value();
+    ui->TimeSlider->setValue(value + 1);
+    VideoCtrls::on_TimeSlider_actionTriggered(0);
+}
+
+void VideoCtrls::Backward()
+{
+    int value = ui->TimeSlider->value();
+    ui->TimeSlider->setValue(value - 1);
+    VideoCtrls::on_TimeSlider_actionTriggered(0);
+}

@@ -1,8 +1,8 @@
 Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
-Version:        1.0.50
+Version:        1.0.51
 
-%global Rel 8
+%global Rel 0
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -136,6 +136,9 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/*
 
 %changelog
+* Sat Jul 29 2023 surfzoid@gmail.com
++ Config of multimedia shorcut key.
+
 * Sat Jul 22 2023 surfzoid@gmail.com
 - Mageia 9 use openssl3, use openssl 1.1 libs from mga8 in /usr/lib64/QtVsPlayer.
 + Use release number for about box and packages built at Github.

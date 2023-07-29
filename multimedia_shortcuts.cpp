@@ -27,6 +27,8 @@ void Multimedia_shortcuts::showEvent(QShowEvent *event)
     this->ui->LEnext->setText(settings.value("next", "0X1000083").value<QString>());
     this->ui->LESeekLess->setText(settings.value("SeekLess", "0x01000062").value<QString>());
     this->ui->LESeekMore->setText(settings.value("SeekMore", "0x01000061").value<QString>());
+    this->ui->LEForward->setText(settings.value("Forward", "0x01000063").value<QString>());
+    this->ui->LEBackward->setText(settings.value("Backward", "0x01000064").value<QString>());
     settings.endGroup();
 
     IsShown = true;
@@ -47,6 +49,8 @@ void Multimedia_shortcuts::on_buttonBox_accepted()
     settings.setValue("next", ui->LEnext->text());
     settings.setValue("SeekLess", ui->LESeekLess->text());
     settings.setValue("SeekMore", ui->LESeekMore->text());
+    settings.setValue("Forward", ui->LEForward->text());
+    settings.setValue("Backward", ui->LEBackward->text());
 
     settings.endGroup();
     settings.sync();
@@ -78,6 +82,10 @@ bool Multimedia_shortcuts::eventFilter(QObject *obj, QEvent *event)
                 this->ui->LESeekLess->setText(TheKey);
             if (this->ui->LESeekMore->hasFocus())
                 this->ui->LESeekMore->setText(TheKey);
+            if (this->ui->LEForward->hasFocus())
+                this->ui->LEForward->setText(TheKey);
+            if (this->ui->LEBackward->hasFocus())
+                this->ui->LEBackward->setText(TheKey);
     }
     return QObject::eventFilter(obj, event);
 }

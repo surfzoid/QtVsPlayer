@@ -170,7 +170,38 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
     }
 
     /*printf("---Event type %i :%s\r\n", event->type(), QEvent::staticMetaObject
-       .enumerator(eventEnumIndex).valueToKey(event->type()));*/
+       .enumerator(eventEnumIndex).valueToKey(event->type()));*/    if (event->type() == QEvent::KeyRelease || event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *key = static_cast<QKeyEvent *>(event);
+//        qDebug() << "pressed"<< key->key();
+//        qDebug() << "pressed"<< key->text();
+//        qDebug() << "pressed"<< key->nativeScanCode();
+        QSettings settings;
+        settings.beginGroup("Multimedia_shortcuts");
+            QString TheKey = QString::number(key->key());
+            if (key->key() == settings.value("play", "0X1000080").value<int>())
+                playm4interface::Play();
+            if (key->key() == settings.value("pause", "0X1000085").value<int>())
+                VideoCtrls::pause();
+            if (key->key() == settings.value("stop", "0X1000081").value<int>())
+                playm4interface::Stop();
+            if (key->key() == settings.value("previous", "0X1000082").value<int>())
+            {
+                QtVsPlayer::LastPlayIdx -= 2;
+                QtVsPlayer::PlayNextFile(false, 0);
+            }
+            if (key->key() == settings.value("next", "0X1000083").value<int>())
+                QtVsPlayer::PlayNextFile(false,0);
+            if (key->key() == settings.value("SeekLess", "0x01000062").value<int>())
+                playm4interface::Slow();
+            if (key->key() == settings.value("SeekMore", "0x01000061").value<int>())
+                playm4interface::Fast();
+            if (key->key() == settings.value("Forward", "0x010000631").value<int>())
+                WVideoCtrls->Forward();
+            if (key->key() == settings.value("Backward", "0x010000631").value<int>())
+                WVideoCtrls->Backward();
+            settings.endGroup();
+    }
 
     return QObject::eventFilter(obj, event);
 }

@@ -29,6 +29,8 @@ public:
     static void pause();
     static int Duration;
     static bool AutoHide;
+    void Forward();
+    void Backward();
 
 private:
     Ui::VideoCtrls *ui;
