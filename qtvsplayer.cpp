@@ -170,37 +170,19 @@ bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
     }
 
     /*printf("---Event type %i :%s\r\n", event->type(), QEvent::staticMetaObject
-       .enumerator(eventEnumIndex).valueToKey(event->type()));*/    if (event->type() == QEvent::KeyRelease || event->type() == QEvent::KeyPress)
+       .enumerator(eventEnumIndex).valueToKey(event->type()));*/
+    if (event->type() == QEvent::KeyRelease || event->type() == QEvent::KeyPress)
     {
         QKeyEvent *key = static_cast<QKeyEvent *>(event);
-//        qDebug() << "pressed"<< key->key();
-//        qDebug() << "pressed"<< key->text();
-//        qDebug() << "pressed"<< key->nativeScanCode();
+
         QSettings settings;
         settings.beginGroup("Multimedia_shortcuts");
-            QString TheKey = QString::number(key->key());
-            if (key->key() == settings.value("play", "0X1000080").value<int>())
-                playm4interface::Play();
-            if (key->key() == settings.value("pause", "0X1000085").value<int>())
-                VideoCtrls::pause();
-            if (key->key() == settings.value("stop", "0X1000081").value<int>())
-                playm4interface::Stop();
-            if (key->key() == settings.value("previous", "0X1000082").value<int>())
-            {
-                QtVsPlayer::LastPlayIdx -= 2;
-                QtVsPlayer::PlayNextFile(false, 0);
-            }
-            if (key->key() == settings.value("next", "0X1000083").value<int>())
-                QtVsPlayer::PlayNextFile(false,0);
-            if (key->key() == settings.value("SeekLess", "0x01000062").value<int>())
-                playm4interface::Slow();
-            if (key->key() == settings.value("SeekMore", "0x01000061").value<int>())
-                playm4interface::Fast();
-            if (key->key() == settings.value("Forward", "0x010000631").value<int>())
-                WVideoCtrls->Forward();
-            if (key->key() == settings.value("Backward", "0x010000631").value<int>())
-                WVideoCtrls->Backward();
-            settings.endGroup();
+        QString TheKey = QString::number(key->key(),16);
+        if (key->key() == settings.value("Forward", "0x010000631").value<int>())
+            WVideoCtrls->Forward();
+        if (key->key() == settings.value("Backward", "0x010000631").value<int>())
+            WVideoCtrls->Backward();
+        settings.endGroup();
     }
 
     return QObject::eventFilter(obj, event);
@@ -438,7 +420,7 @@ void QtVsPlayer::keyPressEvent(QKeyEvent *event)
     case Qt::Key_F10:
         QtVsPlayer::HideCtrl();
         break;
-    case 16777248:
+//    case 16777248:
     case Qt::Key_Space:
         VideoCtrls::pause();
         break;
@@ -448,6 +430,33 @@ void QtVsPlayer::keyPressEvent(QKeyEvent *event)
         qDebug() << "currentKeyPressed 0X" + result.toUpper();
         break;
     }
+
+    QSettings settings;
+    settings.beginGroup("Multimedia_shortcuts");
+    QString TheKey = QString::number(event->key(),16);
+    if (event->key() == settings.value("play", "0X1000080").value<int>())
+        playm4interface::Play();
+    if (event->key() == settings.value("pause", "0X1000085").value<int>())
+        VideoCtrls::pause();
+    if (event->key() == settings.value("stop", "0X1000081").value<int>())
+        playm4interface::Stop();
+    if (event->key() == settings.value("previous", "0X1000082").value<int>())
+    {
+        QtVsPlayer::LastPlayIdx -= 2;
+        QtVsPlayer::PlayNextFile(false, 0);
+    }
+    if (event->key() == settings.value("next", "0X1000083").value<int>())
+        QtVsPlayer::PlayNextFile(false,0);
+    if (event->key() == settings.value("SeekLess", "0x01000062").value<int>())
+        playm4interface::Slow();
+    if (event->key() == settings.value("SeekMore", "0x01000061").value<int>())
+        playm4interface::Fast();
+    if (event->key() == settings.value("Forward", "0x010000631").value<int>())
+        WVideoCtrls->Forward();
+    if (event->key() == settings.value("Backward", "0x010000631").value<int>())
+        WVideoCtrls->Backward();
+    settings.endGroup();
+
     return;
 }
 

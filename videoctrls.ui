@@ -136,9 +136,6 @@
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control-skip-180.png</normaloff>:/images/images/control-skip-180.png</iconset>
       </property>
-      <property name="shortcut">
-       <string>Left</string>
-      </property>
       <property name="flat">
        <bool>true</bool>
       </property>
@@ -195,9 +192,6 @@
       <property name="icon">
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control-skip.png</normaloff>:/images/images/control-skip.png</iconset>
-      </property>
-      <property name="shortcut">
-       <string>Right</string>
       </property>
       <property name="flat">
        <bool>true</bool>
@@ -448,9 +442,6 @@
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control-stop-square.png</normaloff>:/images/images/control-stop-square.png</iconset>
       </property>
-      <property name="shortcut">
-       <string>Space</string>
-      </property>
       <property name="flat">
        <bool>true</bool>
       </property>
@@ -507,9 +498,6 @@
       <property name="icon">
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control-slow.png</normaloff>:/images/images/control-slow.png</iconset>
-      </property>
-      <property name="shortcut">
-       <string>-</string>
       </property>
       <property name="flat">
        <bool>true</bool>
@@ -704,9 +692,6 @@
       <property name="icon">
        <iconset resource="ressources.qrc">
         <normaloff>:/images/images/control-fast.png</normaloff>:/images/images/control-fast.png</iconset>
-      </property>
-      <property name="shortcut">
-       <string>+</string>
       </property>
       <property name="flat">
        <bool>true</bool>

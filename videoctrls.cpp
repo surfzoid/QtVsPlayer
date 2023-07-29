@@ -52,17 +52,17 @@ void VideoCtrls::hideEvent(QHideEvent *event)
 void VideoCtrls::showEvent(QShowEvent *event)
 {
     //Multimedia keys shortcut
-    settings.beginGroup("Multimedia_shortcuts");
+//    settings.beginGroup("Multimedia_shortcuts");
 
-    this->ui->playButton->setShortcut(settings.value("play", "0X1000080").value<int>());
-    this->ui->pauseButton->setShortcut(settings.value("pause", "0X1000085").value<int>());
-    this->ui->stopButton->setShortcut(settings.value("stop", "0X1000081").value<int>());
-    this->ui->previousButton->setShortcut(settings.value("previous", "0X1000082").value<int>());
-    this->ui->nextButton->setShortcut(settings.value("next", "0X1000083").value<int>());
-    this->ui->SeekLessButton->setShortcut(settings.value("SeekLess", "0x01000062").value<int>());
-    this->ui->SeekMoreButton->setShortcut(settings.value("SeekMore", "0x01000061").value<int>());
+//    this->ui->playButton->setShortcut(settings.value("play", "0X1000080").value<int>());
+//    this->ui->pauseButton->setShortcut(settings.value("pause", "0X1000085").value<int>());
+//    this->ui->stopButton->setShortcut(settings.value("stop", "0X1000081").value<int>());
+//    this->ui->previousButton->setShortcut(settings.value("previous", "0X1000082").value<int>());
+//    this->ui->nextButton->setShortcut(settings.value("next", "0X1000083").value<int>());
+//    this->ui->SeekLessButton->setShortcut(settings.value("SeekLess", "0x01000062").value<int>());
+//    this->ui->SeekMoreButton->setShortcut(settings.value("SeekMore", "0x01000061").value<int>());
 
-    settings.endGroup();
+//    settings.endGroup();
     if(event)
         return;
 }
