@@ -20,7 +20,7 @@ export DH_VERBOSE = 1
 VERSION=$(shell tail -c 2 <<<$(VERS))
 RELEASE=$(shell tail -c 2 <<<"$(REL)")
 #	sed -i 's/\(VERSION = \).*/\1         $version/' QtVsPlayer.pro
-sed -i 's/\(RELEASE = \).*/\1         $(RELEASE)/' QtVsPlayer.pro
+$(shell sed -i 's/\(RELEASE = \).*/\1         $(RELEASE)/' QtVsPlayer.pro)
 
 %:
 	dh $@
