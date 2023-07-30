@@ -24,6 +24,7 @@ HOST_ARCH=$(shell uname -m)
 override_dh_auto_configure:
 	dh_auto_configure -- PREFIX=usr/share
 		version=$(grep "Version:" QtVsPlayermga8wally.spec| cut -d ' ' -f 3)
+		echo $version
 #		grep '%global Rel' QtVsPlayermga8wally.spec 
 		Rele=$(grep '%global Rel' QtVsPlayermga8wally.spec)
 		echo $Rele
