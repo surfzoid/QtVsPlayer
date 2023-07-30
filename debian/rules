@@ -1,10 +1,10 @@
 #!/usr/bin/make -f
 export QT_SELECT := qt5
 HOST_ARCH=$(shell uname -m)
-VERSION=$(shell grep "Version:" QtVsPlayermga8wally.spec)
-VERSION=$(shell tail -c 2 <<<$(VERSION))
-RELEASE='$(shell grep '%global Rel' QtVsPlayermga8wally.spec)'
-RELEASE=$(shell tail -c 2 <<<"$(RELEASE)")
+VERS=$(shell grep "Version:" QtVsPlayermga8wally.spec)
+VERSION=$(shell tail -c 2 <<<$(VERS))
+REL='$(shell grep '%global Rel' QtVsPlayermga8wally.spec)'
+RELEASE=$(shell tail -c 2 <<<"$(REL)")
 # See debhelper(7) (uncomment to enable)
 # output every command that modifies files on the build system.
 #export DH_VERBOSE = 1
