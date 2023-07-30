@@ -54,7 +54,10 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 
     ui->statusbar->addPermanentWidget(ui->SatusLbl,1);
 
-    printf("---QtVsPlayer %s\r\n",APP_VERSION);
+    QString Vers = APP_VERSION;
+    Vers += "-";
+    Vers += APP_RELEASE;
+    printf("---QtVsPlayer %s\r\n",Vers.toUtf8().data());
 
     QString CpuArch = QSysInfo::buildCpuArchitecture();
     printf("---buildCpuArchitecture :%s\r\n",CpuArch.toUtf8().data());
