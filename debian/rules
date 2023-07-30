@@ -23,9 +23,8 @@ HOST_ARCH=$(shell uname -m)
 # This is example for Cmake (See https://bugs.debian.org/641051 )
 override_dh_auto_configure:
 	dh_auto_configure -- PREFIX=usr/share
-#		version=$(grep "Version:" QtVsPlayermga8wally.spec| cut -d ' ' -f 3)
-		ls
-		grep '%global Rel' QtVsPlayermga8wally.spec 
+		version=$(grep "Version:" QtVsPlayermga8wally.spec| cut -d ' ' -f 3)
+#		grep '%global Rel' QtVsPlayermga8wally.spec 
 		Rel=$(grep "%global Rel" QtVsPlayermga8wally.spec)
 		echo $Rel
 		Rel=$(tail -c 2 <<<"$Rel")
