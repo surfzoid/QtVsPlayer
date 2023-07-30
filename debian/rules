@@ -2,7 +2,7 @@
 export QT_SELECT := qt5
 HOST_ARCH=$(shell uname -m)
 VERS=$(shell grep "Version:" QtVsPlayermga8wally.spec)
-REL='$(shell grep '%global Rel' QtVsPlayermga8wally.spec)'
+REL=$(shell grep '%global Rel' QtVsPlayermga8wally.spec)
 # See debhelper(7) (uncomment to enable)
 # output every command that modifies files on the build system.
 #export DH_VERBOSE = 1
@@ -26,9 +26,7 @@ REL='$(shell grep '%global Rel' QtVsPlayermga8wally.spec)'
 override_dh_auto_configure:
 	dh_auto_configure -- PREFIX=usr/share
 VERSION=$(shell tail -c 2 <<<$(VERS))
-echo $(VERSION)
 RELEASE=$(shell tail -c 2 <<<"$(REL)")
-echo $(RELEASE)
 #	sed -i 's/\(VERSION = \).*/\1         $version/' QtVsPlayer.pro
 	sed -i 's/\(RELEASE = \).*/\1         $(RELEASE)/' QtVsPlayer.pro
  
