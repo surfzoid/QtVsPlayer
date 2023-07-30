@@ -26,9 +26,9 @@ REL='$(shell grep '%global Rel' QtVsPlayermga8wally.spec)'
 override_dh_auto_configure:
 	dh_auto_configure -- PREFIX=usr/share
 VERSION=$(shell tail -c 2 <<<$(VERS))
-	echo $(VERSION)
+echo $(VERSION)
 RELEASE=$(shell tail -c 2 <<<"$(REL)")
-	echo $(RELEASE)
+echo $(RELEASE)
 #	sed -i 's/\(VERSION = \).*/\1         $version/' QtVsPlayer.pro
 	sed -i 's/\(RELEASE = \).*/\1         $(RELEASE)/' QtVsPlayer.pro
  
