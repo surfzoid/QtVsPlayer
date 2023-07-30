@@ -7,7 +7,7 @@ export REL=$(shell grep '%global Rel' QtVsPlayermga8wally.spec)
 # output every command that modifies files on the build system.
 export DH_VERBOSE = 1
 
-echo $(REL)
+$(shell echo $(REL))
 # see FEATURE AREAS in dpkg-buildflags(1)
 #export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
@@ -19,7 +19,7 @@ echo $(REL)
 
 export VERSION=$(shell tail -c 2 <<<$(VERS))
 export RELEASE=$(shell tail -c 2 <<<$(REL))
-echo $(RELEASE)
+$(shell echo $(RELEASE))
 #	sed -i 's/\(VERSION = \).*/\1         $version/' QtVsPlayer.pro
 $(shell sed -i 's/\(RELEASE = \).*/\1         $(RELEASE)/' QtVsPlayer.pro)
 
