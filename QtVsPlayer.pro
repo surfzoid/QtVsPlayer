@@ -166,6 +166,7 @@ CONFIG(release, debug|release): LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_6
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/lib/w86_64/ -Wl,-rpath=lib/w86_64:/HCNetSDKCom:./ -lhcnetsdk -lPlayCtrl -lAudioRender -lSuperRender
 INCLUDEPATH += $$PWD/lib/w86_64
 DEPENDPATH += $$PWD/lib/w86_64
+RC_ICONS = $$PWD/images/QtVsPlayer.ico
 }
 
 unix:!macx: LIBS += -lopenal
