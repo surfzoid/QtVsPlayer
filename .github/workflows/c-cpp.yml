@@ -376,7 +376,7 @@ jobs:
           #target: 'desktop'
           dir: 'qt'
           arch: 'win64_mingw81'
-          tools: 'tools_qtcreator,qt.tools.qtcreator,tools_ifw,4.4.1,qt.tools.ifw.44'
+          tools: 'tools_qtcreator,qt.tools.qtcreator,tools_ifw,qt.tools.ifw.44'
 
 
       - name: qmake
