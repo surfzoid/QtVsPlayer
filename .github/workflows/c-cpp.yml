@@ -421,6 +421,7 @@ jobs:
             Compress-Archive -Path application\* -DestinationPath QtVsPlayer-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}.zip
             
       - name: Create windows setup
+        run: |
             cp -r application/ windeploy/packages/com.surfzoid.QtVsPlayer/data/
             mv windeploy/packages/com.surfzoid.QtVsPlayer/data/LICENSE.txt windeploy/packages/com.surfzoid.QtVsPlayer/meta
             cd windeploy
