@@ -4,7 +4,7 @@
     <Version>1.0.0</Version>
     <Title>QtVsPlayer</Title>
     <Publisher>Surfzoid</Publisher>
-    <StartMenuDir>QtVsPlayer.exe</StartMenuDir>
+    <StartMenuDir>QtVsPlayer/QtVsPlayer.exe</StartMenuDir>
     <TargetDir>@HomeDir@/QtVsPlayer</TargetDir>
     <RunProgram>@TargetDir@/QtVsPlayer.exe</RunProgram>
 </Installer>
