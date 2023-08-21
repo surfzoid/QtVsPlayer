@@ -7,4 +7,5 @@
     <StartMenuDir>QtVsPlayer/QtVsPlayer.exe</StartMenuDir>
     <TargetDir>@HomeDir@/QtVsPlayer</TargetDir>
     <RunProgram>@TargetDir@/QtVsPlayer.exe</RunProgram>
+    <SupportsModify>true</SupportsModify>
 </Installer>
