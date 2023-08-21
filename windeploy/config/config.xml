@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>QtVsPlayer</Name>
+    <Version>1.0.0</Version>
+    <Title>QtVsPlayer</Title>
+    <Publisher>Surfzoid</Publisher>
+    <StartMenuDir>QtVsPlayer.exe</StartMenuDir>
+    <TargetDir>@HomeDir@/QtVsPlayer</TargetDir>
+    <RunProgram>@TargetDir@/QtVsPlayer.exe</RunProgram>
+</Installer>

@@ -376,7 +376,7 @@ jobs:
           #target: 'desktop'
           dir: 'qt'
           arch: 'win64_mingw81'
-          tools: 'tools_qtcreator,qt.tools.qtcreator'
+          tools: 'tools_qtcreator,qt.tools.qtcreator,tools_ifw 4.0 qt.tools.ifw.40'
 
 
       - name: qmake
@@ -412,12 +412,16 @@ jobs:
             cp qt/Qt/5.15.2/mingw81_64/bin/libstdc++-6.dll application/
             cp qt/Qt/5.15.2/mingw81_64/bin/libwinpthread-1.dll application/
             Compress-Archive -Path application\* -DestinationPath QtVsPlayer-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}.zip
+            cp -r application/ windeploy/packages/com.surfzoid.QtVsPlayer/data/
+            mv windeploy/packages/com.surfzoid.QtVsPlayer/data/LICENSE.txt windeploy/packages/com.surfzoid.QtVsPlayer/meta
+            cd windeploy
+            binarycreator.exe -c config/config.xml -p packages -f QtVsPlayerSetup-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}
 
       - name: Create Github Release
         uses: ncipollo/release-action@v1.11.1
         id: create_release
         with:
-          artifacts: "QtVsPlayer-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}.zip"
+          artifacts: "QtVsPlayer-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}.zip,QtVsPlayerSetup-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}.exe"
           replacesArtifacts: true
           token: ${{ github.TOKEN }}
           allowUpdates: true
