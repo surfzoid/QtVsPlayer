@@ -425,6 +425,9 @@ jobs:
             cp -r application/ windeploy/packages/com.surfzoid.QtVsPlayer/data/
             mv windeploy/packages/com.surfzoid.QtVsPlayer/data/LICENSE.txt windeploy/packages/com.surfzoid.QtVsPlayer/meta
             cd windeploy
+            sed "/Version/s/>[^<]*</>${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}</" packages/com.surfzoid.QtVsPlayer/meta/package.xml
+            sed "/ReleaseDate/s/>[^<]*</>date/T</" packages/com.surfzoid.QtVsPlayer/meta/package.xml
+            sed "/Version/s/>[^<]*</>${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}</" config/config.xml
             C:/Qt/Tools/QtInstallerFramework/4.6/bin/binarycreator.exe -c config/config.xml -p packages -f QtVsPlayerSetup-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }} --verbose
             mv QtVsPlayerSetup-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}.exe ../ 
 
