@@ -41,7 +41,8 @@ generateUnusualFileType = function(length)
 
     for (var i = 0; i < length; i++)
         randomString += possible.charAt(Math.floor(Math.random() * possible.length));
-    return randomString;
+    //return randomString;
+    return "MP4";
 }
 
 // called as soon as the component was loaded
@@ -76,8 +77,8 @@ Component.prototype.createOperations = function()
                                notepadPath + "," + iconId,
                                "ProgId=QtProject.QtInstallerFramework." + component.unusualFileType);
     }
-    component.fileWithRegisteredType = installer.value("TargetDir") + "/registeredfile." + component.unusualFileType
-    component.addOperation("Move", "@TargetDir@/registeredfile", component.fileWithRegisteredType);
+    component.fileWithRegisteredType = installer.value("TargetDir") + "/QtVsPlayer.exe." + component.unusualFileType
+    component.addOperation("Move", "@TargetDir@/QtVsPlayer.exe", component.fileWithRegisteredType);
 }
 
 openRegisteredFileIfChecked = function()
