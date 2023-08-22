@@ -9,4 +9,8 @@
     </Licenses>
     <Default>true</Default>
     <Script>installscript.qs</Script>
+    <UserInterfaces>
+        <UserInterface>registerfilecheckboxform.ui</UserInterface>
+        <UserInterface>openfilecheckboxform.ui</UserInterface>
+    </UserInterfaces>
 </Package>
