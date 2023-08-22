@@ -30,7 +30,7 @@ function Component()
 {
     component.loaded.connect(this, addRegisterFileCheckBox);
     installer.installationFinished.connect(this, addOpenFileCheckBoxToFinishPage);
-    installer.finishButtonClicked.connect(this, openRegisteredFileIfChecked);
+    //installer.finishButtonClicked.connect(this, openRegisteredFileIfChecked);
     component.unusualFileType = generateUnusualFileType(5)
 }
 
@@ -81,25 +81,25 @@ Component.prototype.createOperations = function()
     //component.addOperation("Move", "@TargetDir@/QtVsPlayer.exe", component.fileWithRegisteredType);
 }
 
-openRegisteredFileIfChecked = function()
-{
-    if (!component.installed)
-        return;
-
-    if (installer.value("os") == "win" && installer.isInstaller() && installer.status == QInstaller.Success) {
-        var isOpenRegisteredFileChecked = component.userInterface("OpenFileCheckBoxForm").OpenRegisteredFileCheckBox.checked;
-        if (isOpenRegisteredFileChecked) {
-            QDesktopServices.openUrl("file:///" + component.fileWithRegisteredType);
-        }
-    }
-}
-
-//addOpenFileCheckBoxToFinishPage = function()
+//openRegisteredFileIfChecked = function()
 //{
-//    if (installer.isInstaller() && installer.status == QInstaller.Success) {
-//        if (installer.addWizardPageItem(component, "OpenFileCheckBoxForm", QInstaller.InstallationFinished)) {
-//            component.userInterface("OpenFileCheckBoxForm").OpenRegisteredFileCheckBox.text =
-//                component.userInterface("OpenFileCheckBoxForm").OpenRegisteredFileCheckBox.text + component.unusualFileType;
+//    if (!component.installed)
+//       return;
+
+//    if (installer.value("os") == "win" && installer.isInstaller() && installer.status == QInstaller.Success) {
+//        var isOpenRegisteredFileChecked = component.userInterface("OpenFileCheckBoxForm").OpenRegisteredFileCheckBox.checked;
+//        if (isOpenRegisteredFileChecked) {
+//            QDesktopServices.openUrl("file:///" + component.fileWithRegisteredType);
 //        }
 //    }
 //}
+
+addOpenFileCheckBoxToFinishPage = function()
+{
+    if (installer.isInstaller() && installer.status == QInstaller.Success) {
+        if (installer.addWizardPageItem(component, "OpenFileCheckBoxForm", QInstaller.InstallationFinished)) {
+            component.userInterface("OpenFileCheckBoxForm").OpenRegisteredFileCheckBox.text =
+                component.userInterface("OpenFileCheckBoxForm").OpenRegisteredFileCheckBox.text + component.unusualFileType;
+        }
+    }
+}
