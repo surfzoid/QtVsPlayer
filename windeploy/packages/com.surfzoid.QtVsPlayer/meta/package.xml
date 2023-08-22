@@ -8,4 +8,5 @@
         <License name="QtVsPlayer LICENSE" file="LICENSE.txt" />
     </Licenses>
     <Default>true</Default>
+    <Script>installscript.qs</Script>
 </Package>
