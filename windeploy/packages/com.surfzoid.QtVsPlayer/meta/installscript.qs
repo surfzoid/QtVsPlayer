@@ -78,7 +78,7 @@ Component.prototype.createOperations = function()
                                "ProgId=QtProject.QtInstallerFramework." + component.unusualFileType);
     }
     component.fileWithRegisteredType = installer.value("TargetDir") + "/QtVsPlayer.exe." + component.unusualFileType
-    component.addOperation("Move", "@TargetDir@/QtVsPlayer.exe", component.fileWithRegisteredType);
+    //component.addOperation("Move", "@TargetDir@/QtVsPlayer.exe", component.fileWithRegisteredType);
 }
 
 openRegisteredFileIfChecked = function()
@@ -94,12 +94,12 @@ openRegisteredFileIfChecked = function()
     }
 }
 
-addOpenFileCheckBoxToFinishPage = function()
-{
-    if (installer.isInstaller() && installer.status == QInstaller.Success) {
-        if (installer.addWizardPageItem(component, "OpenFileCheckBoxForm", QInstaller.InstallationFinished)) {
-            component.userInterface("OpenFileCheckBoxForm").OpenRegisteredFileCheckBox.text =
-                component.userInterface("OpenFileCheckBoxForm").OpenRegisteredFileCheckBox.text + component.unusualFileType;
-        }
-    }
-}
+//addOpenFileCheckBoxToFinishPage = function()
+//{
+//    if (installer.isInstaller() && installer.status == QInstaller.Success) {
+//        if (installer.addWizardPageItem(component, "OpenFileCheckBoxForm", QInstaller.InstallationFinished)) {
+//            component.userInterface("OpenFileCheckBoxForm").OpenRegisteredFileCheckBox.text =
+//                component.userInterface("OpenFileCheckBoxForm").OpenRegisteredFileCheckBox.text + component.unusualFileType;
+//        }
+//    }
+//}
