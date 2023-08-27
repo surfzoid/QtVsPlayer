@@ -102,17 +102,6 @@ ldd ./QtVsPlayer|grep -i found
 Qt5 runtime  
 Developer package lib64qt5opengl-devel 
 
-Qt use platform tools, so qtmultimedia can use Gstreamer, ffmpeg and so on, it could be necessary to install :  
-sudo urpmi gstreamer1.0-plugins-good "something RTSP too" 
-gstreamer-vaapi + Nvidia are not happy and make random crash of RTSP player!  
-
-To develop QtVsPlayer I use Gnome desktop on Mageia8, I really don't know why, but Qt seems broken, especially RTSP read if I don't have the folowing RPM :   
-``` 
-sudo urpmi elementary-xfce-icon-theme   
-``` 
-
-Under Magia some gstreamer rpms made RTSP player crash, perhaps pluggin-bad ?  
-
 # News 
 I finally found HikCnetSdk for arm64, so QtMultimedia is no longer needed to provide a live view.  
 
