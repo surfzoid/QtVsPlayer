@@ -226,6 +226,19 @@
      <property name="tabletTracking">
       <bool>true</bool>
      </property>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>280</y>
+        <width>126</width>
+        <height>33</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PushButton</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -252,6 +265,7 @@
     <addaction name="actionDossier"/>
     <addaction name="actionRtsp_Play"/>
     <addaction name="separator"/>
+    <addaction name="actionSettings"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuAide">
@@ -295,7 +309,6 @@
     <addaction name="actionMasquer_les_controles"/>
     <addaction name="actionAuto_hide_controls"/>
     <addaction name="actionListe_de_lecture"/>
-    <addaction name="actionSettings"/>
     <addaction name="actionMultimedia_shortcuts"/>
     <addaction name="actionInfos"/>
     <addaction name="separator"/>

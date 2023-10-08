@@ -72,7 +72,8 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         }
     }
 
-    /*    if (!PlayM4_GetDecodeEngine(m_pblocalportnum))
+    int DecodeEngine = PlayM4_GetDecodeEngine(m_pblocalportnum);
+        if (!DecodeEngine)
     {
         qDebug()  << "Using SOFT_DECODE_ENGINE";
     }else{
@@ -80,10 +81,10 @@ unsigned int  playm4interface::VideoFs(QString fileName)
     }
 
 #if (defined(_WIN32))
-    if (!PlayM4_SetDecodeEngineEx(m_pblocalportnum,HARD_DECODE_ENGINE))
-    {
-        DisplayError("PlayM4_SetDecodeEngineEx",PlayM4_GetLastError(m_pblocalportnum));
-    }
+//    if (!PlayM4_SetDecodeEngineEx(m_pblocalportnum,HARD_DECODE_ENGINE))
+//    {
+//        DisplayError("PlayM4_SetDecodeEngineEx",PlayM4_GetLastError(m_pblocalportnum));
+//    }
 #elif defined(__linux__) | defined(__APPLE__)
 
     qDebug()  << "Try to set HARD_DECODE_ENGINE";
@@ -92,8 +93,8 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         DisplayError("PlayM4_SetDecodeEngine",PlayM4_GetLastError(m_pblocalportnum));
     }
 #endif
-
-    if (!PlayM4_GetDecodeEngine(m_pblocalportnum))
+DecodeEngine = PlayM4_GetDecodeEngine(m_pblocalportnum);
+    if (!DecodeEngine)
     {
         qDebug()  << "Using SOFT_DECODE_ENGINE";
     }else{
@@ -114,7 +115,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         qDebug()  << pstEngineSupport->chReserved;
         qDebug()  << &pstEngineSupport->stHDecodeSupport;
         qDebug()  << &pstEngineSupport->stRenderSupport;
-    }*/
+    }/**/
 
     if (!PlayM4_GetCaps())
     {
