@@ -101,14 +101,7 @@ DecodeEngine = PlayM4_GetDecodeEngine(m_pblocalportnum);
     }else{
         qDebug()  << "Using HARD_DECODE_ENGINE";
     }
-#endif
 
-    //PlayM4_SetRunTimeInfoCallBack(int nPort, void (CALLBACK* RunTimeInfoCBFun)(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
-    playm4interface::nModule = 1;
-    if (! PlayM4_SetRunTimeInfoCallBackEx(m_pblocalportnum, nModule, (void (CALLBACK *)(int , RunTimeInfo* , void* ))SetRunTimeInfoCBFun, nUser))
-    {
-        DisplayError("PlayM4_SetRunTimeInfoCallBackEx",PlayM4_GetLastError(m_pblocalportnum));
-    }
     ENGINESUPPORT* pstEngineSupport;
     if (!PlayM4_GetEngineSupport(m_pblocalportnum, pstEngineSupport))
     {
@@ -118,6 +111,14 @@ DecodeEngine = PlayM4_GetDecodeEngine(m_pblocalportnum);
         qDebug()  << &pstEngineSupport->stHDecodeSupport;
         qDebug()  << &pstEngineSupport->stRenderSupport;
     }/**/
+#endif
+
+    //PlayM4_SetRunTimeInfoCallBack(int nPort, void (CALLBACK* RunTimeInfoCBFun)(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
+    playm4interface::nModule = 1;
+    if (! PlayM4_SetRunTimeInfoCallBackEx(m_pblocalportnum, nModule, (void (CALLBACK *)(int , RunTimeInfo* , void* ))SetRunTimeInfoCBFun, nUser))
+    {
+        DisplayError("PlayM4_SetRunTimeInfoCallBackEx",PlayM4_GetLastError(m_pblocalportnum));
+    }
 
     if (!PlayM4_GetCaps())
     {
