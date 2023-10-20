@@ -55,8 +55,14 @@
    <property name="toolTip">
     <string extracomment="Move"/>
    </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="tickInterval">
+    <number>1</number>
    </property>
   </widget>
   <widget class="QWidget" name="widget" native="true">

@@ -23,6 +23,7 @@ bool playm4interface::FsOpened = false;
 void* playm4interface::nUser;
 FRAME_INFO *playm4interface::pFRAME_INFO;
 int playm4interface::nModule = 0;
+int playm4interface::FsTime = 0;
 
 unsigned int  playm4interface::VideoFs(QString fileName)
 {
@@ -138,7 +139,7 @@ DecodeEngine = PlayM4_GetDecodeEngine(m_pblocalportnum);
     int frames = PlayM4_GetFileTotalFrames(m_pblocalportnum); // STEP-6
     qDebug()  << frames << " <- PlayM4_GetFileTotalFrames()";
 
-    int FsTime =PlayM4_GetFileTime(m_pblocalportnum);
+    FsTime =PlayM4_GetFileTime(m_pblocalportnum);
     qDebug() << "File Time" << FsTime;
 
     PlayM4_GetSourceBufferRemain(m_pblocalportnum);

@@ -11,6 +11,7 @@ class playm4interface
 public:
     playm4interface();
     static PLAYM4_HWND  hwnd;
+    static int FsTime;
     static unsigned int  VideoFs (QString fileName);
     static int SetVideoWin(unsigned int nRegionNum);
     static int RefreshPlay();

@@ -82,7 +82,7 @@ VideoCtrls::~VideoCtrls()
 
 void VideoCtrls::InitTimeSlide()
 {
-    this->ui->TimeSlider->setRange(0,100);
+    //this->ui->TimeSlider->setRange(0,100);
     this->ui->TimeSlider->setValue(0);
     //ui.horizontalSlider_playback_volume_2->setRange(0,10);
     return;
@@ -227,7 +227,7 @@ void VideoCtrls::updatelocalprocess()
                 unsigned int currentpos;
                 float pos;
                 pos = PlayM4_GetPlayPos(HikNumPort);
-                currentpos =(unsigned int)(pos*100);
+                currentpos =(unsigned int)(pos*ui->TimeSlider->maximum());
                 ui->TimeSlider->setValue(currentpos);
 
                 unsigned int PlayedTime = PlayM4_GetPlayedTime(HikNumPort);
@@ -237,7 +237,7 @@ void VideoCtrls::updatelocalprocess()
 
                 //ui->LblDuration->setText(QString::number((Duration/60)*pos, 'f', 2) +  " / " + QString::number(Duration/60, 'f', 2) );
                 //ui->TimeSlider->statusTip(currentpos).fromUtf8();
-                if (currentpos >= 100) {
+                if (currentpos >= (unsigned int)ui->TimeSlider->maximum()) {
 
                     //PlayM4_CloseFile(playm4interface::m_pblocalportnum);
                     QThreadPool::globalInstance()->releaseThread();
@@ -388,10 +388,10 @@ void VideoCtrls::on_TimeSlider_actionTriggered(int action)
         return;
     }
 
-    pause();
+    m_pbqtimer->stop();
     int value =ui->TimeSlider->value();
-    PlayM4_SetPlayPos(HikNumPort, ((float)value)*0.01);
-    pause();
+    PlayM4_SetPlayPos(HikNumPort, ((float)value)/ui->TimeSlider->maximum());
+    m_pbqtimer->start(1000);
 
 
     if(action)
