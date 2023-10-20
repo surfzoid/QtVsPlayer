@@ -111,7 +111,6 @@ DecodeEngine = PlayM4_GetDecodeEngine(m_pblocalportnum);
         qDebug()  << &pstEngineSupport->stHDecodeSupport;
         qDebug()  << &pstEngineSupport->stRenderSupport;
     }/**/
-#endif
 
     //PlayM4_SetRunTimeInfoCallBack(int nPort, void (CALLBACK* RunTimeInfoCBFun)(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
     playm4interface::nModule = 1;
@@ -119,6 +118,7 @@ DecodeEngine = PlayM4_GetDecodeEngine(m_pblocalportnum);
     {
         DisplayError("PlayM4_SetRunTimeInfoCallBackEx",PlayM4_GetLastError(m_pblocalportnum));
     }
+#endif
 
     if (!PlayM4_GetCaps())
     {
