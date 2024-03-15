@@ -1,6 +1,6 @@
 VERSION = 1.0.52
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
-RELEASE = 1
+RELEASE = 2
 DEFINES += APP_RELEASE=\\\"$$RELEASE\\\"
 
 QT       += core gui network

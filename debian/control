@@ -9,7 +9,7 @@ Build-Depends: dh-make,
                qtchooser,
                qtbase5-dev-tools,
                libopenal-dev
-Standards-Version: 1.0.51
+Standards-Version: 1.0.52
 Homepage: https://github.com/surfzoid/QtVsPlayer
 #Vcs-Browser: https://salsa.debian.org/debian/qtvsplayer
 #Vcs-Git: https://salsa.debian.org/debian/qtvsplayer.git

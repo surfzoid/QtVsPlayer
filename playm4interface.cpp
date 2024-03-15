@@ -43,17 +43,13 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         FsOpened = false;
         m_pblocalportnum = -1;
     }
-    //ENGINESUPPORT *pstEngineSupport;
+
     if (m_pblocalportnum == -1) {
 
         SetPort();
-        /*qDebug() << PlayM4_GetEngineSupport(m_pblocalportnum,pstEngineSupport);
-
-        qDebug() <<  PlayM4_GetDecodeEngine(m_pblocalportnum);
-        qDebug() << PlayM4_SetDecodeEngine(m_pblocalportnum, 1);
-
-        qDebug() <<  PlayM4_GetDecodeEngine(m_pblocalportnum);*/
     }
+
+//PlayM4_SetDecCallBackExMend(m_pblocalportnum, &SetDecCallBack, NULL, 0, 0);
 
 //    int DecryptStatus = PlayM4_SetSecretKey(m_pblocalportnum, 0, "paassww", 11);
 
@@ -65,7 +61,7 @@ unsigned int  playm4interface::VideoFs(QString fileName)
         DisplayError("PlayM4_OpenFile",PlayM4_GetLastError(m_pblocalportnum));
     }
 
-    QTime dieTime= QTime::currentTime().addSecs(10);
+    QTime dieTime= QTime::currentTime().addSecs(5);
     while(!isIndexed) { // STEP-5
         //delay();
         if (QTime::currentTime() > dieTime) {
@@ -100,16 +96,6 @@ DecodeEngine = PlayM4_GetDecodeEngine(m_pblocalportnum);
         qDebug()  << "Using SOFT_DECODE_ENGINE";
     }else{
         qDebug()  << "Using HARD_DECODE_ENGINE";
-    }
-
-    ENGINESUPPORT* pstEngineSupport;
-    if (!PlayM4_GetEngineSupport(m_pblocalportnum, pstEngineSupport))
-    {
-        DisplayError("PlayM4_GetEngineSupport",PlayM4_GetLastError(m_pblocalportnum));
-    }else{
-        qDebug()  << pstEngineSupport->chReserved;
-        qDebug()  << &pstEngineSupport->stHDecodeSupport;
-        qDebug()  << &pstEngineSupport->stRenderSupport;
     }/**/
 
     //PlayM4_SetRunTimeInfoCallBack(int nPort, void (CALLBACK* RunTimeInfoCBFun)(int nPort, RunTimeInfo* pstRunTimeInfo, void* pUser), void* pUser);
@@ -512,6 +498,17 @@ void CALLBACK playm4interface::SetVerifyCallBack(int nPort, FRAME_POS* pFilePos,
 
 void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2)
 {
+
+        ENGINESUPPORT pstEngineSupport;
+        if (!PlayM4_GetEngineSupport(m_pblocalportnum, &pstEngineSupport))
+        {
+            DisplayError("PlayM4_GetEngineSupport",PlayM4_GetLastError(m_pblocalportnum));
+        }else{
+            qDebug()  << pstEngineSupport.chReserved;
+            qDebug()  << &pstEngineSupport.stHDecodeSupport;
+            qDebug()  << &pstEngineSupport.stRenderSupport;
+        }
+
     Infos *InfDialog = new Infos();
     InfDialog->InfoData = "";
     //printf("SetDecCallBack---%l:%l\r\n",nPort, nSize);
@@ -550,13 +547,6 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
         qDebug()  << width << "x" << height << " <- PlayM4_GetPictureSize()" ;
         InfDialog->InfoData.append("\nVideo resolution : " + QString::number(width) + "x" + QString::number(height));
     }
-
-//    if (PlayM4_GetDecodeEngine(m_pblocalportnum)) {
-//        InfDialog->InfoData.append("\nUsing hardware decoding");
-//    }else
-//    {
-//       InfDialog->InfoData.append("\nUsing software  decoding");
-//    }
 
 #if (defined(_WIN32))
     //PlayM4_SetDecCallBack(m_pblocalportnum, (void (CALLBACK *)(int,char *,long,int,FRAME_INFO*, void*, void*))NULL);
