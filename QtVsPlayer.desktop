@@ -8,7 +8,6 @@ TryExec=/usr/bin/QtVsPlayer
 Icon=QtVsPlayer
 Terminal=true
 Type=Application
-DBusActivatable=true
 Categories=AudioVideo;Player;Qt;
 MimeType=application/x-extension-mp4;inode/directory;
 Keywords=Player;Video;HikVision;Motion;
