@@ -499,7 +499,7 @@ void CALLBACK playm4interface::SetVerifyCallBack(int nPort, FRAME_POS* pFilePos,
 void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FRAME_INFO * pFrameInfo, void* nUser,int nReserved2)
 {
 
-        ENGINESUPPORT pstEngineSupport;
+/*         ENGINESUPPORT pstEngineSupport;
         if (!PlayM4_GetEngineSupport(m_pblocalportnum, &pstEngineSupport))
         {
             DisplayError("PlayM4_GetEngineSupport",PlayM4_GetLastError(m_pblocalportnum));
@@ -507,7 +507,7 @@ void CALLBACK playm4interface::SetDecCallBack(int nPort,char * pBuf,int nSize,FR
             qDebug()  << pstEngineSupport.chReserved;
             qDebug()  << &pstEngineSupport.stHDecodeSupport;
             qDebug()  << &pstEngineSupport.stRenderSupport;
-        }
+        } */
 
     Infos *InfDialog = new Infos();
     InfDialog->InfoData = "";
