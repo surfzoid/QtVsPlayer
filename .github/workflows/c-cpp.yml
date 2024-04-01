@@ -382,7 +382,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           python -m aqt install-tool windows desktop tools_ifw --outputdir C:/Qt
-          echo "C:/Qt/Tools/QtInstallerFramework/4.6/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "C:/Qt/Tools/QtInstallerFramework/4.7/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           echo $env:GITHUB_PATH
           echo $env:PATH
 
@@ -428,7 +428,7 @@ jobs:
             sed "/Version/s/>[^<]*</>${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}</" packages/com.surfzoid.QtVsPlayer/meta/package.xml
             sed "/ReleaseDate/s/>[^<]*</>date/T</" packages/com.surfzoid.QtVsPlayer/meta/package.xml
             sed "/Version/s/>[^<]*</>${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}</" config/config.xml
-            C:/Qt/Tools/QtInstallerFramework/4.6/bin/binarycreator.exe -c config/config.xml -p packages -f QtVsPlayerSetup-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }} --verbose
+            C:/Qt/Tools/QtInstallerFramework/4.7/bin/binarycreator.exe -c config/config.xml -p packages -f QtVsPlayerSetup-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }} --verbose
             mv QtVsPlayerSetup-win64-${{ steps.version.outputs.version }}-${{ steps.Rel.outputs.rel }}.exe ../ 
 
       - name: Create Github Release
