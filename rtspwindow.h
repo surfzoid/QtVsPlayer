@@ -95,6 +95,7 @@ private slots:
 
 private:
     Ui::RtspWindow *ui;
+    bool SnapErr = false;
     bool IsShown = false;
     void PlayRtsp(QString Camuri);
     void blink();

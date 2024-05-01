@@ -291,6 +291,14 @@ void RtspWindow::replyFinished(QNetworkReply *reply)
                 ui->comboBxPresset->addItem("Presset" + QString::number(i));
             }
         }
+        if (SnapErr) {
+            SnapErr = false;
+            QString AdPath = "/ISAPI/Streaming/channels/101/picture";
+            QUrl Adresse("http://" + CamUser + ":" + CamPass +
+                         "@" +  CamIp + ":" + CamPortHttp + AdPath);
+
+            manager->get((QNetworkRequest)Adresse);
+        }
     }
     else
     {
@@ -307,6 +315,7 @@ void RtspWindow::replyFinished(QNetworkReply *reply)
 
 
         if (Header.startsWith("image/jpeg") == true) {
+            SnapErr = false;
             QString FsName = QFileDialog::getSaveFileName(this,
                                                           tr("Save as"),
                                                           QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/" + ui->ComboBxCam->currentText() +
@@ -406,6 +415,7 @@ void RtspWindow::CallPresset(int Presset)
 
 void RtspWindow::on_SnapshotBtn_pressed()
 {
+    SnapErr = true;
     //http://192.168.8.104/ISAPI/Streaming/channels/101/picture?videoResolutionWidth=1920&videoResolutionHeight=1080
     QString AdPath = "/ISAPI/Streaming/channels/101/picture?videoResolutionWidth=2592&videoResolutionHeight=1944";
     QUrl Adresse("http://" + CamUser + ":" + CamPass +

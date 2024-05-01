@@ -8,7 +8,7 @@
 [![Matrix community channel](https://img.shields.io/matrix/QtVsPlayer:matrix.org?label=Community%20channel)](https://app.element.io/#/room/#QtVsPlayer:matrix.org)  
 
 
-# For happy users, QtVsPlayer need almost feedback, translator, and so on, I wrote QTVsPlayer because after years of search I didn't find anything for Linux, normaly with Windows or Mac dll, QtVsPlayer should be able to compile under Windows and Mac.  
+# I wrote QTVsPlayer because after years of search I didn't find anything for Linux, normaly with Windows or Mac dll, QtVsPlayer should be able to compile under Windows and Mac. For happy users, QtVsPlayer need almost feedback, translator, and so on.   
 
 # QtVsPlayer for Hikvision.
 Read local video files of Hikvision devices and display blue, green and red vectors. 
