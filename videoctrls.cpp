@@ -389,9 +389,11 @@ void VideoCtrls::on_TimeSlider_actionTriggered(int action)
     }
 
     m_pbqtimer->stop();
+    VideoCtrls::pause();
     int value =ui->TimeSlider->value();
     PlayM4_SetPlayPos(HikNumPort, ((float)value)/ui->TimeSlider->maximum());
     m_pbqtimer->start(1000);
+    VideoCtrls::pause();
 
 
     if(action)
