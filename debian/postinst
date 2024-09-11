@@ -50,7 +50,7 @@ ln -sr $(whereis "libz.so" | sed "s|.* \(.*libz.so\).*|\1|") /usr/lib64/QtVsPlay
 
 cat << 'EOF' > /etc/ld.so.conf.d/QtVsPlayer.conf
 /usr/lib64/QtVsPlayer/
-/usr/lb64/QtVsPlayer/HCNetSDKCom/
+/usr/lib64/QtVsPlayer/HCNetSDKCom/
 EOF
 
 /sbin/ldconfig
