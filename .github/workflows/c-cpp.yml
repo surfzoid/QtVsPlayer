@@ -455,7 +455,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-13, macos-12]
+        os: [macos-12]
 
     steps:
       - uses: actions/checkout@v3.5.3
@@ -498,7 +498,7 @@ jobs:
           
       - name: qmake
         run: |
-            PREFIX=~/QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}/usr/share; qmake -Wnone -d
+            PREFIX=~/QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}/usr/share; qmake -Wnone
 
       - name: make
         run: |
