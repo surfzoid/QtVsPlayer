@@ -498,7 +498,7 @@ jobs:
           
       - name: qmake
         run: |
-            PREFIX=~/QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}/usr/share; qmake -Wnone
+            PREFIX=~/QtVsPlayer-mac64-${{ steps.MacVersion.outputs.version }}-${{ steps.version.outputs.version }}/usr/share; qmake -Wnone -d
 
       - name: make
         run: |
