@@ -74,11 +74,6 @@ RtspWindow::RtspWindow(QWidget *parent) :
 
     settings.endGroup();
 
-    ShowHideTimer = new QTimer(this);
-    ShowHideTimer->setTimerType(Qt::PreciseTimer);
-    ShowHideTimer->start( 10000 );
-    RtspWindow::connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(HideMenu()));
-
     settings.beginGroup("RtspWindow");
     QPoint NewPos;
     QSize NewSize;
@@ -91,6 +86,11 @@ RtspWindow::RtspWindow(QWidget *parent) :
     settings.endGroup();
     this->move(NewPos);
     this->resize(NewSize);
+
+    ShowHideTimer = new QTimer(this);
+    ShowHideTimer->setTimerType(Qt::PreciseTimer);
+    ShowHideTimer->start( 10000 );
+    RtspWindow::connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(HideMenu()));
 }
 
 void RtspWindow::showEvent(QShowEvent *event)
@@ -640,6 +640,7 @@ void RtspWindow::mouseMoveEvent(QMouseEvent *event)
         {
             ui->menubar->show();
             ui->statusbar->show();
+            QGuiApplication::restoreOverrideCursor();
 #if (defined(__linux__))
             if (!PlayM4_WndResolutionChange(lPort))
             {
@@ -659,6 +660,8 @@ void RtspWindow::HideMenu()
         ui->menubar->hide();
         ui->statusbar->hide();
         PTCmd->setVisible(false);
+        QGuiApplication::setOverrideCursor(QCursor(Qt::BlankCursor));
+
 #if (defined(__linux__))
         if (!PlayM4_WndResolutionChange(lPort))
         {

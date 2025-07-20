@@ -94,6 +94,8 @@ private slots:
 
     void on_actionMultimedia_shortcuts_triggered();
 
+    void HideMenu();
+
 public slots:
 
 signals:
@@ -128,6 +130,7 @@ static void  FsChanged();*/
     void enumerateMenu(QMenu *menu, bool ChkState);
     void ScrollBarsView(bool VState);
     QString GetWinState();
+    QTimer *ShowHideTimer;
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

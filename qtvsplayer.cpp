@@ -12,6 +12,7 @@
 #include "videoctrls.h"
 #include <QMimeDatabase>
 #include "multimedia_shortcuts.h"
+#include <QTimer>
 
 #if (!defined(__ANDROID__))
 #include "qtvsplayer_adaptor.h"
@@ -110,6 +111,11 @@ QtVsPlayer::QtVsPlayer(QWidget *parent)
 #endif
 
     setCentralWidget(ui->scrollArea);
+
+    ShowHideTimer = new QTimer(this);
+    ShowHideTimer->setTimerType(Qt::PreciseTimer);
+    ShowHideTimer->start( 2000 );
+    RtspWindow::connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(HideMenu()));
 }
 
 void QtVsPlayer::showEvent(QShowEvent *event)
@@ -624,13 +630,11 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
         }else
         {
             WVideoCtrls->setVisible(false);
-            QtVsPlayer::cursor() = Qt::BlankCursor;
         }
     }
 
-    if (QtVsPlayer::cursor() == Qt::BlankCursor) {
         QtVsPlayer::unsetCursor();
-    }
+        QGuiApplication::restoreOverrideCursor();
 
     if (event->buttons() == Qt::LeftButton and Zoomed) {
         QPoint p = event->pos();
@@ -652,23 +656,7 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
 void QtVsPlayer::ShowHide()
 {
 
-    if (!this->ui->actionMasquer_les_controles->isChecked() and
-            !WVideoCtrls->isHidden() and
-            this->ui->actionAuto_hide_controls->isChecked() and
-            !WVideoCtrls->underMouse() ) {
-        WVideoCtrls->hide();
-        this->ui->statusbar->setVisible(false);
 
-        if (!Zoomed and !QtVsPlayer::isFullScreen())
-            resize(width(),height() + this->ui->statusbar->height());
-    }
-
-    if (!this->ui->actionMasquer_les_controles->isChecked() and
-            QtVsPlayer::cursor() != Qt::BlankCursor and
-            !WVideoCtrls->underMouse() and
-            this->ui->actionAuto_hide_controls->isChecked()) {
-        QtVsPlayer::setCursor(Qt::BlankCursor);
-    }
     return;
 }
 
@@ -1024,4 +1012,22 @@ void QtVsPlayer::on_actionMultimedia_shortcuts_triggered()
     Multimedia_shortcuts *MulSh = new Multimedia_shortcuts();
     MulSh->setWindowTitle("Multimedia shortcuts");
     MulSh->exec();
+}
+
+void QtVsPlayer::HideMenu()
+{
+    if (!this->ui->actionMasquer_les_controles->isChecked() and
+            !WVideoCtrls->isHidden() and
+            this->ui->actionAuto_hide_controls->isChecked() and
+            !WVideoCtrls->underMouse() ) {
+        WVideoCtrls->hide();
+
+        if (!Zoomed and !QtVsPlayer::isFullScreen())
+            resize(width(),height() + this->ui->statusbar->height());
+    }
+
+    if (QtVsPlayer::cursor() != Qt::BlankCursor and
+            !WVideoCtrls->underMouse()) {
+        QtVsPlayer::setCursor(Qt::BlankCursor);
+    }
 }
