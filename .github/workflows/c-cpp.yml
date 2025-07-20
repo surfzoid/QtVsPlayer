@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-bullseye]
+        os: [ubuntu-22.04]
     steps:
       - name: Checkout onto ${{ runner.os }}
         uses: actions/checkout@v3.5.3
