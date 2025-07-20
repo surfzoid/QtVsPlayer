@@ -136,6 +136,9 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/*
 
 %changelog
+* Sun Jul 20 2025 surfzoid@gmail.com
++ Fix, hide mouse cursor.
+
 * Wed May 01 2024 surfzoid@gmail.com
 + Fix, some devices reject custom resolution for jpeg captures.
 
