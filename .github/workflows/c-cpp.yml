@@ -11,7 +11,7 @@ jobs:
         os: [ubuntu-latest]
     steps:
       - name: Checkout onto ${{ runner.os }}
-        uses: actions/checkout
+        uses: actions/checkout@v4.2.2
       - name: Setup C++ environment
         uses: kurocha/setup-cpp@v1
       - name: Install Qt
@@ -472,6 +472,7 @@ jobs:
         run: |
             sed -ie 's/\(VERSION = \).*/\1         ${{ steps.version.outputs.version }}/' QtVsPlayer.pro
             sed -ie 's/\(RELEASE = \).*/\1         ${{ steps.Rel.outputs.rel }}/' QtVsPlayer.pro
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
       - name: MacVersion
         run: echo "::set-output name=version::$(sw_vers -productVersion)"
