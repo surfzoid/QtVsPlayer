@@ -11,7 +11,7 @@ jobs:
         os: [ubuntu-latest]
     steps:
       - name: Checkout onto ${{ runner.os }}
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout
       - name: Setup C++ environment
         uses: kurocha/setup-cpp@v1
       - name: Install Qt
@@ -482,6 +482,7 @@ jobs:
 
       - name: py setup
         run: |
+          brew install pip3
             pip3 install --upgrade pip
             pip3 install --upgrade setuptools
             pip3 install wheel
