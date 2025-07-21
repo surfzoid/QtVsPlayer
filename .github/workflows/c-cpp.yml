@@ -85,7 +85,7 @@ jobs:
         run: INSTALL_ROOT=.debpkg/usr/share; make install
 
       - name: build-deb-action
-        uses: jiro4989/build-deb-action@v2.1.0
+        uses: jiro4989/build-deb-action@v4.2.1
         with:
           package: QtVsPlayer
           package_root: .debpkg
