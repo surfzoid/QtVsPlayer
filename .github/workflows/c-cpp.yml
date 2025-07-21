@@ -483,7 +483,7 @@ jobs:
 
       - name: py setup
         run: |
-          brew install pip3
+          brew install pipx
             pip3 install --upgrade pip
             pip3 install --upgrade setuptools
             pip3 install wheel
