@@ -485,8 +485,8 @@ jobs:
         run: |
           brew install pipx
             pipx install pip
-            pipx install setuptools
-            pipx install wheel
+            pip3 install setuptools
+            pip3 install wheel
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3.2.1
