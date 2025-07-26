@@ -484,8 +484,8 @@ jobs:
       - name: py setup
         run: |
           brew install pipx
-            # pipx upgrade pip
-            pipx upgrade setuptools
+            pipx install pip
+            pipx install setuptools
             pipx install wheel
 
       - name: Install Qt
