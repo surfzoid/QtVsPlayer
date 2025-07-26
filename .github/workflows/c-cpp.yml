@@ -484,9 +484,9 @@ jobs:
       - name: py setup
         run: |
           brew install pipx
-            pip3 install --upgrade pip
-            pip3 install --upgrade setuptools
-            pip3 install wheel
+            pipx install --upgrade pip
+            pipx install --upgrade setuptools
+            pipx install wheel
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3.2.1
