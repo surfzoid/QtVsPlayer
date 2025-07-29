@@ -89,7 +89,7 @@ RtspWindow::RtspWindow(QWidget *parent) :
 
     ShowHideTimer = new QTimer(this);
     ShowHideTimer->setTimerType(Qt::PreciseTimer);
-    ShowHideTimer->start( 10000 );
+    ShowHideTimer->start( 2000 );
     RtspWindow::connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(HideMenu()));
 }
 
@@ -640,7 +640,6 @@ void RtspWindow::mouseMoveEvent(QMouseEvent *event)
         {
             ui->menubar->show();
             ui->statusbar->show();
-            QGuiApplication::restoreOverrideCursor();
 #if (defined(__linux__))
             if (!PlayM4_WndResolutionChange(lPort))
             {
@@ -649,6 +648,7 @@ void RtspWindow::mouseMoveEvent(QMouseEvent *event)
 #endif
         }
         PTCmd->setVisible(true);
+        QGuiApplication::restoreOverrideCursor();
         PTCmd->setFocus();
     }
     return;
@@ -660,7 +660,6 @@ void RtspWindow::HideMenu()
         ui->menubar->hide();
         ui->statusbar->hide();
         PTCmd->setVisible(false);
-        QGuiApplication::setOverrideCursor(QCursor(Qt::BlankCursor));
 
 #if (defined(__linux__))
         if (!PlayM4_WndResolutionChange(lPort))
@@ -669,6 +668,7 @@ void RtspWindow::HideMenu()
         }
 #endif
     }
+    QGuiApplication::setOverrideCursor(QCursor(Qt::BlankCursor));
 }
 
 bool RtspWindow::MenubarHasFocus(QMenuBar *menu)
