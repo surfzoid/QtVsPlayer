@@ -89,7 +89,7 @@ RtspWindow::RtspWindow(QWidget *parent) :
 
     ShowHideTimer = new QTimer(this);
     ShowHideTimer->setTimerType(Qt::PreciseTimer);
-    ShowHideTimer->start( 2000 );
+    ShowHideTimer->start( 5000 );
     RtspWindow::connect(ShowHideTimer, SIGNAL(timeout()), this, SLOT(HideMenu()));
 }
 
