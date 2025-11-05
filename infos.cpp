@@ -37,6 +37,8 @@ void Infos::showEvent(QShowEvent *event)
     }
 
     resize(ui->formLayout->sizeHint());
+    unsetCursor();
+    QGuiApplication::restoreOverrideCursor();
 }
 
 Infos::~Infos()

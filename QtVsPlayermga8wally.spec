@@ -2,7 +2,7 @@ Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
 Version:        1.0.52
 
-%global Rel 9
+%global Rel 10
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -136,6 +136,9 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/*
 
 %changelog
+* Wed Nov 05 2025 surfzoid@gmail.com
++ Fix, mouse cursor more visible.
+
 * Tue Jul 29 2025 surfzoid@gmail.com
 + Fix, rtsp full screen don't show mouse cursor.
 

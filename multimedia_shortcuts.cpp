@@ -32,6 +32,8 @@ void Multimedia_shortcuts::showEvent(QShowEvent *event)
     settings.endGroup();
 
     IsShown = true;
+    unsetCursor();
+    QGuiApplication::restoreOverrideCursor();
 
     if(event)
         return;

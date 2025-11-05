@@ -16,6 +16,8 @@ void CfgDialog::showEvent(QShowEvent *event)
     ui->spinBoxNameY->setValue(ChannelY);
     ui->spinBoxOSDX->setValue(wOSDTopLeftX);
     ui->spinBoxOSDY->setValue(wOSDTopLeftY);
+    unsetCursor();
+    QGuiApplication::restoreOverrideCursor();
 }
 
 CfgDialog::~CfgDialog()

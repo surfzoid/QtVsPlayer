@@ -27,6 +27,9 @@ crypto.setKey(Q_UINT64_C(0x0c2ad4a4acb9f023 * 3));//some random number
     settings.endGroup();
 
     ui->ConfFsPath->setText(settings.fileName());
+
+    unsetCursor();
+    QGuiApplication::restoreOverrideCursor();
 }
 
 SettingsForm::~SettingsForm()

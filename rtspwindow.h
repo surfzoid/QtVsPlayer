@@ -93,6 +93,8 @@ private slots:
 
     void on_actionReconnect_triggered();
 
+    void on_actionClose_hovered();
+
 private:
     Ui::RtspWindow *ui;
     bool SnapErr = false;

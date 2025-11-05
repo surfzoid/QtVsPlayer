@@ -152,6 +152,7 @@ void QtVsPlayer::showEvent(QShowEvent *event)
     }*/
 
     GetMenuItemState(ui->menuAffichage);
+    QGuiApplication::restoreOverrideCursor();
 
 }
 
@@ -633,7 +634,7 @@ void QtVsPlayer::mouseMoveEvent(QMouseEvent *event)
         }
     }
 
-        QtVsPlayer::unsetCursor();
+        unsetCursor();
         QGuiApplication::restoreOverrideCursor();
 
     if (event->buttons() == Qt::LeftButton and Zoomed) {
@@ -1031,3 +1032,11 @@ void QtVsPlayer::HideMenu()
         QtVsPlayer::setCursor(Qt::BlankCursor);
     }
 }
+
+void QtVsPlayer::on_actionOuvrir_visibleChanged()
+{
+
+    unsetCursor();
+    QGuiApplication::restoreOverrideCursor();
+}
+

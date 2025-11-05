@@ -62,6 +62,7 @@ void VideoCtrls::showEvent(QShowEvent *event)
 //    this->ui->SeekLessButton->setShortcut(settings.value("SeekLess", "0x01000062").value<int>());
 //    this->ui->SeekMoreButton->setShortcut(settings.value("SeekMore", "0x01000061").value<int>());
 
+    QGuiApplication::restoreOverrideCursor();
 //    settings.endGroup();
     if(event)
         return;
@@ -113,6 +114,9 @@ void VideoCtrls::mouseMoveEvent(QMouseEvent *event)
         settings.endGroup();
         settings.sync();
     }
+
+    unsetCursor();
+    QGuiApplication::restoreOverrideCursor();
     return;
 }
 

@@ -120,4 +120,6 @@ void PanTilCmd::mouseMoveEvent(QMouseEvent *event)
             this->move(p.x()-60,p.y()-60);
         repaint();
     }
+    unsetCursor();
+    QGuiApplication::restoreOverrideCursor();
 }

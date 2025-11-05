@@ -23,6 +23,8 @@ FilesListe::FilesListe(QWidget *parent) :
     ui->dateTimeEdit_2_start->setTime(starttime);
     ui->dateTimeEdit_2_stop->setDate(stopdate);
     ui->dateTimeEdit_2_stop->setTime(stoptime);
+    unsetCursor();
+    QGuiApplication::restoreOverrideCursor();
 }
 
 FilesListe::~FilesListe()

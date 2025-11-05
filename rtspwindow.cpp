@@ -1249,3 +1249,11 @@ void RtspWindow::on_actionReconnect_triggered()
     LoadPreset();
     LoadPatrol();
 }
+
+void RtspWindow::on_actionClose_hovered()
+{
+
+    unsetCursor();
+    QGuiApplication::restoreOverrideCursor();
+}
+
