@@ -2,7 +2,7 @@ Name:           QtVsPlayer
 Summary:        QtVsPlayer for Hikvision
 Version:        1.0.52
 
-%global Rel 10
+%global Rel 11
 %if 0%{?mageia}
 Release:        %mkrel %{Rel}
 %elif 0%{?fedora} > 36 || 0%{?rhel} > 6
@@ -136,6 +136,9 @@ chmod -R ug+rw %{_srcrpmdir}
 %{_libdir}/QtVsPlayer/*
 
 %changelog
+* Wed Jul 22 2026 surfzoid@gmail.com
++ Fix, lost mouse cursor.
+
 * Wed Nov 05 2025 surfzoid@gmail.com
 + Fix, mouse cursor more visible.
 

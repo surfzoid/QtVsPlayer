@@ -96,8 +96,6 @@ private slots:
 
     void HideMenu();
 
-    void on_actionOuvrir_visibleChanged();
-
 public slots:
 
 signals:

@@ -169,6 +169,12 @@ QtVsPlayer::~QtVsPlayer()
 bool QtVsPlayer::eventFilter(QObject *obj, QEvent *event)
 {
 
+    if(event->type() == QEvent::MouseMove)
+    {
+        unsetCursor();
+        QGuiApplication::restoreOverrideCursor();
+    }
+
     if(event->type() == QEvent::WinIdChange)
     {
         if(obj->objectName() == "VideoView")
@@ -1031,12 +1037,5 @@ void QtVsPlayer::HideMenu()
             !WVideoCtrls->underMouse()) {
         QtVsPlayer::setCursor(Qt::BlankCursor);
     }
-}
-
-void QtVsPlayer::on_actionOuvrir_visibleChanged()
-{
-
-    unsetCursor();
-    QGuiApplication::restoreOverrideCursor();
 }
 
